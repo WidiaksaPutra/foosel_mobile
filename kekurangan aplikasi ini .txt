@@ -1,0 +1,3 @@
+kekurangan aplikasi ini :
+- Laravel+Flutter Websockets untuk realtime data
+- corn job untuk backup data 

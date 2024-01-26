@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "373934951939",
+    "project_id": "sepatuku-88297",
+    "storage_bucket": "sepatuku-88297.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:373934951939:android:efd1302cc5b6e54c604836",
+        "android_client_info": {
+          "package_name": "com.example.flutter_laravel_toko_sepatu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "373934951939-haibkdlpljooe3kmsq8nc2pthi9snhgd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEA1moasQ6rRj6dy90fdopYNITJ7e-O-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "373934951939-haibkdlpljooe3kmsq8nc2pthi9snhgd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

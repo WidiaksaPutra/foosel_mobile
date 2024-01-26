@@ -1,0 +1,72 @@
+// ignore_for_file: invalid_use_of_visible_for_testing_member
+
+import 'package:flutter/material.dart';
+import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/event_default/event_form_products.dart';
+import 'package:flutter_laravel_toko_sepatu/blocs/bloc_update_product/event_update_barang.dart';
+import 'package:flutter_laravel_toko_sepatu/blocs/bloc_update_product/interfaces_update_products.dart';
+import 'package:flutter_laravel_toko_sepatu/blocs/bloc_update_product/state_update_barang.dart';
+import 'package:flutter_laravel_toko_sepatu/interface/interface_local/service/interface_update_data_product.dart';
+import 'package:flutter_laravel_toko_sepatu/shared/theme_global_variabel.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+late BuildContext context1;
+class BlocUploadUpdateProduct extends Bloc<DataEventUpdateBarang, StateUpdateBarang> with interfacesButtonUpdateProduct, defaultSharedPref{
+  final interfaceUpdateDataProduct updateDataProduct = getItInstance<interfaceUpdateDataProduct>();
+  BlocUploadUpdateProduct() : super(UpdateBarang(loading: false, snackBar: false, responApi: '-')){
+    on<ButtonFormProducts>((event, emit) async{
+      ButtonUploadProduct(
+        tokenId: event.tokenId,
+        nameProduct: event.nameProduct,
+        price: event.price,
+        description: event.description,
+        type: event.type,
+        image: event.image,
+        images: event.images, 
+        oldImage: event.oldImage,
+        context: event.context,
+      );
+    });
+  }
+
+  @override
+  ButtonUploadProduct({
+    required String tokenId,
+    required String nameProduct, 
+    required String price, 
+    required String description, 
+    required XFile? image, 
+    required List images, 
+    required String type,
+    required String oldImage,
+    required BuildContext context,
+  }) async {
+    emit(UpdateBarang(loading: true, snackBar: false, responApi: '-'));
+    await sharedPref();
+    String responUpdateProducts = await updateDataProduct.UpdateDataProduct(
+      tokenId: tokenId,
+      email: prefs.getString('email').toString(),
+      description: description, 
+      name: nameProduct,
+      price: price,
+      oldImage: oldImage,
+      image: image,
+      images: images,
+      type: type,
+    );
+    print("test respon update $responUpdateProducts");
+    if(responUpdateProducts == "berhasil"){
+      emit(UpdateBarang(loading: false, snackBar: true, responApi: responUpdateProducts));
+      prefs.remove('namaProduct');
+      prefs.remove('deskripsi');
+      prefs.remove('price');
+      prefs.remove('typeProduct');
+      prefs.remove('indexDropdown');
+      prefs.remove('tokenId');
+      prefs.remove('oldImage');
+    }else{
+      emit(UpdateBarang(loading: false, snackBar: true, responApi: responUpdateProducts));
+    }
+  }
+}
