@@ -9,7 +9,8 @@ mixin imageSingleAccess{
   }) async{
     final ImagePicker imagePicker = ImagePicker();
     if(namaProduct != 'null' 
-    && deskripsi != 'null' 
+    && deskripsi != 'null'
+    && deskripsi.length < 255
     && price != 'null'
     && price != '0.00'
     && typeProduct != "All Product"

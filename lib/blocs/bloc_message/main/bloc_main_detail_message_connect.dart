@@ -1,22 +1,23 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_message/event_message.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_message/state_message.dart';
-import 'package:flutter_laravel_toko_sepatu/firebase/api_chat_firebase/mixin/search_id_chat_personal_firebase.dart';
-import 'package:flutter_laravel_toko_sepatu/firebase/api_notification.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/firebase/interface_get_chat_firebase.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/firebase/interface_insert_chat_firebase.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/firebase/interface_update_chat_firebase.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_global_variabel.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_message/event_message.dart';
+import 'package:foosel/blocs/bloc_message/state_message.dart';
+import 'package:foosel/firebase/api_chat_firebase/interfaces/interface_search_id_chat_personal_firebase.dart';
+import 'package:foosel/interface/interface_local/firebase/interface_get_chat_firebase.dart';
+import 'package:foosel/interface/interface_local/firebase/interface_insert_chat_firebase.dart';
+import 'package:foosel/interface/interface_local/firebase/interface_insert_notification_firebase.dart';
+import 'package:foosel/interface/interface_local/firebase/interface_update_chat_firebase.dart';
+import 'package:foosel/shared/theme_global_variabel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class BlocDetailMessageConnect extends Bloc<DataEventMessage, DataBlocStateChatMessage> with defaultSharedPref, notificationFirebase, searchIdChatPersonalFirebase{
+class BlocDetailMessageConnect extends Bloc<DataEventMessage, DataBlocStateChatMessage> with defaultSharedPref{
+  final interfaceInsertNotificationFirebase dataInsertNotificationFirebase = getItInstance<interfaceInsertNotificationFirebase>();
   final interfaceInsertChatFirebase dataInsertChatFirebase = getItInstance<interfaceInsertChatFirebase>();
   final interfaceGetChatFirebase dataGetChatFirebase = getItInstance<interfaceGetChatFirebase>();
   final interfaceUpdateChatFirebase dataUpdateChatFirebase = getItInstance<interfaceUpdateChatFirebase>();
+  final interfaceSearchIdChatPersonalFirebase dataSearchIdChatPersonal = getItInstance<interfaceSearchIdChatPersonalFirebase>();
   BlocDetailMessageConnect() : super(DataBlocChatMessage(false)){
     on<DataEventPostMessage>((event, emit) async{
       await sharedPref();
@@ -60,11 +61,11 @@ class BlocDetailMessageConnect extends Bloc<DataEventMessage, DataBlocStateChatM
         emailPenerima: emailPenerima, 
         messager: message
       );
-      await pushNotificationFCM(
+      await dataInsertNotificationFirebase.InsertNotificationFirebase(
         deviceToken: tokenPenerima,
         body: message,
         title: prefEmail,
-      ); 
+      );
     }
   }
 
@@ -87,7 +88,10 @@ class BlocDetailMessageConnect extends Bloc<DataEventMessage, DataBlocStateChatM
     SharedPreferences pref = await SharedPreferences.getInstance(); 
     String emailPenerima = pref.getString('emailPenerima').toString();
     String emailPengirim = pref.getString('email').toString();   
-    await searchIdChatPersonal(emailPengirim: emailPengirim, emailPenerima: emailPenerima);
+    String chatIdMessage = await dataSearchIdChatPersonal.SearchIdChatPersonal(
+      emailPengirim: emailPengirim,
+      emailPenerima: emailPenerima,
+    );
     yield* firestore.collection('Chats').doc(chatIdMessage).collection("message").orderBy('time', descending: true).snapshots();
   }
 }

@@ -1,5 +1,11 @@
 abstract class interfaceGetDataCategory{
-  GetDataCategory({required bool loadingApiService});
+  GetDataCategory({
+    bool testing = false,
+    required bool loadingApiService,
+  });
 
-  GetDataCategoryNoParameters({required bool loadingApiService});
+  GetDataCategoryNoParameters({
+    bool testing = false,
+    required bool loadingApiService,
+  });
 }

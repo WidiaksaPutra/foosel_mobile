@@ -7,15 +7,14 @@ class SqlTransaksiTabel{
         tokenId String,
         emailPenjual String,
         emailPembeli String,
-        productId String,
-        name String,
-        description TEXT,
         idCategory String,
+        name String, 
+        description String, 
         nameCategory String,
         hargaSatuan String,
         hargaTotal String,
         jumlah int,
-        imagePath TEXT
+        imagePath String
       )
     """);
   }

@@ -1,4 +1,4 @@
-import 'package:flutter_laravel_toko_sepatu/helpers/login/sql_login_tabel.dart';
+import 'package:foosel/helpers/login/sql_login_tabel.dart';
 
 mixin helperLogin{
   Future<int> insertDataLogin({required String email, required String password, required String token}) async {

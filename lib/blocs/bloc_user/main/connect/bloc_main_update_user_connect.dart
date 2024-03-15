@@ -2,14 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/state_default/state_snackBar_form.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_user/event_user.dart';
-import 'package:flutter_laravel_toko_sepatu/helpers/login/helper_login.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/service/interface_update_user.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_global_variabel.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_konstanta.dart';
+import 'package:foosel/blocs/bloc_default/state_default/state_snackBar_form.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_user/event_user.dart';
+import 'package:foosel/helpers/login/helper_login.dart';
+import 'package:foosel/interface/interface_local/service/interface_update_user.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_global_variabel.dart';
+import 'package:foosel/shared/theme_konstanta.dart';
 import 'package:go_router/go_router.dart';
 
 late String statusUpdate = "";

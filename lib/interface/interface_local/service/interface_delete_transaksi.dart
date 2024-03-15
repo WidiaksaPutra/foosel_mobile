@@ -1,6 +1,8 @@
 abstract class interfaceDeleteTransaksi{
   DeleteTransaksi({
-    required String transactionsId,
+    bool testing = false,
+    String transactionsId = "-",
+    String productsId = "-",
   });
   LoadingDeleteDataTransaksi();
 }

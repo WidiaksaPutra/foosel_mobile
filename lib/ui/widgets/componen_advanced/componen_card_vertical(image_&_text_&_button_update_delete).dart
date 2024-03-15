@@ -1,10 +1,10 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_advanced/componen_text_column(crossStart_&_mainSpaceEvenly_&_gray2_and_white_and_blue_&_font12_and_font16_and_font14_&_regular_and_semiBold_and_medium).dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_basic/componen_basic_image.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_basic/componen_basic_button.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/ui/widgets/componen_advanced/componen_text_column(crossStart_&_mainSpaceEvenly_&_gray2_and_white_and_blue_&_font12_and_font16_and_font14_&_regular_and_semiBold_and_medium).dart';
+import 'package:foosel/ui/widgets/componen_basic/componen_basic_image.dart';
+import 'package:foosel/ui/widgets/componen_basic/componen_basic_button.dart';
 
 class ComponenCardVertical_ImageAndTextAndButtonUpdateDelete extends StatelessWidget {
   late String gambar, type, nama, harga;
@@ -23,10 +23,10 @@ class ComponenCardVertical_ImageAndTextAndButtonUpdateDelete extends StatelessWi
 
   @override
   Widget build(BuildContext context) {
+    themeBox(context);
     return Container(
-      margin: EdgeInsets.only(bottom: themeBox.defaultHeightBox30),
-      child: Row(        
-        // mainAxisAlignment: MainAxisAlignment.start,
+      margin: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox20),
+      child: Row(
         children:[
           ComponenBasicImage(
             heightImage: themeBox.defaultHeightBox120,

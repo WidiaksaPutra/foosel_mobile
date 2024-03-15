@@ -4,27 +4,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_navigasi_role.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_detail_products/detail_product/cubit_detail_product_connect.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_message/main/cubit_main_list_message_connect.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_message/main/cubit_main_title_message_connect.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_message/main/cubit_nav_message.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_message/state_message.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/message/detail_message/body_detail_message.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_get_back.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_header_status.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_loading.dart';
+import 'package:foosel/blocs/bloc_default/default/default_navigasi_role.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_detail_products/detail_product/cubit_detail_product_connect.dart';
+import 'package:foosel/blocs/bloc_message/main/cubit_main_list_message_connect.dart';
+import 'package:foosel/blocs/bloc_message/main/cubit_main_title_message_connect.dart';
+import 'package:foosel/blocs/bloc_message/main/cubit_nav_message.dart';
+import 'package:foosel/blocs/bloc_message/state_message.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/ui/page/message/detail_message/body_detail_message.dart';
+import 'package:foosel/ui/widgets/componen_advanced/compenen_get_back.dart';
+import 'package:foosel/ui/widgets/componen_header_status.dart';
+import 'package:foosel/ui/widgets/componen_loading.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class DetailMessage extends HookWidget with navigasiRole, navigasiRoleBarRead{
+class DetailMessage extends HookWidget with navigasiRole, navigasiRoleBarRead, defaultSharedPref{
   DetailMessage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    navigasiR();
+    sharedPref();
     final navBack = useState("-");
     final loadingTitle = useState(true);
     final imageTitle = useState("-");
@@ -53,14 +53,14 @@ class DetailMessage extends HookWidget with navigasiRole, navigasiRoleBarRead{
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         CompenenGetBackBasic(
-                          onPressed: () async{ 
-                            if(state.detailMessage == false){
-                              navigasiRBR(context: context, value: state.roleBar);
-                              navBack.value = navigation;
-                            }else{
-                              SharedPreferences prefs = await SharedPreferences.getInstance();
-                              context.read<CubitDetailProductConnect>().GetDetailProductConnect(prefs.getString('detailTokenId').toString());
+                          onPressed: () { 
+                            if(state.detailMessage == true){
+                              context.read<CubitDetailProductConnect>().GetDetailProductConnect(idProduct: prefs.getString('detailTokenId').toString());
                               navBack.value = prefs.getString('navDetailRole').toString();
+                            }else{
+                              navigasiRBR(context: context, value: state.roleBar);
+                              navigasiR();
+                              navBack.value = navigation;
                             }
                             context.go(navBack.value);
                           },
@@ -70,7 +70,6 @@ class DetailMessage extends HookWidget with navigasiRole, navigasiRoleBarRead{
                           child: BlocBuilder<cubitTitleMessageConnect, DataStateTitleMessage>(
                             builder: (context, listTitle) {
                               if(listTitle.loadingData == true){
-                                // context.read<cubitTitleMessageConnect>().getTitleMessage(users: snapshot.data!.docs, message: '-');
                                 return ElevatedButton(
                                   onPressed: () {
                                     context.read<cubitTitleMessageConnect>().getTitleMessage(users: snapshot.data!.docs, message: '-');
@@ -82,7 +81,11 @@ class DetailMessage extends HookWidget with navigasiRole, navigasiRoleBarRead{
                                 imageTitle.value = listTitle.image;
                                 statusTitle.value = listTitle.status;
                                 nameTitle.value = listTitle.title;
-                                return ComponenHeaderImageTitleStatus(image: imageTitle.value, status: statusTitle.value, title: nameTitle.value);
+                                return ComponenHeaderImageTitleStatus(
+                                  image: imageTitle.value, 
+                                  status: statusTitle.value, 
+                                  title: nameTitle.value,
+                                );
                               }
                             },
                           ),
@@ -90,11 +93,11 @@ class DetailMessage extends HookWidget with navigasiRole, navigasiRoleBarRead{
                       ]
                     );
                   }else{
-                    return const ComponenLoadingBasic(colors: kPurpleColor);
+                    return Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50));
                   }
                 } 
               )
-            : ComponenLoadingBasic(colors: kPurpleColor);
+            : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50));
           }
         ),
       ),
@@ -102,7 +105,3 @@ class DetailMessage extends HookWidget with navigasiRole, navigasiRoleBarRead{
     );
   }
 }
-
-// Future onRefresh(){
-//   return 
-// }

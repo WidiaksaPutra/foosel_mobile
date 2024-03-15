@@ -1,47 +1,50 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_transaksi/interfaces_transaksi.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_transaksi/transaksi_local/state_transaksi.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/helpers/interface_get_data_transaksi_local.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_global_variabel.dart';
+import 'package:foosel/blocs/bloc_transaksi/interfaces_transaksi.dart';
+import 'package:foosel/blocs/bloc_transaksi/transaksi_local/state_transaksi.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_get_data_transaksi_local.dart';
+import 'package:foosel/shared/theme_global_variabel.dart';
 
+late List dataTransaksi = [];
 class CubitGetTransaksiLocal extends Cubit<DataStateGetTransaksiLocal> with getTransaksiLocal{
   final interfaceGetDataTransaksiLocal dataTransaksiLocal = getItInstance<interfaceGetDataTransaksiLocal>();
   CubitGetTransaksiLocal() : super(DataGetTransaksiLocal(
-    getData: [], 
+    getData: dataTransaksi, 
     loadingTransaksi: true, 
     totalHarga: 0,
   ));
 
   @override
   GetDataTransaksi() async{
+    dataTransaksi.clear();
     emit(DataGetTransaksiLocal(
-      getData: [], 
+      getData: dataTransaksi, 
       loadingTransaksi: true, 
       totalHarga: 0,
     ));
-    final dataLocal = await dataTransaksiLocal.GetDataTransaksiLocal();
+    dataTransaksi.addAll(await dataTransaksiLocal.GetDataTransaksiLocal());
     late int totalHarga = 0;
-    for(int i = 0; i < dataLocal.length; i++){
-      totalHarga = totalHarga + double.parse(dataLocal[i]['hargaTotal'].toString()).toInt();
-    }
+    dataTransaksi.forEach((data) {
+      totalHarga = totalHarga + double.parse(data['hargaTotal'].toString()).toInt();
+    });
     emit(DataGetTransaksiLocal(
       loadingTransaksi: false, 
-      getData: dataLocal, 
+      getData: dataTransaksi, 
       totalHarga: totalHarga,
     ));
   }
 
   @override
   GetDataTransaksiWhereId({required String tokenId}) async{
+    dataTransaksi.clear();
     emit(DataGetTransaksiLocal(
-      getData: [], 
+      getData: dataTransaksi,
       loadingTransaksi: true, 
       totalHarga: 0,
     ));
-    List dataLocal = await dataTransaksiLocal.GetDataTransaksiWhereIdLocal(tokenId: tokenId);
+    dataTransaksi.addAll(await dataTransaksiLocal.GetDataTransaksiWhereIdLocal(tokenId: tokenId));
     emit(DataGetTransaksiLocal(
-      loadingTransaksi: false, 
-      getData: dataLocal, 
+      loadingTransaksi: false,
+      getData: dataTransaksi, 
       totalHarga: 0,
     ));
   }

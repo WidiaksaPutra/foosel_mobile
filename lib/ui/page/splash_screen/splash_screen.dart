@@ -1,11 +1,12 @@
 // ignore_for_file: must_be_immutable
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_roles.dart';
-import 'package:flutter_laravel_toko_sepatu/routes/route_name.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
+import 'package:foosel/blocs/bloc_default/default/default_roles.dart';
+import 'package:foosel/routes/route_name.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_box.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 
 class SplashScreen extends StatelessWidget with roleAcces{
   SplashScreen({Key? key }) : super(key: key);
@@ -34,10 +35,10 @@ class SplashScreen extends StatelessWidget with roleAcces{
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: Image.asset(
-              "asset/icon/logo_toko.png",
-              width: themeBox.defaultWidthBox130,
-              height: themeBox.defaultHeightBox150,
+            child: Lottie.asset(
+              "asset/animations/loading_basic_lottie.json",
+              height: themeBox.defaultWidthBox215,
+              width: themeBox.defaultHeightBox300,
             ),
           ), 
         ],

@@ -2,63 +2,94 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/refresh_dialog.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/state_default/state_product_basic.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_bottom_nav_pembeli/cubit_detail_produk_nav_pembeli.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_bottom_nav_pembeli/state_bottom_nav_pembeli.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_navigasi_role.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/show_snack_bar.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_detail_products/detail_product/cubit_detail_products_disconnect.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_like/cubit_get_like.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_like/state_like.dart';
-import 'package:flutter_laravel_toko_sepatu/routes/route_name.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_advanced/componen_text_column(crossStart_white_and_gray2_&_font18_and_font12_&_semi_bold_and_regular).dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_carousel_slider_image.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_container_harga.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_deskripsi_detail.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_header/componen_header_product.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_loading.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_small_horizontal.dart';
+import 'package:foosel/blocs/bloc_default/default/refresh_dialog.dart';
+import 'package:foosel/blocs/bloc_default/state_default/state_product_basic.dart';
+import 'package:foosel/blocs/bloc_bottom_nav_pembeli/cubit_detail_produk_nav_pembeli.dart';
+import 'package:foosel/blocs/bloc_bottom_nav_pembeli/state_bottom_nav_pembeli.dart';
+import 'package:foosel/blocs/bloc_default/default/default_navigasi_role.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/default/show_snack_bar.dart';
+import 'package:foosel/blocs/bloc_detail_products/detail_product/cubit_detail_products_disconnect.dart';
+import 'package:foosel/blocs/bloc_like/cubit_get_like.dart';
+import 'package:foosel/blocs/bloc_like/state_like.dart';
+import 'package:foosel/blocs/bloc_transaksi/transaksi_api/state_transaksi.dart';
+import 'package:foosel/blocs/bloc_transaksi/transaksi_local/cubit_get_transaksi.dart';
+import 'package:foosel/blocs/bloc_transaksi/transaksi_local/cubit_get_transaksi_product_local.dart';
+import 'package:foosel/blocs/bloc_transaksi/transaksi_local/state_transaksi.dart';
+import 'package:foosel/routes/route_name.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/ui/widgets/componen_advanced/componen_header_product.dart';
+import 'package:foosel/ui/widgets/componen_advanced/componen_text_column(crossStart_white_and_gray2_&_font18_and_font12_&_semi_bold_and_regular).dart';
+import 'package:foosel/ui/widgets/componen_carousel_slider_image.dart';
+import 'package:foosel/ui/widgets/componen_container_harga.dart';
+import 'package:foosel/ui/widgets/componen_advanced/componen_detail/componen_deskripsi_detail.dart';
+import 'package:foosel/ui/widgets/componen_loading.dart';
 import 'package:go_router/go_router.dart';
 
 class DetailBodyDisconnectProductPembeli extends StatelessWidget with navigasiRole, navigasiRoleBarRead, showSnackBar, defaultSharedPref{
   DetailBodyDisconnectProductPembeli({Key? key}) : super(key: key);
 
+  void navigationBack({
+    required BuildContext context,
+    required String jenisDetail,
+  }) async{
+    (jenisDetail == "AllProduct")
+    ? await navigasiRBR(context: context, value: 0)
+    : await navigasiRBR(context: context, value: 2);
+    await navigasiR();
+    (jenisDetail == "Transaksi") 
+    ? context.go(RouteName.cart) 
+    : (jenisDetail == "TransaksiHistory")
+    ? context.go(RouteName.cartHistory)
+    : (jenisDetail == "TransaksiDetail")
+    ? context.go(RouteName.cartDetail)
+    : context.go(navigation);
+  }
+
+  void listener({
+    required BuildContext context,
+    required String navigation,
+    required bool loading,
+  }){
+    if(loading == true){
+      Future.delayed(
+        Duration(seconds: 5),
+        () => ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200),
+      );
+      RefreshDialog().basicRefresh(context: context, onTap: () => context.go(navigation));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     sharedPref();
     Size size = MediaQuery.of(context).size;
-
-    navigationRole(BuildContext context) async{
-      return BlocBuilder<CubitDetailProdukNavPembeli, DataStateDetailProdukNavPembeli>(
-        builder: (context, state) => (state.jenisDetail == "AllProduct")
-        ? navigasiRBR(context: context, value: 0)
-        : navigasiRBR(context: context, value: 2)
-      );
-    }
-    navigasiR();
-    
-    Widget contentDisconnect(dynamic state){
+    Widget contentDisconnect({
+      String jumlahItem = "-",
+      String jumlahTotalHarga = "-",
+      required String name,
+      required String nameCategory,
+      required String price,
+      required String description,
+      required String jenisDetail,
+      required String emailPenjual,
+    }){
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          headerDetailProduct(
-            context: context, 
-            guestUser: false, 
-            onPressedBack: () async{
-              prefs.remove('emailPenerima');
-              prefs.remove('detailTokenId');
-              prefs.remove('navDetailRole');
-              context.go(navigation);
-            }, 
-            onPressedChart: () {
-              context.go(RouteName.cartDetail);
+          BlocBuilder<CubitDetailProdukNavPembeli, DataStateDetailProdukNavPembeli>(
+            builder: (context2, state2){
+              return headerDetailProduct(
+                context: context, 
+                guestUser: false, 
+                onPressedBack: () => navigationBack(context: context, jenisDetail: state2.jenisDetail.toString()), 
+                onPressedChart: () => context.go(RouteName.cart), 
+                icon: 'asset/icon/cart_Icon4.png',
+              );
             },
           ),
-          ComponenCarouselSliderImage(sizeWidth: size.width, imageProduct: ["asset/image/sampel_sepatu_home_small_4.png"], connect: false),
+          ComponenCarouselSliderImage(sizeWidth: size.width, imageProduct: ["asset/image/disconnect_image.jpg"], connect: false),
           Expanded(
             child: Container(
               margin: EdgeInsets.only(top: themeBox.defaultHeightBox17),
@@ -68,16 +99,30 @@ class DetailBodyDisconnectProductPembeli extends StatelessWidget with navigasiRo
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(themeBox.defaultRadius24), topRight: Radius.circular(themeBox.defaultRadius24))
               ),
               child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ComponenTextColumn_CrossStartAndWhiteGray2AndFont18Font12AndSemiBoldRegular(
-                      title: state.getData[0]['name'].toString(), 
-                      content: state.getData[0]['nameCategory'].toString(),
+                      title: name,
+                      content: nameCategory,
                     ),
-                    ComponenContainerHarga(titleHarga: "Price starts from", harga: state.getData[0]['price'].toString()),
-                    ComponenDeskripsiDetail(titleDeskripsi: "Description", deskripsi: state.getData[0]['description'].toString()),
-                    ComponenSmallHorizontal(titleImage: "Fimiliar Product"),
+                    (jenisDetail == "AllProduct" || jenisDetail == "Like")
+                    ? ComponenContainerHarga(
+                        titleHarga: "Harga",
+                        harga: price.toString(),
+                      )
+                    : ComponenContainerHarga(
+                        titleHarga: "Harga",
+                        harga: price.toString(),
+                        titleItem: "Jumlah Barang",
+                        jumlahItem: jumlahItem,
+                        titleTotalHarga: "Total Harga",
+                        jumlahTotalHarga: jumlahTotalHarga,
+                      ),
+                    ComponenTextDetail(title: "Description", data: description),
+                    ComponenTextDetail(title: "Email Penjual", data: emailPenjual),
+                    // ComponenSmallHorizontal(titleImage: "Fimiliar Product"),
                   ],
                 ),
               ),
@@ -88,39 +133,73 @@ class DetailBodyDisconnectProductPembeli extends StatelessWidget with navigasiRo
     }
 
     return BlocBuilder<CubitDetailProdukNavPembeli, DataStateDetailProdukNavPembeli>(
-    builder: (context, state) => (state.jenisDetail == "AllProduct")
-    ? BlocConsumer<CubitDetailProductsDisconnect, DataStateProductBasic>(
-        listener: (context, state1){
-          if(state1.loadingApi == true){
-            ComponenLoadingBasic(colors: kPurpleColor);
-            Future.delayed(Duration(milliseconds: 5000));
-            RefreshDialog().basicRefresh(context: context, onTap: () {
-              prefs.remove('emailPenerima');
-              prefs.remove('detailTokenId');
-              context.go(navigation);
-            });
-          }
-        },
-        builder: (context, state1) => (state1.loadingApi == true)
-        ? ComponenLoadingBasic(colors: kPurpleColor)
-        : contentDisconnect(state1)
-      )
-    : BlocConsumer<CubitGetLike, DataStateGetLike>(
-        listener: (context, state2){
-          if(state2.loadingLike == true){
-            ComponenLoadingBasic(colors: kPurpleColor);
-            Future.delayed(Duration(milliseconds: 5000));
-            RefreshDialog().basicRefresh(context: context, onTap: () {
-              prefs.remove('emailPenerima');
-              prefs.remove('detailTokenId');
-              context.go(navigation);
-            });
-          }
-        },
-        builder: (context, state2) => (state2.loadingLike == true)
-        ? ComponenLoadingBasic(colors: kPurpleColor)
-        : contentDisconnect(state2)
-      )
+    builder: (context0, state0) => (state0.jenisDetail == "AllProduct")
+      ? BlocConsumer<CubitDetailProductsDisconnect, DataStateProductBasic>(
+          listener: (context1, state1) => listener(context: context, navigation: navigation, loading: state1.loadingApi),
+          builder: (context1, state1) => (state1.loadingApi == true)
+          ? ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200)
+          : (state1.getData.toString() != "[]")
+            ? contentDisconnect(
+                name: state1.getData[0]['name'].toString(),
+                nameCategory: state1.getData[0]['nameCategory'].toString(),
+                price: state1.getData[0]['price'].toString(),
+                description: state1.getData[0]['description'].toString(),
+                emailPenjual: state1.getData[0]['email'].toString(),
+                jenisDetail: "AllProduct",
+              )
+            : Center(child: ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200)),
+        )
+      : (state0.jenisDetail == "Like")
+      ? BlocConsumer<CubitGetLike, DataStateGetLike>(
+          listener: (context2, state2) => listener(context: context, navigation: navigation, loading: state2.loadingLike),
+          builder: (context2, state2) => (state2.loadingLike == true)
+          ? ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200)
+          : (state2.getData.toString() != "[]")
+            ? contentDisconnect(
+                name: state2.getData[0]['name'].toString(),
+                nameCategory: state2.getData[0]['nameCategory'].toString(),
+                price: state2.getData[0]['price'].toString(),
+                description: state2.getData[0]['description'].toString(),
+                emailPenjual: state2.getData[0]['email'].toString(),
+                jenisDetail: "Like",
+              )
+            : Center(child: ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200))
+        )
+      : (state0.jenisDetail == "TransaksiHistory")
+      ? BlocConsumer<CubitGetTransaksiProductLocal, DataStateGetTransaksi>(
+          listener: (context3, state3) => listener(context: context, navigation: navigation, loading: state3.loading),
+          builder: (context3, state3) => (state3.loading == true)
+          ? ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200)
+          : (state3.dataTransaksi.toString() != "[]")
+            ? contentDisconnect(
+                name: state3.dataTransaksi[0]['name'].toString(),
+                nameCategory: state3.dataTransaksi[0]['nameCategory'].toString(),
+                price: state3.dataTransaksi[0]['price'].toString(),
+                description: state3.dataTransaksi[0]['description'].toString(),
+                jenisDetail: "TransaksiHistory",
+                jumlahItem: state3.dataTransaksi[0]['quantity'].toString(),
+                jumlahTotalHarga: state3.dataTransaksi[0]['totalPrice'].toString(),
+                emailPenjual: state3.dataTransaksi[0]['usersEmailPenjual'].toString(),
+              )
+            : Center(child: ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200))
+        )
+      : BlocConsumer<CubitGetTransaksiLocal, DataStateGetTransaksiLocal>(
+          listener: (context4, state4) => listener(context: context, navigation: navigation, loading: state4.loadingTransaksi),
+          builder: (context4, state4) => (state4.loadingTransaksi == true)
+          ? ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200)
+          : (state4.getData.toString() != "[]")
+            ? contentDisconnect(
+                name: state4.getData[0]['name'].toStFFring(),
+                nameCategory: state4.getData[0]['nameCategory'].toString(),
+                price: state4.getData[0]['hargaSatuan'].toString(),
+                description: state4.getData[0]['description'].toString(),
+                jenisDetail: "Transaksi",
+                jumlahItem: state4.getData[0]['jumlah'].toString(),
+                jumlahTotalHarga: state4.getData[0]['hargaTotal'].toString(),
+                emailPenjual: state4.getData[0]['emailPenjual'].toString(),
+              )
+            : Center(child: ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200))
+        ),
     );
   }
 }

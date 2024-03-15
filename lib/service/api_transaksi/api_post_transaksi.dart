@@ -1,15 +1,15 @@
-// ignore_for_file: override_on_non_overriding_member
-
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/service/interface_post_transaksi.dart';
-import 'package:flutter_laravel_toko_sepatu/service/api_konstanta.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/interface/interface_local/service/interface_post_transaksi.dart';
+import 'package:foosel/service/api_konstanta.dart';
 import 'dart:convert';
 
-import 'package:shared_preferences/shared_preferences.dart';
+class apiPostTransaksi with defaultSharedPref implements interfacePostTransaksi{
+  late String tokens;
 
-class apiPostTransaksi implements interfacePostTransaksi{
-  
   @override
   PostTransaksi({
+    bool testing = false,
+    String testingToken = "",
     required String usersEmailPembeli,
     required String usersEmailPenjual,
     required String productsId,
@@ -21,10 +21,13 @@ class apiPostTransaksi implements interfacePostTransaksi{
     required String status,
   }) async{
     try {
-      await Future.delayed(const Duration(milliseconds: 500));
-      SharedPreferences token = await SharedPreferences.getInstance();
-      late String? tokens = token.getString("token")!;
-      final responseTransaksi = await Api.client.post(Uri.parse('${Api.baseURL}/transaksi?'),
+      if(testing == false){
+        await sharedPref();
+        tokens = prefs.getString('token').toString();
+      }else{
+        tokens = testingToken;
+      }
+      final responseTransaksi = await Api.client.post(Uri.parse('${Api.baseURL}/insertTransaksi?'),
         headers: <String, String>{
           'Accept': 'application/json',
           'Authorization': 'Bearer $tokens',
@@ -40,13 +43,10 @@ class apiPostTransaksi implements interfacePostTransaksi{
           'shipping_price': shippingPrice,
           'quantity': quantity,
           'status': status, 
+          'unit_test': testing.toString(),
         }),
-      );
-      if(responseTransaksi.statusCode == 200){       
-        return "berhasil";
-      }else{
-        return "gagal";
-      }
+      ).timeout(const Duration(seconds: 10));       
+      return (responseTransaksi.statusCode == 200) ? "berhasil" : "gagal";
     } catch (e) {
       return "error";
     }

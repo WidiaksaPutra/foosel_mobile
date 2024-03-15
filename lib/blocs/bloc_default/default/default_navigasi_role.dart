@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_bottom_nav_pembeli/cubit_bottom_nav_pembeli.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_bottom_nav_penjual/cubit_bottom_nav_penjual.dart';
-import 'package:flutter_laravel_toko_sepatu/routes/route_name.dart';
+import 'package:foosel/blocs/bloc_bottom_nav_pembeli/cubit_bottom_nav_pembeli.dart';
+import 'package:foosel/blocs/bloc_bottom_nav_penjual/cubit_bottom_nav_penjual.dart';
+import 'package:foosel/routes/route_name.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

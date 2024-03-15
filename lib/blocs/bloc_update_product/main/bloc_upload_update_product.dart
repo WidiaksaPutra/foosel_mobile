@@ -1,13 +1,13 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/event_default/event_form_products.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_update_product/event_update_barang.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_update_product/interfaces_update_products.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_update_product/state_update_barang.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/service/interface_update_data_product.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_global_variabel.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/event_default/event_form_products.dart';
+import 'package:foosel/blocs/bloc_update_product/event_update_barang.dart';
+import 'package:foosel/blocs/bloc_update_product/interfaces_update_products.dart';
+import 'package:foosel/blocs/bloc_update_product/state_update_barang.dart';
+import 'package:foosel/interface/interface_local/service/interface_update_data_product.dart';
+import 'package:foosel/shared/theme_global_variabel.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -55,7 +55,6 @@ class BlocUploadUpdateProduct extends Bloc<DataEventUpdateBarang, StateUpdateBar
       images: images,
       type: type,
     );
-    print("test respon update $responUpdateProducts");
     if(responUpdateProducts == "berhasil"){
       emit(UpdateBarang(loading: false, snackBar: true, responApi: responUpdateProducts));
       prefs.remove('namaProduct');

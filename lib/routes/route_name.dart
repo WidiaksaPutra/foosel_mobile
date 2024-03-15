@@ -20,4 +20,6 @@ abstract class RouteName{
   static const headUpdateImage = '/headUpdateImage';
   static const updateBarangPenjual = '/updateBarangPenjual';
   static const cartHistory = '/cartHistory';
+  static const cartPenjual = '/cartPenjual';
+  static const cartProduct = '/cartProduct';
 }

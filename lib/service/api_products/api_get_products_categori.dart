@@ -1,16 +1,19 @@
 import 'dart:convert';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/service/interface_get_data_products_category.dart';
-import 'package:flutter_laravel_toko_sepatu/model/products.dart';
-import 'package:flutter_laravel_toko_sepatu/service/api_konstanta.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/interface/interface_local/service/interface_get_data_products_category.dart';
+import 'package:foosel/model/products.dart';
+import 'package:foosel/service/api_konstanta.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class apiGetProductsCategori implements interfaceGetDataProductsCategory{
+class apiGetProductsCategori with defaultSharedPref implements interfaceGetDataProductsCategory{
   late List dataProducts = [];
   late int pages = 1;
+  late String tokens;
 
   @override
   GetDataProductsCategory({ 
+    bool testing = false,
+    String testingToken = "",
     required String categoriesId, 
     required bool fresh,
   }) async {
@@ -22,24 +25,34 @@ class apiGetProductsCategori implements interfaceGetDataProductsCategory{
       if(dataProducts.isNotEmpty && (categoriesId != dataProducts[0].category!.id.toString())){
         categoriesId = dataProducts[0].category!.id.toString();
       }
-      final tokenUser = await SharedPreferences.getInstance();
-      String tokens = tokenUser.getString('token').toString();
-      if(tokens == 'null'){
-        await TokenNull(
-          categoriesId: categoriesId);
+      if(testing == false){
+        await sharedPref();
+        tokens = prefs.getString('token').toString();
       }else{
-        await TokenNotNull(
-          tokens: tokens,
-          categoriesId: categoriesId,
-        );
+        (testingToken == "") ? tokens = 'null' : tokens = testingToken;
       }
-      return await dataProducts;
+      if(tokens == 'null'){
+        if(testing == false){
+          return await TokenNull(categoriesId: categoriesId);
+        }else{
+          await TokenNull(categoriesId: categoriesId);
+          return "berhasil";
+        }  
+      }else{
+        if(testing == false){
+          return await TokenNotNull(tokens: tokens, categoriesId: categoriesId); 
+        }else{
+          await TokenNotNull(tokens: tokens, categoriesId: categoriesId);
+          return "berhasil";
+        }
+      }
     }catch (e) {
       throw Exception('data error');
     }
   }
 
   TokenNull({
+    bool testing = false,
     required String categoriesId
   }) async {
     Map<String, String> headers = {
@@ -55,10 +68,11 @@ class apiGetProductsCategori implements interfaceGetDataProductsCategory{
       link: 'products', 
       headers: headers, 
     );
-    return dataProducts;
+    return (testing == false) ? dataProducts : "berhasil";
   }
 
   TokenNotNull({
+    bool testing = false,
     required String tokens,
     required String categoriesId,
   }) async {
@@ -79,10 +93,11 @@ class apiGetProductsCategori implements interfaceGetDataProductsCategory{
         categoriesId: categoriesId,
       );
     }
-    return dataProducts;
+    return (testing == false) ? dataProducts : "berhasil";
   }
 
   RolePenjual({
+    bool testing = false,
     required Map<String, String>? headers,
     required String categoriesId,
   }) async {
@@ -96,10 +111,11 @@ class apiGetProductsCategori implements interfaceGetDataProductsCategory{
       link: 'productsPenjual',
       headers: headers, 
     );
-    return dataProducts;
+    return (testing == false) ? dataProducts : "berhasil";
   }
 
   RolePembeli({
+    bool testing = false,
     required Map<String, String>? headers,
     required String categoriesId,
   }) async {
@@ -113,10 +129,11 @@ class apiGetProductsCategori implements interfaceGetDataProductsCategory{
       link: 'productsPembeli',
       headers: headers, 
     );
-    return dataProducts;
+    return (testing == false) ? dataProducts : "berhasil";
   }
 
   GetDataProductUsers({
+    bool testing = false,
     required Map<String, dynamic> parameterApi,
     required Map<String, String>? headers,
     required String link,
@@ -125,15 +142,15 @@ class apiGetProductsCategori implements interfaceGetDataProductsCategory{
     final responseProducts = await Api.client.get(
       Uri.parse('${Api.baseURL}/$link?' + parameterString),
       headers: headers,
-    );
+    ).timeout(const Duration(seconds: 10));
     if(responseProducts.statusCode == 200){
       final parse = await json.decode(responseProducts.body);
       Products productsDataModel = await Products.fromJson(parse);
       pages++;
       dataProducts.addAll(await productsDataModel.data!.data.toList());
+      return (testing == false) ? dataProducts : "berhasil";
     }else{
       throw Exception('data gagal');
     }
-    return dataProducts;
   }
 }

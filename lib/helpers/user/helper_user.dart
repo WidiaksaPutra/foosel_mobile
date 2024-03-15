@@ -1,4 +1,4 @@
-import 'package:flutter_laravel_toko_sepatu/helpers/user/sql_user_tabel.dart';
+import 'package:foosel/helpers/user/sql_user_tabel.dart';
 
 mixin helperUser{
   Future<int> insertDataUser(String name, String email, String username, String phone, String profilePhoto) async {

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_user/state_user.dart';
-import 'package:flutter_laravel_toko_sepatu/helpers/user/helper_user.dart';
+import 'package:foosel/blocs/bloc_user/state_user.dart';
+import 'package:foosel/helpers/user/helper_user.dart';
 
 class CubitMainUserDisconnect extends Cubit<DataStateUser> with helperUser{
   CubitMainUserDisconnect() : super(DataUser(true, {}));

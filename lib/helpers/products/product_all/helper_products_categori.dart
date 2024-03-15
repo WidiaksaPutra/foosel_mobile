@@ -1,5 +1,5 @@
-import 'package:flutter_laravel_toko_sepatu/helpers/products/product_all/sql_products_tabel.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/helpers/interface_get_data_products_category_local.dart';
+import 'package:foosel/helpers/products/product_all/sql_products_tabel.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_get_data_products_category_local.dart';
 
 class helperProductsCategory implements interfaceGetDataProductsCategoryLocal{ 
   @override

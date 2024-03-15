@@ -1,16 +1,19 @@
 // ignore_for_file: must_be_immutable
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_text_style.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_basic/componen_basic_button.dart';
+import 'package:foosel/ui/widgets/componen_basic/componen_basic_button.dart';
 import 'package:lottie/lottie.dart';
 
 class ComponenContentDialog_ImageAndTitleTextAndButtonYesAndButtonNo extends StatelessWidget {
   late String image, titleText;
+  late Color primaryColorYes, primaryColorNo;
   late VoidCallback onTapYes;
   ComponenContentDialog_ImageAndTitleTextAndButtonYesAndButtonNo({Key? key,
+    this.primaryColorYes = kRedColor,
+    this.primaryColorNo = kYellowColor,
     required this.image,
     required this.titleText,
     required this.onTapYes,
@@ -42,7 +45,7 @@ class ComponenContentDialog_ImageAndTitleTextAndButtonYesAndButtonNo extends Sta
                     color: kBlackColor,
                   ),
                   onPressed: onTapYes, 
-                  primaryColor: kRedColor, 
+                  primaryColor: primaryColorYes, 
                   secondaryColor: kGreyColor,
                 ),
                 ComponenBasicButton(
@@ -55,7 +58,7 @@ class ComponenContentDialog_ImageAndTitleTextAndButtonYesAndButtonNo extends Sta
                   onPressed: (){
                     Navigator.of(context).pop();
                   }, 
-                  primaryColor: kYellowColor, 
+                  primaryColor: primaryColorNo, 
                   secondaryColor: kGreyColor,
                 ),
               ],

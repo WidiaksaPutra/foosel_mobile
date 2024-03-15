@@ -1,18 +1,19 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/service/api_konstanta.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_konstanta.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_basic/componen_basic_button.dart';
+import 'package:foosel/service/api_konstanta.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_konstanta.dart';
+import 'package:foosel/shared/theme_text_style.dart';
+import 'package:foosel/ui/widgets/componen_basic/componen_basic_button.dart';
 
 class ComponenCardVertical_ImageAndTextAndButtonRejectedAndButtonSuccess extends StatelessWidget {
   late bool connection;
   late String image, textTitle, harga, status, type;
-  late VoidCallback onTapCard, onTapDelete;
+  late VoidCallback onTapCard, onTapReject, onTapApprove;
+  late dynamic kondisi, bukanTujuanKondisi;
   ComponenCardVertical_ImageAndTextAndButtonRejectedAndButtonSuccess({Key? key, 
     required this.connection,
     required this.status,
@@ -20,8 +21,11 @@ class ComponenCardVertical_ImageAndTextAndButtonRejectedAndButtonSuccess extends
     required this.textTitle, 
     required this.harga,
     required this.type,
-    required this.onTapDelete,
+    required this.onTapReject,
+    required this.onTapApprove,
     required this.onTapCard,
+    required this.kondisi,
+    required this.bukanTujuanKondisi,
   }) : super(key: key);
 
   @override
@@ -45,16 +49,18 @@ class ComponenCardVertical_ImageAndTextAndButtonRejectedAndButtonSuccess extends
                     borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
                     child: (connection == true)
                     ? Image.network(
-                        "${Api.baseURLImage}$image", 
+                        "${Api.linkURL}/$image", 
                         height: themeBox.defaultHeightBox60, 
                         width: themeBox.defaultWidthBox60,
-                        alignment: Alignment.centerLeft
+                        alignment: Alignment.centerLeft,
+                        fit: BoxFit.cover,
                       )
                     : Image.asset(
-                        "asset/image/sampel_sepatu_home_small_4.png", 
+                        "asset/image/disconnect_image.jpg", 
                         height: themeBox.defaultHeightBox60,
                         width: themeBox.defaultWidthBox60,
-                        alignment: Alignment.centerLeft
+                        alignment: Alignment.centerLeft,
+                        fit: BoxFit.cover,
                       ),
                   )
                 ),
@@ -70,32 +76,34 @@ class ComponenCardVertical_ImageAndTextAndButtonRejectedAndButtonSuccess extends
                     ]
                   )
                 ), 
-                Column(
-                  children: [
-                    ComponenBasicButton(
-                      paddingVertical: 0, 
-                      borderRadius: themeBox.defaultRadius5, 
-                      content: Icon(
-                        Icons.check,
-                        color: kBlackColor,
+                if(kondisi != bukanTujuanKondisi)...[
+                  Column(
+                    children: [
+                      ComponenBasicButton(
+                        paddingVertical: 0, 
+                        borderRadius: themeBox.defaultRadius5, 
+                        content: Icon(
+                          Icons.check,
+                          color: kBlackColor,
+                        ),
+                        onPressed: onTapApprove, 
+                        primaryColor: kGreenColor, 
+                        secondaryColor: kGreyColor,
                       ),
-                      onPressed: onTapDelete, 
-                      primaryColor: kGreenColor, 
-                      secondaryColor: kGreyColor,
-                    ),
-                    ComponenBasicButton(
-                      paddingVertical: 0, 
-                      borderRadius: themeBox.defaultRadius5, 
-                      content: Icon(
-                        Icons.close,
-                        color: kBlackColor,
+                      ComponenBasicButton(
+                        paddingVertical: 0, 
+                        borderRadius: themeBox.defaultRadius5, 
+                        content: Icon(
+                          Icons.close,
+                          color: kBlackColor,
+                        ),
+                        onPressed: onTapReject, 
+                        primaryColor: kRedColor, 
+                        secondaryColor: kGreyColor,
                       ),
-                      onPressed: onTapDelete, 
-                      primaryColor: kRedColor, 
-                      secondaryColor: kGreyColor,
-                    ),
-                  ]
-                ), 
+                    ]
+                  ),
+                ], 
               ]
             ),
           ],

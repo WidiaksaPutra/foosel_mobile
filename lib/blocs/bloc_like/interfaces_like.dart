@@ -4,6 +4,7 @@ abstract class insertLike{
   SaveLocalDataLike({
     required String tokenId, 
     required String name,
+    required String email,
     required String description,
     required String nameCategory,
     required String price,
@@ -24,6 +25,7 @@ abstract class like{
   });
   GetLikeOnClick({
     required String name,
+    required String email,
     required String categoryName,
     required String tokenId,
     required String description,

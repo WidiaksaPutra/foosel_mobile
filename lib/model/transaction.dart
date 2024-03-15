@@ -3,10 +3,12 @@
 import 'dart:convert';
 
 class Transaksi {
-    final Data? data;
+    final Meta? meta;
+    final List<Datum> data;
 
     Transaksi({
-        this.data,
+        this.meta,
+        required this.data,
     });
 
     factory Transaksi.fromRawJson(String str) => Transaksi.fromJson(json.decode(str));
@@ -14,43 +16,17 @@ class Transaksi {
     String toRawJson() => json.encode(toJson());
 
     factory Transaksi.fromJson(Map<String, dynamic> json) => Transaksi(
-        data: json["data"] == null ? null : Data.fromJson(json["data"]),
-    );
-
-    Map<String, dynamic> toJson() => {
-        "data": data == null ? null : data!.toJson(),
-    };
-}
-
-class Data {
-    final int? currentPage;
-    final List<Datum> data;
-    final int? to;
-
-    Data({
-        this.currentPage,
-        required this.data,
-        this.to,
-    });
-
-    factory Data.fromRawJson(String str) => Data.fromJson(json.decode(str));
-
-    String toRawJson() => json.encode(toJson());
-
-    factory Data.fromJson(Map<String, dynamic> json) => Data(
-        currentPage: json["current_page"] == null ? 0 : json["current_page"].toInt(),
-        data: json["data"] == null ? [] 
+        meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
+        data: json["data"] == null ? []
         : json["data"] == [] ? []
         : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
-        to: json["to"] == null ? 0 : json["to"].toInt(),
     );
 
     Map<String, dynamic> toJson() => {
-        "current_page": currentPage == null ? 0 : currentPage!.toInt(),
+        "meta": meta?.toJson(),
         "data": data == null ? []
-        : data == [] ? [] 
+        : data == [] ? []
         : List<dynamic>.from(data.map((x) => x.toJson())),
-        "to": to == null ? 0 : to!.toInt(),
     };
 }
 
@@ -59,6 +35,7 @@ class Datum {
     final String? usersEmailPembeli;
     final String? usersEmailPenjual;
     final String? productsId;
+    final int? categoryId;
     final String? latitude;
     final String? longitude;
     final int? total;
@@ -69,15 +46,30 @@ class Datum {
     final DateTime? deletedAt;
     final DateTime? createdAt;
     final DateTime? updatedAt;
-    final Products? products;
-    final UsersPenjual? usersPenjual;
-    final Category? category;
+    final String? productsName;
+    final String? productsUrlImage;
+    final int? productPrice;
+    final String? productsDescription;
+    final String? productCategoriesName;
+    final String? usersNamePenjual;
+    final String? usersUsernamePenjual;
+    final String? usersPhonePenjual;
+    final String? usersRolesPenjual;
+    final String? usersAlamatPenjual;
+    final String? usersPhotoPenjual;
+    final String? usersNamePembeli;
+    final String? usersUsernamePembeli;
+    final String? usersPhonePembeli;
+    final String? usersRolesPembeli;
+    final String? usersAlamatPembeli;
+    final String? usersPhotoPembeli;
 
     Datum({
         this.transactionsId,
         this.usersEmailPembeli,
         this.usersEmailPenjual,
         this.productsId,
+        this.categoryId,
         this.latitude,
         this.longitude,
         this.total,
@@ -88,9 +80,23 @@ class Datum {
         this.deletedAt,
         this.createdAt,
         this.updatedAt,
-        this.products,
-        this.usersPenjual,
-        this.category,
+        this.productsName,
+        this.productsUrlImage,
+        this.productPrice,
+        this.productsDescription,
+        this.productCategoriesName,
+        this.usersNamePenjual,
+        this.usersUsernamePenjual,
+        this.usersPhonePenjual,
+        this.usersRolesPenjual,
+        this.usersAlamatPenjual,
+        this.usersPhotoPenjual,
+        this.usersNamePembeli,
+        this.usersUsernamePembeli,
+        this.usersPhonePembeli,
+        this.usersRolesPembeli,
+        this.usersAlamatPembeli,
+        this.usersPhotoPembeli,
     });
 
     factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
@@ -102,6 +108,7 @@ class Datum {
         usersEmailPembeli: json["users_email_pembeli"] == null ? "-" : json["users_email_pembeli"].toString(),
         usersEmailPenjual: json["users_email_penjual"] == null ? "-" : json["users_email_penjual"].toString(),
         productsId: json["products_id"] == null ? "-" : json["products_id"].toString(),
+        categoryId: json["category_id"] == null ? 1 : json["category_id"].toInt(),
         latitude: json["latitude"] == null ? "-" : json["latitude"].toString(),
         longitude: json["longitude"] == null ? "-" : json["longitude"].toString(),
         total: json["total"] == null ? 0 : json["total"].toInt(),
@@ -112,9 +119,24 @@ class Datum {
         deletedAt: json["deleted_at"] == null ? null : DateTime.parse(json["deleted_at"]),
         createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-        products: json["products"] == null ? null : Products.fromJson(json["products"]),
-        usersPenjual: json["users_penjual"] == null ? null : UsersPenjual.fromJson(json["users_penjual"]),
-        category: json["category"] == null ? null : Category.fromJson(json["category"]),
+        productsName: json["products_name"] == null ? "-" : json["products_name"].toString(),
+        productsUrlImage: json["products_urlImage"] == null ? "-" : json["products_urlImage"].toString(),
+        productPrice: json["product_price"] == null ? 0 : json["product_price"].toInt(),
+        productsDescription: json["products_description"] == null ? "-" : json["products_description"].toString(),
+        productCategoriesName: json["product_categories_name"] == null ? "-" : json["product_categories_name"].toString(),
+        usersNamePenjual: json["users_name_penjual"] == null ? "-" : json["users_name_penjual"].toString(),
+        usersUsernamePenjual: json["users_username_penjual"] == null ? "-" : json["users_username_penjual"].toString(),
+        usersPhonePenjual: json["users_phone_penjual"] == null ? "-" : json["users_phone_penjual"].toString(),
+        usersRolesPenjual: json["users_roles_penjual"] == null ? "-" : json["users_roles_penjual"].toString(),
+        usersAlamatPenjual: json["users_alamat_penjual"] == null ? "-" : json["users_alamat_penjual"].toString(),
+        usersPhotoPenjual: json["users_photo_penjual"] == null ? "-" : json["users_photo_penjual"].toString(),
+        usersNamePembeli: json["users_name_pembeli"] == null ? "-" : json["users_name_pembeli"].toString(),
+        usersUsernamePembeli: json["users_username_pembeli"] == null ? "-" : json["users_username_pembeli"].toString(),
+        usersPhonePembeli: json["users_phone_pembeli"] == null ? "-" : json["users_phone_pembeli"].toString(),
+        usersRolesPembeli: json["users_roles_pembeli"] == null ? "-" : json["users_roles_pembeli"].toString(),
+        usersAlamatPembeli: json["users_alamat_pembeli"] == null ? "-" : json["users_alamat_pembeli"].toString(),
+        usersPhotoPembeli: json["users_photo_pembeli"] == null ? "-" : json["users_photo_pembeli"].toString(),
+    
     );
 
     Map<String, dynamic> toJson() => {
@@ -122,6 +144,7 @@ class Datum {
         "users_email_pembeli": usersEmailPembeli == null ? "-" : usersEmailPembeli.toString(),
         "users_email_penjual": usersEmailPenjual == null ? "-" : usersEmailPenjual.toString(),
         "products_id": productsId == null ? "-" : productsId.toString(),
+        "category_id": categoryId == null ? 1 : categoryId!.toInt(),
         "latitude": latitude == null ? "-" : latitude.toString(),
         "longitude": longitude == null ? "-" : longitude.toString(),
         "total": total == null ? 0 : total!.toInt(),
@@ -129,179 +152,53 @@ class Datum {
         "shipping_price": shippingPrice == null ? 0 : shippingPrice!.toInt(),
         "quantity": quantity == null ? 0 : quantity!.toInt(),
         "status": status == null ? "-" : status.toString(),
-        "deleted_at": deletedAt == null ? null : deletedAt?.toIso8601String(),
-        "created_at": createdAt == null ? null : createdAt?.toIso8601String(),
-        "updated_at": updatedAt == null ? null : updatedAt?.toIso8601String(),
-        "products": products == null ? null : products?.toJson(),
-        "users_penjual": usersPenjual == null ? null : usersPenjual?.toJson(),
-        "category": category == null ? null : category?.toJson(),
+        "deleted_at": deletedAt?.toIso8601String(),
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "products_name": productsName == null ? "-" : productsName.toString(),
+        "products_urlImage": productsUrlImage == null ? "-" : productsUrlImage.toString(),
+        "product_price": productPrice == null ? 0 : productPrice!.toInt(),
+        "products_description": productsDescription == null ? "-" : productsDescription.toString(),
+        "product_categories_name": productCategoriesName == null ? "-" : productCategoriesName.toString(),
+        "users_name_penjual": usersNamePenjual == null ? "-" : usersNamePenjual.toString(),
+        "users_username_penjual": usersUsernamePenjual == null ? "-" : usersUsernamePenjual.toString(),
+        "users_phone_penjual": usersPhonePenjual == null ? "-" : usersPhonePenjual.toString(),
+        "users_roles_penjual": usersRolesPenjual == null ? "-" : usersRolesPenjual.toString(),
+        "users_alamat_penjual": usersAlamatPenjual == null ? "-" : usersAlamatPenjual.toString(),
+        "users_photo_penjual": usersPhotoPenjual == null ? "-" : usersPhotoPenjual.toString(),
+        "users_name_pembeli": usersNamePembeli == null ? "-" : usersNamePembeli.toString(),
+        "users_username_pembeli": usersUsernamePembeli == null ? "-" : usersUsernamePembeli.toString(),
+        "users_phone_pembeli": usersPhonePembeli == null ? "-" : usersPhonePembeli.toString(),
+        "users_roles_pembeli": usersRolesPembeli == null ? "-" : usersRolesPembeli.toString(),
+        "users_alamat_pembeli": usersAlamatPembeli == null ? "-" : usersAlamatPembeli.toString(),
+        "users_photo_pembeli": usersPhotoPembeli == null ? "-" : usersPhotoPembeli.toString(),
     };
 }
 
-class Category {
-    final int? id;
-    final String? name;
-    final DateTime? deletedAt;
-    final DateTime? createdAt;
-    final DateTime? updatedAt;
+class Meta {
+    final int? code;
+    final String? status;
+    final String? message;
 
-    Category({
-        this.id,
-        this.name,
-        this.deletedAt,
-        this.createdAt,
-        this.updatedAt,
+    Meta({
+        this.code,
+        this.status,
+        this.message,
     });
 
-    factory Category.fromRawJson(String str) => Category.fromJson(json.decode(str));
+    factory Meta.fromRawJson(String str) => Meta.fromJson(json.decode(str));
 
     String toRawJson() => json.encode(toJson());
 
-    factory Category.fromJson(Map<String, dynamic> json) => Category(
-        id: json["id"] == null ? 0 : json["id"].toInt(),
-        name: json["name"] == null ? "-" : json["name"].toString(),
-        deletedAt: json["deleted_at"] == null ? null : DateTime.parse(json["deleted_at"]),
-        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+    factory Meta.fromJson(Map<String, dynamic> json) => Meta(
+        code: json["code"] == null ? 0 : json["code"].toInt(),
+        status: json["status"] == null ? "-" : json["status"].toString(),
+        message: json["message"] == null ? "-" : json["message"].toString(),
     );
 
     Map<String, dynamic> toJson() => {
-        "id": id == null ? 0 : id!.toInt(),
-        "name": name == null ? "-" : name.toString(),
-        "deleted_at": deletedAt == null ? null : deletedAt?.toIso8601String(),
-        "created_at": createdAt == null ? null : createdAt?.toIso8601String(),
-        "updated_at": updatedAt == null ? null : updatedAt?.toIso8601String(),
-    };
-}
-
-class Products {
-    final String? tokenId;
-    final String? email;
-    final String? name;
-    final int? price;
-    final String? description;
-    final String? urlImage;
-    final String? tags;
-    final int? categoriesId;
-    final DateTime? deletedAt;
-    final DateTime? createdAt;
-    final DateTime? updatedAt;
-
-    Products({
-        this.tokenId,
-        this.email,
-        this.name,
-        this.price,
-        this.description,
-        this.urlImage,
-        this.tags,
-        this.categoriesId,
-        this.deletedAt,
-        this.createdAt,
-        this.updatedAt,
-    });
-
-    factory Products.fromRawJson(String str) => Products.fromJson(json.decode(str));
-
-    String toRawJson() => json.encode(toJson());
-
-    factory Products.fromJson(Map<String, dynamic> json) => Products(
-        tokenId: json["token_id"] == null ? "-" : json["token_id"].toString(),
-        email: json["email"] == null ? "-" : json["email"].toString(),
-        name: json["name"] == null ? "-" : json["name"].toString(),
-        price: json["price"] == null ? 0 : json["price"].toInt(),
-        description: json["description"] == null ? "-" : json["description"].toString(),
-        urlImage: json["url_image"] == null ? "-" : json["url_image"].toString(),
-        tags: json["tags"] == null ? "-" : json["tags"].toString(),
-        categoriesId: json["categories_id"] == null ? 0 : json["categories_id"].toInt(),
-        deletedAt: json["deleted_at"] == null ? null : DateTime.parse(json["deleted_at"]),
-        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-    );
-
-    Map<String, dynamic> toJson() => {
-        "token_id": tokenId == null ? "-" : tokenId.toString(),
-        "email": email == null ? "-" : email.toString(),
-        "name": name == null ? "-" : name.toString(),
-        "price": price == null ? 0 : price!.toInt(),
-        "description": description == null ? "-" : description.toString(),
-        "url_image": urlImage == null ? "-" : urlImage.toString(),
-        "tags": tags == null ? "-" : tags.toString(),
-        "categories_id": categoriesId == null ? 0 : categoriesId!.toInt(),
-        "deleted_at": deletedAt == null ? null : deletedAt?.toIso8601String(),
-        "created_at": createdAt == null ? null : createdAt?.toIso8601String(),
-        "updated_at": updatedAt == null ? null : updatedAt?.toIso8601String(),
-    };
-}
-
-class UsersPenjual {
-    final int? id;
-    final String? name;
-    final String? email;
-    final String? username;
-    final String? phone;
-    final String? roles;
-    final String? alamat;
-    final String? emailVerifiedAt;
-    final String? twoFactorConfirmedAt;
-    final String? currentTeamId;
-    final String? profilePhotoPath;
-    final DateTime? createdAt;
-    final DateTime? updatedAt;
-    final String? profilePhotoUrl;
-
-    UsersPenjual({
-        this.id,
-        this.name,
-        this.email,
-        this.username,
-        this.phone,
-        this.roles,
-        this.alamat,
-        this.emailVerifiedAt,
-        this.twoFactorConfirmedAt,
-        this.currentTeamId,
-        this.profilePhotoPath,
-        this.createdAt,
-        this.updatedAt,
-        this.profilePhotoUrl,
-    });
-
-    factory UsersPenjual.fromRawJson(String str) => UsersPenjual.fromJson(json.decode(str));
-
-    String toRawJson() => json.encode(toJson());
-
-    factory UsersPenjual.fromJson(Map<String, dynamic> json) => UsersPenjual(
-        id: json["id"] == null ? 0 : json["id"].toInt(),
-        name: json["name"] == null ? "-" : json["name"].toString(),
-        email: json["email"] == null ? "-" : json["email"].toString(),
-        username: json["username"] == null ? "-" : json["username"].toString(),
-        phone: json["phone"] == null ? "-" : json["phone"].toString(),
-        roles: json["roles"] == null ? "-" : json["roles"].toString(),
-        alamat: json["alamat"] == null ? "-" : json["alamat"].toString(),
-        emailVerifiedAt: json["email_verified_at"] == null ? "-" : json["email_verified_at"].toString(),
-        twoFactorConfirmedAt: json["two_factor_confirmed_at"] == null ? "-" : json["two_factor_confirmed_at"].toString(),
-        currentTeamId: json["current_team_id"] == null ? "-" : json["current_team_id"].toString(),
-        profilePhotoPath: json["profile_photo_path"] == null ? "-" : json["profile_photo_path"].toString(),
-        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-        profilePhotoUrl: json["profile_photo_url"] == null ? "-" : json["profile_photo_url"].toString(),
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id == null ? 0 : id!.toInt(),
-        "name": name == null ? "-" : name.toString(),
-        "email": email == null ? "-" : email.toString(),
-        "username": username == null ? "-" : username.toString(),
-        "phone": phone == null ? "-" : phone.toString(),
-        "roles": roles == null ? "-" : roles.toString(),
-        "alamat": alamat == null ? "-" : alamat.toString(),
-        "email_verified_at": emailVerifiedAt == null ? "-" : emailVerifiedAt.toString(),
-        "two_factor_confirmed_at": twoFactorConfirmedAt == null ? "-" : twoFactorConfirmedAt.toString(),
-        "current_team_id": currentTeamId == null ? "-" : currentTeamId.toString(),
-        "profile_photo_path": profilePhotoPath == null ? "-" : profilePhotoPath.toString(),
-        "created_at": createdAt == null ? null : createdAt?.toIso8601String(),
-        "updated_at": updatedAt == null ? null : updatedAt?.toIso8601String(),
-        "profile_photo_url": profilePhotoUrl == null ? "-" : profilePhotoUrl.toString(),
+        "code": code == null ? 0 : code!.toInt(),
+        "status": status == null ? "-" : status.toString(),
+        "message": message == null ? "-" : message.toString(),
     };
 }

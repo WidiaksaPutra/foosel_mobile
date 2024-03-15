@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_konstanta.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_konstanta.dart';
+import 'package:foosel/shared/theme_text_style.dart';
+import 'package:foosel/shared/theme_box.dart';
 
 // ignore: must_be_immutable
 class ComponenBottomCartButton extends StatelessWidget {
@@ -27,6 +27,7 @@ class ComponenBottomCartButton extends StatelessWidget {
         (listCart == true) ? size.height * 0.27 : size.height * 0.18
       : size.height * 0.10,
       child: ListView(
+        physics: BouncingScrollPhysics(),
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -58,16 +59,12 @@ class ComponenBottomCartButton extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: (listCart == true) ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
                       children: [
-                        if(listCart == true)...[
-                          Text(textButton, style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16)),
-                          Image.asset(
-                            "asset/icon/icon_button_next.png",
-                            height: themeBox.defaultHeightBox14,
-                            width: themeBox.defaultHeightBox12,
-                          )
-                        ] else...[
-                          Text(textButton, style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16)),
-                        ]
+                        Expanded(child: Text(textButton, style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16), overflow: TextOverflow.ellipsis,)),
+                        Image.asset(
+                          "asset/icon/icon_button_next.png",
+                          height: themeBox.defaultHeightBox14,
+                          width: themeBox.defaultHeightBox12,
+                        ),
                       ],
                     ),
                   ),

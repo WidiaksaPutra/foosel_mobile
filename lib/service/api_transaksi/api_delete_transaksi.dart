@@ -1,26 +1,36 @@
 import 'dart:convert';
-
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/service/interface_delete_transaksi.dart';
-import 'package:flutter_laravel_toko_sepatu/service/api_konstanta.dart';
+import 'package:foosel/interface/interface_local/service/interface_delete_transaksi.dart';
+import 'package:foosel/service/api_konstanta.dart';
 
 class apiDeleteTransaksi implements interfaceDeleteTransaksi{
-  late bool loading = true;
-
+  late bool loadingTransaksi = true;
+  
   @override
-  DeleteTransaksi({required String transactionsId}) async{
+  DeleteTransaksi({
+    bool testing = false,
+    String transactionsId = "-",
+    String productsId = "-",
+  }) async{
     try {
-      await Future.delayed(const Duration(milliseconds: 500));
       final responseTransaksi = await Api.client.delete(Uri.parse('${Api.baseURL}/deleteTransaksi?'),
         headers: <String, String>{
           'Accept': 'application/json',
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(<String, String>{
-          'transactions_id': transactionsId,
-        }),
-      );
+        body: (transactionsId != "-")
+        ? jsonEncode(<String, String>{
+            'unit_test': testing.toString(),
+            'transactions_id': transactionsId,
+          })
+        : (productsId != "-")
+        ? jsonEncode(<String, String>{
+            'unit_test': testing.toString(),
+            'products_id': productsId,
+          })
+        : {},
+      ).timeout(const Duration(seconds: 10));
       if(responseTransaksi.statusCode == 200){  
-        loading = false;     
+        loadingTransaksi = false;     
         return "berhasil";
       }else{
         return "gagal";
@@ -32,6 +42,6 @@ class apiDeleteTransaksi implements interfaceDeleteTransaksi{
 
   @override
   bool LoadingDeleteDataTransaksi() {
-    return loading;
+    return loadingTransaksi;
   }
 }

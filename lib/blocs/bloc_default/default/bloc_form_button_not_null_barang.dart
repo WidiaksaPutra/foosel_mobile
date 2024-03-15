@@ -1,10 +1,10 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/event_default/event_form_products.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/interface_default/interfaces_form_button_not_null_barang.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/state_default/state_form_button_not_null_barang.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/state_default/state_multipe_form.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_konstanta.dart';
+import 'package:foosel/blocs/bloc_default/event_default/event_form_products.dart';
+import 'package:foosel/blocs/bloc_default/interface_default/interfaces_form_button_not_null_barang.dart';
+import 'package:foosel/blocs/bloc_default/state_default/state_form_button_not_null_barang.dart';
+import 'package:foosel/blocs/bloc_default/state_default/state_multipe_form.dart';
+import 'package:foosel/shared/theme_konstanta.dart';
 
 class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMultiFormProduct> implements interfacesFormButtonNotNullBarang{
   BlocFormButtonNotNullBarang() : super(DataStateInitialFormProduct()){
@@ -32,7 +32,7 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
       messageType: '',
       lengthPriceMessage: '',
     ));
-    if(nameProduct == "" && price == "" && description == "" && type == "" && price.length > 16){
+    if(nameProduct == "" && price == "" && (description == "" || description.length >= 255) && type == "" && price.length > 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: true, 
         formVisiblePrice: true,
@@ -41,12 +41,12 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         formLengthVisiblePrice: true,
         messageNameProduct: nameProductKosong,
         messagePrice: priceProductKosong,
-        messageDescription: descriptionProductKosong,
+        messageDescription: descriptionProduct,
         messageType: typeProductKosong,
         lengthPriceMessage: priceProductLebih,
       ));
     }
-    else if(nameProduct == "" && price != "" && description != "" && type == "" && price.length > 16){
+    else if(nameProduct == "" && price != "" && (description != "" && description.length < 255) && type == "" && price.length > 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: true, 
         formVisiblePrice: false,
@@ -60,7 +60,7 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         lengthPriceMessage: priceProductLebih,
       ));
     }
-    else if(nameProduct == "" && price == "" && description != "" && type == "" && price.length > 16){
+    else if(nameProduct == "" && price == "" && (description != "" && description.length < 255) && type == "" && price.length > 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: true, 
         formVisiblePrice: true,
@@ -74,7 +74,7 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         lengthPriceMessage: priceProductLebih,
       ));
     }
-    else if(nameProduct != "" && price == "" && description == "" && type == "" && price.length > 16){
+    else if(nameProduct != "" && price == "" && (description == "" || description.length >= 255) && type == "" && price.length > 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: false, 
         formVisiblePrice: true,
@@ -83,12 +83,12 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         formLengthVisiblePrice: true,
         messageNameProduct: '',
         messagePrice: priceProductKosong,
-        messageDescription: descriptionProductKosong,
+        messageDescription: descriptionProduct,
         messageType: typeProductKosong,
         lengthPriceMessage: priceProductLebih,
       ));
     }
-    else if(nameProduct == "" && price != "" && description == "" && type == "" && price.length > 16){
+    else if(nameProduct == "" && price != "" && (description == "" || description.length >= 255) && type == "" && price.length > 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: true, 
         formVisiblePrice: false,
@@ -97,12 +97,12 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         formLengthVisiblePrice: true,
         messageNameProduct: nameProductKosong,
         messagePrice: '',
-        messageDescription: descriptionProductKosong,
+        messageDescription: descriptionProduct,
         messageType: typeProductKosong,
         lengthPriceMessage: priceProductLebih,
       ));
     }
-    else if(nameProduct != "" && price != "" && description == "" && type == "" && price.length > 16){
+    else if(nameProduct != "" && price != "" && (description == "" || description.length >= 255) && type == "" && price.length > 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: false, 
         formVisiblePrice: false,
@@ -111,12 +111,12 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         formLengthVisiblePrice: true,
         messageNameProduct: '',
         messagePrice: '',
-        messageDescription: descriptionProductKosong,
+        messageDescription: descriptionProduct,
         messageType: typeProductKosong,
         lengthPriceMessage: priceProductLebih,
       ));
     }
-    else if(nameProduct != "" && price == "" && description != "" && type == "" && price.length > 16){
+    else if(nameProduct != "" && price == "" && (description != "" && description.length < 255) && type == "" && price.length > 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: false, 
         formVisiblePrice: true,
@@ -130,7 +130,7 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         lengthPriceMessage: priceProductLebih,
       ));
     }
-    else if(nameProduct != "" && price != "" && description != "" && type == "" && price.length > 16){
+    else if(nameProduct != "" && price != "" && (description != "" && description.length < 255) && type == "" && price.length > 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: false, 
         formVisiblePrice: false,
@@ -144,7 +144,7 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         lengthPriceMessage: priceProductLebih,
       ));
     }
-    else if(nameProduct == "" && price == "" && description == "" && type != "" && price.length > 16){
+    else if(nameProduct == "" && price == "" && (description == "" || description.length >= 255) && type != "" && price.length > 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: true, 
         formVisiblePrice: true,
@@ -153,12 +153,12 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         formLengthVisiblePrice: true,
         messageNameProduct: nameProductKosong,
         messagePrice: priceProductKosong,
-        messageDescription: descriptionProductKosong,
+        messageDescription: descriptionProduct,
         messageType: '',
         lengthPriceMessage: priceProductLebih,
       ));
     }
-    else if(nameProduct == "" && price != "" && description != "" && type != "" && price.length > 16){
+    else if(nameProduct == "" && price != "" && (description != "" && description.length < 255) && type != "" && price.length > 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: true, 
         formVisiblePrice: false,
@@ -172,7 +172,7 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         lengthPriceMessage: priceProductLebih,
       ));
     }
-    else if(nameProduct == "" && price == "" && description != "" && type != "" && price.length > 16){
+    else if(nameProduct == "" && price == "" && (description != "" && description.length < 255) && type != "" && price.length > 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: true, 
         formVisiblePrice: true,
@@ -186,7 +186,7 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         lengthPriceMessage: priceProductLebih,
       ));
     }
-    else if(nameProduct != "" && price == "" && description == "" && type != "" && price.length > 16){
+    else if(nameProduct != "" && price == "" && (description == "" || description.length >= 255) && type != "" && price.length > 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: false, 
         formVisiblePrice: true,
@@ -195,12 +195,12 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         formLengthVisiblePrice: true,
         messageNameProduct: '',
         messagePrice: priceProductKosong,
-        messageDescription: descriptionProductKosong,
+        messageDescription: descriptionProduct,
         messageType: '',
         lengthPriceMessage: priceProductLebih,
       ));
     }
-    else if(nameProduct == "" && price != "" && description == "" && type != "" && price.length > 16){
+    else if(nameProduct == "" && price != "" && (description == "" || description.length >= 255) && type != "" && price.length > 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: true, 
         formVisiblePrice: false,
@@ -209,12 +209,12 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         formLengthVisiblePrice: true,
         messageNameProduct: nameProductKosong,
         messagePrice: '',
-        messageDescription: descriptionProductKosong,
+        messageDescription: descriptionProduct,
         messageType: '',
         lengthPriceMessage: priceProductLebih,
       ));
     }
-    else if(nameProduct != "" && price != "" && description == "" && type != "" && price.length > 16){
+    else if(nameProduct != "" && price != "" && (description == "" || description.length >= 255) && type != "" && price.length > 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: false, 
         formVisiblePrice: false,
@@ -223,12 +223,12 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         formLengthVisiblePrice: true,
         messageNameProduct: '',
         messagePrice: '',
-        messageDescription: descriptionProductKosong,
+        messageDescription: descriptionProduct,
         messageType: '',
         lengthPriceMessage: priceProductLebih,
       ));
     }
-    else if(nameProduct != "" && price == "" && description != "" && type != "" && price.length > 16){
+    else if(nameProduct != "" && price == "" && (description != "" && description.length < 255) && type != "" && price.length > 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: false, 
         formVisiblePrice: true,
@@ -242,7 +242,7 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         lengthPriceMessage: priceProductLebih,
       ));
     }
-    else if(nameProduct != "" && price != "" && description != "" && type != "" && price.length > 16){
+    else if(nameProduct != "" && price != "" && (description != "" && description.length < 255) && type != "" && price.length > 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: false, 
         formVisiblePrice: false,
@@ -256,7 +256,7 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         lengthPriceMessage: priceProductLebih,
       ));
     }
-    else if(nameProduct == "" && price == "" && description == "" && type == "" && price.length <= 16){
+    else if(nameProduct == "" && price == "" && (description == "" || description.length >= 255) && type == "" && price.length <= 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: true, 
         formVisiblePrice: true,
@@ -265,12 +265,12 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         formLengthVisiblePrice: false,
         messageNameProduct: nameProductKosong,
         messagePrice: priceProductKosong,
-        messageDescription: descriptionProductKosong,
+        messageDescription: descriptionProduct,
         messageType: typeProductKosong,
         lengthPriceMessage: '',
       ));
     }
-    else if(nameProduct == "" && price != "" && description != "" && type == "" && price.length <= 16){
+    else if(nameProduct == "" && price != "" && (description != "" && description.length < 255) && type == "" && price.length <= 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: true, 
         formVisiblePrice: false,
@@ -284,7 +284,7 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         lengthPriceMessage: '',
       ));
     }
-    else if(nameProduct == "" && price == "" && description != "" && type == "" && price.length <= 16){
+    else if(nameProduct == "" && price == "" && (description != "" && description.length < 255) && type == "" && price.length <= 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: true, 
         formVisiblePrice: true,
@@ -298,7 +298,7 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         lengthPriceMessage: '',
       ));
     }
-    else if(nameProduct != "" && price == "" && description == "" && type == "" && price.length <= 16){
+    else if(nameProduct != "" && price == "" && (description == "" || description.length >= 255) && type == "" && price.length <= 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: false, 
         formVisiblePrice: true,
@@ -307,12 +307,12 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         formLengthVisiblePrice: false,
         messageNameProduct: '',
         messagePrice: priceProductKosong,
-        messageDescription: descriptionProductKosong,
+        messageDescription: descriptionProduct,
         messageType: typeProductKosong,
         lengthPriceMessage: '',
       ));
     }
-    else if(nameProduct == "" && price != "" && description == "" && type == "" && price.length <= 16){
+    else if(nameProduct == "" && price != "" && (description == "" || description.length >= 255) && type == "" && price.length <= 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: true, 
         formVisiblePrice: false,
@@ -321,12 +321,12 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         formLengthVisiblePrice: false,
         messageNameProduct: nameProductKosong,
         messagePrice: '',
-        messageDescription: descriptionProductKosong,
+        messageDescription: descriptionProduct,
         messageType: typeProductKosong,
         lengthPriceMessage: '',
       ));
     }
-    else if(nameProduct != "" && price != "" && description == "" && type == "" && price.length <= 16){
+    else if(nameProduct != "" && price != "" && (description == "" || description.length >= 255) && type == "" && price.length <= 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: false, 
         formVisiblePrice: false,
@@ -335,12 +335,12 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         formLengthVisiblePrice: false,
         messageNameProduct: '',
         messagePrice: '',
-        messageDescription: descriptionProductKosong,
+        messageDescription: descriptionProduct,
         messageType: typeProductKosong,
         lengthPriceMessage: '',
       ));
     }
-    else if(nameProduct != "" && price == "" && description != "" && type == "" && price.length <= 16){
+    else if(nameProduct != "" && price == "" && (description != "" && description.length < 255) && type == "" && price.length <= 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: false, 
         formVisiblePrice: true,
@@ -354,7 +354,7 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         lengthPriceMessage: '',
       ));
     }
-    else if(nameProduct != "" && price != "" && description != "" && type == "" && price.length <= 16){
+    else if(nameProduct != "" && price != "" && (description != "" && description.length < 255) && type == "" && price.length <= 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: false, 
         formVisiblePrice: false,
@@ -368,7 +368,7 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         lengthPriceMessage: '',
       ));
     }
-    else if(nameProduct == "" && price == "" && description == "" && type != "" && price.length <= 16){
+    else if(nameProduct == "" && price == "" && (description == "" || description.length >= 255) && type != "" && price.length <= 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: true, 
         formVisiblePrice: true,
@@ -377,12 +377,12 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         formLengthVisiblePrice: false,
         messageNameProduct: nameProductKosong,
         messagePrice: priceProductKosong,
-        messageDescription: descriptionProductKosong,
+        messageDescription: descriptionProduct,
         messageType: '',
         lengthPriceMessage: '',
       ));
     }
-    else if(nameProduct == "" && price != "" && description != "" && type != "" && price.length <= 16){
+    else if(nameProduct == "" && price != "" && (description != "" && description.length < 255) && type != "" && price.length <= 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: true, 
         formVisiblePrice: false,
@@ -396,7 +396,7 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         lengthPriceMessage: '',
       ));
     }
-    else if(nameProduct == "" && price == "" && description != "" && type != "" && price.length <= 16){
+    else if(nameProduct == "" && price == "" && (description != "" && description.length < 255) && type != "" && price.length <= 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: true, 
         formVisiblePrice: true,
@@ -410,7 +410,7 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         lengthPriceMessage: '',
       ));
     }
-    else if(nameProduct != "" && price == "" && description == "" && type != "" && price.length <= 16){
+    else if(nameProduct != "" && price == "" && (description == "" || description.length >= 255) && type != "" && price.length <= 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: false, 
         formVisiblePrice: true,
@@ -419,12 +419,12 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         formLengthVisiblePrice: false,
         messageNameProduct: '',
         messagePrice: priceProductKosong,
-        messageDescription: descriptionProductKosong,
+        messageDescription: descriptionProduct,
         messageType: '',
         lengthPriceMessage: '',
       ));
     }
-    else if(nameProduct == "" && price != "" && description == "" && type != "" && price.length <= 16){
+    else if(nameProduct == "" && price != "" && (description == "" || description.length >= 255) && type != "" && price.length <= 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: true, 
         formVisiblePrice: false,
@@ -433,12 +433,12 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         formLengthVisiblePrice: false,
         messageNameProduct: nameProductKosong,
         messagePrice: '',
-        messageDescription: descriptionProductKosong,
+        messageDescription: descriptionProduct,
         messageType: '',
         lengthPriceMessage: '',
       ));
     }
-    else if(nameProduct != "" && price != "" && description == "" && type != "" && price.length <= 16){
+    else if(nameProduct != "" && price != "" && (description == "" || description.length >= 255) && type != "" && price.length <= 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: false, 
         formVisiblePrice: false,
@@ -447,12 +447,12 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         formLengthVisiblePrice: false,
         messageNameProduct: '',
         messagePrice: '',
-        messageDescription: descriptionProductKosong,
+        messageDescription: descriptionProduct,
         messageType: '',
         lengthPriceMessage: '',
       ));
     }
-    else if(nameProduct != "" && price == "" && description != "" && type != "" && price.length <= 16){
+    else if(nameProduct != "" && price == "" && (description != "" && description.length < 255) && type != "" && price.length <= 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: false, 
         formVisiblePrice: true,
@@ -466,7 +466,7 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
         lengthPriceMessage: '',
       ));
     }
-    else if(nameProduct != "" && price != "" && description != "" && type != "" && price.length <= 16){
+    else if(nameProduct != "" && price != "" && (description != "" && description.length < 255) && type != "" && price.length <= 16){
       emit(DataStateFormButtonNotNullBarang(
         formVisibleNameProduct: false, 
         formVisiblePrice: false,

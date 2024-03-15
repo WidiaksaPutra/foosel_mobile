@@ -1,6 +1,6 @@
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/firebase/interface_get_user_firebase.dart';
-import 'package:flutter_laravel_toko_sepatu/model/user_firebase.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_global_variabel.dart';
+import 'package:foosel/interface/interface_local/firebase/interface_get_user_firebase.dart';
+import 'package:foosel/model/user_firebase.dart';
+import 'package:foosel/shared/theme_global_variabel.dart';
 
 class getUserFirebase implements interfaceGetUserFirebase{
   late List<FirebaseUsers> userList = [];

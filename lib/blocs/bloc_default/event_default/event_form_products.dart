@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_add_product/event_add_barang.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_update_product/event_update_barang.dart';
+import 'package:foosel/blocs/bloc_add_product/event_add_barang.dart';
+import 'package:foosel/blocs/bloc_update_product/event_update_barang.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ButtonFormProducts with DataEventAddBarang, DataEventUpdateBarang{         

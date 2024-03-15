@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_laravel_toko_sepatu/main/main_screen.dart';
+import 'package:foosel/main/main_screen.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-@pragma('vm:entry-point')
+@pragma('vm:entry-poin                                                                                                                                                              t')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   flutterLocalNotificationsPlugin.show(
@@ -13,7 +13,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     message.notification?.body,
     NotificationDetails(
       android: AndroidNotificationDetails(
-        channel.id,
+        channel.
+        id,
         channel.name,
         icon: message.notification?.android?.smallIcon,
       ),
@@ -32,6 +33,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterL
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   await messaging.requestPermission(
     alert: true,
@@ -43,7 +45,7 @@ void main() async{
     sound: true,
   );
   
-  var initialzationSettingsAndroid = AndroidInitializationSettings('@mipmap/logo_shop_picture');
+  var initialzationSettingsAndroid = AndroidInitializationSettings('@mipmap/foosel_logo');
   var initializationSettings = InitializationSettings(android: initialzationSettingsAndroid);
   flutterLocalNotificationsPlugin.initialize(initializationSettings);
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {

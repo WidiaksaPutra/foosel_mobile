@@ -2,19 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/event_default/event_form_user.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_color_random.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_register/event_register.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/state_default/state_snackBar_form.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/service/interface_post_register.dart';
-import 'package:flutter_laravel_toko_sepatu/service/api_user.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_global_variabel.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_konstanta.dart';
+import 'package:foosel/blocs/bloc_default/event_default/event_form_user.dart';
+import 'package:foosel/blocs/bloc_default/default/default_color_random.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_register/event_register.dart';
+import 'package:foosel/blocs/bloc_default/state_default/state_snackBar_form.dart';
+import 'package:foosel/interface/interface_local/service/interface_post_register.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_global_variabel.dart';
+import 'package:foosel/shared/theme_konstanta.dart';
 import 'package:go_router/go_router.dart';
 
-class BlocButtonRegisterData extends Bloc<DataEventFormRegister, StateSnackBar> with defaultSharedPref, apiUser, colorRandom{
+class BlocButtonRegisterData extends Bloc<DataEventFormRegister, StateSnackBar> with defaultSharedPref, colorRandom{
   final interfacePostRegister dataPostRegister = getItInstance<interfacePostRegister>();
   BlocButtonRegisterData() : super(DataStateInitialSnackBar()){
     on<ButtonFormUser>((event, emit) async{
@@ -57,7 +56,6 @@ class BlocButtonRegisterData extends Bloc<DataEventFormRegister, StateSnackBar> 
           colorSnackBar2: kWhiteColor,
         ),
       );
-      await Future.delayed(const Duration(milliseconds: 500));
       await prosesColorRandom();
       String rColor = colorData;
       List<String> inisial = email.split('');

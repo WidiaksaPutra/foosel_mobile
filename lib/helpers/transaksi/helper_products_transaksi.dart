@@ -1,26 +1,37 @@
-import 'package:flutter_laravel_toko_sepatu/helpers/transaksi/sql_transaksi_product_tabel.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/helpers/interface_delete_data_product_transaksi_storage_local.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/helpers/interface_get_data_product_transaksi_storage_local.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/helpers/interface_insert_product_transaksi_local.dart';
+import 'package:foosel/helpers/transaksi/sql_transaksi_product_tabel.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_delete_data_product_transaksi_storage_local.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_get_data_product_transaksi_storage_local.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_insert_product_transaksi_local.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_update_data_product_transaksi_local.dart';
 
-class helperProductsTransaksi implements interfaceGetDataProductTransaksiStorageLocal, interfaceInsertDataProductTransaksiLocal, interfaceDeleteDataProductTransaksiStorageLocal{
+class helperProductsTransaksi implements interfaceGetDataProductTransaksiStorageLocal, interfaceInsertDataProductTransaksiLocal, interfaceDeleteDataProductTransaksiStorageLocal, interfaceUpdateDataProductTransaksiLocal{
   @override
   Future<int> InsertDataLocal({
-    required String tokenId, 
+    required String tokenTransaksi,
+    required String usersEmailPembeli,
+    required String usersEmailPenjual,
+    required String tokenProduct, 
     required String name, 
     required String description, 
     required String nameCategory, 
     required String price,
     required String status,
-    required String imagePath
+    required String imagePath,
+    required String quantity,
+    required String totalPrice,
   }) async {
     final db = await SqlProductsTransaksiTabel.db();
     final dataInsert = {
-      'tokenId': tokenId, 
+      'tokenTransaksi': tokenTransaksi,
+      'usersEmailPembeli': usersEmailPembeli,
+      'usersEmailPenjual': usersEmailPenjual,	
+      'tokenProduct': tokenProduct,
       'name': name,
-      'description': description, 
-      'nameCategory': nameCategory, 
+      'description': description,
+      'nameCategory': nameCategory,
       'price': price,
+      'quantity': quantity,
+      'totalPrice': totalPrice,
       'status': status,
       'imagePath': imagePath
     };
@@ -30,13 +41,14 @@ class helperProductsTransaksi implements interfaceGetDataProductTransaksiStorage
   @override
   Future<List<Map<String, dynamic>>> GetDataProductTransaksiLocal() async{
     final dbGet = await SqlProductsTransaksiTabel.db();
+    // print("test get ${await dbGet.query('productsTransaksi')}");
     return await dbGet.query('productsTransaksi');
   }
   
   @override
-  Future<List<Map<String, dynamic>>> GetDataProductTransaksiWhereIdLocal({required String tokenId}) async {
+  Future<List<Map<String, dynamic>>> GetDataProductTransaksiWhereIdLocal({required String tokenTransaksi}) async {
     final dbGet = await SqlProductsTransaksiTabel.db();
-    return await dbGet.query('productsTransaksi', where: "tokenId = '$tokenId'");
+    return await dbGet.rawQuery("SELECT * FROM productsTransaksi WHERE tokenTransaksi = '$tokenTransaksi'").timeout(Duration(seconds: 10));
   }
 
   @override
@@ -46,9 +58,24 @@ class helperProductsTransaksi implements interfaceGetDataProductTransaksiStorage
   }
   
   @override
-  DeleteDataProductTransaksiWhereIdLocal({required String tokenId}) {
-    // TODO: implement DeleteDataProductTransaksiWhereIdLocal
-    throw UnimplementedError();
+  Future<int> DeleteDataProductTransaksiWhereIdTransaksi({required String tokenTransaksi}) async{
+    final db = await SqlProductsTransaksiTabel.db();
+    return await db.rawDelete("DELETE FROM productsTransaksi WHERE tokenTransaksi = '$tokenTransaksi'");
+  }
+
+  @override
+  Future<int> DeleteDataProductTransaksiWhereIdProduct({required String tokenProduct}) async{
+    final db = await SqlProductsTransaksiTabel.db();
+    return await db.rawDelete("DELETE FROM productsTransaksi WHERE tokenProduct = '$tokenProduct'");
+  }
+  
+  @override
+  Future<int> UpdateDataProductTransaksiLocal({
+    required String tokenTransaksi,
+    required String status,
+  }) async{
+    final db = await SqlProductsTransaksiTabel.db();
+    return await db.rawUpdate("UPDATE productsTransaksi SET status='$status' WHERE tokenTransaksi='$tokenTransaksi'");
   }
 }
 

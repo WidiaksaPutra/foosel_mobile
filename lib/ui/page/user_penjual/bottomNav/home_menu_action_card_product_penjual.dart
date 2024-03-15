@@ -2,20 +2,22 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_navigasi_role.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/show_dialog_basic.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/show_snack_bar.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_delete_product/cubit_delete_product.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_delete_product/state_delete_product.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_detail_products/detail_product/cubit_detail_product_connect.dart';
-import 'package:flutter_laravel_toko_sepatu/routes/route_name.dart';
-import 'package:flutter_laravel_toko_sepatu/service/api_konstanta.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_konstanta.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_advanced/componen_card_vertical(image_&_text_&_button_update_delete).dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_advanced/componen_content_dialog(image_&_text).dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_advanced/componen_content_dialog(image_&_title_text_&_button_yes_and_button_no).dart';
+import 'package:foosel/blocs/bloc_categories/event_categories.dart';
+import 'package:foosel/blocs/bloc_categories/main/connect/bloc_main_klasifikasi_categories_connect.dart';
+import 'package:foosel/blocs/bloc_default/bloc_button_up/cubit_button_up.dart';
+import 'package:foosel/blocs/bloc_default/default/default_navigasi_role.dart';
+import 'package:foosel/blocs/bloc_default/default/show_dialog_basic.dart';
+import 'package:foosel/blocs/bloc_default/default/show_snack_bar.dart';
+import 'package:foosel/blocs/bloc_delete_product/cubit_delete_product.dart';
+import 'package:foosel/blocs/bloc_delete_product/state_delete_product.dart';
+import 'package:foosel/blocs/bloc_detail_products/detail_product/cubit_detail_product_connect.dart';
+import 'package:foosel/routes/route_name.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_konstanta.dart';
+import 'package:foosel/ui/widgets/componen_advanced/componen_card_vertical(image_&_text_&_button_update_delete).dart';
+import 'package:foosel/ui/widgets/componen_advanced/componen_content_dialog(image_&_text).dart';
+import 'package:foosel/ui/widgets/componen_advanced/componen_content_dialog(image_&_title_text_&_button_yes_and_button_no).dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -31,9 +33,9 @@ class HomeMenuActionCardProductPenjual extends HookWidget with dialogBasic, navi
     required this.onTapImage,
   }) : super(key: key);
 
-  void navigationRole(BuildContext context) async{
-    await navigasiRBR(context: context, value: 0);
-    await navigasiR();
+  void navigationRole(BuildContext context){
+    navigasiRBR(context: context, value: 0);
+    navigasiR();
   }
 
   @override
@@ -43,7 +45,7 @@ class HomeMenuActionCardProductPenjual extends HookWidget with dialogBasic, navi
       type: type, 
       nama: nama,
       harga: harga,
-      gambar: "${Api.baseURLImage}$gambar", 
+      gambar: gambar, 
       connection: true,
       onTapImage: onTapImage,
       onTapDelete: () {
@@ -63,16 +65,25 @@ class HomeMenuActionCardProductPenjual extends HookWidget with dialogBasic, navi
                   titleText: apakahProductDihapus,
                   onTapYes: () async{
                     await context.read<cubitDeleteProduct>().DeleteDataProduct(
-                      context: context, 
                       idProduct: idProduct, 
                       image: gambar,
+                    );
+                    await context.read<cubitUpButton>().upButton(
+                      currentBody: 0, 
+                      currentTop: 0,
+                      readBloc: {context.read<BlocKlasifikasiCategoriesConnect>().add(KlasifikasiCategories(categoryKey: "0"))}, 
+                      index: 0,
                     );
                     navigationRole(context);
                     context.go(navigation);
                     statusDelete.value = true;
-                    await Future.delayed(Duration(seconds: 2));
-                    Navigator.of(context).pop();
-                    statusDelete.value = false;
+                    Future.delayed(
+                      Duration(seconds: 5),
+                      (){
+                        Navigator.of(context).pop();
+                        statusDelete.value = false;
+                      },
+                    );
                   },
                 )
               : (state.statusAlert == 'berhasil')
@@ -85,15 +96,15 @@ class HomeMenuActionCardProductPenjual extends HookWidget with dialogBasic, navi
                     text: 'Gagal..!',
                   )
             : ComponenContentDialog_ImageAndTitleText(
-                image: 'asset/animations/loading_lottie.json', 
+                image: 'asset/animations/loading_dialog_lottie.json', 
                 text: '...',
-              )
+              ),
           ),
           onTapCloseDialog: () => Navigator.of(context).pop(), 
         );
       },
       onTapUpdate: () async{
-        await context.read<CubitDetailProductConnect>().GetDetailProductConnect(idProduct);
+        await context.read<CubitDetailProductConnect>().GetDetailProductConnect(idProduct: idProduct);
         context.go(RouteName.updateBarangPenjual);
       },
     );

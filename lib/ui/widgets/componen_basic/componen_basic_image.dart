@@ -1,6 +1,8 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:foosel/service/api_konstanta.dart';
+import 'package:foosel/shared/theme_box.dart';
 
 class ComponenBasicImage extends StatelessWidget {
   late bool connection;
@@ -20,6 +22,7 @@ class ComponenBasicImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    themeBox(context);
     return Container(
       width: widthImage,
       height: heightImage,
@@ -30,11 +33,19 @@ class ComponenBasicImage extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: (connection == true)
-        ? Image.network(
-            gambar,
+        ? ClipRRect(
+            borderRadius: BorderRadius.circular(themeBox.defaultRadius10),
+            child: Image.network(
+              "${Api.linkURL}/$gambar",
+              fit: BoxFit.cover,
+            )
           )
-        : Image.asset(
-            gambar,
+        : ClipRRect(
+            borderRadius: BorderRadius.circular(themeBox.defaultRadius10),
+            child: Image.asset(
+              "asset/image/$gambar",
+              fit: BoxFit.cover,
+            ),
           ),
       )
     );

@@ -4,24 +4,27 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/cubit_navigation_list_image_barang.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_navigasi_role.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/show_snack_bar.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/event_default/event_form_products.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/connection_dialog.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/state_default/state_navigation_list_image_barang.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_update_product/main/bloc_upload_update_product.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_update_product/state_update_barang.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_konstanta.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/connection/connection_profile.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_penjual/insert_barang/default/body_insert_image.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_get_back.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_loading.dart';
+import 'package:foosel/blocs/bloc_categories/event_categories.dart';
+import 'package:foosel/blocs/bloc_categories/main/connect/bloc_main_klasifikasi_categories_connect.dart';
+import 'package:foosel/blocs/bloc_default/bloc_button_up/cubit_button_up.dart';
+import 'package:foosel/blocs/bloc_default/default/cubit_navigation_list_image_barang.dart';
+import 'package:foosel/blocs/bloc_default/default/default_navigasi_role.dart';
+import 'package:foosel/blocs/bloc_default/default/show_snack_bar.dart';
+import 'package:foosel/blocs/bloc_default/event_default/event_form_products.dart';
+import 'package:foosel/blocs/bloc_default/default/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/state_default/state_navigation_list_image_barang.dart';
+import 'package:foosel/blocs/bloc_update_product/main/bloc_upload_update_product.dart';
+import 'package:foosel/blocs/bloc_update_product/state_update_barang.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_konstanta.dart';
+import 'package:foosel/shared/theme_text_style.dart';
+import 'package:foosel/ui/page/connection/connection_profile.dart';
+import 'package:foosel/ui/page/user_penjual/insert_barang/default/body_insert_image.dart';
+import 'package:foosel/ui/widgets/componen_advanced/compenen_get_back.dart';
+import 'package:foosel/ui/widgets/componen_loading.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -64,7 +67,6 @@ class HeadInsertUpdateImage extends HookWidget with defaultSharedPref, navigasiR
           if(imageFileList.value.length > 5 || imageFileList.value.isEmpty){
             imageFileList.value = [];
           }else{
-            print("test name save product ${prefs.getString('namaProduct').toString()}");
             context.read<BlocUploadUpdateProduct>().add(
               ButtonFormProducts(
                 nameProduct: prefs.getString('namaProduct').toString(),
@@ -77,6 +79,12 @@ class HeadInsertUpdateImage extends HookWidget with defaultSharedPref, navigasiR
                 tokenId: prefs.getString('tokenId').toString(), 
                 oldImage: prefs.getString('oldImage').toString(),
               ),
+            );
+            await context.read<cubitUpButton>().upButton(
+              currentBody: 0, 
+              currentTop: 0,
+              readBloc: {context.read<BlocKlasifikasiCategoriesConnect>().add(KlasifikasiCategories(categoryKey: "0"))}, 
+              index: 0,
             );
           }
         },
@@ -106,27 +114,27 @@ class HeadInsertUpdateImage extends HookWidget with defaultSharedPref, navigasiR
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CompenenGetBackX(navBack: navigation),
+                      CompenenGetBackX(onPressed: () => context.go(navigation)),
                       title(),
                       getUpdate(),
                     ]
                   )
-                : ComponenLoadingBasic(colors: kPurpleColor);
+                : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50));
               }
             )
-          : ComponenLoadingHashDataMap(boolLoading: stateUserConn.loading, data: stateUserConn.dataUser),
+          : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50)),
           childDisconnect: (context, stateUserDisconn) => (stateUserDisconn.loading == true)
           ? Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CompenenGetBackX(navBack: navigation),
+                CompenenGetBackX(onPressed: () => context.go(navigation)),
                 title(),
                 SizedBox(
                   width: themeBox.defaultWidthBox45,
                 )
               ]
             )
-          : ComponenLoadingBasic(colors: kPurpleColor),
+          : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50)),
         ),
       );
     }
@@ -166,7 +174,7 @@ class HeadInsertUpdateImage extends HookWidget with defaultSharedPref, navigasiR
               selectImage: selectImage, 
               selectImageCamera: selectImageCamera,
             ) 
-          : ComponenLoadingBasic(colors: kPurpleColor);
+          : ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200);
         } 
       )
     );

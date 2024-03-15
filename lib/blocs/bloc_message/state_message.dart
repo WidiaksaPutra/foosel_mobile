@@ -9,6 +9,21 @@ class DataListMessage extends DataStateListMessage{
   DataListMessage(List dataUser, bool loading) : super(dataUser, loading);
 }
 
+class DataStateBadges{
+  List notivBadges;
+  int  totalBadges;
+  bool loading;
+  DataStateBadges(this.notivBadges, this.totalBadges, this.loading);
+}
+
+class DataBadges extends DataStateBadges{
+  DataBadges({
+    required List notivBadges,
+    required int totalBadges,
+    required bool loading,
+  }) : super(notivBadges, totalBadges, loading);
+}
+
 class DataStateTitleMessage{
   String image, status, title;
   bool loadingData;
@@ -51,4 +66,17 @@ class DataStateNavMessageDetail{
 class DataNavMessageDetail extends DataStateNavMessageDetail{
   DataNavMessageDetail({required String tokenPenerima, required int roleBar, required bool detailMessage, required bool loadingMessage})
   : super(tokenPenerima, roleBar, detailMessage, loadingMessage);
+}
+
+class StateDeleteMessage{
+  late bool loadingDeleteTransaksi, statusAlert;
+  StateDeleteMessage(this.loadingDeleteTransaksi, this.statusAlert);
+}
+
+class DeleteMessage extends StateDeleteMessage{
+  DeleteMessage({
+    required bool loadingDeleteMessage,
+    required bool statusAlert,
+  }) 
+  : super(loadingDeleteMessage, statusAlert);
 }

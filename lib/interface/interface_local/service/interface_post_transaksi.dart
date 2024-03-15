@@ -1,12 +1,14 @@
 abstract class interfacePostTransaksi{
   PostTransaksi({
+    bool testing = false,
+    String testingToken = "",
     required String usersEmailPembeli,
-    required String usersEmailPenjual, 
+    required String usersEmailPenjual,
     required String productsId,
     required String categoryId,
     required String total,
-    required String totalPrice, 
-    required String shippingPrice,
+    required String totalPrice,
+    required String shippingPrice, 
     required String quantity,
     required String status,
   });

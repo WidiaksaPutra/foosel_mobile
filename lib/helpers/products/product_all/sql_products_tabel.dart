@@ -5,6 +5,7 @@ class SqlProductsTabel{
     await database.execute("""
       CREATE TABLE products(
         tokenId String,
+        email String,
         name String,
         description TEXT,
         nameCategory String,

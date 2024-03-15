@@ -126,9 +126,7 @@ class Datum {
         "galleries": galleries == null ? []
         : galleries == [] ? []
         : List<dynamic>.from(galleries!.map((x) => x.toJson())),
-        "user": user == null ? []
-        : user == [] ? [] 
-        : user!.toJson(),
+        "user": user == null ? null : user?.toJson(),
     };
 }
 

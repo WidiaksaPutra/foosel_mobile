@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/size_device.dart';
+import 'package:foosel/blocs/bloc_default/default/size_device.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class themeBox with sizeDevice{
@@ -62,6 +62,10 @@ class themeBox with sizeDevice{
   static late double defaultHeightBox150;
   static late double defaultHeightBox250;
   static late double defaultHeightBox40;
+  static late double defaultHeightBox300;
+  static late double defaultHeightBox140;
+  static late double defaultHeightBox170;
+
   //width
   static late double defaultWidthBox152;
   static late double defaultWidthBox70;
@@ -104,6 +108,7 @@ class themeBox with sizeDevice{
   static late double defaultWidthBox02;
   static late double defaultWidthBox35;
   static late double defaultWidthBox22;
+  static late double defaultWidthBox1_5;
 
   themeBox(BuildContext context){
     getsizeDevice(context);
@@ -153,6 +158,9 @@ class themeBox with sizeDevice{
     defaultHeightBox150 = getHaight(150.0).h;
     defaultHeightBox250 = getHaight(250.0).h;
     defaultHeightBox40 = getHaight(40.0).h;
+    defaultHeightBox300 = getHaight(300.0).h;
+    defaultHeightBox140 = getHaight(140.0).h;
+    defaultHeightBox170 = getHaight(170.0).h;
     //width
     defaultWidthBox152 = getWidth(152.0).w;
     defaultWidthBox70 = getWidth(70.0).w;
@@ -195,5 +203,6 @@ class themeBox with sizeDevice{
     defaultWidthBox02 = getWidth(2.0).w;
     defaultWidthBox35 = getWidth(35.0).w;
     defaultWidthBox22 = getWidth(22.0).w;
+    defaultWidthBox1_5 = getWidth(1.5).w;
   }
 }

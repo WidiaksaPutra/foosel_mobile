@@ -1,3 +1,9 @@
 kekurangan aplikasi ini :
-- Laravel+Flutter Websockets untuk realtime data
+- Laravel+Flutter Websockets untuk realtime data popular
 - corn job untuk backup data 
+- notive transaksi
+- web untuk user aplikasi ini
+- fitur update yang dipisah antara update gambar dan update text
+- searching dan filter transaksi berdasarkan approvalnya
+- aplikasi hanya berfungsi ketika aplikasi connect dan disconnect, masih belum bisa berfungsi dengan baik ketika aplikasi dalam koneksi yang buruk
+- versi ios

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/bloc_button_up/cubit_button_up.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/bloc_button_up/state_button_up.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
+import 'package:foosel/blocs/bloc_default/bloc_button_up/cubit_button_up.dart';
+import 'package:foosel/blocs/bloc_default/bloc_button_up/state_button_up.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_text_style.dart';
 
 class ComponenDataUpButton extends StatelessWidget {
   late int dataLength, index;

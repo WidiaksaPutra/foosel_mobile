@@ -1,19 +1,27 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_text_style.dart';
 
 class ComponenHeadHome extends StatelessWidget {
-  final String label1, label2, image;
-  const ComponenHeadHome({Key? key, required this.label1, required this.label2, required this.image}) : super(key: key);
+  late String label1, label2, image;
+  late bool connect;
+  ComponenHeadHome({Key? key,
+    required this.label1,
+    required this.label2,
+    required this.image,
+    required this.connect,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print("test $image");
     return Container(
       margin: EdgeInsets.only(top: themeBox.defaultHeightBox30, right: themeBox.defaultWidthBox30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: Column(
@@ -26,8 +34,8 @@ class ComponenHeadHome extends StatelessWidget {
           ),
           GestureDetector(
             onTap: (){},
-            child:  ClipOval(
-              child: (image.contains("https://"))
+            child: ClipOval(
+              child: (connect == true)
               ? Image.network(
                   image.toLowerCase(),
                   width: defaultFont54,

@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/widgets.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_text_style.dart';
 
 class ComponenTextColumn_CrossStartAndWhiteGray2AndFont18Font12AndSemiBoldRegular extends StatelessWidget {
   late String title, content;

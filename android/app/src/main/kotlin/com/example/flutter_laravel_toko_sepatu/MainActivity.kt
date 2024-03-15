@@ -1,4 +1,4 @@
-package com.example.flutter_laravel_toko_sepatu
+package com.example.foosel
 
 import io.flutter.embedding.android.FlutterActivity
 

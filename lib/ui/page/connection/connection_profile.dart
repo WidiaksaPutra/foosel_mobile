@@ -1,11 +1,11 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/state_default/state_connection.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_user/cubit_connection_main_user.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_user/main/connect/cubit_main_user_connect.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_user/main/disconnect/cubit_main_user_disconnect.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_user/state_user.dart';
+import 'package:foosel/blocs/bloc_default/state_default/state_connection.dart';
+import 'package:foosel/blocs/bloc_user/cubit_connection_main_user.dart';
+import 'package:foosel/blocs/bloc_user/main/connect/cubit_main_user_connect.dart';
+import 'package:foosel/blocs/bloc_user/main/disconnect/cubit_main_user_disconnect.dart';
+import 'package:foosel/blocs/bloc_user/state_user.dart';
 
 class ConnectionHomeProfile extends StatelessWidget {
   final dynamic childConnect, childDisconnect, connection; 

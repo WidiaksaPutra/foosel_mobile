@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 mixin DataEventMessage{}
 
 class DataEventPostMessage with DataEventMessage{

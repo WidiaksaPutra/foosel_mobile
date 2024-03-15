@@ -2,15 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_categories/event_categories.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_categories/state_categories.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_categories/interfaces_category.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/service/interface_get_data_products_category.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_global_variabel.dart';
+import 'package:foosel/blocs/bloc_categories/event_categories.dart';
+import 'package:foosel/blocs/bloc_categories/state_categories.dart';
+import 'package:foosel/blocs/bloc_categories/interfaces_category.dart';
+import 'package:foosel/interface/interface_local/service/interface_get_data_products_category.dart';
+import 'package:foosel/shared/theme_global_variabel.dart';
 
 ScrollController scrollController = ScrollController();
 late bool loadingScrolling = false;
-late dynamic dataList = [];
+late List dataList = [];
 class BlocKlasifikasiCategoriesConnect extends Bloc<DataEventKlasifikasi, DataStateCategori> implements interfacesProductsCategoryConnect{
   final interfaceGetDataProductsCategory dataGetProductCategoryFuture = getItInstance<interfaceGetDataProductsCategory>();
   BlocKlasifikasiCategoriesConnect() : super(
@@ -47,7 +47,6 @@ class BlocKlasifikasiCategoriesConnect extends Bloc<DataEventKlasifikasi, DataSt
       if(scrollController.position.pixels == scrollController.position.maxScrollExtent && loadingScrolling == false){
         loadingScrolling = true;
         dataList = await dataGetProductCategoryFuture.GetDataProductsCategory(categoriesId: categoryKey, fresh: false);
-        await Future.delayed(const Duration(milliseconds: 1000));
         emit(
           DataCategori(
             dataKlassifikasiCategories: dataList, 
@@ -56,12 +55,14 @@ class BlocKlasifikasiCategoriesConnect extends Bloc<DataEventKlasifikasi, DataSt
             scrollControl: scrollController,
           ),
         );
-        await Future.delayed(const Duration(milliseconds: 1000));
-        loadingScrolling = false;
+        await Future.delayed(
+          Duration(milliseconds: 3000),
+          () => loadingScrolling = false,
+        );
         emit(
           DataCategori(
             dataKlassifikasiCategories: dataList, 
-            loadingKlassifikasi: false, 
+            loadingKlassifikasi: false,
             loadingScrollKlassifikasi: loadingScrolling,
             scrollControl: scrollController,
           ),

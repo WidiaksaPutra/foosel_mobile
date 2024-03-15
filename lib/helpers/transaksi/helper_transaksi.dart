@@ -1,8 +1,8 @@
-import 'package:flutter_laravel_toko_sepatu/helpers/transaksi/sql_transaksi_tabel.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/helpers/interface_delete_data_transaksi_local.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/helpers/interface_get_data_transaksi_local.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/helpers/interface_insert_data_transaksi_local.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/helpers/interface_update_data_transaksi_local.dart';
+import 'package:foosel/helpers/transaksi/sql_transaksi_tabel.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_delete_data_transaksi_local.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_get_data_transaksi_local.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_insert_data_transaksi_local.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_update_data_transaksi_local.dart';
 
 class helperTransaksi implements interfaceGetDataTransaksiLocal, interfaceDeleteDataTransaksiLocal, interfaceInsertDataTransaksiLocal, interfaceUpdateDataTransaksiLocal{  
   
@@ -36,7 +36,7 @@ class helperTransaksi implements interfaceGetDataTransaksiLocal, interfaceDelete
     required String hargaTotal,
     required int jumlah,
   }) async {
-    final db = await SqlTransaksiTabel.db();
+     final db = await SqlTransaksiTabel.db();
     return await db.rawUpdate("UPDATE transaksi SET hargaTotal='$hargaTotal',jumlah='$jumlah' WHERE tokenId='$tokenId'");
   }
 

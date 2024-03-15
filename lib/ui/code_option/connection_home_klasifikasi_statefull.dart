@@ -2,9 +2,9 @@
 // // page ini tak terpakai, tapi digunakan untuk refetensi tentang merubah data Future ke data asli
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_laravel_toko_sepatu/blocs/bloc_categories/bloc_state_categories.dart';
-// import 'package:flutter_laravel_toko_sepatu/blocs/bloc_categories/main/connect/bloc_main_klasifikasi_categories_connect.dart';
-// import 'package:flutter_laravel_toko_sepatu/blocs/bloc_categories/main/disconnect/bloc_main_klasifikasi_categories_disconnect.dart';
+// import 'package:foosel/blocs/bloc_categories/bloc_state_categories.dart';
+// import 'package:foosel/blocs/bloc_categories/main/connect/bloc_main_klasifikasi_categories_connect.dart';
+// import 'package:foosel/blocs/bloc_categories/main/disconnect/bloc_main_klasifikasi_categories_disconnect.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 // class ConnectionHomeKlasifikasiStatefull extends StatefulWidget{

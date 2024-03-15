@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/routes/route_name.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_guest/detail_product_guest/detail_product_guest.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_guest/menu_guest/menu_guest.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/login/login.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/message/detail_message/head_detail_message.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/message/message_list.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/register/register.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/splash_screen/splash_screen.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_pembeli/bottomNav/bottom_nav.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_pembeli/cart/cart_detail.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_pembeli/cart/cart_history.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_pembeli/cart/cart_list.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_pembeli/detail_product/detail_product_pembeli.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_penjual/cart/cart_penjual.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_penjual/insert_barang/button_insert/add_insert/head_insert_add_image.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_penjual/bottomNav/bottom_nav.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_penjual/detail_product/detail_product.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_penjual/insert_barang/button_insert/update_insert/head_insert_update_image.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_penjual/insert_barang/button_insert/update_insert/insert_update_barang.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_profile/account/head_edit_profile.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_profile/profile.dart';
+import 'package:foosel/routes/route_name.dart';
+import 'package:foosel/ui/page/user_guest/detail_product_guest/detail_product_guest.dart';
+import 'package:foosel/ui/page/user_guest/home_menu_user/menu_guest.dart';
+import 'package:foosel/ui/page/login/login.dart';
+import 'package:foosel/ui/page/message/detail_message/head_detail_message.dart';
+import 'package:foosel/ui/page/message/message_list.dart';
+import 'package:foosel/ui/page/register/register.dart';
+import 'package:foosel/ui/page/splash_screen/splash_screen.dart';
+import 'package:foosel/ui/page/user_pembeli/bottomNav/bottom_nav.dart';
+import 'package:foosel/ui/page/user_pembeli/cart/cart_detail.dart';
+import 'package:foosel/ui/page/user_pembeli/cart/cart_history.dart';
+import 'package:foosel/ui/page/user_pembeli/cart/cart_list.dart';
+import 'package:foosel/ui/page/user_pembeli/detail_product/detail_product_pembeli.dart';
+import 'package:foosel/ui/page/user_penjual/cart/cart_penjual.dart';
+import 'package:foosel/ui/page/user_penjual/cart/cart_product.dart';
+import 'package:foosel/ui/page/user_penjual/insert_barang/button_insert/add_insert/head_insert_add_image.dart';
+import 'package:foosel/ui/page/user_penjual/bottomNav/bottom_nav.dart';
+import 'package:foosel/ui/page/user_penjual/detail_product/detail_product.dart';
+import 'package:foosel/ui/page/user_penjual/insert_barang/button_insert/update_insert/head_insert_update_image.dart';
+import 'package:foosel/ui/page/user_penjual/insert_barang/button_insert/update_insert/insert_update_barang.dart';
+import 'package:foosel/ui/page/user_profile/account/head_edit_profile.dart';
+import 'package:foosel/ui/page/user_profile/profile.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class AppRoutes{
@@ -44,6 +45,8 @@ abstract class AppRoutes{
       GoRoute(path: RouteName.headUpdateImage, builder: (context, state) => HeadInsertUpdateImage()),
       GoRoute(path: RouteName.updateBarangPenjual, builder: (context, state) => InsertUpdateBarangPenjual()),
       GoRoute(path: RouteName.cartHistory, builder: (context, state) => CartHistory()),
+      GoRoute(path: RouteName.cartPenjual, builder: (context, state) => CartPenjual()),
+      GoRoute(path: RouteName.cartProduct, builder: (context, state) => CartProduct()),
     ]
   );
 }

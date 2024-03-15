@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_login/event_login.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_register/event_register.dart';
+import 'package:foosel/blocs/bloc_login/event_login.dart';
+import 'package:foosel/blocs/bloc_register/event_register.dart';
 
 class ButtonFormUser with DataEventFormLogin, DataEventFormRegister{
   late String email, password, fullName, username, navigation, alamat;

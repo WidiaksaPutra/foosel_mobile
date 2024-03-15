@@ -1,4 +1,4 @@
-import 'package:flutter_laravel_toko_sepatu/shared/theme_konstanta.dart';
+import 'package:foosel/shared/theme_konstanta.dart';
 
 class DataStateFormUser{
   bool formVisibleEmail, formVisiblePassword, formVisibleFullName, formVisibleUsername, formVisibleAlamat;  

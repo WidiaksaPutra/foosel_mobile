@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "flutter_laravel_toko_sepatu",
+            "name": "foosel",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "flutter_laravel_toko_sepatu (profile mode)",
+            "name": "foosel (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "flutter_laravel_toko_sepatu (release mode)",
+            "name": "foosel (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

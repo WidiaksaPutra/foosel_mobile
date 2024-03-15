@@ -1,19 +1,20 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/service/api_konstanta.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_konstanta.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
+import 'package:foosel/service/api_konstanta.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_konstanta.dart';
+import 'package:foosel/shared/theme_text_style.dart';
 
 class ComponenCardVertical_ImageAndTextAndButtonAddAndButtonMinAndButtonDelete extends StatelessWidget {
   late bool connection;
-  late String image, textTitle, harga, jumlah, iconAdd, iconMin;
+  late String type, image, textTitle, harga, jumlah, iconAdd, iconMin;
   late VoidCallback onTapAdd, onTapMin, onTapDelete, onTapCard;
   ComponenCardVertical_ImageAndTextAndButtonAddAndButtonMinAndButtonDelete({Key? key, 
     required this.connection,
+    required this.type,
     required this.image, 
     required this.textTitle, 
     required this.harga, 
@@ -47,16 +48,18 @@ class ComponenCardVertical_ImageAndTextAndButtonAddAndButtonMinAndButtonDelete e
                     borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
                     child: (connection == true)
                     ? Image.network(
-                        "${Api.baseURLImage}$image", 
+                        "${Api.linkURL}/$image", 
                         height: themeBox.defaultHeightBox60, 
                         width: themeBox.defaultWidthBox60,
-                        alignment: Alignment.centerLeft
+                        alignment: Alignment.centerLeft,
+                        fit: BoxFit.cover,
                       )
                     : Image.asset(
-                        "asset/image/sampel_sepatu_home_small_4.png", 
+                        "asset/image/disconnect_image.jpg", 
                         height: themeBox.defaultHeightBox60,
                         width: themeBox.defaultWidthBox60,
-                        alignment: Alignment.centerLeft
+                        alignment: Alignment.centerLeft,
+                        fit: BoxFit.cover,
                       ),
                   )
                 ),
@@ -65,6 +68,7 @@ class ComponenCardVertical_ImageAndTextAndButtonAddAndButtonMinAndButtonDelete e
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text(type, style: grayTextStyle2.copyWith(fontWeight: regular, fontSize: defaultFont12, overflow: TextOverflow.ellipsis)),
                       Text(textTitle, style: whiteTextStyle.copyWith(fontWeight: semiBold, fontSize: defaultFont14), overflow: TextOverflow.ellipsis),
                       Text(formatCurrency.format(double.parse(harga.toString()).toInt()), style: blueTextStyle.copyWith(fontWeight: regular, fontSize: defaultFont14), overflow: TextOverflow.ellipsis),
                     ]

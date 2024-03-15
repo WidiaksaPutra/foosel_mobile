@@ -1,8 +1,8 @@
+// ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/service/api_login.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
+import 'package:foosel/shared/theme_box.dart';
 
-class ComponenTextButton_315x50 extends StatelessWidget with apiLogin{
+class ComponenTextButton_315x50 extends StatelessWidget{
   Widget textButton;
   Color colorButton;
   ComponenTextButton_315x50({ Key? key, required this.textButton, required this.colorButton}) : super(key: key);

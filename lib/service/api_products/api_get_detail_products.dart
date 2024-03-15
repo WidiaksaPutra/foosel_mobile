@@ -1,33 +1,52 @@
 import 'dart:convert';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/service/interface_get_data_detail_product.dart';
-import 'package:flutter_laravel_toko_sepatu/model/detail_products.dart';
-import 'package:flutter_laravel_toko_sepatu/service/api_konstanta.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/interface/interface_local/service/interface_get_data_detail_product.dart';
+import 'package:foosel/model/detail_products.dart';
+import 'package:foosel/service/api_konstanta.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class apiGetDetailProducts implements interfaceGetDataDetailProduct{
+class apiGetDetailProducts with defaultSharedPref implements interfaceGetDataDetailProduct{
   late Datum? dataProducts = Datum();
   late bool loading = true;
+  late String tokens;
 
   @override
   GetDataDetailProduct({
+    bool testing = false,
+    String testingToken = "",
     required String tokenId
   }) async{
     try {
-      final tokenUser = await SharedPreferences.getInstance();
-      String tokens = tokenUser.getString('token').toString();
-      if(tokens == 'null'){
-        await TokenNull(tokenId: tokenId);
+      if(testing == false){
+        await sharedPref();
+        tokens = prefs.getString('token').toString();
       }else{
-        await TokenNotNull(tokens: tokens, tokenId: tokenId);
+        (testingToken == "") ? tokens = 'null' : tokens = testingToken;
       }
-      return await dataProducts;
+      if(tokens == 'null'){
+        if(testing == false){
+          return await TokenNull(tokenId: tokenId);
+        }else{
+          await TokenNull(tokenId: tokenId);
+          return "berhasil";
+        }  
+      }else{
+        if(testing == false){
+          return await TokenNotNull(tokens: tokens, tokenId: tokenId); 
+        }else{
+          await TokenNotNull(tokens: tokens, tokenId: tokenId);
+          return "berhasil";
+        }
+      }
     }catch (e) {
       throw Exception('data error');
-    }// TODO: implement GetDataDetailProduct
+    }
   }
 
-  TokenNull({required String tokenId}) async {
+  TokenNull({
+    bool testing = false,
+    required String tokenId,
+  }) async {
     Map<String, String> headers = {
       'Content-Type': 'application/json; charset=UTF-8',
     };
@@ -39,10 +58,11 @@ class apiGetDetailProducts implements interfaceGetDataDetailProduct{
       link: 'detailGuest', 
       headers: headers,
     );
-    return dataProducts;
+    return (testing == false) ? dataProducts : "berhasil";
   }
 
   TokenNotNull({
+    bool testing = false,
     required String tokens,
     required String tokenId
   }) async {
@@ -63,10 +83,11 @@ class apiGetDetailProducts implements interfaceGetDataDetailProduct{
         tokenId: tokenId,
       );
     }
-    return dataProducts;
+    return (testing == false) ? dataProducts : "berhasil";
   }
 
   RolePenjual({
+    bool testing = false,
     required Map<String, String>? headers,
     required String tokenId,
   }) async {
@@ -78,10 +99,11 @@ class apiGetDetailProducts implements interfaceGetDataDetailProduct{
       link: 'detailPenjual',
       headers: headers,
     );
-    return dataProducts;
+    return (testing == false) ? dataProducts : "berhasil";
   }
 
   RolePembeli({
+    bool testing = false,
     required Map<String, String>? headers,
     required String tokenId,
   }) async {
@@ -93,10 +115,11 @@ class apiGetDetailProducts implements interfaceGetDataDetailProduct{
       link: 'detailPembeli',
       headers: headers,
     );
-    return dataProducts;
+    return (testing == false) ? dataProducts : "berhasil";
   }
 
   GetDataProductUsers({
+    bool testing = false,
     required Map<String, dynamic> parameterApi,
     required Map<String, String>? headers,
     required String link,
@@ -105,16 +128,16 @@ class apiGetDetailProducts implements interfaceGetDataDetailProduct{
     final responseDetailProducts = await Api.client.get(
       Uri.parse('${Api.baseURL}/$link?' + parameterString),
       headers: headers,
-    );
+    ).timeout(const Duration(seconds: 10));
     if(responseDetailProducts.statusCode == 200){
       final parse = await json.decode(responseDetailProducts.body);
       DetailProducts detailProductsDataModel = DetailProducts.fromJson(parse);
       dataProducts = detailProductsDataModel.data!.data[0];
       loading = false;
+      return (testing == false) ? dataProducts : "berhasil";
     }else{
       throw Exception('data gagal');
     }
-    return dataProducts;
   }
   
   @override

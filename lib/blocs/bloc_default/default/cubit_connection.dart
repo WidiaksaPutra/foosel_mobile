@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/state_default/state_connection.dart';
+import 'package:foosel/blocs/bloc_default/state_default/state_connection.dart';
 
 class cubitConnection extends Cubit<DataStateConnection>{
   cubitConnection() : super(DataConnection(false));

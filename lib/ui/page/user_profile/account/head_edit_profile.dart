@@ -2,19 +2,20 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/connection_dialog.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_navigasi_role.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_user/event_user.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_user/main/connect/bloc_main_update_user_connect.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/connection/connection_profile.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_profile/account/body_edit_profile.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_get_back.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_loading.dart';
+import 'package:foosel/blocs/bloc_default/default/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/default/default_navigasi_role.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_user/event_user.dart';
+import 'package:foosel/blocs/bloc_user/main/connect/bloc_main_update_user_connect.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_text_style.dart';
+import 'package:foosel/ui/page/connection/connection_profile.dart';
+import 'package:foosel/ui/page/user_profile/account/body_edit_profile.dart';
+import 'package:foosel/ui/widgets/componen_advanced/compenen_get_back.dart';
+import 'package:foosel/ui/widgets/componen_loading.dart';
+import 'package:go_router/go_router.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -36,8 +37,11 @@ class EditProfile extends StatelessWidget with defaultSharedPref, navigasiRole, 
     navigasi(context);
     navigasiR();
     sharedPref();
-    Widget title() => Text("Edit Profile", 
-      style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont18)
+    Widget title() => Expanded(
+      child: Text("Edit Profile", 
+        style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont18),
+        overflow: TextOverflow.ellipsis,
+      ),
     );
 
     Widget getUpdate() => IconButton(
@@ -72,28 +76,28 @@ class EditProfile extends StatelessWidget with defaultSharedPref, navigasiRole, 
         automaticallyImplyLeading: false,
         title: ConnectionHomeProfile(
           connection: connection.basicConnection,
-          childConnect: (context, stateUserConn) => (stateUserConn.loading == true)
+          childConnect: (context1, stateUserConn) => (stateUserConn.loading == true)
           ? Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CompenenGetBackX(navBack: navigation),
+                CompenenGetBackX(onPressed: () => context.go(navigation)),
                 title(),
                 getUpdate(),
               ]
             )
-          : ComponenLoadingHashDataMap(boolLoading: stateUserConn.loading, data: stateUserConn.dataUser),
-          childDisconnect: (context, stateUserDisconn) => (stateUserDisconn.loading == true)
+          : ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50),
+          childDisconnect: (context1, stateUserDisconn) => (stateUserDisconn.loading == true)
           ? Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CompenenGetBackX(navBack: navigation),
+                CompenenGetBackX(onPressed: () => context.go(navigation)),
                 title(),
                 SizedBox(
                   width: themeBox.defaultWidthBox45,
                 )
               ]
             )
-          : ComponenLoadingHashDataMap(boolLoading: stateUserDisconn.loading, data: stateUserDisconn.dataUser),
+          : ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50)
         ),
       );
     }

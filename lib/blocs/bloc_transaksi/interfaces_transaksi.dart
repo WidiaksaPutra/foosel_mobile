@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 abstract class insertTransaksiLocal{
   SaveLocalDataTransaksi({
     required String tokenId, 
@@ -32,16 +34,13 @@ abstract class updateTransaksi{
   UpdateDataTransaksi({
     required String transactionsId,
     required String status,
+    required BuildContext context,
   });
 }
 
 abstract class getTransaksiLocal{
   GetDataTransaksi();
   GetDataTransaksiWhereId({required String tokenId});
-}
-
-abstract class getTransaksi{
-  GetDataTransaksi();
 }
 
 abstract class getTransaksiHistory{

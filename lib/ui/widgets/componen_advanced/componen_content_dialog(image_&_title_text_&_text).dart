@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 

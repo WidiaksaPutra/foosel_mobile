@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/firebase/interface_update_user_firebase.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_global_variabel.dart';
+import 'package:foosel/interface/interface_local/firebase/interface_update_user_firebase.dart';
+import 'package:foosel/shared/theme_global_variabel.dart';
 
 class updateUserFirebase implements interfaceUpdateUserFirebase{
 

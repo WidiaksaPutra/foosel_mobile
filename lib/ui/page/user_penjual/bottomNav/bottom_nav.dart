@@ -1,48 +1,57 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_bottom_nav_penjual/cubit_bottom_nav_penjual.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_bottom_nav_penjual/state_bottom_nav_pembeli.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/connection_dialog.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_logout/cubit_logout.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_logout/state_logout.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_message/main/cubit_main_list_message_connect.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/connection/connection_profile.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/home_up/home_menu_user.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/message/message_list.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_penjual/cart/cart_penjual.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_penjual/insert_barang/button_insert/add_insert/insert_add_barang.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_profile/profile.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_header_logout.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:foosel/blocs/bloc_bottom_nav_penjual/cubit_bottom_nav_penjual.dart';
+import 'package:foosel/blocs/bloc_bottom_nav_penjual/state_bottom_nav_pembeli.dart';
+import 'package:foosel/blocs/bloc_default/default/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_logout/cubit_logout.dart';
+import 'package:foosel/blocs/bloc_logout/state_logout.dart';
+import 'package:foosel/blocs/bloc_message/main/cubit_main_list_jumlah_badges.dart';
+import 'package:foosel/blocs/bloc_message/main/cubit_main_list_message_connect.dart';
+import 'package:foosel/blocs/bloc_message/state_message.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_text_style.dart';
+import 'package:foosel/ui/page/connection/connection_profile.dart';
+import 'package:foosel/ui/page/message/message_list.dart';
+import 'package:foosel/ui/page/user_penjual/cart/cart_penjual.dart';
+import 'package:foosel/ui/page/user_penjual/home_menu_user/home_menu_user.dart';
+import 'package:foosel/ui/page/user_penjual/insert_barang/button_insert/add_insert/insert_add_barang.dart';
+import 'package:foosel/ui/page/user_profile/profile.dart';
+import 'package:foosel/ui/widgets/componen_header_logout.dart';
+import 'package:foosel/ui/widgets/componen_loading.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:badges/badges.dart' as badges;
 
-class BottomNavPenjual extends StatelessWidget {
+class BottomNavPenjual extends HookWidget with defaultSharedPref {
   BottomNavPenjual({ Key? key }) : super(key: key);
-  late bool loadingLogout = false;
-  late int currentButton = 0;
-  late BuildContext contexts;
+  late Size size;
 
   @override
   Widget build(BuildContext context) {
-    contexts = context;
+    var loadingLogout = useState<bool>(false);
+    var currentButton = useState<int>(0);
+    size = MediaQuery.of(context).size;
+    sharedPref();
     return BlocBuilder<cubitBottomNavPenjual, DataStateBottomNavigasiPenjual>(
       builder: (context, state){
-        currentButton = state.currentButton;
+        currentButton.value = state.currentButton;
         return BlocBuilder<cubitLogout,StateDataLogout>(
           builder: (context, state){
-            loadingLogout = state.loadingLogout;
+            loadingLogout.value = state.loadingLogout;
             return Scaffold(
-              appBar: appBar(),
-              body: body(),
+              appBar: appBar(contexts: context, currentButton: currentButton.value, loadingLogout: loadingLogout.value),
+              body: body(contexts: context, currentButton: currentButton.value),
               // floatingActionButton: (loadingLogout == false) ? FloatingButtonNav() : Text(""),
               // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-              bottomNavigationBar: (loadingLogout == false) ? customBottomNav() : Text(""),
-              backgroundColor: (currentButton == 0 ) ? kPrimaryColor : kBlackColor6,
+              bottomNavigationBar: (loadingLogout.value == false) ? customBottomNav(contexts: context, currentButton: currentButton.value) : Text(""),
+              backgroundColor: (currentButton.value == 0 ) ? kPrimaryColor : kBlackColor6,
             );
           }
         );
@@ -50,7 +59,27 @@ class BottomNavPenjual extends StatelessWidget {
     );
   }
 
-  Widget customBottomNav(){
+  Widget message({
+    required Widget contentMessage,
+    required BuildContext contexts,
+  }){
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+    stream: contexts.read<cubitListMessageConnect>().getStreamFirebaseListMessage,
+    builder: (context1, snapshot){
+      if(snapshot.connectionState == ConnectionState.active){
+        contexts.read<cubitListMessageConnect>().getListMessage(snapshot.data!.docs);
+        return contentMessage;
+      }else return Lottie.asset(
+        "asset/animations/loading_horizontal_lottie.json",
+        height: themeBox.defaultHeightBox50,
+      );
+    });
+  }
+
+  Widget customBottomNav({
+    required BuildContext contexts,
+    required int currentButton,
+  }){
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(
         top: Radius.circular(30),
@@ -69,11 +98,21 @@ class BottomNavPenjual extends StatelessWidget {
             BottomNavigationBarItem(
               icon: Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: Image.asset(
-                  "asset/icon/home_icon.png",
-                  color: (currentButton == 0) ? kPurpleColor : kGreyColor,
-                  width: 21.0,
-                  height: 20.0,
+                child: message(
+                  contexts: contexts,
+                  contentMessage: BlocBuilder<cubitListMessageConnect, DataStateListMessage>(
+                    builder: (context2, listMessage){
+                      if(listMessage.loading == false && listMessage.dataUser.isNotEmpty){
+                        contexts.read<cubitJumlahBadges>().getBadgesMessage(listMessage.dataUser);
+                      }
+                      return Image.asset(
+                        "asset/icon/home_icon.png",
+                        color: (currentButton == 0) ? kPurpleColor : kGreyColor,
+                        width: 21.0,
+                        height: 20.0,
+                      );
+                    },
+                  ),
                 ),
               ),
               label: "",
@@ -81,11 +120,62 @@ class BottomNavPenjual extends StatelessWidget {
             BottomNavigationBarItem(
               icon: Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: Image.asset(
-                  "asset/icon/chat_icon.png",
-                  color: (currentButton == 1) ? kPurpleColor : kGreyColor,
-                  width: 20.0,
-                  height: 18.0,
+                child: message(
+                  contexts: contexts,
+                  contentMessage: BlocBuilder<cubitListMessageConnect, DataStateListMessage>(
+                    builder: (context2, listMessage){
+                      if(listMessage.loading == false && listMessage.dataUser.isNotEmpty){
+                        return BlocBuilder<cubitJumlahBadges, DataStateBadges>(
+                          builder: (context3, jumlahBadges){
+                          if(jumlahBadges.loading == false && jumlahBadges.totalBadges.toString() != "0"){
+                            prefs.setString("navBadges", jumlahBadges.totalBadges.toString());
+                          }
+                          return (jumlahBadges.loading == false)
+                          ? (jumlahBadges.totalBadges.toString() == "0")
+                            ? Image.asset(
+                                "asset/icon/chat_icon.png",
+                                color: (currentButton == 1) ? kPurpleColor : kGreyColor,
+                                width: 20.0,
+                                height: 18.0,
+                              )
+                            : badges.Badge(
+                                badgeContent: Text(jumlahBadges.totalBadges.toString(), style: const TextStyle(fontSize: 12, color: Colors.white)), 
+                                child: Image.asset(
+                                  "asset/icon/chat_icon.png",
+                                  color: (currentButton == 1) ? kPurpleColor : kGreyColor,
+                                  width: 20.0,
+                                  height: 18.0,
+                                ),
+                              )
+                          : (prefs.getString("navBadges") != null)
+                          ? badges.Badge(
+                              badgeContent: Text(prefs.getString("navBadges").toString(),
+                              style: const TextStyle(fontSize: 12, color: Colors.white)), 
+                              child: Image.asset(
+                                "asset/icon/chat_icon.png",
+                                color: (currentButton == 1) ? kPurpleColor : kGreyColor,
+                                width: 20.0,
+                                height: 18.0,
+                              ),
+                            )
+                          : Image.asset(
+                              "asset/icon/chat_icon.png",
+                              color: (currentButton == 1) ? kPurpleColor : kGreyColor,
+                              width: 20.0,
+                              height: 18.0,
+                            );
+                          }
+                        );
+                      }else{
+                        return Image.asset(
+                          "asset/icon/chat_icon.png",
+                          color: (currentButton == 1) ? kPurpleColor : kGreyColor,
+                          width: 20.0,
+                          height: 18.0,
+                        );
+                      }
+                    },
+                  ),
                 ),
               ),
               label: "",
@@ -132,7 +222,11 @@ class BottomNavPenjual extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget? appBar(){
+  PreferredSizeWidget? appBar({
+    required BuildContext contexts,
+    required int currentButton,
+    required bool loadingLogout,
+  }){
     switch(currentButton){
       case 1 :
         return AppBar(
@@ -166,6 +260,7 @@ class BottomNavPenjual extends StatelessWidget {
         );
       case 4 :
       ClassConnectionDialog connection = ClassConnectionDialog();
+      if(loadingLogout == true){Future.delayed(Duration(seconds: 3),()=>loadingLogout = false);}
       return AppBar(
         toolbarHeight: themeBox.defaultHeightBox124,
         backgroundColor: kPrimaryColor,
@@ -183,7 +278,7 @@ class BottomNavPenjual extends StatelessWidget {
                 logoutIcon: "asset/icon/logout_bottom.png", 
                 onPressed: () => contexts.read<cubitLogout>().logout(context: contexts),
               )
-            : Center(child: CircularProgressIndicator(color: kPurpleColor)),
+            : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox100)),
             childDisconnect: (BuildContext context1, stateUserDisconn) => (stateUserDisconn.loading == true)
             ? ComponenHeaderLogout(
                 image: "asset/icon/profile_user.png", 
@@ -193,9 +288,9 @@ class BottomNavPenjual extends StatelessWidget {
                 onPressed: (){}
                 // voidDialogBasic(context: context, text: 'Koneksi Internet Terputus', titleText: 'penggunaan aplikasi akan dibatasi karena aplikasi dalam mode offline', image: 'asset/icon/bad_connaction.png', onTap: () {  }),
               )
-            : Center(child: CircularProgressIndicator(color: kPurpleColor)),
+            : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox100)),
           )
-        : Center(child: CircularProgressIndicator(color: kPurpleColor)),
+        : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox100)),
       );
     }
     return null;
@@ -224,7 +319,10 @@ class BottomNavPenjual extends StatelessWidget {
     }
   }
 
-  Widget body(){
+  Widget body({
+    required BuildContext contexts,
+    required int currentButton,
+  }){
     switch(currentButton){
       case 0 :
       removeAddProduct();
@@ -234,6 +332,7 @@ class BottomNavPenjual extends StatelessWidget {
       contexts.read<cubitListMessageConnect>().updateListMessage();
       return MessageList();
       case 2 :
+      removeAddProduct();
       return CartPenjual();
       case 3 :
       removeUpdateProduct();

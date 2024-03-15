@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_transaksi/transaksi_local/cubit_get_transaksi.dart';
-import 'package:flutter_laravel_toko_sepatu/routes/route_name.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
+import 'package:foosel/routes/route_name.dart';
+import 'package:foosel/shared/theme_color.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

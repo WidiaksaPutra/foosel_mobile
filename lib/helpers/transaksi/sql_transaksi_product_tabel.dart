@@ -4,11 +4,16 @@ class SqlProductsTransaksiTabel{
   static Future<void> createTableProductsTransaksi(sql.Database database) async{
     await database.execute("""
       CREATE TABLE productsTransaksi(
-        tokenId String,
+        tokenTransaksi String,
+        usersEmailPembeli String,
+        usersEmailPenjual String,	
+        tokenProduct String,
         name String,
         description TEXT,
         nameCategory String,
         price String,
+        quantity String,
+        totalPrice String,
         status String,
         imagePath TEXT
       )

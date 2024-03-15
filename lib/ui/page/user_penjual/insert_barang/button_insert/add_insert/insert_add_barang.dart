@@ -2,19 +2,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/bloc_form_button_not_null_barang.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/cubit_navigation_list_image_barang.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_categories/main/cubit_main_data_noscroll_categories.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/event_default/event_form_products.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/mixin/mixin_image_single_access.dart';
-import 'package:flutter_laravel_toko_sepatu/routes/route_name.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/user_penjual/insert_barang/default/form_insert_barang.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_list_view.dart';
+import 'package:foosel/blocs/bloc_default/default/bloc_form_button_not_null_barang.dart';
+import 'package:foosel/blocs/bloc_default/default/cubit_navigation_list_image_barang.dart';
+import 'package:foosel/blocs/bloc_categories/main/cubit_main_data_noscroll_categories.dart';
+import 'package:foosel/blocs/bloc_default/event_default/event_form_products.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_image_single_access.dart';
+import 'package:foosel/routes/route_name.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_text_style.dart';
+import 'package:foosel/ui/page/user_penjual/insert_barang/default/form_insert_barang.dart';
+import 'package:foosel/ui/widgets/componen_list_view.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -32,7 +32,7 @@ class InsertAddBarangPenjual extends HookWidget with defaultSharedPref, imageSin
           //layoutBuilder mengambil dan menentukan ukuran widget max dan min, dan digunakan harus dengan ConstrainedBox
           builder: (context, constraint){
             return ComponenListViewVertical(
-              sizeHeightBox: constraint.maxHeight-70.0, 
+              sizeHeightBox: constraint.maxHeight-themeBox.defaultHeightBox70, 
               content: Container(
                 margin: EdgeInsets.only(left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30, top: themeBox.defaultHeightBox50),
                 child: Column(

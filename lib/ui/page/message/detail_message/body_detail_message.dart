@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_message/event_message.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_message/main/bloc_main_detail_message_connect.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_message/main/cubit_nav_message.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_message/state_message.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/message/detail_message/real_time_chat.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_bottom_chat_message.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_loading.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_message/event_message.dart';
+import 'package:foosel/blocs/bloc_message/main/bloc_main_detail_message_connect.dart';
+import 'package:foosel/blocs/bloc_message/main/cubit_nav_message.dart';
+import 'package:foosel/blocs/bloc_message/state_message.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/ui/page/message/detail_message/real_time_chat.dart';
+import 'package:foosel/ui/widgets/componen_bottom_chat_message.dart';
+import 'package:foosel/ui/widgets/componen_loading.dart';
 
 class BodyDetailMessage extends StatelessWidget with defaultSharedPref{
   BodyDetailMessage({Key? key}) : super(key: key);
@@ -30,7 +29,7 @@ class BodyDetailMessage extends StatelessWidget with defaultSharedPref{
               // height: size.height,
               child: RealTimeChat(),
             )
-          : ComponenLoadingBasic(colors: kPurpleColor);
+          : ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200);
         }
       );
     }
@@ -61,7 +60,7 @@ class BodyDetailMessage extends StatelessWidget with defaultSharedPref{
                   prefs.remove("message");
                 },
               )
-            : ComponenLoadingBasic(colors: kPurpleColor);
+            : ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox100);
           }
         ),
       );
@@ -125,7 +124,7 @@ class BodyDetailMessage extends StatelessWidget with defaultSharedPref{
 //         //           prefs.remove("message");
 //         //         },
 //         //       )
-//         //     : ComponenLoadingBasic(colors: kPurpleColor);
+//         //     : ComponenLoadingLottieBasic(height: 100);
 //         //   }
 //         // ),
 //       );
@@ -170,5 +169,5 @@ class BodyDetailMessage extends StatelessWidget with defaultSharedPref{
 //                 // );
 //               },
 //             )
-//           : const ComponenLoadingBasic(),
+//           : const ComponenLoadingLottieBasic(),
 //         ), 

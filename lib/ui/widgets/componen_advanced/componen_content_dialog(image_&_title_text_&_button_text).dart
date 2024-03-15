@@ -1,10 +1,10 @@
 // ignore_for_file: must_be_immutable
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_text_style.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_basic/componen_basic_button.dart';
+import 'package:foosel/ui/widgets/componen_basic/componen_basic_button.dart';
 import 'package:lottie/lottie.dart';
 
 class ComponenContentDialog_ImageAndTitleTextAndButtonText extends StatelessWidget {

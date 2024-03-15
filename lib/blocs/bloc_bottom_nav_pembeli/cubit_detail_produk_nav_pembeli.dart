@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_bottom_nav_pembeli/state_bottom_nav_pembeli.dart';
+import 'package:foosel/blocs/bloc_bottom_nav_pembeli/state_bottom_nav_pembeli.dart';
 
 class CubitDetailProdukNavPembeli extends Cubit<DataStateDetailProdukNavPembeli>{
   CubitDetailProdukNavPembeli() : super(DataDetailProdukNavPembeli(jenisDetail: ''));
@@ -16,6 +16,14 @@ class CubitDetailProdukNavPembeli extends Cubit<DataStateDetailProdukNavPembeli>
       emit(DataDetailProdukNavPembeli(jenisDetail: jenisDetail));
     }
     if(jenisDetail == "Transaksi"){
+      readDetail;
+      emit(DataDetailProdukNavPembeli(jenisDetail: jenisDetail));
+    }
+    if(jenisDetail == "TransaksiHistory"){
+      readDetail;
+      emit(DataDetailProdukNavPembeli(jenisDetail: jenisDetail));
+    }
+    if(jenisDetail == "TransaksiDetail"){
       readDetail;
       emit(DataDetailProdukNavPembeli(jenisDetail: jenisDetail));
     }

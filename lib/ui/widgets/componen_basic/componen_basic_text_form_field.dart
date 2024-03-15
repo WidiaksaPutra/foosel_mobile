@@ -1,9 +1,9 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-class ComponenBasicTextFormField extends StatelessWidget{
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+class ComponenBasicTextFormField extends HookWidget with defaultSharedPref{
   String labelText, hintText, iconText, nameController;
   bool update, hiddenText;
   TextInputType keyboardType;
@@ -15,7 +15,9 @@ class ComponenBasicTextFormField extends StatelessWidget{
   EdgeInsetsGeometry prefixPadding;
   List<TextInputFormatter> inputFormatters;
   dynamic contextForm;
+  int maxLines;
   ComponenBasicTextFormField({ Key? key,
+    this.maxLines = 1,
     required this.labelText, 
     required this.hintText, 
     required this.iconText, 
@@ -39,10 +41,7 @@ class ComponenBasicTextFormField extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    // TextEditingController controller = TextEditingController();
-    // if(update == true){
-      // controller.text = hintText.toString();
-    // }
+    sharedPref();
     return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -50,13 +49,13 @@ class ComponenBasicTextFormField extends StatelessWidget{
         SizedBox(height: sizeLabelToTextForm),
         TextFormField(
           // controller: (update == true) ? controller : null,
+          maxLines: maxLines,
           keyboardType: keyboardType,
           obscureText: hiddenText,//untuk mengatur hidden text
           inputFormatters: inputFormatters,
           style: textFormFieldStyle,
           onChanged: (value) async{
-            SharedPreferences pref = await SharedPreferences.getInstance();
-            pref.setString(nameController, value);
+            prefs.setString(nameController, value);
             contextForm(value);
           },
           decoration: InputDecoration(
@@ -76,9 +75,29 @@ class ComponenBasicTextFormField extends StatelessWidget{
                 height: prefixHeight,
               ),
             ),
+            // suffixIcon: Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            //   child: IconButton(
+            //     onPressed: (){
+            //       hiddenText =! hiddenText;
+            //     },
+            //     icon: SvgPicture.asset(
+            //       (hiddenText) ? "assets/icons/eye.svg" : "assets/icons/eye_hide.svg",
+            //       height: themeBox.defaultHeightBox20,
+            //       color: (hiddenText) ? const Color.fromRGBO(217, 217, 217, 1) : Colors.green,
+            //     ),
+            //   ),
+            // )
           ),
         ),
       ]
     );
   }
 }
+
+
+
+// TextEditingController controller = TextEditingController();
+    // if(update == true){
+      // controller.text = hintText.toString();
+    // }

@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/state_default/state_form_products.dart';
+import 'package:foosel/blocs/bloc_default/state_default/state_form_products.dart';
 
 class CubitFormNotNullBarang extends Cubit<DataStateFormProduct>{
   CubitFormNotNullBarang() : super(DataStateInitial());
@@ -20,8 +20,8 @@ class CubitFormNotNullBarang extends Cubit<DataStateFormProduct>{
     }
   }
 
-  descriptionValidasiEmpty(String description){
-    if(description.isEmpty){
+  descriptionValidasi(String description){
+    if(description.isEmpty || description.length >= 255){
       emit(DataStateDescriptionProduct(true));
     }else{
       emit(DataStateDescriptionProduct(false));

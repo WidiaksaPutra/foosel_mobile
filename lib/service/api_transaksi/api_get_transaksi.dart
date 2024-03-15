@@ -1,72 +1,98 @@
 import 'dart:convert';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/service/interface_get_transaksi.dart';
-import 'package:flutter_laravel_toko_sepatu/model/transaction.dart';
-import 'package:flutter_laravel_toko_sepatu/service/api_konstanta.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/interface/interface_local/service/interface_get_transaksi.dart';
+import 'package:foosel/model/transaction.dart';
+import 'package:foosel/service/api_konstanta.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class apiGetTransaksi implements interfaceGetTransaksi{
+class apiGetTransaksi with defaultSharedPref implements interfaceGetTransaksi{
   late List dataListTransaksi = [];
-  
+  late String tokens;
+
   @override
-  GetTransaksi({required String email}) async {
+  GetTransaksi({
+    bool testing = false,
+    String testingToken = "",
+    String email = "", transactionsId = "",
+  }) async {
     try {
-      final tokenUser = await SharedPreferences.getInstance();
-      String tokens = tokenUser.getString('token').toString();
+      if(testing == false){
+        await sharedPref();
+        tokens = prefs.getString('token').toString();
+      }else{
+        (testingToken == "") ? tokens = 'null' : tokens = testingToken;
+      }
       Map<String, dynamic> decodeTokenUser = await JwtDecoder.decode(tokens);
       String role = decodeTokenUser['roles'].toString();
       Map<String, String> headers = {
         'Authorization': 'Bearer $tokens',
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      if(role == "PENJUAL"){
-        await RolePenjual(
+      await (role == "PENJUAL")
+      ? RolePenjual(
           email: email,
+          transactionsId: transactionsId,
+          headers: headers,
+        )
+      : RolePembeli(
+          email: email,
+          transactionsId: transactionsId,
           headers: headers,
         );
-      }else{
-        await RolePembeli(
-          email: email,
-          headers: headers,
-        );
-      }  
-      return await dataListTransaksi;
+      return await (testing == false) ? dataListTransaksi : "berhasil";
     }catch (e) {
       throw Exception('data error');
     }
   }
 
   RolePenjual({
-    required String email,
+    bool testing = false,
+    String email = "", transactionsId = "",
     required Map<String, String>? headers
   }) async {
-    Map<String, String> parameterApi = {
-      'email_penjual' : email,
-    };
+    late Map<String, String> parameterApi = {};
+    if(email != ""){
+      parameterApi = {
+        'email_penjual' : email,
+      };
+    }else{
+      parameterApi = {
+        'transactions_id' : transactionsId,
+      };
+    }
     await GetDataTransaksi(
       headers: headers, 
       link: 'fetchTransaksiPenjual', 
       parameterApi: parameterApi
     );
-    return dataListTransaksi;
+    return await (testing == false) ? dataListTransaksi : "berhasil";
   }
 
   RolePembeli({
-    required String email,
+    bool testing = false,
+    String email = "", transactionsId = "",
     required Map<String, String>? headers
   }) async {
-    Map<String, String> parameterApi = {
-      'email_pembeli' : email,
-    };
+    late Map<String, String> parameterApi = {};
+    if(email != ""){
+      parameterApi = {
+        'email_pembeli' : email,
+      };
+    }else{
+      parameterApi = {
+        'transactions_id' : transactionsId,
+      };
+    }
     await GetDataTransaksi(
       headers: headers, 
       link: 'fetchTransaksiPembeli', 
       parameterApi: parameterApi
     );
-    return await dataListTransaksi;
+    await (testing == false) ? dataListTransaksi : "berhasil";
   }
 
   GetDataTransaksi({
+    bool testing = false,
     required Map<String, dynamic> parameterApi,
     required Map<String, String>? headers,
     required String link,
@@ -75,15 +101,15 @@ class apiGetTransaksi implements interfaceGetTransaksi{
     final responseTransaksi = await Api.client.get(
       Uri.parse('${Api.baseURL}/$link?' + parameterString),
       headers: headers,
-    );
+    ).timeout(const Duration(seconds: 10));
     if(responseTransaksi.statusCode == 200){
       final parse = await json.decode(responseTransaksi.body);
       Transaksi transaksiDataModel = await Transaksi.fromJson(parse);
       dataListTransaksi.clear();
-      dataListTransaksi.addAll(transaksiDataModel.data!.data.toList());
+      dataListTransaksi.addAll(transaksiDataModel.data.toList());
     }else{
       throw Exception('data gagal');
     }
-    return await dataListTransaksi;
+    return await (testing == false) ? dataListTransaksi : "berhasil";
   }
 }

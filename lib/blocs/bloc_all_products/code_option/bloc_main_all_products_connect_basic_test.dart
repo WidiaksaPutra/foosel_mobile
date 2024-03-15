@@ -1,13 +1,13 @@
 // import 'dart:async';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_laravel_toko_sepatu/blocs/bloc_all_products/bloc_event_all_products.dart';
-// import 'package:flutter_laravel_toko_sepatu/blocs/bloc_all_products/bloc_state_all_products.dart';
-// import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_konstanta.dart';
-// import 'package:flutter_laravel_toko_sepatu/helpers/products/product_popular/helper_products.dart';
-// import 'package:flutter_laravel_toko_sepatu/service/api_products/api_get_products.dart';
-// import 'package:flutter_laravel_toko_sepatu/service/api_products/api_get_products_popular.dart';
-// import 'package:flutter_laravel_toko_sepatu/service/api_transaction_item.dart';
+// import 'package:foosel/blocs/bloc_all_products/bloc_event_all_products.dart';
+// import 'package:foosel/blocs/bloc_all_products/bloc_state_all_products.dart';
+// import 'package:foosel/blocs/bloc_default/default/default_konstanta.dart';
+// import 'package:foosel/helpers/products/product_popular/helper_products.dart';
+// import 'package:foosel/service/api_products/api_get_products.dart';
+// import 'package:foosel/service/api_products/api_get_products_popular.dart';
+// import 'package:foosel/service/api_transaction_item.dart';
 
 // class BlocAllProductConnect extends Bloc<dataEventAllProduct,DataStateAllProduct> with apiGetProducts, apiGetProductsPopular, apiTransactionItem, helperProducts, helperProductsPopular, defaultSharedPref implements InterfaceScrollList{
 //   BlocAllProductConnect() : super(DataAllProduct([], false, false, false, [], false)){

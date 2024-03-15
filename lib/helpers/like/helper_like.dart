@@ -1,7 +1,7 @@
-import 'package:flutter_laravel_toko_sepatu/helpers/like/sql_like_tabel.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/helpers/interface_delete_data_like_local.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/helpers/interface_get_data_like_local.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/helpers/interface_insert_data_like_local.dart';
+import 'package:foosel/helpers/like/sql_like_tabel.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_delete_data_like_local.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_get_data_like_local.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_insert_data_like_local.dart';
 
 class helperLike implements interfaceGetDataLikeLocal, interfaceInsertDataLikeLocal, interfaceDeleteDataLikeLocal{
   
@@ -32,7 +32,8 @@ class helperLike implements interfaceGetDataLikeLocal, interfaceInsertDataLikeLo
   @override
   Future<int> InsertDataLikeLocal({
     required String tokenId, 
-    required String name, 
+    required String name,
+    required String email,
     required String description, 
     required String nameCategory, 
     required String price, 
@@ -42,6 +43,7 @@ class helperLike implements interfaceGetDataLikeLocal, interfaceInsertDataLikeLo
     final dataInsert = {
       'tokenId': tokenId, 
       'name': name,
+      'email': email,
       'description': description, 
       'nameCategory': nameCategory, 
       'price': price,

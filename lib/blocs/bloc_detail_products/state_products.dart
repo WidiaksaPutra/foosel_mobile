@@ -1,13 +1,17 @@
-import 'package:flutter_laravel_toko_sepatu/model/detail_products.dart';
+import 'package:foosel/model/detail_products.dart';
 
 class DataStateProducts{
-  bool loading;
+  bool loading, jenisDetail;
   Datum dataProducts;
-  DataStateProducts(this.loading, this.dataProducts);
+  DataStateProducts(this.loading, this.dataProducts, this.jenisDetail);
 }
 
 class DataProducts extends DataStateProducts{
-  DataProducts(bool loading, Datum dataProducts) : super(loading, dataProducts);
+  DataProducts({
+    required bool loading, 
+    required Datum dataProducts, 
+    required bool jenisDetail,
+  }) : super(loading, dataProducts, jenisDetail);
 }
 
 class DataStateDetailProduct{

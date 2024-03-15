@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/routes/route_name.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_row_between_text_icon.dart';
+import 'package:foosel/routes/route_name.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_text_style.dart';
+import 'package:foosel/ui/widgets/componen_row_between_text_icon.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);

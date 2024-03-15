@@ -1,10 +1,13 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/service/api_konstanta.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:foosel/service/api_konstanta.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
 
-class ComponenCarouselSliderImage extends StatefulWidget {
+class ComponenCarouselSliderImage extends HookWidget {
   late double sizeWidth;
   late List imageProduct;
   late bool connect;
@@ -15,67 +18,61 @@ class ComponenCarouselSliderImage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ComponenCarouselSliderImage> createState() => _ComponenCarouselSliderImageState();
-}
-
-class _ComponenCarouselSliderImageState extends State<ComponenCarouselSliderImage> {
-  int currentIndex = 0;
-
-  Widget indicator(index){
-    return Container(
-      margin: EdgeInsets.only(right: themeBox.defaultWidthBox4),
-      width: (currentIndex == index) ? themeBox.defaultWidthBox16 : themeBox.defaultWidthBox4,
-      height: themeBox.defaultHeightBox4,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(themeBox.defaultRadius10),
-        color: (currentIndex == index) ? kPurpleColor : kGreyColor5,
-      ),
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
-    int index = -1;
+    final currentIndex = useState<int>(0);
+    final index = useState<int>(-1);
+    themeBox(context);
     return Container(
       color: kGreyColor6,
       child: Column(
         children: [
           CarouselSlider(
-            items: (widget.connect == true)
-            ? widget.imageProduct.map(
-                (imageProduct) => 
-                Image.network(
-                  "${Api.baseURLImage}${imageProduct.toString()}",
-                  width: widget.sizeWidth,
-                  height: themeBox.defaultHeightBox340,
-                  fit: BoxFit.cover,
-                )
+            items: (connect == true)
+            ? imageProduct.map(
+                (imageProduct) => ClipRRect(
+                  borderRadius: BorderRadius.circular(themeBox.defaultRadius10), // Mengatur borderRadius menjadi setengah dari lebar/tinggi
+                  child: Image.network(
+                    "${Api.linkURL}/${imageProduct.toString()}",
+                    width: sizeWidth,
+                    height: themeBox.defaultHeightBox340,
+                    fit: BoxFit.cover,
+                  )
+                ),
               ).toList()
-            : widget.imageProduct.map(
-                (imageProduct) => 
-                Image.asset(
-                  imageProduct,
-                  width: widget.sizeWidth,
-                  height: themeBox.defaultHeightBox340,
-                  fit: BoxFit.cover,
-                )
+            : imageProduct.map(
+                (imageProduct) => ClipRRect(
+                  borderRadius: BorderRadius.circular(themeBox.defaultRadius10), // Mengatur borderRadius menjadi setengah dari lebar/tinggi
+                  child: Image.asset(
+                    imageProduct,
+                    width: sizeWidth,
+                    height: themeBox.defaultHeightBox340,
+                    fit: BoxFit.cover,
+                  )
+                ),
               ).toList(),
             options: CarouselOptions(
               initialPage: 0,
               enlargeCenterPage: true,
-              onPageChanged: ((index, reason){
-                setState(() {
-                  currentIndex = index;//untuk memberikan nilai index pada currentIndex, digunakan untuk nilai index dari gambar
-                });
+              onPageChanged: ((i, reason){
+                currentIndex.value = i;//untuk memberikan nilai index pada currentIndex, digunakan untuk nilai index dari gambar
+                index.value = -1;
               })
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: widget.imageProduct.map(//??
+            children: imageProduct.map(//??
               (e) {
-                index++;
-                return indicator(index);
+                index.value++;
+                return Container(
+                  margin: EdgeInsets.only(right: themeBox.defaultWidthBox4),
+                  width: (currentIndex.value == index.value) ? themeBox.defaultWidthBox16 : themeBox.defaultWidthBox4,
+                  height: themeBox.defaultHeightBox4,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(themeBox.defaultRadius10),
+                    color: (currentIndex.value == index.value) ? kPurpleColor : kGreyColor5,
+                  ),
+                );
               }
             ).toList(),
           ),

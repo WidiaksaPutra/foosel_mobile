@@ -1,14 +1,14 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_categories/main/cubit_main_data_noscroll_categories.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_categories/state_categories.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/cubit_form_not_null_barang.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_advanced/componen_text_drop_down.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_loading.dart';
+import 'package:foosel/blocs/bloc_categories/main/cubit_main_data_noscroll_categories.dart';
+import 'package:foosel/blocs/bloc_categories/state_categories.dart';
+import 'package:foosel/blocs/bloc_default/default/cubit_form_not_null_barang.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/ui/widgets/componen_advanced/componen_text_drop_down.dart';
+import 'package:foosel/ui/widgets/componen_loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 class DropdownTypeData extends StatefulWidget {
   late String namaType;
   late String? indexType;
@@ -21,7 +21,6 @@ class DropdownTypeData extends StatefulWidget {
   @override
   State<DropdownTypeData> createState() => _DropdownTypeDataState();
 }
-
 class _DropdownTypeDataState extends State<DropdownTypeData> with defaultSharedPref{
   late List<String> listData;
   late String first;
@@ -60,6 +59,7 @@ class _DropdownTypeDataState extends State<DropdownTypeData> with defaultSharedP
 
   @override
   Widget build(BuildContext context) {
+    themeBox(context);
     return Expanded(
       child: BlocBuilder<CubitMainDataNoscrollCategories, DataStateCategoriNameNoscroll>(
         builder: (context, state){
@@ -70,9 +70,9 @@ class _DropdownTypeDataState extends State<DropdownTypeData> with defaultSharedP
             }
           }
           return (state.loading == true && state.dataNameCategory.isNotEmpty)
-          ? ComponenTextDropDown(labelText: "Type Sepatu", list: listData,
+          ? ComponenTextDropDown(labelText: "Type Product", list: listData,
             viewDropdownButton: first.toString(), onClicked: dropDownClick)
-          : ComponenLoadingHashData(boolLoading: state.loading, data: listData);
+          : ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50);
         }
       ),
     );

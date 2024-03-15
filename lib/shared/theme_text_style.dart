@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
+import 'package:foosel/shared/theme_color.dart';
 
 TextStyle nullTextStyle = const TextStyle();
 TextStyle blackTextStyle = const TextStyle(color: kBlackColor7, fontFamily: "Poppins", decoration: TextDecoration.none);

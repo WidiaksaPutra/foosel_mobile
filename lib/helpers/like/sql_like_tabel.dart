@@ -6,6 +6,7 @@ class SqlLikeTabel{
       CREATE TABLE like(
         tokenId String,
         name String,
+        email String,
         description TEXT,
         nameCategory String,
         price String,

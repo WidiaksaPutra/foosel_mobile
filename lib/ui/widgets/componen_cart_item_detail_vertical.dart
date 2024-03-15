@@ -1,20 +1,21 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/service/api_konstanta.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_konstanta.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
+import 'package:foosel/service/api_konstanta.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_konstanta.dart';
+import 'package:foosel/shared/theme_text_style.dart';
 
 class ComponenCartItemDetailVertical extends StatelessWidget {
-  late String image, textTitle, harga, jumlah;
+  late String image, textTitle, harga, jumlah, type;
   late VoidCallback onTapCard;
   ComponenCartItemDetailVertical({Key? key,
     required this.image,
     required this.textTitle,
     required this.harga,
+    required this.type,
     required this.jumlah,
     required this.onTapCard,
   }) : super(key: key);
@@ -37,10 +38,11 @@ class ComponenCartItemDetailVertical extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
                 child: Image.network(
-                  "${Api.baseURLImage}$image", 
+                  "${Api.linkURL}/$image", 
                   height: themeBox.defaultHeightBox60, 
                   width: themeBox.defaultWidthBox60, 
-                  alignment: Alignment.centerLeft
+                  alignment: Alignment.centerLeft,
+                  fit: BoxFit.cover,
                 ),
               )
             ),
@@ -49,6 +51,7 @@ class ComponenCartItemDetailVertical extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(type, style: grayTextStyle2.copyWith(fontWeight: regular, fontSize: defaultFont12, overflow: TextOverflow.ellipsis)),
                   Text(textTitle, style: whiteTextStyle.copyWith(fontWeight: semiBold, fontSize: defaultFont14), overflow: TextOverflow.ellipsis),
                   Text(formatCurrency.format(double.parse(harga.toString()).toInt()), style: blueTextStyle.copyWith(fontWeight: regular, fontSize: defaultFont14), overflow: TextOverflow.ellipsis),
                 ]

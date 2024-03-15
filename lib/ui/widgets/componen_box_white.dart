@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
+import 'package:foosel/shared/theme_box.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ComponenBoxWhite extends StatelessWidget {

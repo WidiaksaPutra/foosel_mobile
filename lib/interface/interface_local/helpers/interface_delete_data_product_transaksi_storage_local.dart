@@ -1,4 +1,5 @@
 abstract class interfaceDeleteDataProductTransaksiStorageLocal{
   DeleteDataProductTransaksiLocal();
-  DeleteDataProductTransaksiWhereIdLocal({required String tokenId});
+  DeleteDataProductTransaksiWhereIdTransaksi({required String tokenTransaksi});
+  DeleteDataProductTransaksiWhereIdProduct({required String tokenProduct});
 }

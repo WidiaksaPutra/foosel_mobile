@@ -1,5 +1,6 @@
 abstract class interfacePostRegister{
   PostRegister({
+    bool testing = false,
     required String name,
     required String username, 
     required String alamat,

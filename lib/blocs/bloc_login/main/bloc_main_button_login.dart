@@ -1,11 +1,11 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/event_default/event_form_user.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_login/event_login.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_login/state_login.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/state_default/state_multipe_form.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_konstanta.dart';
+import 'package:foosel/blocs/bloc_default/event_default/event_form_user.dart';
+import 'package:foosel/blocs/bloc_login/event_login.dart';
+import 'package:foosel/blocs/bloc_login/state_login.dart';
+import 'package:foosel/blocs/bloc_default/state_default/state_multipe_form.dart';
+import 'package:foosel/shared/theme_konstanta.dart';
 
 class BlocButtonLogin extends Bloc<DataEventFormLogin, DataStateMultiFormUser>{
   BlocButtonLogin() : super(DataStateInitialFormUser()){

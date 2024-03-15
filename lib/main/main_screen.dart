@@ -2,9 +2,9 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/main/firebase_init.dart';
+import 'package:foosel/main/firebase_init.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/size_device.dart';
+import 'package:foosel/blocs/bloc_default/default/size_device.dart';
 
 class MainScreen extends StatelessWidget with sizeDevice{
   MainScreen({Key? key}) : super(key: key);
@@ -19,8 +19,7 @@ class MainScreen extends StatelessWidget with sizeDevice{
       designSize: Size(screenW , screenH),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, _) =>
-      FirebaseInit(
+      builder: (context, _) => FirebaseInit(
         initialization: initialization,
       ),
     );

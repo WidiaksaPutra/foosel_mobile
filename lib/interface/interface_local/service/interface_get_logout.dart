@@ -1,3 +1,6 @@
 abstract class interfaceGetLogout{
-  GetLogout();
+  GetLogout({
+    bool testing = false,
+    String testingToken = "",
+  });
 }

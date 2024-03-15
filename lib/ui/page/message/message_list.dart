@@ -1,96 +1,154 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/cubit_connection_example.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/state_default/state_connection.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_message/main/cubit_main_list_message_connect.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_message/main/cubit_nav_message.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_message/state_message.dart';
-import 'package:flutter_laravel_toko_sepatu/routes/route_name.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_global_variabel.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_loading.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_message_card_vertical.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_page_kosong.dart';
+import 'package:foosel/blocs/bloc_default/default/cubit_connection_example.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/default/show_dialog_basic.dart';
+import 'package:foosel/blocs/bloc_default/state_default/state_connection.dart';
+import 'package:foosel/blocs/bloc_message/main/cubit_main_delete_messege.dart';
+import 'package:foosel/blocs/bloc_message/main/cubit_main_list_jumlah_badges.dart';
+import 'package:foosel/blocs/bloc_message/main/cubit_main_list_message_connect.dart';
+import 'package:foosel/blocs/bloc_message/main/cubit_nav_message.dart';
+import 'package:foosel/blocs/bloc_message/state_message.dart';
+import 'package:foosel/routes/route_name.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_global_variabel.dart';
+import 'package:foosel/shared/theme_konstanta.dart';
+import 'package:foosel/ui/widgets/componen_advanced/componen_content_dialog(image_&_text).dart';
+import 'package:foosel/ui/widgets/componen_advanced/componen_content_dialog(image_&_title_text_&_button_yes_and_button_no).dart';
+import 'package:foosel/ui/widgets/componen_loading.dart';
+import 'package:foosel/ui/widgets/componen_advanced/componen_card_vertical_message.dart';
+import 'package:foosel/ui/widgets/componen_page_kosong.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:badges/badges.dart' as badges;
 
-class MessageList extends StatelessWidget with defaultSharedPref{
+class MessageList extends HookWidget with defaultSharedPref, dialogBasic{
   MessageList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    sharedPref();
     context.read<cubitConnectionExample>().connectCheck(readBlocConnect: {},readBlocDisconnect: {});
-
-    MessageConnection(){
-      return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: context.read<cubitListMessageConnect>().getStreamFirebaseListMessage,
-        builder: (context, snapshot){
-          if(snapshot.connectionState == ConnectionState.active){
-            context.read<cubitListMessageConnect>().getListMessage(snapshot.data!.docs);
-            return BlocBuilder<cubitListMessageConnect, DataStateListMessage>(
-              builder: (context, listMessage) => (listMessage.loading == false)
-              ? Stack(
-                  children: [
-                    if(listMessage.dataUser.isEmpty)...[
-                      ComponenPageKosongBasic(
-                        image: "asset/icon/headset_icon.png", 
-                        titleText: "Opss no message yet?", 
-                        messageText: "You have never done a transaction", 
-                        size: size,
-                      ),
-                    ] else...[
-                      ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        itemCount: listMessage.dataUser.length,
-                        itemBuilder: (BuildContext context , int index){
-                          final String preConverted = listMessage.dataUser[index].lastTime;
-                          final int seconds = int.parse(preConverted.substring(18, 28));
-                          return Column(
-                            children: [
-                              ComponenMessageCardVertical(
-                                icon: listMessage.dataUser[index].gambar, 
-                                textTitle: listMessage.dataUser[index].nama, 
-                                textSubTitle: (listMessage.dataUser[index].status == "Offline") 
-                                  ? formatDate.format(DateTime.fromMillisecondsSinceEpoch(seconds * 1000)) 
-                                  : "now", 
-                                textTailing: listMessage.dataUser[index].status, 
-                                onTap: () {
-                                  prefs.setString('emailPenerima', listMessage.dataUser[index].email);
-                                  context.read<cubitNavMessageDetail>().navigation(tokenPenerima: listMessage.dataUser[index].tokenNotive.toString(), roleBar: 1, detailMessage: false);
-                                  context.go(RouteName.detailMessage);
-                                },
-                              ),
-                              Divider(height: themeBox.defaultHeightBox12, thickness: 1, color: kBlackColor8, indent: themeBox.defaultWidthBox30, endIndent: themeBox.defaultWidthBox30),
-                            ],
-                          );
-                        }, 
-                      ),
-                    ]
-                  ]
+    Size size = MediaQuery.of(context).size;
+    var statusMessage = useState(false);
+    sharedPref();
+    Widget ContentMessage({
+      required DataStateListMessage listMessage,
+      required int index,
+    }){
+      final String preConverted = listMessage.dataUser[index].lastTime;
+      final int seconds = int.parse(preConverted.substring(18, 28));
+      return ComponenMessageCardVertical(
+        icon: listMessage.dataUser[index].gambar, 
+        textTitle: listMessage.dataUser[index].nama, 
+        textSubTitle: (listMessage.dataUser[index].status == "Offline") 
+          ? formatDate.format(DateTime.fromMillisecondsSinceEpoch(seconds * 1000)) 
+          : "now",
+        textTailing: listMessage.dataUser[index].status, 
+        onLongPress: () => voidDialogBasic(
+          context: context, 
+          margin: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
+          padding: EdgeInsets.only(left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30, top: themeBox.defaultHeightBox30),
+          borderRadius: BorderRadius.circular(themeBox.defaultRadius10),
+          color: kBlackColor6,
+          closeIconStatus: true,
+          barrierDismissible: false,
+          contentDialog: BlocBuilder<CubitDeleteMessege, StateDeleteMessage>(
+            builder: (context5, state2) => (state2.loadingDeleteTransaksi == false)
+            ? (statusMessage.value == false)
+              ? ComponenContentDialog_ImageAndTitleTextAndButtonYesAndButtonNo(
+                  image: 'asset/animations/peringatan_lottie.json',
+                  titleText: delleteMessageUser,
+                  onTapYes: () async{
+                    await context.read<CubitDeleteMessege>().DeleteDataMessage(emailPengirim: prefs.getString('email').toString(), emailPenerima: listMessage.dataUser[index].email);
+                    statusMessage.value = true;
+                    Future.delayed(
+                      Duration(seconds: 2),
+                      (){
+                        Navigator.of(context).pop();
+                        statusMessage.value = false;
+                      },
+                    );
+                  },
                 )
-              : const ComponenLoadingBasic(colors: kPurpleColor)
-            );
-          }
-          else{
-            return const ComponenLoadingBasic(colors: kPurpleColor);
-          }
-        }
+              : (state2.statusAlert == true)
+                ? ComponenContentDialog_ImageAndTitleText(
+                    image: 'asset/animations/check_lottie.json',
+                    text: 'Berhasil...',
+                  )
+                : ComponenContentDialog_ImageAndTitleText(
+                    image: 'asset/animations/close_lottie.json', 
+                    text: 'Gagal..!',
+                  )
+            : ComponenContentDialog_ImageAndTitleText(
+                image: 'asset/animations/loading_dialog_lottie.json', 
+                text: '...',
+              )
+          ),
+          onTapCloseDialog: () => Navigator.of(context).pop(), 
+        ),
+        onTap: () {
+          prefs.setString('emailPenerima', listMessage.dataUser[index].email);
+          context.read<cubitNavMessageDetail>().navigation(tokenPenerima: listMessage.dataUser[index].tokenNotive.toString(), roleBar: 1, detailMessage: false);
+          context.go(RouteName.detailMessage);
+        },
       );
     }
-
+  
     return BlocBuilder<cubitConnectionExample, DataStateConnection>(
-      builder: (context, state) => (state.connectionBoolean == true)
-      ? MessageConnection()
-      : ComponenPageKosongBasic(
-        image: "asset/icon/headset_icon.png", 
+    builder: (context, state) => (state.connectionBoolean == true)
+    ? BlocBuilder<cubitListMessageConnect, DataStateListMessage>(
+        builder: (context2, listMessage){
+          if(listMessage.loading == false){
+            return Stack(
+              children: [
+                if(listMessage.dataUser.isEmpty)...[
+                  ComponenPageKosongBasic(
+                    image: "asset/animations/chat_lottie.json", 
+                    titleText: "Opss no message yet?", 
+                    messageText: "You have never done a transaction", 
+                    sizeHeight: size.height, 
+                    sizeWidth: size.width,
+                  ),
+                ] else...[
+                  BlocBuilder<cubitJumlahBadges, DataStateBadges>(
+                    builder: (context3, jumlahBadges) => ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      itemCount: listMessage.dataUser.length,
+                      itemBuilder: (BuildContext context4, int index) => Column(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: themeBox.defaultHeightBox22, left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30),
+                            child: (jumlahBadges.loading == false)
+                            ? (jumlahBadges.notivBadges[index].toString() == "0")
+                              ? ContentMessage(listMessage: listMessage, index: index)
+                              : badges.Badge(
+                                  badgeContent: Text(jumlahBadges.notivBadges[index].toString(), style: const TextStyle(fontSize: 12, color: Colors.white)), 
+                                  child: ContentMessage(listMessage: listMessage, index: index)
+                                )
+                            : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50))
+                          ),
+                          Divider(height: themeBox.defaultHeightBox12, thickness: 1, color: kBlackColor8, indent: themeBox.defaultWidthBox30, endIndent: themeBox.defaultWidthBox30),
+                        ],
+                      ),
+                    ),
+                  ),
+                ]
+              ]
+            );
+          }else return ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200);
+        }
+      )
+    : ComponenPageKosongBasic(
+        image: "asset/animations/chat_lottie.json", 
         titleText: "Opss no message yet?", 
         messageText: "You have never done a transaction", 
-        size: size,
+        sizeHeight: size.height, 
+        sizeWidth: size.width,
       ),
     );
   }

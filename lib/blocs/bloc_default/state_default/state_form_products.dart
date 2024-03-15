@@ -1,4 +1,4 @@
-import 'package:flutter_laravel_toko_sepatu/shared/theme_konstanta.dart';
+import 'package:foosel/shared/theme_konstanta.dart';
 
 class DataStateFormProduct{
   bool formVisibleNameProduct, formVisiblePrice, formVisibleDescription, formVisibleType; 
@@ -19,7 +19,7 @@ class DataStatePriceProduct extends DataStateFormProduct{
 }
 
 class DataStateDescriptionProduct extends DataStateFormProduct{
-  DataStateDescriptionProduct(bool formVisibleDescriptionProduct) : super(false, false, formVisibleDescriptionProduct, false, descriptionProductKosong);
+  DataStateDescriptionProduct(bool formVisibleDescriptionProduct) : super(false, false, formVisibleDescriptionProduct, false, descriptionProduct);
 }
 
 class DataStateTypeProduct extends DataStateFormProduct{

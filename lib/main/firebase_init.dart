@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/main/multi_bloc.dart';
+import 'package:foosel/main/multi_bloc.dart';
 
 class FirebaseInit extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
@@ -11,13 +11,20 @@ class FirebaseInit extends StatelessWidget {
     return FutureBuilder(
       future: initialization,
       builder: (context, snapshot) {
-        if(snapshot.hasError){
-          return const Text("error");
+        if (snapshot.hasError) {
+          return const Text("Error");
         }
-        if(snapshot.connectionState == ConnectionState.done){
-          return MultiBlocProviderGetX();
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
         }
-        return const Text("loading");
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            return MultiBlocProviderGetX();
+          } else {
+            return const Text("No data available");
+          }
+        }
+        return const Text("Loading");
       }
     );
   }

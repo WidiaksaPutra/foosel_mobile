@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/bloc_button_up/state_button_up.dart';
+import 'package:foosel/blocs/bloc_default/bloc_button_up/state_button_up.dart';
 
 class cubitUpButton extends Cubit<StateDataUpButton>{
   cubitUpButton() : super(StateUpButton(0,0));

@@ -1,14 +1,14 @@
 // ignore_for_file: must_be_immutable
-
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_basic/componen_basic_text_form_field.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_text_style.dart';
+import 'package:foosel/ui/widgets/componen_basic/componen_basic_text_form_field.dart';
 
 class ComponenTextFormField_TextFormAndHintGrey14AndRadius12AndFillColorBlack extends StatelessWidget { 
+  int maxLines;
   String? labelText, iconText;
   bool? hiddenText, update;
   TextInputType? keyboardType;
@@ -17,6 +17,7 @@ class ComponenTextFormField_TextFormAndHintGrey14AndRadius12AndFillColorBlack ex
   String hintText, nameController;
   dynamic contextForm;
   ComponenTextFormField_TextFormAndHintGrey14AndRadius12AndFillColorBlack({
+    this.maxLines = 1,
     this.labelText = "",
     this.inputFormatters,
     this.keyboardType = TextInputType.text,
@@ -32,6 +33,7 @@ class ComponenTextFormField_TextFormAndHintGrey14AndRadius12AndFillColorBlack ex
   @override
   Widget build(BuildContext context) {
     return ComponenBasicTextFormField(
+      maxLines: maxLines,
       labelText: labelText!, 
       hintText: hintText, 
       inputFormatters: (inputFormatters != null) ? inputFormatters! : [],

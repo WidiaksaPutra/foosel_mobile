@@ -3,17 +3,18 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/event_default/event_form_user.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_navigasi_role.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_login/event_login.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/state_default/state_snackBar_form.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/firebase/interface_insert_user_firebase.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/service/interface_get_login.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/service/interface_get_user.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_global_variabel.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_konstanta.dart';
+import 'package:foosel/blocs/bloc_default/event_default/event_form_user.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/default/default_navigasi_role.dart';
+import 'package:foosel/blocs/bloc_login/event_login.dart';
+import 'package:foosel/blocs/bloc_default/state_default/state_snackBar_form.dart';
+import 'package:foosel/blocs/bloc_message/main/cubit_main_list_message_connect.dart';
+import 'package:foosel/interface/interface_local/firebase/interface_insert_user_firebase.dart';
+import 'package:foosel/interface/interface_local/service/interface_get_login.dart';
+import 'package:foosel/interface/interface_local/service/interface_get_user.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_global_variabel.dart';
+import 'package:foosel/shared/theme_konstanta.dart';
 import 'package:go_router/go_router.dart';
 
 // part 'bloc_event_login.dart';
@@ -31,7 +32,6 @@ class BlocButtonLoginData extends Bloc<DataEventFormLogin, StateSnackBar> with d
   }
 
   buttonSnackBar(String email, String password, BuildContext context) async{
-    await Future.delayed(const Duration(milliseconds: 500));
     await sharedPref();
     if(email != "" && password != ""){
       if(email != ""){
@@ -61,9 +61,9 @@ class BlocButtonLoginData extends Bloc<DataEventFormLogin, StateSnackBar> with d
               dataProfil: dataUser,
             );
             prefs.setString('fcmToken', fcmToken.toString());
-            Future.delayed(Duration(milliseconds: 1000));
             await navigasiR();
             await navigasiRBR(context: context, value: 0);
+            await context.read<cubitListMessageConnect>().updateListMessage();            
             emit(
               DataStateSnackBar(
                 context.go("$navigation"),

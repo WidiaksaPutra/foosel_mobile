@@ -1,9 +1,9 @@
 // import 'package:flutter/material.dart';
-// import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_shared_pref.dart';
-// import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-// import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-// import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-// import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
+// import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+// import 'package:foosel/shared/theme_box.dart';
+// import 'package:foosel/shared/theme_color.dart';
+// import 'package:foosel/shared/theme_font.dart';
+// import 'package:foosel/shared/theme_text_style.dart';
 
 // class ComponenTextFormField extends StatelessWidget with defaultSharedPref {
 //   String labelText, hintText, iconText, nameController;

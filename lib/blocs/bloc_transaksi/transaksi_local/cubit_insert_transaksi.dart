@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_transaksi/interfaces_transaksi.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_transaksi/transaksi_local/state_transaksi.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/helpers/interface_insert_data_transaksi_local.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_global_variabel.dart';
+import 'package:foosel/blocs/bloc_transaksi/interfaces_transaksi.dart';
+import 'package:foosel/blocs/bloc_transaksi/transaksi_local/state_transaksi.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_insert_data_transaksi_local.dart';
+import 'package:foosel/shared/theme_global_variabel.dart';
 
 class CubitInsertTransaksiLocal extends Cubit<DataStatePostTransaksiLocal> with insertTransaksiLocal{
   final interfaceInsertDataTransaksiLocal dataInsertTransaksiLocal = getItInstance<interfaceInsertDataTransaksiLocal>();
@@ -23,6 +23,7 @@ class CubitInsertTransaksiLocal extends Cubit<DataStatePostTransaksiLocal> with 
     required String imagePath
   }) async{
     emit(DataPostTransaksiLocal(loadingTransaksi: true, status: false));
+    Future.delayed(Duration(seconds: 2));
     int respons = await dataInsertTransaksiLocal.InsertDataTransaksiLocal(
       emailPenjual: emailPenjual,
       emailPembeli: emailPembeli,

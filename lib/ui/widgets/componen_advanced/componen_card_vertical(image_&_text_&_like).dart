@@ -1,11 +1,11 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_konstanta.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_konstanta.dart';
+import 'package:foosel/shared/theme_text_style.dart';
 
 class ComponenCardVertical_ImageAndTextAndLike extends StatelessWidget {
   late String image, title, harga;
@@ -40,13 +40,15 @@ class ComponenCardVertical_ImageAndTextAndLike extends StatelessWidget {
                   image, 
                   height: themeBox.defaultHeightBox60,
                   width: themeBox.defaultWidthBox60,
-                  alignment: Alignment.centerLeft
+                  alignment: Alignment.centerLeft,
+                  fit: BoxFit.cover,
                 )
               : Image.asset(
-                  "asset/image/sampel_sepatu_home_small_4.png", 
+                  "asset/image/disconnect_image.jpg", 
                   height: themeBox.defaultHeightBox60,
                   width: themeBox.defaultWidthBox60,
-                  alignment: Alignment.centerLeft
+                  alignment: Alignment.centerLeft,
+                  fit: BoxFit.cover,
                 ),
             ),
           ),

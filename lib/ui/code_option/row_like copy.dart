@@ -2,11 +2,11 @@
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter_hooks/flutter_hooks.dart';
-// import 'package:flutter_laravel_toko_sepatu/blocs/bloc_like/cubit_insert_like.dart';
-// import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-// import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-// import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-// import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
+// import 'package:foosel/blocs/bloc_like/cubit_insert_like.dart';
+// import 'package:foosel/shared/theme_box.dart';
+// import 'package:foosel/shared/theme_color.dart';
+// import 'package:foosel/shared/theme_font.dart';
+// import 'package:foosel/shared/theme_text_style.dart';
 
 // class RowLikeCopy extends HookWidget {
 //   late String name, categoryName, tokenId, description, price, imagePath;

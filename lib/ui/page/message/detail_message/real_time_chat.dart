@@ -3,13 +3,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_message/main/bloc_main_detail_message_connect.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_global_variabel.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_chat_bubble_basic.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_loading.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_page_kosong.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_message/main/bloc_main_detail_message_connect.dart';
+import 'package:foosel/shared/theme_global_variabel.dart';
+import 'package:foosel/ui/widgets/componen_chat_bubble_basic.dart';
+import 'package:foosel/ui/widgets/componen_loading.dart';
+import 'package:foosel/ui/widgets/componen_page_kosong.dart';
 
 class RealTimeChat extends StatelessWidget with defaultSharedPref{
   RealTimeChat({Key? key}) : super(key: key);
@@ -47,14 +46,15 @@ class RealTimeChat extends StatelessWidget with defaultSharedPref{
               },
             );
           }else{
-            return const ComponenLoadingBasic(colors: kPurpleColor);
+            return ComponenLoadingLottieBasic(height: 100);
           }
         }else{
           return ComponenPageKosongBasic(
-            image: "asset/icon/headset_icon.png", 
+            image: "asset/animations/chat_lottie.json", 
             titleText: "Opss no message yet?", 
-            messageText: "You have never done a transaction",
-            size: size,
+            messageText: "You have never done a transaction", 
+            sizeHeight: size.height, 
+            sizeWidth: size.width,
           );
         }
       }

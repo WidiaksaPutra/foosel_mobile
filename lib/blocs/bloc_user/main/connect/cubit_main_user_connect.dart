@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_user/state_user.dart';
-import 'package:flutter_laravel_toko_sepatu/helpers/user/helper_user.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/firebase/interface_update_user_firebase.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/service/interface_get_user.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_global_variabel.dart';
+import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_user/state_user.dart';
+import 'package:foosel/helpers/user/helper_user.dart';
+import 'package:foosel/interface/interface_local/firebase/interface_update_user_firebase.dart';
+import 'package:foosel/interface/interface_local/service/interface_get_user.dart';
+import 'package:foosel/shared/theme_global_variabel.dart';
 
 class CubitMainUserConnect extends Cubit<DataStateUser> with helperUser, defaultSharedPref{
   final interfaceGetUser dataGetUser = getItInstance<interfaceGetUser>();

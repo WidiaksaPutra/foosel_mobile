@@ -1,4 +1,4 @@
 abstract class interfaceGetDataProductTransaksiStorageLocal{
   GetDataProductTransaksiLocal();
-  GetDataProductTransaksiWhereIdLocal({required String tokenId});
+  GetDataProductTransaksiWhereIdLocal({required String tokenTransaksi});
 }

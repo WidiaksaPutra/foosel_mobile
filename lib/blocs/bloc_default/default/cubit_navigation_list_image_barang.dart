@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/show_snack_bar.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/state_default/state_navigation_list_image_barang.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
+import 'package:foosel/blocs/bloc_default/default/show_snack_bar.dart';
+import 'package:foosel/blocs/bloc_default/state_default/state_navigation_list_image_barang.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_text_style.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
+import 'package:foosel/shared/theme_box.dart';
 
 class CubitNavigationListImageBarang extends Cubit<DataStateNavigationListImageBarang> with showSnackBar{
   CubitNavigationListImageBarang() : super(DataNavigationListImageBarang(null));

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_text_style.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ComponenFormKosong extends StatelessWidget {
@@ -23,7 +23,7 @@ class ComponenFormKosong extends StatelessWidget {
               width: 14,
             ),
             SizedBox(width: themeBox.defaultWidthBox4),
-            Text(message, style: redTextStyle.copyWith(fontSize: defaultFont12, fontWeight: regular)),
+            Expanded(child: Text(message, style: redTextStyle.copyWith(fontSize: defaultFont12, fontWeight: regular), overflow: TextOverflow.ellipsis,)),
           ]
         ),
       ),

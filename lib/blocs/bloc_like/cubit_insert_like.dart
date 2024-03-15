@@ -1,8 +1,8 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_like/interfaces_like.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/helpers/interface_insert_data_like_local.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_global_variabel.dart';
+import 'package:foosel/blocs/bloc_like/interfaces_like.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_insert_data_like_local.dart';
+import 'package:foosel/shared/theme_global_variabel.dart';
 
 class cubitInsertLike extends Cubit<dynamic> with insertLike{
   final interfaceInsertDataLikeLocal dataInsertLike = getItInstance<interfaceInsertDataLikeLocal>();
@@ -12,6 +12,7 @@ class cubitInsertLike extends Cubit<dynamic> with insertLike{
   SaveLocalDataLike({
     required String tokenId,
     required String name,
+    required String email,
     required String description,
     required String nameCategory,
     required String price,
@@ -20,6 +21,7 @@ class cubitInsertLike extends Cubit<dynamic> with insertLike{
     await dataInsertLike.InsertDataLikeLocal(
       tokenId: tokenId,
       name: name,
+      email: email,
       description: description,
       nameCategory: nameCategory,
       price: price,

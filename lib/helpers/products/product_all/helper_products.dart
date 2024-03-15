@@ -1,13 +1,14 @@
-import 'package:flutter_laravel_toko_sepatu/helpers/products/product_all/sql_products_tabel.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/default/interface_delete_data_storage_local.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/helpers/interface_get_data_product_storage_local.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/helpers/interface_insert_data_products_local.dart';
+import 'package:foosel/helpers/products/product_all/sql_products_tabel.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_delete_data_product_storage_local.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_get_data_product_storage_local.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_insert_data_products_local.dart';
 
-class helperProducts implements interfaceGetDataProductStorageLocal, interfaceInsertDataProductsLocal, interfaceDeleteDataStorageLocal{
+class helperProducts implements interfaceGetDataProductStorageLocal, interfaceInsertDataProductsLocal, interfaceDeleteDataProductStorageLocal{
   @override
   Future<int> InsertDataLocal({
-    required String tokenId, 
-    required String name, 
+    required String tokenId,
+    required String email,
+    required String name,
     required String description, 
     required String nameCategory, 
     required String price,
@@ -15,7 +16,8 @@ class helperProducts implements interfaceGetDataProductStorageLocal, interfaceIn
   }) async {
     final db = await SqlProductsTabel.db();
     final dataInsert = {
-      'tokenId': tokenId, 
+      'tokenId': tokenId,
+      'email': email,
       'name': name,
       'description': description, 
       'nameCategory': nameCategory, 
@@ -38,7 +40,7 @@ class helperProducts implements interfaceGetDataProductStorageLocal, interfaceIn
   }
 
   @override
-  DeleteDataLocal() async{
+  Future<int> DeleteDataProductLocal() async{
     final db = await SqlProductsTabel.db();
     return await db.delete('products');
   }

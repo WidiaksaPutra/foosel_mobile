@@ -1,4 +1,4 @@
-name: flutter_laravel_toko_sepatu
+name: foosel
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -58,6 +58,9 @@ dependencies:
   flutter_hooks: ^0.20.3
   lottie: ^1.1.0
   mobkit_dashed_border: ^0.0.5
+  # mockito: ^5.4.2
+  # path_provider: ^2.0.2
+  badges: ^3.1.1
   # google_maps_flutter: ^2.5.0
   # webview_flutter: ^2.0.12
   # location: ^5.0.3

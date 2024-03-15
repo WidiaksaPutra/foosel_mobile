@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
+import 'package:foosel/shared/theme_box.dart';
 
 mixin dialogBasic{
   void voidDialogBasic({
@@ -35,6 +35,7 @@ mixin dialogBasic{
                     'asset/icon/close_icon.png',
                     height: themeBox.defaultHeightBox10,
                     width: themeBox.defaultWidthBox10,
+                    
                   ),
                 ),
               ),

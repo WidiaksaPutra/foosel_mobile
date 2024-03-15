@@ -1,16 +1,16 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/bloc_form_button_not_null_barang.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/default/cubit_form_not_null_barang.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/state_default/state_form_products.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_default/state_default/state_multipe_form.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_box.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/page/dropdown/dropdown_type_data.dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_advanced/componen_text_form_field(label_white_16_&_text_form_and_hint_grey_14_&_radius_12_&_fill_color_black).dart';
-import 'package:flutter_laravel_toko_sepatu/ui/widgets/componen_form_kosong.dart';
+import 'package:foosel/blocs/bloc_default/default/bloc_form_button_not_null_barang.dart';
+import 'package:foosel/blocs/bloc_default/default/cubit_form_not_null_barang.dart';
+import 'package:foosel/blocs/bloc_default/state_default/state_form_products.dart';
+import 'package:foosel/blocs/bloc_default/state_default/state_multipe_form.dart';
+import 'package:foosel/shared/theme_box.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_text_style.dart';
+import 'package:foosel/ui/page/dropdown/dropdown_type_data.dart';
+import 'package:foosel/ui/widgets/componen_advanced/componen_text_form_field(label_white_16_&_text_form_and_hint_grey_14_&_radius_12_&_fill_color_black).dart';
+import 'package:foosel/ui/widgets/componen_form_kosong.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:flutter_multi_formatter/formatters/currency_input_formatter.dart';
 
@@ -29,18 +29,18 @@ class FormInsertBarang extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     if(hintNameProduct == ''){
-      hintNameProduct = 'Merek & Nama Sepatumu';
+      hintNameProduct = 'Merek & Nama Productmu';
     }
     if(hintDeskripsiProduct == ''){
-      hintDeskripsiProduct = 'Penjelasan Sepatu';
+      hintDeskripsiProduct = 'Penjelasan Product';
     }
     if(hintHargaProduct == ''){
-      hintHargaProduct = 'Harga Sepatu';
+      hintHargaProduct = 'Harga Product';
     }
     return Column(
       children: [
         ComponenTextFormField_TextFormAndHintGrey14AndRadius12AndFillColorBlack(
-          labelText: "Nama Sepatu",
+          labelText: "Nama Product",
           labelStyle: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16),
           hintText: hintNameProduct!,
           nameController: "namaProduct",
@@ -69,11 +69,12 @@ class FormInsertBarang extends StatelessWidget{
         ),
         SizedBox(height: themeBox.defaultHeightBox30),
         ComponenTextFormField_TextFormAndHintGrey14AndRadius12AndFillColorBlack(
-          labelText: "Deskripsi Sepatu",
+          maxLines: 5,
+          labelText: "Deskripsi Product",
           labelStyle: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16),
           hintText: hintDeskripsiProduct!,
           nameController: "deskripsi", 
-          contextForm: context.read<CubitFormNotNullBarang>().descriptionValidasiEmpty, 
+          contextForm: context.read<CubitFormNotNullBarang>().descriptionValidasi, 
           update: statusUpdateFormBarang, 
         ),
         BlocBuilder<BlocFormButtonNotNullBarang, DataStateMultiFormProduct>(
@@ -85,7 +86,7 @@ class FormInsertBarang extends StatelessWidget{
         ),
         SizedBox(height: themeBox.defaultHeightBox30),
         ComponenTextFormField_TextFormAndHintGrey14AndRadius12AndFillColorBlack(
-          labelText: "Harga Sepatu",
+          labelText: "Harga Product",
           labelStyle: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16),
           hintText: hintHargaProduct!,
           nameController: 'price',

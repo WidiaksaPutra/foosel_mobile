@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_color.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_font.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_text_style.dart';
+import 'package:foosel/shared/theme_color.dart';
+import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_text_style.dart';
 
 class LabeledRadio extends StatelessWidget {
   const LabeledRadio({
@@ -38,7 +38,7 @@ class LabeledRadio extends StatelessWidget {
                 onChanged(newValue!);
               },
             ),
-            Text(label, style: grayTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont14)),
+            Expanded(child: Text(label, style: grayTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont14), overflow: TextOverflow.visible,)),
           ],
         ),
       ),

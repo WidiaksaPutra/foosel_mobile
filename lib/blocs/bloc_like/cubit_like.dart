@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_like/cubit_insert_like.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_like/interfaces_like.dart';
-import 'package:flutter_laravel_toko_sepatu/blocs/bloc_like/state_like.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/helpers/interface_delete_data_like_local.dart';
-import 'package:flutter_laravel_toko_sepatu/interface/interface_local/helpers/interface_get_data_like_local.dart';
-import 'package:flutter_laravel_toko_sepatu/shared/theme_global_variabel.dart';
+import 'package:foosel/blocs/bloc_like/cubit_insert_like.dart';
+import 'package:foosel/blocs/bloc_like/interfaces_like.dart';
+import 'package:foosel/blocs/bloc_like/state_like.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_delete_data_like_local.dart';
+import 'package:foosel/interface/interface_local/helpers/interface_get_data_like_local.dart';
+import 'package:foosel/shared/theme_global_variabel.dart';
 
 class cubitLike extends Cubit<DataStateLike> with like{
   final interfaceGetDataLikeLocal dataGetLike = getItInstance<interfaceGetDataLikeLocal>();
@@ -27,7 +27,8 @@ class cubitLike extends Cubit<DataStateLike> with like{
   
   @override
   GetLikeOnClick({
-    required String name, 
+    required String name,
+    required String email, 
     required String categoryName, 
     required String tokenId, 
     required String description, 
@@ -41,6 +42,7 @@ class cubitLike extends Cubit<DataStateLike> with like{
       context.read<cubitInsertLike>().SaveLocalDataLike(
         tokenId: tokenId, 
         name: name,
+        email: email,
         nameCategory: categoryName, 
         description: description, 
         price: price,

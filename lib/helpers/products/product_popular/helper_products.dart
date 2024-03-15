@@ -1,4 +1,4 @@
-import 'package:flutter_laravel_toko_sepatu/helpers/products/product_popular/sql_products_tabel.dart';
+import 'package:foosel/helpers/products/product_popular/sql_products_tabel.dart';
 
 mixin helperProductsPopular{
    //fungsi menambah data
