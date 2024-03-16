@@ -6,9 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_pembeli/cubit_bottom_nav_pembeli.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_pembeli/state_bottom_nav_pembeli.dart';
 import 'package:foosel/blocs/bloc_default/default/connection_dialog.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_connection_example.dart';
 import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_connection.dart';
 import 'package:foosel/blocs/bloc_like/cubit_get_like.dart';
 import 'package:foosel/blocs/bloc_logout/cubit_logout.dart';
 import 'package:foosel/blocs/bloc_logout/state_logout.dart';
@@ -138,7 +136,7 @@ class BottomNavPembeli extends StatelessWidget with defaultSharedPref{
                             )
                         : (prefs.getString("navBadges") != null)
                         ? badges.Badge(
-                            badgeContent: Text(prefs.getString("navBadges").toString(),
+                            badgeContent: Text("...",
                             style: const TextStyle(fontSize: 12, color: Colors.white)), 
                             child: Image.asset(
                               "asset/icon/chat_icon.png",
@@ -269,27 +267,28 @@ class BottomNavPembeli extends StatelessWidget with defaultSharedPref{
     // contexts.read<BlocAllProductConnect>().close();
   // }
 
-  void messageList() async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('emailPenerima');
-  }
+  // void messageList() async{
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.remove('emailPenerima');
+  // }
 
   Widget body(){
     switch(currentButton){
       case 0 :
-      messageList();
+      // messageList();
       return HomeMenuUser();
       case 1 :
+      contexts.read<cubitListMessageConnect>().updateListMessage();
       return MessageList();
       case 2 :
-      messageList();
+      // messageList();
       contexts.read<CubitGetLike>().GetDataLike();
       return Like();
       case 3 :
-      messageList();
+      // messageList();
       return const Profile();
       default :
-      messageList();
+      // messageList();
       return HomeMenuUser();
     }
   }

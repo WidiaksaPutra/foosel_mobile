@@ -149,7 +149,7 @@ class BottomNavPenjual extends HookWidget with defaultSharedPref {
                               )
                           : (prefs.getString("navBadges") != null)
                           ? badges.Badge(
-                              badgeContent: Text(prefs.getString("navBadges").toString(),
+                              badgeContent: Text("...",
                               style: const TextStyle(fontSize: 12, color: Colors.white)), 
                               child: Image.asset(
                                 "asset/icon/chat_icon.png",

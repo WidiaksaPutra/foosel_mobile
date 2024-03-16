@@ -7,14 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class FloatingButtonNav extends StatelessWidget {
   const FloatingButtonNav({Key? key}) : super(key: key);
 
-  void closeBloc() async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('emailPenerima');
-  }
-
   @override
   Widget build(BuildContext context) {
-    closeBloc();
     return FloatingActionButton(
       onPressed: (){
         context.go(RouteName.cart);
