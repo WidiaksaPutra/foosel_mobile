@@ -1,6 +1,4 @@
 // ignore_for_file: must_be_immutable
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_default/default/cubit_connection_example.dart';
@@ -92,7 +90,11 @@ class MessageList extends HookWidget with defaultSharedPref, dialogBasic{
         ),
         onTap: () {
           prefs.setString('emailPenerima', listMessage.dataUser[index].email);
-          context.read<cubitNavMessageDetail>().navigation(tokenPenerima: listMessage.dataUser[index].tokenNotive.toString(), roleBar: 1, detailMessage: false);
+          context.read<cubitNavMessageDetail>().navigation(
+            tokenPenerima: listMessage.dataUser[index].tokenNotive.toString(), 
+            roleBar: 1, 
+            detailMessage: false,
+          );
           context.go(RouteName.detailMessage);
         },
       );

@@ -29,7 +29,7 @@ class BodyDetailMessage extends StatelessWidget with defaultSharedPref{
               // height: size.height,
               child: RealTimeChat(),
             )
-          : ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200);
+          : Expanded(child: ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200));
         }
       );
     }
@@ -60,7 +60,7 @@ class BodyDetailMessage extends StatelessWidget with defaultSharedPref{
                   prefs.remove("message");
                 },
               )
-            : ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox100);
+            : ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50);
           }
         ),
       );

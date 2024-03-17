@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
 import 'package:foosel/blocs/bloc_message/main/bloc_main_detail_message_connect.dart';
+import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 import 'package:foosel/ui/widgets/componen_chat_bubble_basic.dart';
 import 'package:foosel/ui/widgets/componen_loading.dart';
@@ -17,6 +18,7 @@ class RealTimeChat extends StatelessWidget with defaultSharedPref{
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     sharedPref();
+    context.read<BlocDetailMessageConnect>().getStreamFirebaseChatMessage;
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: context.read<BlocDetailMessageConnect>().getStreamFirebaseChatMessage,
       builder: (context, snapshot){
@@ -28,8 +30,8 @@ class RealTimeChat extends StatelessWidget with defaultSharedPref{
               reverse: true,
               itemCount: allChats.length,
               itemBuilder: (BuildContext context, int index) {
-                final String preConverted = allChats[index]['time'].toString();
-                final int seconds = int.parse(preConverted.substring(18, 28));
+                late String preConverted = allChats[index]['time'].toString();
+                late int seconds = int.parse(preConverted.substring(18, 28));
                 context.read<BlocDetailMessageConnect>().updateFirebaseChatMessage(emailPenerima: prefs.getString('emailPenerima').toString(), emailPengirim: prefs.getString('email').toString());
                 return 
                 // BlocBuilder<CubitBottomSpace, dynamic>(
@@ -46,15 +48,17 @@ class RealTimeChat extends StatelessWidget with defaultSharedPref{
               },
             );
           }else{
-            return ComponenLoadingLottieBasic(height: 100);
+            return ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200);
           }
         }else{
-          return ComponenPageKosongBasic(
-            image: "asset/animations/chat_lottie.json", 
-            titleText: "Opss no message yet?", 
-            messageText: "You have never done a transaction", 
-            sizeHeight: size.height, 
-            sizeWidth: size.width,
+          return Expanded(
+            child: ComponenPageKosongBasic(
+              image: "asset/animations/chat_lottie.json", 
+              titleText: "Opss no message yet?", 
+              messageText: "You have never done a transaction", 
+              sizeHeight: size.height, 
+              sizeWidth: size.width,
+            ),
           );
         }
       }

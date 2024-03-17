@@ -5,11 +5,10 @@ import 'package:foosel/shared/theme_font.dart';
 import 'package:foosel/shared/theme_text_style.dart';
 
 class ComponenChatBubbleBasic extends StatelessWidget {
-  final String dataMessage, userPenerima, jenisUserMessage, dataTimeMinute;
-  final bool dataIsRead;
-
+  late String dataMessage, userPenerima, jenisUserMessage, dataTimeMinute;
+  late bool dataIsRead;
   // final bool bSpace;
-  const ComponenChatBubbleBasic({Key? key, required this.dataMessage, required this.userPenerima, required this.jenisUserMessage, required this.dataTimeMinute, required this.dataIsRead}) : super(key: key);
+  ComponenChatBubbleBasic({Key? key, required this.dataMessage, required this.userPenerima, required this.jenisUserMessage, required this.dataTimeMinute, required this.dataIsRead}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

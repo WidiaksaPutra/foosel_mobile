@@ -46,7 +46,6 @@ class DetailBottomNavigationBarConnectionProductPembeli extends HookWidget with 
                 }else{
                   listMessage.dataUser.forEach((data) { 
                     if(data.email.toString() == prefs.getString('emailPenerima').toString()){               
-                      context.read<cubitTitleMessageConnect>().getTitleMessage(users: snapshot.data!.docs, message: "hai...");
                       context.read<cubitNavMessageDetail>().navigation(tokenPenerima: data.tokenNotive.toString(), roleBar: 0, detailMessage: true);
                       haveTitle.value = true;
                     }
@@ -70,10 +69,9 @@ class DetailBottomNavigationBarConnectionProductPembeli extends HookWidget with 
                       navBack: RouteName.detailProductPembeli, 
                       onPressedMessage: () {
                         if(titleBool.value == true){
-                          context.read<cubitTitleMessageConnect>().getTitleMessage(users: snapshot.data!.docs, message: "hai...");
                           context.read<cubitNavMessageDetail>().navigation(tokenPenerima: "-", roleBar: 0, detailMessage: true);
                         }
-                        context.go(RouteName.detailMessage);       
+                        context.go(RouteName.detailMessage);     
                       },
                       onTapTransaksi: () {
                         context.read<CubitInsertTransaksiLocal>().SaveLocalDataTransaksi(

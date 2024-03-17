@@ -5,7 +5,7 @@ import 'package:foosel/shared/theme_font.dart';
 import 'package:foosel/shared/theme_text_style.dart';
 
 class ComponenHeaderImageTitleStatus extends StatelessWidget with sizeDevice{
-  final String image, title, status;
+  late String image, title, status;
   ComponenHeaderImageTitleStatus({Key? key, required this.image, required this.title, required this.status}) : super(key: key);
 
   @override
