@@ -87,7 +87,7 @@ class Cart extends StatelessWidget{
               )},
               readBlocDisconnect: {context.read<CubitDetailProdukNavPembeli>().DetailProdukNavPembeli(
                 jenisDetail: "Transaksi", 
-                readDetail:context.read<CubitGetTransaksiLocal>().GetDataTransaksiWhereId(tokenId: data['tokenId'].toString())
+                readDetail: context.read<CubitGetTransaksiLocal>().GetDataTransaksiWhereId(tokenId: data['tokenId'].toString())
               )},
             );
             context.go(state1.navigation);

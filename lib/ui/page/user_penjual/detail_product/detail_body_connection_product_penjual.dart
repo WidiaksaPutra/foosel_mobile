@@ -10,9 +10,7 @@ import 'package:foosel/blocs/bloc_default/default/show_snack_bar.dart';
 import 'package:foosel/blocs/bloc_detail_products/detail_product/cubit_detail_product_connect.dart';
 import 'package:foosel/blocs/bloc_detail_products/state_products.dart';
 import 'package:foosel/blocs/bloc_transaksi/transaksi_api/cubit_get_detail_transaksi_product.dart';
-import 'package:foosel/blocs/bloc_transaksi/transaksi_api/cubit_get_transaksi_product.dart';
 import 'package:foosel/blocs/bloc_transaksi/transaksi_api/state_transaksi.dart';
-import 'package:foosel/blocs/bloc_transaksi/transaksi_local/cubit_get_transaksi_product_local.dart';
 import 'package:foosel/routes/route_name.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/shared/theme_color.dart';
@@ -100,28 +98,32 @@ class DetailBodyConnectionProductPenjual extends HookWidget with navigasiRole, n
                           )
                         : BlocBuilder<CubitGetDetailTransaksiProduct, DataStateGetTransaksi>(
                           builder: (context3, state3) {
-                            return (state3.loading == false && state3.dataTransaksi.isNotEmpty)
-                            ? ComponenContainerHarga(
-                                titleHarga: "Harga",
-                                harga: (state.dataProducts.price == null) ? "0.0" : state.dataProducts.price.toString(),
-                                titleItem: "Jumlah Barang",
-                                jumlahItem: state3.dataTransaksi[0]["quantity"].toString(),
-                                titleTotalHarga: "Total Harga",
-                                jumlahTotalHarga: state3.dataTransaksi[0]["totalPrice"].toString(),
-                              )
-                            : ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox100);
-                          }
-                        )
+                            return (state3.dataTransaksi.isEmpty)
+                            ? ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox100)
+                            : (state3.dataTransaksi[0].productsId != state.dataProducts.tokenId)
+                              ? ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox100)
+                              : ComponenContainerHarga(
+                                  titleHarga: "Harga",
+                                  harga: (state.dataProducts.price == null) ? "0.0" : state.dataProducts.price.toString(),
+                                  titleItem: "Jumlah Barang",
+                                  jumlahItem: state3.dataTransaksi[0].quantity.toString(),
+                                  titleTotalHarga: "Total Harga",
+                                  jumlahTotalHarga: state3.dataTransaksi[0].totalPrice.toString(),
+                                );
+                          })
                       ),
                       ComponenTextDetail(title: "Description", data: state.dataProducts.description.toString()),
                       BlocBuilder<CubitDetailProdukNavPenjual, DataStateDetailProdukNavPenjual>(
                         builder: (context2, state2) => (state2.jenisDetail.toString() == "AllProduct")
                         ? SizedBox()
                         : BlocBuilder<CubitGetDetailTransaksiProduct, DataStateGetTransaksi>(
-                            builder: (context3, state3) => (state3.loading == false && state3.dataTransaksi.isNotEmpty)
-                            ? ComponenTextDetail(title: "Email Pembeli", data: state3.dataTransaksi[0]["usersEmailPembeli"].toString())
-                            : ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox100) 
-                          )
+                          builder: (context3, state3) {
+                            return (state3.dataTransaksi.isEmpty)
+                            ? ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox100)
+                            : (state3.dataTransaksi[0].productsId != state.dataProducts.tokenId)
+                              ? ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox100)
+                              : ComponenTextDetail(title: "Email Pembeli", data: state3.dataTransaksi[0].usersEmailPembeli.toString());
+                          })
                       ),
                       // ComponenSmallHorizontal(titleImage: "Fimiliar Product"),
                     ],

@@ -26,9 +26,7 @@ class BlocKlasifikasiCategoriesDisconnect extends Bloc<DataEventKlasifikasi, Dat
   }
 
   GetDataCategoryProductLocal(String categoryKey) async{
-    print("data list disconnect $categoryKey");
     dataList = await dataGetProductsCategoryLocal.GetDataLocal(nameCategory: categoryKey);
-    print("data list product $dataList");
     emit(
       DataCategori(
         dataKlassifikasiCategories: dataList, 

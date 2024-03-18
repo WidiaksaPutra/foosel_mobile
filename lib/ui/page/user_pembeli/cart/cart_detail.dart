@@ -104,12 +104,12 @@ class CartDetail extends StatelessWidget with dialogBasic{
                 jenisDetail: "TransaksiDetail",
                 readDetail: {
                   context.read<CubitDetailProductConnect>().GetDetailProductConnect(idProduct: data['tokenId'].toString()),
-                  context.read<CubitDetailProductsDisconnect>().GetDetailProductDisconnect(tokenId: data['tokenId'].toString()),
+                  context.read<CubitGetTransaksiLocal>().GetDataTransaksiWhereId(tokenId: data['tokenId'].toString()),
                 }
               )},
               readBlocDisconnect: {context.read<CubitDetailProdukNavPembeli>().DetailProdukNavPembeli(
                 jenisDetail: "TransaksiDetail", 
-                readDetail: context.read<CubitDetailProductsDisconnect>().GetDetailProductDisconnect(tokenId: data['tokenId'].toString()),
+                readDetail: context.read<CubitGetTransaksiLocal>().GetDataTransaksiWhereId(tokenId: data['tokenId'].toString()),
               )},
             );
             context.go(state1.navigation);

@@ -31,13 +31,16 @@ class DataPatchTransaksi extends DataStatePatchTransaksi{
 }
 
 class DataStateGetTransaksi{
-  List dataTransaksi;
-  bool loading;
+  late List dataTransaksi;
+  late bool loading;
   DataStateGetTransaksi(this.dataTransaksi, this.loading);
 }
 
 class DataGetTransaksi extends DataStateGetTransaksi{
-  DataGetTransaksi({required List dataTransaksi, required bool loading}) : super(dataTransaksi, loading);
+  DataGetTransaksi({
+    required List dataTransaksi, 
+    required bool loading,
+  }) : super(dataTransaksi, loading);
 }
 
 class StateDeleteTransaksi{

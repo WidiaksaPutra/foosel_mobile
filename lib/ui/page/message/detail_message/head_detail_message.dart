@@ -17,14 +17,14 @@ import 'package:foosel/ui/widgets/componen_advanced/compenen_get_back.dart';
 import 'package:foosel/ui/widgets/componen_header_status.dart';
 import 'package:foosel/ui/widgets/componen_loading.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class DetailMessage extends StatelessWidget with navigasiRole, navigasiRoleBarRead, defaultSharedPref{
+class DetailMessage extends HookWidget with navigasiRole, navigasiRoleBarRead, defaultSharedPref{
   DetailMessage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     sharedPref();
-    // final readListMessage = useState(context.read<cubitListMessageConnect>().getStreamFirebaseListMessage);
     return Scaffold(
       backgroundColor: kBlackColor6,
       appBar: AppBar(

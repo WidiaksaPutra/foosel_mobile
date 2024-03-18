@@ -81,12 +81,12 @@ class CartProduct extends HookWidget with dialogBasic, navigasiRoleBarRead, defa
                         status: state1.dataTransaksi[index]['status'].toString().toUpperCase(),
                         kondisi: state1.dataTransaksi[index]['status'].toString(), 
                         bukanTujuanKondisi: "approved",
-                        onTapCard: () {
+                        onTapCard: () async {
                           context.read<CubitDetailProdukNavPenjual>().DetailProdukNavPenjual(
                             jenisDetail: "Transaksi",
                             readDetail: {
+                              await context.read<CubitGetDetailTransaksiProduct>().GetDataTransaksiDetail(transactionsId: state1.dataTransaksi[index]['tokenTransaksi'].toString()),
                               context.read<CubitDetailProductConnect>().GetDetailProductConnect(jenisDetail: false, idProduct: state1.dataTransaksi[index]['tokenProduct'].toString()),
-                              context.read<CubitGetDetailTransaksiProduct>().GetDataTransaksiDetail(transactionsId: state1.dataTransaksi[index]['tokenTransaksi'].toString()),
                             }
                           );
                           context.go(stateNavDetail.navigation);

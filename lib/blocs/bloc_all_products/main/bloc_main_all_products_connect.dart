@@ -36,7 +36,6 @@ class BlocAllProductConnect extends Bloc<dataEventAllProduct,DataStateProductBas
 
   @override
   GetDataAllProduct(int pages) async{
-    print("test all data");
     loadingScrolling = false;
     dataList = await dataGetProduct.GetDataProduct(pages: pages);
     loadingApi = false;

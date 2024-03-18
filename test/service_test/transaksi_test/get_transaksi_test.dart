@@ -34,8 +34,7 @@ void main(){
         testing: true,
         email: emailPembeli,
       );
-      print(data);
-      // expect(data, equals("berhasil"));
+      expect(data, equals("berhasil"));
     });
     test("Unit Test Service Get Data Transaksi Role Penjual", () async{
       Map<String, String> headers = {

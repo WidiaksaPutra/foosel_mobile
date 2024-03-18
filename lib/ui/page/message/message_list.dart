@@ -46,48 +46,62 @@ class MessageList extends HookWidget with defaultSharedPref, dialogBasic{
           ? formatDate.format(DateTime.fromMillisecondsSinceEpoch(seconds * 1000)) 
           : "now",
         textTailing: listMessage.dataUser[index].status, 
-        onLongPress: () => voidDialogBasic(
-          context: context, 
-          margin: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
-          padding: EdgeInsets.only(left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30, top: themeBox.defaultHeightBox30),
-          borderRadius: BorderRadius.circular(themeBox.defaultRadius10),
-          color: kBlackColor6,
-          closeIconStatus: true,
-          barrierDismissible: false,
-          contentDialog: BlocBuilder<CubitDeleteMessege, StateDeleteMessage>(
-            builder: (context5, state2) => (state2.loadingDeleteTransaksi == false)
-            ? (statusMessage.value == false)
-              ? ComponenContentDialog_ImageAndTitleTextAndButtonYesAndButtonNo(
-                  image: 'asset/animations/peringatan_lottie.json',
-                  titleText: delleteMessageUser,
-                  onTapYes: () async{
-                    await context.read<CubitDeleteMessege>().DeleteDataMessage(emailPengirim: prefs.getString('email').toString(), emailPenerima: listMessage.dataUser[index].email);
-                    statusMessage.value = true;
-                    Future.delayed(
-                      Duration(seconds: 2),
-                      (){
-                        Navigator.of(context).pop();
-                        statusMessage.value = false;
-                      },
-                    );
-                  },
+        onLongPress: () => (listMessage.dataUser[index].status.toString() == "Offline")
+        ? voidDialogBasic(
+            context: context, 
+            margin: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
+            padding: EdgeInsets.only(left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30, top: themeBox.defaultHeightBox30),
+            borderRadius: BorderRadius.circular(themeBox.defaultRadius10),
+            color: kBlackColor6,
+            closeIconStatus: true,
+            barrierDismissible: false,
+            contentDialog: BlocBuilder<CubitDeleteMessege, StateDeleteMessage>(
+              builder: (context5, state2) => (state2.loadingDeleteTransaksi == false)
+              ? (statusMessage.value == false)
+                ? ComponenContentDialog_ImageAndTitleTextAndButtonYesAndButtonNo(
+                    image: 'asset/animations/peringatan_lottie.json',
+                    titleText: delleteMessageUser,
+                    onTapYes: () async{
+                      await context.read<CubitDeleteMessege>().DeleteDataMessage(emailPengirim: prefs.getString('email').toString(), emailPenerima: listMessage.dataUser[index].email);
+                      statusMessage.value = true;
+                      Future.delayed(
+                        Duration(seconds: 2),
+                        (){
+                          Navigator.of(context).pop();
+                          statusMessage.value = false;
+                        },
+                      );
+                    },
+                  )
+                : (state2.statusAlert == true)
+                  ? ComponenContentDialog_ImageAndTitleText(
+                      image: 'asset/animations/check_lottie.json',
+                      text: 'Berhasil...',
+                    )
+                  : ComponenContentDialog_ImageAndTitleText(
+                      image: 'asset/animations/close_lottie.json', 
+                      text: 'Gagal..!',
+                    )
+              : ComponenContentDialog_ImageAndTitleText(
+                  image: 'asset/animations/loading_dialog_lottie.json', 
+                  text: '...',
                 )
-              : (state2.statusAlert == true)
-                ? ComponenContentDialog_ImageAndTitleText(
-                    image: 'asset/animations/check_lottie.json',
-                    text: 'Berhasil...',
-                  )
-                : ComponenContentDialog_ImageAndTitleText(
-                    image: 'asset/animations/close_lottie.json', 
-                    text: 'Gagal..!',
-                  )
-            : ComponenContentDialog_ImageAndTitleText(
-                image: 'asset/animations/loading_dialog_lottie.json', 
-                text: '...',
-              )
+            ),
+            onTapCloseDialog: () => Navigator.of(context).pop(), 
+          )
+        : voidDialogBasic(
+            context: context, 
+            margin: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
+            padding: EdgeInsets.only(left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30, top: themeBox.defaultHeightBox30),
+            borderRadius: BorderRadius.circular(themeBox.defaultRadius10),
+            color: kBlackColor6,
+            closeIconStatus: true,
+            barrierDismissible: true,
+            contentDialog: ComponenContentDialog_ImageAndTitleText(
+              image: 'asset/animations/peringatan_lottie.json',
+              text: 'User yang ingin diDelete masih Online...',
+            ), onTapCloseDialog: () => Navigator.of(context).pop(),
           ),
-          onTapCloseDialog: () => Navigator.of(context).pop(), 
-        ),
         onTap: () {
           prefs.setString('emailPenerima', listMessage.dataUser[index].email);
           context.read<cubitNavMessageDetail>().navigation(
@@ -99,7 +113,6 @@ class MessageList extends HookWidget with defaultSharedPref, dialogBasic{
         },
       );
     }
-  
     return BlocBuilder<cubitConnectionExample, DataStateConnection>(
     builder: (context, state) => (state.connectionBoolean == true)
     ? BlocBuilder<cubitListMessageConnect, DataStateListMessage>(

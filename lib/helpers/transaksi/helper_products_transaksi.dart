@@ -41,7 +41,6 @@ class helperProductsTransaksi implements interfaceGetDataProductTransaksiStorage
   @override
   Future<List<Map<String, dynamic>>> GetDataProductTransaksiLocal() async{
     final dbGet = await SqlProductsTransaksiTabel.db();
-    // print("test get ${await dbGet.query('productsTransaksi')}");
     return await dbGet.query('productsTransaksi');
   }
   

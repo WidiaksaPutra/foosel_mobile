@@ -20,7 +20,6 @@ class apiCategories implements interfaceGetDataCategory{
         };
         String? parameterString = await Uri(queryParameters: parameterApi).query; 
         final responseCategories = await Api.client.get(Uri.parse('${Api.baseURL}/categories?' + parameterString)).timeout(const Duration(seconds: 10));
-        print("response categories ${responseCategories.statusCode}");
         if(responseCategories.statusCode == 200){
           final parse = await json.decode(responseCategories.body);
           Categories categoriesDataModel = await Categories.fromJson(parse);

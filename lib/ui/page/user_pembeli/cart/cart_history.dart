@@ -13,6 +13,7 @@ import 'package:foosel/blocs/bloc_transaksi/transaksi_api/cubit_delete_transaksi
 import 'package:foosel/blocs/bloc_transaksi/transaksi_api/cubit_get_detail_transaksi_product.dart';
 import 'package:foosel/blocs/bloc_transaksi/transaksi_api/cubit_get_transaksi_product.dart';
 import 'package:foosel/blocs/bloc_transaksi/transaksi_api/state_transaksi.dart';
+import 'package:foosel/blocs/bloc_transaksi/transaksi_local/cubit_get_transaksi.dart';
 import 'package:foosel/blocs/bloc_transaksi/transaksi_local/cubit_get_transaksi_product_local.dart';
 import 'package:foosel/routes/route_name.dart';
 import 'package:foosel/shared/theme_box.dart';
@@ -115,12 +116,12 @@ class CartHistory extends HookWidget with dialogBasic{
                     jumlahItem: state1.dataTransaksi[index]['quantity'].toString(), 
                     totalHarga: state1.dataTransaksi[index]['totalPrice'].toString(),
                     bukanTujuanKondisi: "pending",
-                    onTapCard: (){
+                    onTapCard: () async {
                       context.read<CubitDetailProdukNavPembeli>().DetailProdukNavPembeli(
                         jenisDetail: "TransaksiHistory",
-                        readDetail: {
-                          context.read<CubitDetailProductConnect>().GetDetailProductConnect(idProduct: state1.dataTransaksi[index]['tokenProduct'].toString()),
-                          context.read<CubitGetDetailTransaksiProduct>().GetDataTransaksiDetail(transactionsId: state1.dataTransaksi[index]['tokenTransaksi'].toString()),
+                        readDetail:{
+                          await context.read<CubitGetDetailTransaksiProduct>().GetDataTransaksiDetail(transactionsId: state1.dataTransaksi[index]['tokenTransaksi'].toString()),
+                          context.read<CubitDetailProductConnect>().GetDetailProductConnect(jenisDetail: false, idProduct: state1.dataTransaksi[index]['tokenProduct'].toString()),
                         }
                       );
                       context.go(stateNavDetail.navigation);

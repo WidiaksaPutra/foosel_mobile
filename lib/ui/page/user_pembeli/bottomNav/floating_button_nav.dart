@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:foosel/routes/route_name.dart';
 import 'package:foosel/shared/theme_color.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class FloatingButtonNav extends StatelessWidget {
   const FloatingButtonNav({Key? key}) : super(key: key);

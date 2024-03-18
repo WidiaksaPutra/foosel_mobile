@@ -20,7 +20,6 @@ class apiGetProducts with defaultSharedPref implements interfaceGetDataProduct{
       if(testing == false){
         await sharedPref();
         tokens = prefs.getString('token').toString();
-        print("test token $tokens");
       }else{
         (testingToken == "") ? tokens = 'null' : tokens = testingToken;
       }

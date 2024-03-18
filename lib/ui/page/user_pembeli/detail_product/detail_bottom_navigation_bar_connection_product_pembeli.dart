@@ -8,8 +8,9 @@ import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
 import 'package:foosel/blocs/bloc_default/default/show_dialog_basic.dart';
 import 'package:foosel/blocs/bloc_detail_products/detail_product/cubit_detail_product_connect.dart';
 import 'package:foosel/blocs/bloc_detail_products/state_products.dart';
+import 'package:foosel/blocs/bloc_message/event_message.dart';
+import 'package:foosel/blocs/bloc_message/main/bloc_main_detail_message_connect.dart';
 import 'package:foosel/blocs/bloc_message/main/cubit_main_list_message_connect.dart';
-import 'package:foosel/blocs/bloc_message/main/cubit_main_title_message_connect.dart';
 import 'package:foosel/blocs/bloc_message/main/cubit_nav_message.dart';
 import 'package:foosel/blocs/bloc_message/state_message.dart';
 import 'package:foosel/blocs/bloc_transaksi/transaksi_local/cubit_get_transaksi.dart';
@@ -28,9 +29,8 @@ class DetailBottomNavigationBarConnectionProductPembeli extends HookWidget with 
 
   @override
   Widget build(BuildContext context) {
-    var loadingMessage = useState(true);
-    var titleBool = useState(false);
-    var haveTitle = useState(false);
+    var loadingMessage = useState<bool>(true);
+    var tokenPenerima = useState<String>("-");
     var getDataTransaksi = useState([]);
     sharedPref();
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
@@ -41,19 +41,11 @@ class DetailBottomNavigationBarConnectionProductPembeli extends HookWidget with 
           return BlocListener<cubitListMessageConnect, DataStateListMessage>(
             listener: (context2, listMessage){
               if(listMessage.loading == false){
-                if(listMessage.dataUser.length == 0){
-                  titleBool.value = true;
-                }else{
-                  listMessage.dataUser.forEach((data) { 
-                    if(data.email.toString() == prefs.getString('emailPenerima').toString()){               
-                      context.read<cubitNavMessageDetail>().navigation(tokenPenerima: data.tokenNotive.toString(), roleBar: 0, detailMessage: true);
-                      haveTitle.value = true;
-                    }
-                  });
-                  if(haveTitle.value == false){
-                    titleBool.value = true;
+                listMessage.dataUser.forEach((data) { 
+                  if(data.email.toString() == prefs.getString('emailPenerima').toString()){               
+                    tokenPenerima.value = data.tokenNotive.toString();
                   }
-                }
+                });
                 loadingMessage.value = listMessage.loading;
               }
             },
@@ -68,10 +60,19 @@ class DetailBottomNavigationBarConnectionProductPembeli extends HookWidget with 
                       navigationCart: RouteName.cartDetail, 
                       navBack: RouteName.detailProductPembeli, 
                       onPressedMessage: () {
-                        if(titleBool.value == true){
-                          context.read<cubitNavMessageDetail>().navigation(tokenPenerima: "-", roleBar: 0, detailMessage: true);
+                        context.read<cubitListMessageConnect>().updateListMessage();
+                        if(tokenPenerima.value == "-"){
+                          context.read<BlocDetailMessageConnect>().add(
+                            DataEventPostMessage(
+                              message: "Hi ${prefs.getString('emailPenerima').toString()}...", 
+                              tokenPenerima: "-",
+                            )
+                          );
+                          context.go(RouteName.detailProductPembeli);
+                        }else{
+                          context.read<cubitNavMessageDetail>().navigation(tokenPenerima: tokenPenerima.value, roleBar: 0, detailMessage: true);
+                          context.go(RouteName.detailMessage);
                         }
-                        context.go(RouteName.detailMessage);     
                       },
                       onTapTransaksi: () {
                         context.read<CubitInsertTransaksiLocal>().SaveLocalDataTransaksi(
