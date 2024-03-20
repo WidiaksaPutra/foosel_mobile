@@ -12,10 +12,10 @@ class ComponenTextButton_152x44_Basic extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox24, vertical: themeBox.defaultHeightBox4),
+      padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox24, vertical: ThemeBox.defaultHeightBox4),
       decoration: BoxDecoration(
         color: buttonColor,
-        borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+        borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
       ),
       child: TextButton(
         onPressed: () => context.go(page), 
@@ -33,10 +33,10 @@ class ComponenTextButton_152x44_Basic2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox40, vertical: themeBox.defaultHeightBox4),
+      padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox40, vertical: ThemeBox.defaultHeightBox4),
       decoration: BoxDecoration(
         color: buttonColor,
-        borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+        borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
       ),
       child: TextButton(
         onPressed: () => context.go(page), 

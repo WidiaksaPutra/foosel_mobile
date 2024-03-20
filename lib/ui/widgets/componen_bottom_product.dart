@@ -20,10 +20,11 @@ class BottomProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     return Container(
       color: kPrimaryColor,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox30),
+        margin: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox30),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -31,25 +32,25 @@ class BottomProduct extends StatelessWidget {
               flex: 1,
               child: Container(
                 margin: EdgeInsets.only(
-                  left: themeBox.defaultWidthBox30, 
+                  left: ThemeBox.defaultWidthBox30, 
                   right: (statusTransaksi == false) 
-                  ? themeBox.defaultWidthBox30
-                  : themeBox.defaultWidthBox16
+                  ? ThemeBox.defaultWidthBox30
+                  : ThemeBox.defaultWidthBox16
                 ),
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: kPurpleColor,
-                    width: themeBox.defaultWidthBox02
+                    width: ThemeBox.defaultWidthBox02
                   ),
-                  borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+                  borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
                 ),
                 child: IconButton(
-                  padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox16, horizontal: themeBox.defaultWidthBox16),
+                  padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox16, horizontal: ThemeBox.defaultWidthBox16),
                   onPressed: onPressedMessage,
                   icon: Image.asset(
                     'asset/icon/chat_icon2.png',
-                    width: themeBox.defaultWidthBox23,
-                    height: themeBox.defaultHeightBox22,
+                    width: ThemeBox.defaultWidthBox23,
+                    height: ThemeBox.defaultHeightBox22,
                   ),
                 ),
               ),
@@ -59,11 +60,11 @@ class BottomProduct extends StatelessWidget {
               child: Expanded(
                 flex: 2,
                 child: Container(
-                  margin: EdgeInsets.only(right: themeBox.defaultWidthBox30),
-                  padding: EdgeInsets.only(top: themeBox.defaultHeightBox14, bottom: themeBox.defaultHeightBox16),
+                  margin: EdgeInsets.only(right: ThemeBox.defaultWidthBox30),
+                  padding: EdgeInsets.only(top: ThemeBox.defaultHeightBox14, bottom: ThemeBox.defaultHeightBox16),
                   decoration: BoxDecoration(
                     color: kPurpleColor,
-                    borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+                    borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
                   ),
                   child: GestureDetector(
                     onTap: onTapTransaksi,

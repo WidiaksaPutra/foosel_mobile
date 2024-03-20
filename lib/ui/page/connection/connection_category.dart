@@ -6,8 +6,8 @@ import 'package:foosel/blocs/bloc_categories/event_categories.dart';
 import 'package:foosel/blocs/bloc_categories/state_categories.dart';
 import 'package:foosel/blocs/bloc_categories/main/connect/bloc_main_name_categories_connect.dart';
 import 'package:foosel/blocs/bloc_categories/main/disconnect/bloc_main_name_categories_disconnect.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_connection_example.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_connection.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_example.dart';
+import 'package:foosel/blocs/bloc_default/state/state_connection.dart';
 import 'package:foosel/shared/theme_color.dart';
 import 'package:foosel/ui/widgets/componen_loading.dart';
 
@@ -52,13 +52,13 @@ class ConnectionCategory extends StatelessWidget{
         else{
           Future.delayed(
             Duration(milliseconds: 1000),
-            () => context.read<cubitConnectionExample>().connectCheck(
+            () => context.read<CubitConnectionExample>().connectCheck(
               readBlocConnect: {context.read<BlocNameCategoriesConnect>().add(NameCategories())}, 
               readBlocDisconnect: {context.read<BlocNameCategoriesDisconnect>().add(NameCategories())}
             ),
           );
           nullAcces = ComponenLoadingLottieBasic(height: 100);
-          nullAcces = BlocBuilder<cubitConnectionExample, DataStateConnection>(
+          nullAcces = BlocBuilder<CubitConnectionExample, DataStateConnection>(
             builder: (context, state) => (state.connectionBoolean == true)
             ? statusConnect()
             : statusDisconnect(),

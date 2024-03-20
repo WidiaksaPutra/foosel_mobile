@@ -1,13 +1,13 @@
 import 'dart:convert';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:foosel/interface/interface_local/service/interface_get_login.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
+import 'package:foosel/service/api_login/interface_get_login.dart';
 import 'package:foosel/model/login.dart';
 import 'package:foosel/service/api_konstanta.dart';
 
-class apiLogin with defaultSharedPref implements interfaceGetLogin{
+class ApiLogin with SharedPref implements InterfaceGetLogin{
   
   @override
-  GetLogin({
+  getLogin({
     bool testing = false, 
     required String email, 
     required String password

@@ -1,22 +1,22 @@
-abstract class interfacesProductsCategoryConnect{
-  GetDataCategoryProduct({
+abstract class InterfacesProductsCategoryConnect{
+  getDataCategoryProduct({
     required String categoryKey, 
   });
-  ScrollControlCategoryProduct({
+  scrollControlCategoryProduct({
     required String categoryKey, 
   });
 }
 
-abstract class interfacesCategoryNameConnect{
-  GetNameCategories();
-  SaveLocalDataCategories();
-  ScrollControlNameCategories();
+abstract class InterfacesCategoryNameConnect{
+  getNameCategories();
+  saveLocalDataCategories();
+  scrollControlNameCategories();
 }
 
-abstract class interfacesProductsCategoryDisconnect{
-  GetDataCategoryProductLocal(String categoryKey);
+abstract class InterfacesProductsCategoryDisconnect{
+  getDataCategoryProductLocal({required String categoryKey});
 }
 
-abstract class interfacesCategoryNameDisconnect{
-  GetDataNameCategoriesLocal();
+abstract class InterfacesCategoryNameDisconnect{
+  getDataNameCategoriesLocal();
 }

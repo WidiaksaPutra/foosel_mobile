@@ -17,27 +17,28 @@ class ComponenCartCheckoutSuccess extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(
           image,
-          width: themeBox.defaultWidthBox80,
+          width: ThemeBox.defaultWidthBox80,
         ),
         Container(
-          margin: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox20),
-          padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox90),
+          margin: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox20),
+          padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox90),
           child: Column(
             children: [
               Text(titleText, style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16), maxLines: 2, textAlign: TextAlign.center, overflow: TextOverflow.ellipsis),
-              SizedBox(height: themeBox.defaultHeightBox12),
+              SizedBox(height: ThemeBox.defaultHeightBox12),
               Text(messageText, style: grayTextStyle2.copyWith(fontWeight: regular, fontSize: defaultFont14), maxLines: 2, textAlign: TextAlign.center, overflow: TextOverflow.ellipsis),
             ]
           ),
         ),
         componenTextButton_152x44_1,
         Padding(
-          padding: EdgeInsets.only(top: themeBox.defaultHeightBox12),
+          padding: EdgeInsets.only(top: ThemeBox.defaultHeightBox12),
           child: componenTextButton_152x44_2,
         ),
       ],

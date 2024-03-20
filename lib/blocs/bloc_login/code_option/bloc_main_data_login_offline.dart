@@ -21,7 +21,7 @@
 
 // // part 'bloc_event_login.dart';
 // // part 'bloc_state_login.dart';
-// class BlocButtonLoginData extends Bloc<DataEventFormLogin, StateSnackBar> with apiLogin, userFirebase, helperLogin, helperProducts, helperProductsPopular, defaultSharedPref, navigasiRole, apiUser{
+// class BlocButtonLoginData extends Bloc<DataEventFormLogin, StateSnackBar> with apiLogin, userFirebase, helperLogin, helperProducts, helperProductsPopular, DefaultSharedPref, navigasiRole, apiUser{
 //   BlocButtonLoginData() : super(DataStateInitialSnackBar()){
 //     on<ButtonFormUser>((event, emit) async{
 //       await buttonSnackBar(event.email, event.password, event.context);

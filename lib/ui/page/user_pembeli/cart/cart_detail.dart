@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_pembeli/cubit_detail_produk_nav_pembeli.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_connection_example.dart';
-import 'package:foosel/blocs/bloc_default/default/show_dialog_basic.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_example.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_dialog_basic.dart';
 import 'package:foosel/blocs/bloc_detail_products/cubit_detail_navigasi_product.dart';
 import 'package:foosel/blocs/bloc_detail_products/detail_product/cubit_detail_product_connect.dart';
-import 'package:foosel/blocs/bloc_detail_products/detail_product/cubit_detail_products_disconnect.dart';
 import 'package:foosel/blocs/bloc_detail_products/state_products.dart';
 import 'package:foosel/blocs/bloc_transaksi/transaksi_api/cubit_post_transaksi.dart';
 import 'package:foosel/blocs/bloc_transaksi/transaksi_api/state_transaksi.dart';
@@ -26,12 +25,12 @@ import 'package:foosel/ui/widgets/componen_cart_card_total.dart';
 import 'package:foosel/ui/widgets/componen_cart_item_detail_vertical.dart';
 import 'package:go_router/go_router.dart';
 
-class CartDetail extends StatelessWidget with dialogBasic{
+class CartDetail extends StatelessWidget with DialogBasic{
   CartDetail({Key? key}) : super(key: key);
 
   void read(BuildContext context) async{
-    await context.read<cubitConnectionExample>().connectCheck(readBlocConnect: {}, readBlocDisconnect: {});
-    await context.read<cubitDetailNavigasiProduct>().navigationDetailProduct();
+    await context.read<CubitConnectionExample>().connectCheck(readBlocConnect: {}, readBlocDisconnect: {});
+    await context.read<CubitDetailNavigasiProduct>().navigationDetailProduct();
     await context.read<CubitMainUserConnect>().fetchUser();
   }
 
@@ -41,9 +40,9 @@ class CartDetail extends StatelessWidget with dialogBasic{
   }){
     voidDialogBasic(
       context: context, 
-      margin: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
-      padding: EdgeInsets.only(left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30, top: themeBox.defaultHeightBox30),
-      borderRadius: BorderRadius.circular(themeBox.defaultRadius10),
+      margin: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
+      padding: EdgeInsets.only(left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, top: ThemeBox.defaultHeightBox30),
+      borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10),
       color: kBlackColor6,
       closeIconStatus: false,
       barrierDismissible: true,
@@ -73,7 +72,7 @@ class CartDetail extends StatelessWidget with dialogBasic{
     required BuildContext context,
   }){
     state.getData.forEach((data) async{
-      await context.read<CubitPostTransaksi>().SaveDataTransaksi(
+      await context.read<CubitPostTransaksi>().saveDataTransaksi(
         emailPembeli: data['emailPembeli'].toString(),
         emailPenjual: data['emailPenjual'].toString(),
         productsId: data['tokenId'].toString(),
@@ -89,9 +88,10 @@ class CartDetail extends StatelessWidget with dialogBasic{
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     read(context);
     Widget listCard(dynamic data){
-      return BlocBuilder<cubitDetailNavigasiProduct, DataStateDetailProduct>(
+      return BlocBuilder<CubitDetailNavigasiProduct, DataStateDetailProduct>(
         builder: (context2, state1) => ComponenCartItemDetailVertical(
           image: data['imagePath'].toString(),
           type: data['nameCategory'].toString(),
@@ -99,17 +99,17 @@ class CartDetail extends StatelessWidget with dialogBasic{
           textTitle: data['name'].toString(),
           jumlah: data['jumlah'].toString(),
           onTapCard: (){
-            context.read<cubitConnectionExample>().connectCheck(
-              readBlocConnect: {context.read<CubitDetailProdukNavPembeli>().DetailProdukNavPembeli(
+            context.read<CubitConnectionExample>().connectCheck(
+              readBlocConnect: {context.read<CubitDetailProdukNavPembeli>().detailProdukNavPembeli(
                 jenisDetail: "TransaksiDetail",
                 readDetail: {
-                  context.read<CubitDetailProductConnect>().GetDetailProductConnect(idProduct: data['tokenId'].toString()),
-                  context.read<CubitGetTransaksiLocal>().GetDataTransaksiWhereId(tokenId: data['tokenId'].toString()),
+                  context.read<CubitDetailProductConnect>().getDetailProductConnect(idProduct: data['tokenId'].toString()),
+                  context.read<CubitGetTransaksiLocal>().getDataTransaksiWhereId(tokenId: data['tokenId'].toString()),
                 }
               )},
-              readBlocDisconnect: {context.read<CubitDetailProdukNavPembeli>().DetailProdukNavPembeli(
+              readBlocDisconnect: {context.read<CubitDetailProdukNavPembeli>().detailProdukNavPembeli(
                 jenisDetail: "TransaksiDetail", 
-                readDetail: context.read<CubitGetTransaksiLocal>().GetDataTransaksiWhereId(tokenId: data['tokenId'].toString()),
+                readDetail: context.read<CubitGetTransaksiLocal>().getDataTransaksiWhereId(tokenId: data['tokenId'].toString()),
               )},
             );
             context.go(state1.navigation);
@@ -141,12 +141,12 @@ class CartDetail extends StatelessWidget with dialogBasic{
             ),
           ),
           body: Container(
-            margin: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox30),
+            margin: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox30),
             child: ListView(
               physics: BouncingScrollPhysics(),
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: themeBox.defaultHeightBox30),
+                  padding: EdgeInsets.only(top: ThemeBox.defaultHeightBox30),
                   child: Text("List Items", style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16)),
                 ),
                 if(state.getData.isNotEmpty)...[

@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_form_user.dart';
+import 'package:foosel/blocs/bloc_default/state/state_form_user.dart';
 
 class CubitFormRegister extends Cubit<DataStateFormUser>{
   CubitFormRegister() : super(DataStateInitial());

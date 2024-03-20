@@ -22,7 +22,7 @@ class ComponenBasicImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    themeBox(context);
+    ThemeBox(context);
     return Container(
       width: widthImage,
       height: heightImage,
@@ -34,14 +34,14 @@ class ComponenBasicImage extends StatelessWidget {
         onTap: onTap,
         child: (connection == true)
         ? ClipRRect(
-            borderRadius: BorderRadius.circular(themeBox.defaultRadius10),
+            borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10),
             child: Image.network(
               "${Api.linkURL}/$gambar",
               fit: BoxFit.cover,
             )
           )
         : ClipRRect(
-            borderRadius: BorderRadius.circular(themeBox.defaultRadius10),
+            borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10),
             child: Image.asset(
               "asset/image/$gambar",
               fit: BoxFit.cover,

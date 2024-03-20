@@ -4,8 +4,8 @@ import 'package:foosel/routes/route_name.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class cubitDetailNavigasiProduct extends Cubit<DataStateDetailProduct>{
-  cubitDetailNavigasiProduct() : super(DataDetailProduct(navigation: ""));
+class CubitDetailNavigasiProduct extends Cubit<DataStateDetailProduct>{
+  CubitDetailNavigasiProduct() : super(DataDetailProduct(navigation: ""));
   navigationDetailProduct() async{
     SharedPreferences token = await SharedPreferences.getInstance();
     if(token.getString('token').toString() != 'null'){

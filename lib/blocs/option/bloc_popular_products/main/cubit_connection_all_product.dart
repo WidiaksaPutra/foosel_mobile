@@ -4,8 +4,8 @@
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:foosel/blocs/bloc_default/state_default/state_connection.dart';
 
-// class cubitConnectionAllProduct extends Cubit<DataStateConnection>{
-//   cubitConnectionAllProduct() : super(DataConnection(false));
+// class CubitConnectionAllProduct extends Cubit<DataStateConnection>{
+//   CubitConnectionAllProduct() : super(DataConnection(false));
 //   connectCheck(BuildContext context, dynamic connection) async{
 //     try {
 //       final result = await InternetAddress.lookup('example.com');

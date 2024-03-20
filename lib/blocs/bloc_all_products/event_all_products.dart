@@ -1,6 +1,6 @@
-abstract class dataEventAllProduct{}
+abstract class DataEventAllProduct{}
 
-class Product implements dataEventAllProduct{
+class Product implements DataEventAllProduct{
   late int pages = 6;
   Product({pages});
 }

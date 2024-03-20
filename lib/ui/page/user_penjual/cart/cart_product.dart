@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_penjual/cubit_detail_produk_nav_penjual.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_connection_example.dart';
-import 'package:foosel/blocs/bloc_default/default/default_navigasi_role.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:foosel/blocs/bloc_default/default/show_dialog_basic.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_connection.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_example.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_dialog_basic.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_navigasi_role.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/state/state_connection.dart';
 import 'package:foosel/blocs/bloc_detail_products/cubit_detail_navigasi_product.dart';
 import 'package:foosel/blocs/bloc_detail_products/detail_product/cubit_detail_product_connect.dart';
 import 'package:foosel/blocs/bloc_detail_products/state_products.dart';
@@ -26,7 +26,7 @@ import 'package:foosel/ui/widgets/componen_advanced/componen_header_cart.dart';
 import 'package:foosel/ui/widgets/componen_page_kosong.dart';
 import 'package:go_router/go_router.dart';
 
-class CartProduct extends HookWidget with dialogBasic, navigasiRoleBarRead, defaultSharedPref{
+class CartProduct extends HookWidget with DialogBasic, NavigasiRoleBarRead, SharedPref{
   CartProduct({Key? key}) : super(key: key);
   
   void navigationRole(BuildContext context) async{
@@ -34,15 +34,16 @@ class CartProduct extends HookWidget with dialogBasic, navigasiRoleBarRead, defa
   }
 
   void read(BuildContext context) async{
-    context.read<cubitConnectionExample>().connectCheck(
-      readBlocConnect: context.read<CubitGetTransaksiProduct>().GetDataTransaksiHistory(), 
+    context.read<CubitConnectionExample>().connectCheck(
+      readBlocConnect: context.read<CubitGetTransaksiProduct>().getDataTransaksiHistory(), 
       readBlocDisconnect: {},
     );
-    await context.read<cubitDetailNavigasiProduct>().navigationDetailProduct();
+    await context.read<CubitDetailNavigasiProduct>().navigationDetailProduct();
   }
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     final statusApproval = useState<bool>(false);
     final statusRejected = useState<bool>(false);
     navigationRole(context);
@@ -60,7 +61,7 @@ class CartProduct extends HookWidget with dialogBasic, navigasiRoleBarRead, defa
           context.go(RouteName.bottomNavPenjual);
         },
       ),
-      body: BlocBuilder<cubitConnectionExample, DataStateConnection>(
+      body: BlocBuilder<CubitConnectionExample, DataStateConnection>(
         builder: (context1, state) => (state.connectionBoolean == true)
         ? BlocBuilder<CubitGetTransaksiProduct, DataStateGetTransaksi>(
           builder: (context2, state1) => (state1.dataTransaksi.isNotEmpty)
@@ -68,7 +69,7 @@ class CartProduct extends HookWidget with dialogBasic, navigasiRoleBarRead, defa
               physics: BouncingScrollPhysics(),
               itemCount: state1.dataTransaksi.length,
               itemBuilder: (context3, index){
-              return BlocBuilder<cubitDetailNavigasiProduct, DataStateDetailProduct>(
+              return BlocBuilder<CubitDetailNavigasiProduct, DataStateDetailProduct>(
                 builder: (context4, stateNavDetail) => Column(
                   children: [
                     if(state1.dataTransaksi[index]['usersEmailPembeli'].toString() == state1.dataTransaksi[index]['usersEmailPembeliOnClick'].toString())...[
@@ -82,20 +83,20 @@ class CartProduct extends HookWidget with dialogBasic, navigasiRoleBarRead, defa
                         kondisi: state1.dataTransaksi[index]['status'].toString(), 
                         bukanTujuanKondisi: "approved",
                         onTapCard: () async {
-                          context.read<CubitDetailProdukNavPenjual>().DetailProdukNavPenjual(
+                          context.read<CubitDetailProdukNavPenjual>().detailProdukNavPenjual(
                             jenisDetail: "Transaksi",
                             readDetail: {
-                              await context.read<CubitGetDetailTransaksiProduct>().GetDataTransaksiDetail(transactionsId: state1.dataTransaksi[index]['tokenTransaksi'].toString()),
-                              context.read<CubitDetailProductConnect>().GetDetailProductConnect(jenisDetail: false, idProduct: state1.dataTransaksi[index]['tokenProduct'].toString()),
+                              await context.read<CubitGetDetailTransaksiProduct>().getDataTransaksiDetail(transactionsId: state1.dataTransaksi[index]['tokenTransaksi'].toString()),
+                              context.read<CubitDetailProductConnect>().getDetailProductConnect(jenisDetail: false, idProduct: state1.dataTransaksi[index]['tokenProduct'].toString()),
                             }
                           );
                           context.go(stateNavDetail.navigation);
                         },
                         onTapApprove: () => voidDialogBasic(
                           context: context, 
-                          margin: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
-                          padding: EdgeInsets.only(left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30, top: themeBox.defaultHeightBox30),
-                          borderRadius: BorderRadius.circular(themeBox.defaultRadius10),
+                          margin: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
+                          padding: EdgeInsets.only(left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, top: ThemeBox.defaultHeightBox30),
+                          borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10),
                           color: kBlackColor6,
                           closeIconStatus: true,
                           barrierDismissible: false,
@@ -107,7 +108,7 @@ class CartProduct extends HookWidget with dialogBasic, navigasiRoleBarRead, defa
                                   image: 'asset/animations/peringatan_lottie.json',
                                   titleText: apakahTransaksiApproved,
                                   onTapYes: (){
-                                    context.read<CubitPatchTransaksi>().UpdateDataTransaksi(
+                                    context.read<CubitPatchTransaksi>().updateDataTransaksi(
                                       transactionsId: state1.dataTransaksi[index]['tokenTransaksi'].toString(), 
                                       status: "approved", context: context,
                                     );
@@ -136,9 +137,9 @@ class CartProduct extends HookWidget with dialogBasic, navigasiRoleBarRead, defa
                         ),
                         onTapReject: () => voidDialogBasic(
                           context: context, 
-                          margin: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
-                          padding: EdgeInsets.only(left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30, top: themeBox.defaultHeightBox30),
-                          borderRadius: BorderRadius.circular(themeBox.defaultRadius10),
+                          margin: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
+                          padding: EdgeInsets.only(left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, top: ThemeBox.defaultHeightBox30),
+                          borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10),
                           color: kBlackColor6,
                           closeIconStatus: true,
                           barrierDismissible: false,
@@ -150,11 +151,11 @@ class CartProduct extends HookWidget with dialogBasic, navigasiRoleBarRead, defa
                                   image: 'asset/animations/peringatan_lottie.json',
                                   titleText: apakahTransaksiRejected,
                                   onTapYes: () {
-                                    context.read<CubitPatchTransaksi>().UpdateDataTransaksi(
+                                    context.read<CubitPatchTransaksi>().updateDataTransaksi(
                                       transactionsId: state1.dataTransaksi[index]['tokenTransaksi'].toString(), 
                                       status: "rejected", context: context,
                                     );
-                                    context.read<cubitDetailNavigasiProduct>().navigationDetailProduct();
+                                    context.read<CubitDetailNavigasiProduct>().navigationDetailProduct();
                                     statusRejected.value = true;
                                     Future.delayed(Duration(seconds: 5), (){
                                       statusRejected.value = false;

@@ -1,7 +1,7 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_connection.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_connection.dart';
 import 'package:go_router/go_router.dart';
 
 class ComponenConnectionBasic extends StatelessWidget{
@@ -25,8 +25,8 @@ class ComponenConnectionBasic extends StatelessWidget{
           }
         }
         else{
-          context.read<cubitConnection>().connectCheck(context, connection(context: context, onTap: (){Navigator.of(context).pop();}, buttonConnection: false));
-          return BlocBuilder<cubitConnection, dynamic>(
+          context.read<CubitConnection>().connectCheck(context, connection(context: context, onTap: (){Navigator.of(context).pop();}, buttonConnection: false));
+          return BlocBuilder<CubitConnection, dynamic>(
             builder: (context, state) => (state.connectionBoolean == true)
             ? connect
             : disconnect,
@@ -71,8 +71,8 @@ class ComponenConnectionBasicSingle extends StatelessWidget{
           }
         }
         else{
-          context.read<cubitConnection>().connectCheck(context, connection(context: context, onTap: (){Navigator.of(context).pop();}, buttonConnection: false));
-          return BlocBuilder<cubitConnection, dynamic>(
+          context.read<CubitConnection>().connectCheck(context, connection(context: context, onTap: (){Navigator.of(context).pop();}, buttonConnection: false));
+          return BlocBuilder<CubitConnection, dynamic>(
             builder: (context, state) {
               if(state.connectionBoolean == true){
                 return connect;

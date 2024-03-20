@@ -7,7 +7,7 @@
 
 // ScrollController scrollController = ScrollController();
 // class BlocAllProductDisconnect extends Bloc<dataEventAllProduct,DataStateAllProduct> implements interfacesAllProductDisconnect{
-//   interfaceGetDataProductStorageLocal dataGetProductLocal;
+//   InterfaceGetDataProductStorageLocal dataGetProductLocal;
 //   BlocAllProductDisconnect(this.dataGetProductLocal) : super(
 //     DataAllProduct(
 //       scrollControl: scrollController, 

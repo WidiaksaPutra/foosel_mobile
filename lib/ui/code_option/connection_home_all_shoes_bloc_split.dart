@@ -13,7 +13,7 @@
 // import 'package:foosel/shared/theme_color.dart';
 // import 'package:foosel/ui/widgets/componen_loading.dart';
 
-// class ConnectionHomeAllShoesPembeli extends StatelessWidget with defaultSharedPref, navigasiRole, loadingScrollData{
+// class ConnectionHomeAllShoesPembeli extends StatelessWidget with DefaultSharedPref, navigasiRole, loadingScrollData{
 //   // final dynamic childHorizontal, childVertical, childHorizontalDisconnect, childVerticalDisconnect;
 //   final dynamic childVertical;
 //   // , childVerticalDisconnect;
@@ -76,7 +76,7 @@
 //         if(snapshot.data == ConnectivityResult.mobile || snapshot.data == ConnectivityResult.wifi || snapshot.data == ConnectivityResult.none){
 //           if(snapshot.data == ConnectivityResult.mobile || snapshot.data == ConnectivityResult.wifi){
 //             //Future.delayed(const Duration(milliseconds: 2000), () {
-//               context.read<cubitConnectionAllProduct>().connectCheck(context, connection);
+//               context.read<CubitConnectionAllProduct>().connectCheck(context, connection);
 //               // context.read<BlocAllProductConnect>().add(Product(context: context));
 //               Future.delayed(const Duration(milliseconds: 1000));
 //               BlocAllProductConnect().close();
@@ -100,11 +100,11 @@
 //             return statusDisconnect(snapshot.data);
 //           }
 //         }else{
-//           context.read<cubitConnectionAllProduct>().connectCheck(context, connection);
+//           context.read<CubitConnectionAllProduct>().connectCheck(context, connection);
 //           Future.delayed(const Duration(milliseconds: 1000));
-//           cubitConnectionAllProduct().close();
+//           CubitConnectionAllProduct().close();
 //           nullAcces = ComponenLoadingLottieBasic(height: 100);
-//           nullAcces = BlocBuilder<cubitConnectionAllProduct, dynamic>(
+//           nullAcces = BlocBuilder<CubitConnectionAllProduct, dynamic>(
 //             builder: (context, state) => (state.connectionBoolean == true)
 //             ? BlocBuilder<CubitProductRefresh, dynamic>(
 //                 builder: (context, fresh) => RefreshIndicator(

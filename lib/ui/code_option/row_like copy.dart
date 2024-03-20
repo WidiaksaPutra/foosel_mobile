@@ -38,7 +38,7 @@
 //           onTap: (){
 //             like.value = !like.value;
 //             if(like.value == true){
-//               context.read<cubitInsertLike>().SaveLocalDataLike(
+//               context.read<CubitInsertLike>().SaveLocalDataLike(
 //                 tokenId: tokenId, 
 //                 name: name,
 //                 nameCategory: categoryName, 
@@ -52,9 +52,9 @@
 //             ScaffoldMessenger.of(context).showSnackBar(
 //               SnackBar(
 //                 backgroundColor: (like.value == false) ? kRedColor : kBlueColor2,
-//                 padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox12),
+//                 padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox12),
 //                 shape: RoundedRectangleBorder(
-//                   borderRadius: BorderRadius.only(topLeft: Radius.circular(themeBox.defaultRadius8), topRight: Radius.circular(themeBox.defaultRadius8)),
+//                   borderRadius: BorderRadius.only(topLeft: Radius.circular(ThemeBox.defaultRadius8), topRight: Radius.circular(ThemeBox.defaultRadius8)),
 //                 ),
 //                 content: Text((like.value == false) ? "Has been removed from the Wishlist" : "Has been added to the Wishlist", 
 //                   style: whiteTextStyle.copyWith(fontWeight: regular, fontSize: defaultFont12),
@@ -64,8 +64,8 @@
 //           },
 //           child: Image.asset(
 //             (like.value == false) ? 'asset/icon/black_love_icon.png' : 'asset/icon/blue_love_icon.png',
-//             width: themeBox.defaultWidthBox46,
-//             height: themeBox.defaultHeightBox46,
+//             width: ThemeBox.defaultWidthBox46,
+//             height: ThemeBox.defaultHeightBox46,
 //           ),
 //         ),
 //       ],

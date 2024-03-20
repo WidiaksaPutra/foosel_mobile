@@ -17,8 +17,9 @@ class ComponenHeadHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     return Container(
-      margin: EdgeInsets.only(top: themeBox.defaultHeightBox30, right: themeBox.defaultWidthBox30),
+      margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox30, right: ThemeBox.defaultWidthBox30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -10,24 +10,25 @@ class ComponenCartCardAddress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     return Container(
-      margin: EdgeInsets.only(top: themeBox.defaultHeightBox30),
-      padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox20, horizontal: themeBox.defaultHeightBox20),
+      margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox30),
+      padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox20, horizontal: ThemeBox.defaultHeightBox20),
       decoration: BoxDecoration(
         color: kBlackColor,
-        borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+        borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Address Details", style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16)),
           Padding(
-            padding: EdgeInsets.only(top: themeBox.defaultHeightBox12),
+            padding: EdgeInsets.only(top: ThemeBox.defaultHeightBox12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children:[
                 Padding(
-                  padding: EdgeInsets.only(right: themeBox.defaultWidthBox12),
+                  padding: EdgeInsets.only(right: ThemeBox.defaultWidthBox12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -55,7 +56,7 @@ class ComponenCartCardAddress extends StatelessWidget {
                     children: [
                       Text("Store Location", style: grayTextStyle2.copyWith(fontWeight: light, fontSize: defaultFont12)),
                       Text(storeLocation, style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont14), overflow: TextOverflow.ellipsis),
-                      SizedBox(height: themeBox.defaultHeightBox30),
+                      SizedBox(height: ThemeBox.defaultHeightBox30),
                       Text("Your Location", style: grayTextStyle2.copyWith(fontWeight: light, fontSize: defaultFont12)),
                       Text(yourLocation, style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont14), overflow: TextOverflow.ellipsis),
                     ]

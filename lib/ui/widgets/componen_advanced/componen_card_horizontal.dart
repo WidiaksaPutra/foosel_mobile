@@ -25,13 +25,13 @@ class ComponenCardHorizontal extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    themeBox(context);
+    ThemeBox(context);
     return GestureDetector(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
           color: kWhiteColor,
-          borderRadius: BorderRadius.circular(themeBox.defaultRadius10),
+          borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,27 +39,27 @@ class ComponenCardHorizontal extends StatelessWidget{
           children: [
             ClipRRect(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(themeBox.defaultRadius10),
-                topRight: Radius.circular(themeBox.defaultRadius10),
+                topLeft: Radius.circular(ThemeBox.defaultRadius10),
+                topRight: Radius.circular(ThemeBox.defaultRadius10),
               ),// Mengatur borderRadius menjadi setengah dari lebar/tinggi
               child: (connect == true)
             ? Image.network(
                 "${Api.linkURL}/$gambar",
                 width: widthCardGambar,
-                height: themeBox.defaultHeightBox140,
+                height: ThemeBox.defaultHeightBox140,
                 fit: BoxFit.cover,
               )
             : Image.asset(
                 "asset/image/$gambar",
                 width: widthCardGambar,
-                height: themeBox.defaultHeightBox140,
+                height: ThemeBox.defaultHeightBox140,
                 fit: BoxFit.cover,
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox20),
+              padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox20),
               child: SizedBox(
-                height: themeBox.defaultHeightBox70,
+                height: ThemeBox.defaultHeightBox70,
                 child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Column(

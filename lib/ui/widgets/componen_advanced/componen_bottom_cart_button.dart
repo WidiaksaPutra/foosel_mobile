@@ -34,7 +34,7 @@ class ComponenBottomCartButton extends StatelessWidget {
             children: [
               if(listCart == true)...[
                 Container(
-                  margin: EdgeInsets.only(top: themeBox.defaultHeightBox20, left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30, bottom: themeBox.defaultHeightBox30),
+                  margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox20, left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, bottom: ThemeBox.defaultHeightBox30),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -45,14 +45,14 @@ class ComponenBottomCartButton extends StatelessWidget {
                 ),
               ],
               if(connection == true)...[
-                Divider(height: themeBox.defaultHeightBox12, color: kBlackColor9, thickness: 1,),
+                Divider(height: ThemeBox.defaultHeightBox12, color: kBlackColor9, thickness: 1,),
                 Container(
                   width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox30, vertical: themeBox.defaultHeightBox30),
-                  padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox13, horizontal: themeBox.defaultWidthBox20),
+                  margin: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox30, vertical: ThemeBox.defaultHeightBox30),
+                  padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox13, horizontal: ThemeBox.defaultWidthBox20),
                   decoration: BoxDecoration(
                     color: kPurpleColor,
-                    borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+                    borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
                   ),
                   child: TextButton(
                     onPressed: onPressed,
@@ -62,8 +62,8 @@ class ComponenBottomCartButton extends StatelessWidget {
                         Expanded(child: Text(textButton, style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16), overflow: TextOverflow.ellipsis,)),
                         Image.asset(
                           "asset/icon/icon_button_next.png",
-                          height: themeBox.defaultHeightBox14,
-                          width: themeBox.defaultHeightBox12,
+                          height: ThemeBox.defaultHeightBox14,
+                          width: ThemeBox.defaultHeightBox12,
                         ),
                       ],
                     ),

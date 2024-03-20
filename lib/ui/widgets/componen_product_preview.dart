@@ -13,29 +13,29 @@ class ComponenProductPreview extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: themeBox.defaultWidthBox20, bottom: themeBox.defaultHeightBox20, right: themeBox.defaultWidthBox130),
-      padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox10, vertical: themeBox.defaultHeightBox10),
+      margin: EdgeInsets.only(left: ThemeBox.defaultWidthBox20, bottom: ThemeBox.defaultHeightBox20, right: ThemeBox.defaultWidthBox130),
+      padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox10, vertical: ThemeBox.defaultHeightBox10),
       decoration: BoxDecoration(
         color: kPurpleBlackColor,
-        borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+        borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
         border: Border.all(
           color: kPurpleColor,
-          width: themeBox.defaultWidthBox1,
+          width: ThemeBox.defaultWidthBox1,
         )
       ),
       child: Row(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+            borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
             child: Image.asset(
               image.toString(),
-              width: themeBox.defaultWidthBox54,
-              height: themeBox.defaultHeightBox54,
+              width: ThemeBox.defaultWidthBox54,
+              height: ThemeBox.defaultHeightBox54,
             ),
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: themeBox.defaultWidthBox10, right: themeBox.defaultWidthBox19),
+              padding: EdgeInsets.only(left: ThemeBox.defaultWidthBox10, right: ThemeBox.defaultWidthBox19),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -50,16 +50,16 @@ class ComponenProductPreview extends HookWidget {
           GestureDetector(
             onTap: () {},
             child: Container(
-              margin: EdgeInsets.only(bottom: themeBox.defaultHeightBox32),
-              padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox8, vertical: themeBox.defaultHeightBox8),
+              margin: EdgeInsets.only(bottom: ThemeBox.defaultHeightBox32),
+              padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox8, vertical: ThemeBox.defaultHeightBox8),
               decoration: BoxDecoration(
                 color: kPurpleColor,
-                borderRadius: BorderRadius.circular(themeBox.defaultRadius50),
+                borderRadius: BorderRadius.circular(ThemeBox.defaultRadius50),
               ),
               child: Image.asset(
                 "asset/icon/remove_product_icon.png",
-                height: themeBox.defaultHeightBox6,
-                width: themeBox.defaultWidthBox6,
+                height: ThemeBox.defaultHeightBox6,
+                width: ThemeBox.defaultWidthBox6,
               ),
             ),
           )

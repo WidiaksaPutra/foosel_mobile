@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_default/bloc_button_up/state_button_up.dart';
 
-class cubitUpButton extends Cubit<StateDataUpButton>{
-  cubitUpButton() : super(StateUpButton(0,0));
+class CubitUpButton extends Cubit<StateDataUpButton>{
+  CubitUpButton() : super(StateUpButton(0,0));
   upButton({
     required int index, 
     required int currentTop, 

@@ -3,15 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_categories/event_categories.dart';
-import 'package:foosel/blocs/bloc_categories/state_categories.dart';
 import 'package:foosel/blocs/bloc_categories/interfaces_category.dart';
-import 'package:foosel/interface/interface_local/helpers/interface_get_data_products_category_local.dart';
+import 'package:foosel/blocs/bloc_categories/state_categories.dart';
+import 'package:foosel/helpers/products/product_all/interfaces/interface_get_data_products_category_local.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 
 ScrollController scrollController = ScrollController();
 late List dataList = [];
-class BlocKlasifikasiCategoriesDisconnect extends Bloc<DataEventKlasifikasi, DataStateCategori> implements interfacesProductsCategoryDisconnect{
-  final interfaceGetDataProductsCategoryLocal dataGetProductsCategoryLocal = getItInstance<interfaceGetDataProductsCategoryLocal>();
+class BlocKlasifikasiCategoriesDisconnect extends Bloc<DataEventKlasifikasi, DataStateCategori> implements InterfacesProductsCategoryDisconnect{
+  final InterfaceGetDataProductsCategoryLocal dataGetProductsCategoryLocal = getItInstance<InterfaceGetDataProductsCategoryLocal>();
   BlocKlasifikasiCategoriesDisconnect() : super(
     DataCategori(
       dataKlassifikasiCategories: [], 
@@ -21,12 +21,13 @@ class BlocKlasifikasiCategoriesDisconnect extends Bloc<DataEventKlasifikasi, Dat
     )
   ){
     on<KlasifikasiCategories>((event, emit) async{
-      await GetDataCategoryProductLocal(event.categoryKey);
+      await getDataCategoryProductLocal(categoryKey: event.categoryKey);
     });
   }
-
-  GetDataCategoryProductLocal(String categoryKey) async{
-    dataList = await dataGetProductsCategoryLocal.GetDataLocal(nameCategory: categoryKey);
+  
+  @override
+  getDataCategoryProductLocal({required String categoryKey}) async{
+    dataList = await dataGetProductsCategoryLocal.getDataLocal(nameCategory: categoryKey);
     emit(
       DataCategori(
         dataKlassifikasiCategories: dataList, 

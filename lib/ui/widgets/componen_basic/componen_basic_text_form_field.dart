@@ -1,9 +1,9 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-class ComponenBasicTextFormField extends HookWidget with defaultSharedPref{
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
+class ComponenBasicTextFormField extends HookWidget with SharedPref{
   String labelText, hintText, iconText, nameController;
   bool update, hiddenText;
   TextInputType keyboardType;
@@ -83,7 +83,7 @@ class ComponenBasicTextFormField extends HookWidget with defaultSharedPref{
             //     },
             //     icon: SvgPicture.asset(
             //       (hiddenText) ? "assets/icons/eye.svg" : "assets/icons/eye_hide.svg",
-            //       height: themeBox.defaultHeightBox20,
+            //       height: ThemeBox.defaultHeightBox20,
             //       color: (hiddenText) ? const Color.fromRGBO(217, 217, 217, 1) : Colors.green,
             //     ),
             //   ),

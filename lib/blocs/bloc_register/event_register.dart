@@ -1,1 +1,1 @@
-mixin DataEventFormRegister{}
+abstract class DataEventFormRegister{}

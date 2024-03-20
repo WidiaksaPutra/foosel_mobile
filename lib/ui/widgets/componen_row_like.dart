@@ -33,8 +33,8 @@ class ComponenRowLike extends StatelessWidget {
           onTap: onTap,
           child: Image.asset(
             (like == false) ? 'asset/icon/black_love_icon.png' : 'asset/icon/blue_love_icon.png',
-            width: themeBox.defaultWidthBox46,
-            height: themeBox.defaultHeightBox46,
+            width: ThemeBox.defaultWidthBox46,
+            height: ThemeBox.defaultHeightBox46,
           ),
         ),
       ],

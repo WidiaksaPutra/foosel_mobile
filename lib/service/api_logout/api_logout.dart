@@ -1,14 +1,14 @@
 import 'dart:convert';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:foosel/interface/interface_local/service/interface_get_logout.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
+import 'package:foosel/service/api_logout/interface_get_logout.dart';
 import 'package:foosel/model/logout.dart';
 import 'package:foosel/service/api_konstanta.dart';
 
-class apiLogout with defaultSharedPref implements interfaceGetLogout{
+class ApiLogout with SharedPref implements InterfaceGetLogout{
   late String tokens;
 
   @override
-  GetLogout({
+  getLogout({
     bool testing = false,
     String testingToken = "",
   }) async {

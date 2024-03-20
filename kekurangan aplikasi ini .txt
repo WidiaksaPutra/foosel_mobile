@@ -1,9 +1,14 @@
 kekurangan aplikasi ini :
 - Laravel+Flutter Websockets untuk realtime data popular
-- corn job untuk backup data 
 - notive transaksi
 - web untuk user aplikasi ini
 - fitur update yang dipisah antara update gambar dan update text
-- searching dan filter transaksi berdasarkan approvalnya
+- filter transaksi berdasarkan approvalnya
+- tampilan list transaksi produk yang sama dijadikan satu ketika masih pending
+- searching product secara keseluruhan
 - aplikasi hanya berfungsi ketika aplikasi connect dan disconnect, masih belum bisa berfungsi dengan baik ketika aplikasi dalam koneksi yang buruk
+- fitur chating masih belum bisa mengirim dan menerima data gambar
 - versi ios
+- belum menyediakan penyimpanan gambar dalam local, dimana gambar yang disimpan masih berupa link yang butuh akses internet
+- hanya diUnit test pada service, penerapan Unit Test masih belum menyeluruh
+- untuk saat ini testing hanya sebatas Unit Test 

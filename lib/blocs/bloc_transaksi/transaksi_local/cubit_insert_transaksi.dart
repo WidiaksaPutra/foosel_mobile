@@ -1,15 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_transaksi/interfaces_transaksi.dart';
 import 'package:foosel/blocs/bloc_transaksi/transaksi_local/state_transaksi.dart';
-import 'package:foosel/interface/interface_local/helpers/interface_insert_data_transaksi_local.dart';
+import 'package:foosel/helpers/transaksi/interfaces/interface_insert_data_transaksi_local.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 
-class CubitInsertTransaksiLocal extends Cubit<DataStatePostTransaksiLocal> with insertTransaksiLocal{
-  final interfaceInsertDataTransaksiLocal dataInsertTransaksiLocal = getItInstance<interfaceInsertDataTransaksiLocal>();
+class CubitInsertTransaksiLocal extends Cubit<DataStatePostTransaksiLocal> implements InterfacesInsertTransaksiLocal{
+  final InterfaceInsertDataTransaksiLocal dataInsertTransaksiLocal = getItInstance<InterfaceInsertDataTransaksiLocal>();
   CubitInsertTransaksiLocal() : super(DataPostTransaksiLocal(loadingTransaksi: true, status: false));
   
   @override
-  SaveLocalDataTransaksi({
+  saveLocalDataTransaksi({
     required String emailPenjual,
     required String emailPembeli,
     required String tokenId, 
@@ -24,7 +24,7 @@ class CubitInsertTransaksiLocal extends Cubit<DataStatePostTransaksiLocal> with 
   }) async{
     emit(DataPostTransaksiLocal(loadingTransaksi: true, status: false));
     Future.delayed(Duration(seconds: 2));
-    int respons = await dataInsertTransaksiLocal.InsertDataTransaksiLocal(
+    int respons = await dataInsertTransaksiLocal.insertDataTransaksiLocal(
       emailPenjual: emailPenjual,
       emailPembeli: emailPembeli,
       tokenId: tokenId,

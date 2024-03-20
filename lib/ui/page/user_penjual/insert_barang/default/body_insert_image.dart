@@ -1,10 +1,10 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/shared/theme_color.dart';
 import 'package:foosel/shared/theme_font.dart';
 import 'package:foosel/shared/theme_text_style.dart';
-import 'package:foosel/shared/theme_box.dart';
 
 class BodyAddImage extends StatelessWidget {
   late List imageFileList;
@@ -13,6 +13,7 @@ class BodyAddImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     return Center(
       child: Column(
         children: [
@@ -38,11 +39,11 @@ class BodyAddImage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox10, vertical: themeBox.defaultHeightBox4),
-                margin: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox10),
+                padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox10, vertical: ThemeBox.defaultHeightBox4),
+                margin: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox10),
                 decoration: BoxDecoration(
                   color: kPurpleColor,
-                  borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+                  borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
                 ),
                 child: TextButton(
                   onPressed: (){
@@ -52,11 +53,11 @@ class BodyAddImage extends StatelessWidget {
                 ),  
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox10, vertical: themeBox.defaultHeightBox4),
-                margin: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox10),
+                padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox10, vertical: ThemeBox.defaultHeightBox4),
+                margin: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox10),
                 decoration: BoxDecoration(
                   color: kPurpleColor,
-                  borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+                  borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
                 ),
                 child: TextButton(
                   onPressed: (){

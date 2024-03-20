@@ -3,15 +3,15 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_default/event_default/event_form_user.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:foosel/blocs/bloc_default/default/default_navigasi_role.dart';
+import 'package:foosel/blocs/bloc_default/event/event_form_user.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_navigasi_role.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_login/event_login.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_snackBar_form.dart';
+import 'package:foosel/blocs/bloc_default/state/state_snackBar_form.dart';
 import 'package:foosel/blocs/bloc_message/main/cubit_main_list_message_connect.dart';
-import 'package:foosel/interface/interface_local/firebase/interface_insert_user_firebase.dart';
-import 'package:foosel/interface/interface_local/service/interface_get_login.dart';
-import 'package:foosel/interface/interface_local/service/interface_get_user.dart';
+import 'package:foosel/firebase/api_user_firebase/interfaces/interface_insert_user_firebase.dart';
+import 'package:foosel/service/api_login/interface_get_login.dart';
+import 'package:foosel/service/api_user/interfaces/interface_get_user.dart';
 import 'package:foosel/shared/theme_color.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 import 'package:foosel/shared/theme_konstanta.dart';
@@ -21,10 +21,10 @@ import 'package:go_router/go_router.dart';
 // part 'bloc_state_login.dart';
 late String respons = "";
 late dynamic dataUser;
-class BlocButtonLoginData extends Bloc<DataEventFormLogin, StateSnackBar> with defaultSharedPref, navigasiRole, navigasiRoleBarRead{
-  final interfaceGetLogin dataGetLogin = getItInstance<interfaceGetLogin>();
-  final interfaceGetUser dataGetUser = getItInstance<interfaceGetUser>();
-  final interfaceInsertUserFirebase dataUserFirebase = getItInstance<interfaceInsertUserFirebase>();
+class BlocButtonLoginData extends Bloc<DataEventFormLogin, StateSnackBar> with SharedPref, NavigasiRole, NavigasiRoleBarRead{
+  final InterfaceGetLogin dataGetLogin = getItInstance<InterfaceGetLogin>();
+  final InterfaceGetUser dataGetUser = getItInstance<InterfaceGetUser>();
+  final InterfaceInsertUserFirebase dataUserFirebase = getItInstance<InterfaceInsertUserFirebase>();
   BlocButtonLoginData() : super(DataStateInitialSnackBar()){
     on<ButtonFormUser>((event, emit) async{
       await buttonSnackBar(event.email, event.password, event.context);
@@ -51,19 +51,19 @@ class BlocButtonLoginData extends Bloc<DataEventFormLogin, StateSnackBar> with d
             ),
           );
           prefs.setString('email', email);
-          respons = await dataGetLogin.GetLogin(email: email, password: password);
+          respons = await dataGetLogin.getLogin(email: email, password: password);
           if(respons == "berhasil"){
-            dataUser = await dataGetUser.GetUser();
+            dataUser = await dataGetUser.getUser();
             await FirebaseMessaging.instance.deleteToken();
             var fcmToken = await FirebaseMessaging.instance.getToken();
-            dataUserFirebase.InsertUserFirebase(
+            dataUserFirebase.insertUserFirebase(
               tokenNotive: fcmToken.toString(), 
               dataProfil: dataUser,
             );
             prefs.setString('fcmToken', fcmToken.toString());
             await navigasiR();
             await navigasiRBR(context: context, value: 0);
-            await context.read<cubitListMessageConnect>().updateListMessage();            
+            await context.read<CubitListMessageConnect>().updateListMessage();            
             emit(
               DataStateSnackBar(
                 context.go("$navigation"),

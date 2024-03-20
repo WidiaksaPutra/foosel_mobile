@@ -1,36 +1,38 @@
 import 'package:foosel/helpers/like/sql_like_tabel.dart';
-import 'package:foosel/interface/interface_local/helpers/interface_delete_data_like_local.dart';
-import 'package:foosel/interface/interface_local/helpers/interface_get_data_like_local.dart';
-import 'package:foosel/interface/interface_local/helpers/interface_insert_data_like_local.dart';
+import 'package:foosel/helpers/like/interfaces/interface_delete_data_like_local.dart';
+import 'package:foosel/helpers/like/interfaces/interface_get_data_like_local.dart';
+import 'package:foosel/helpers/like/interfaces/interface_insert_data_like_local.dart';
 
-class helperLike implements interfaceGetDataLikeLocal, interfaceInsertDataLikeLocal, interfaceDeleteDataLikeLocal{
-  
+class HelperLike implements 
+  InterfaceGetDataLikeLocal, 
+  InterfaceInsertDataLikeLocal, 
+  InterfaceDeleteDataLikeLocal{
   @override
-  Future<List<Map<String, dynamic>>> GetDataLikeLocal() async {
+  Future<List<Map<String, dynamic>>> getDataLikeLocal() async {
     final dbGet = await SqlLikeTabel.db();
     return await dbGet.query('like');
   }
 
   @override
-  Future<List<Map<String, dynamic>>> GetDataLikeWhereIdLocal({required String tokenId}) async{
+  Future<List<Map<String, dynamic>>> getDataLikeWhereIdLocal({required String tokenId}) async{
     final dbGet = await SqlLikeTabel.db();
     return await dbGet.query('like', where: "tokenId = '$tokenId'");
   }
 
   @override
-  Future<int> DeleteDataLikeLocal() async{
+  Future<int> deleteDataLikeLocal() async{
     final db = await SqlLikeTabel.db();
     return await db.delete('like');
   }
 
   @override
-  Future<int> DeleteDataLikeLocalWhereIdLocal({required String tokenId}) async{
+  Future<int> deleteDataLikeLocalWhereIdLocal({required String tokenId}) async{
     final db = await SqlLikeTabel.db();
     return await db.delete('like', where: "tokenId = '$tokenId'");
   }
   
   @override
-  Future<int> InsertDataLikeLocal({
+  Future<int> insertDataLikeLocal({
     required String tokenId, 
     required String name,
     required String email,

@@ -1,1 +1,1 @@
-mixin DataEventFormLogin{}
+abstract class DataEventFormLogin{}

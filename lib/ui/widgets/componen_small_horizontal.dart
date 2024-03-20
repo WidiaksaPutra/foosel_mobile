@@ -17,21 +17,21 @@
 //       children: [
 //         Text(titleImage, style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont14)),
 //         Padding(
-//           padding: EdgeInsets.only(top: themeBox.defaultHeightBox12),
+//           padding: EdgeInsets.only(top: ThemeBox.defaultHeightBox12),
 //           child: SizedBox(
-//             height: themeBox.defaultHeightBox60,
+//             height: ThemeBox.defaultHeightBox60,
 //             child: ListView.builder(
 //               physics: const BouncingScrollPhysics(),
 //               scrollDirection: Axis.horizontal,
 //               itemCount: imageFamiliarShoes.length,
 //               itemBuilder: ((context, index) => Padding(
-//                 padding: EdgeInsets.only(right: themeBox.defaultWidthBox16),
+//                 padding: EdgeInsets.only(right: ThemeBox.defaultWidthBox16),
 //                 child: ClipRRect(
-//                   borderRadius: BorderRadius.circular(themeBox.defaultRadius6),
+//                   borderRadius: BorderRadius.circular(ThemeBox.defaultRadius6),
 //                   child: Image.asset(
 //                     imageFamiliarShoes[index],
-//                     height: themeBox.defaultHeightBox54,
-//                     width: themeBox.defaultWidthBox54,
+//                     height: ThemeBox.defaultHeightBox54,
+//                     width: ThemeBox.defaultWidthBox54,
 //                   ),
 //                 ),
 //               ))

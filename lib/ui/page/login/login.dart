@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_default/event_default/event_form_user.dart';
-import 'package:foosel/blocs/bloc_default/default/connection_dialog.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/event/event_form_user.dart';
+import 'package:foosel/blocs/bloc_default/class/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_login/main/bloc_main_button_login.dart';
 import 'package:foosel/blocs/bloc_login/main/bloc_main_data_login.dart';
 import 'package:foosel/blocs/bloc_login/main/cubit_main_form_login.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_form_user.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_multipe_form.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_snackBar_form.dart';
+import 'package:foosel/blocs/bloc_default/state/state_form_user.dart';
+import 'package:foosel/blocs/bloc_default/state/state_multipe_form.dart';
+import 'package:foosel/blocs/bloc_default/state/state_snackBar_form.dart';
 import 'package:foosel/routes/route_name.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/shared/theme_color.dart';
@@ -23,14 +23,13 @@ import 'package:foosel/ui/widgets/componen_list_view.dart';
 import 'package:foosel/ui/widgets/componen_text_button_315x50.dart';
 
 // ignore: must_be_immutable
-class Login extends StatelessWidget with defaultSharedPref{
+class Login extends StatelessWidget with SharedPref{
   Login({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context){
     sharedPref();
-    themeBox(context);
-    
+    ThemeBox(context);
     Widget labelEmail() => ComponenTextFormField_TextFormAndHintGrey14AndRadius12AndFillColorBlack(
       labelText: "Email Address",
       labelStyle: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16),
@@ -115,20 +114,20 @@ class Login extends StatelessWidget with defaultSharedPref{
                 ComponenHeadForm(labelWhite: "Login", labelGrey: "Sign In to Countinue"),
                 Expanded(
                   child: ComponenListViewVertical(
-                    sizeHeightBox: constraint.maxHeight-themeBox.defaultHeightBox70, 
+                    sizeHeightBox: constraint.maxHeight-ThemeBox.defaultHeightBox70, 
                     content: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          margin: EdgeInsets.only(left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30, top: themeBox.defaultHeightBox60),
+                          margin: EdgeInsets.only(left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, top: ThemeBox.defaultHeightBox60),
                           child: Column(
                             children: [
                               labelEmail(),
                               outputEmail(),
-                              SizedBox(height: themeBox.defaultHeightBox30),
+                              SizedBox(height: ThemeBox.defaultHeightBox30),
                               labelPassword(),
                               outputPassword(),
-                              SizedBox(height: themeBox.defaultHeightBox30),
+                              SizedBox(height: ThemeBox.defaultHeightBox30),
                               buttonLogin(),
                             ],
                           ), 

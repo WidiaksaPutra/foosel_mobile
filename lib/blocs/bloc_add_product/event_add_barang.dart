@@ -1,1 +1,1 @@
-mixin DataEventAddBarang{}
+abstract class DataEventAddBarang{}

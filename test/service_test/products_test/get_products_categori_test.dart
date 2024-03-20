@@ -1,4 +1,4 @@
-import 'package:foosel/interface/interface_local/service/interface_get_data_products_category.dart';
+import 'package:foosel/service/api_products/interfaces/interface_get_data_products_category.dart';
 import 'package:foosel/service/api_products/injection_product.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -7,10 +7,10 @@ import '../../default_test/data_dummy_test.dart';
 void main(){
   group("Unit Test Service Get Products Categori", () { 
     setupDInjectionProduct();
-    final interfaceGetDataProductsCategory dataGetProductCategoryFuture = getItInstance<interfaceGetDataProductsCategory>();
+    final InterfaceGetDataProductsCategory dataGetProductCategoryFuture = getItInstance<InterfaceGetDataProductsCategory>();
     
     test("Unit Test Service Get Data Products Categori Null", () async{
-      final data = await dataGetProductCategoryFuture.GetDataProductsCategory(
+      final data = await dataGetProductCategoryFuture.getDataProductsCategory(
         testing: true,
         categoriesId: idCategory, 
         fresh: true,
@@ -19,7 +19,7 @@ void main(){
     });
 
     test("Unit Test Service Get Data Categori Products Token Null", () async{
-      final data = await dataGetProductCategoryFuture.TokenNull(
+      final data = await dataGetProductCategoryFuture.tokenNull(
         testing: true,  
         categoriesId: idCategory,
       );
@@ -27,7 +27,7 @@ void main(){
     });
 
     test("Unit Test Service Get Data Categori Products Pembeli", () async{
-      final data = await dataGetProductCategoryFuture.GetDataProductsCategory(
+      final data = await dataGetProductCategoryFuture.getDataProductsCategory(
         testing: true, 
         testingToken: tokenUserPembeli,
         categoriesId: idCategory, 
@@ -37,7 +37,7 @@ void main(){
     });
 
     test("Unit Test Service Get Data Categori Products Penjual", () async{
-      final data = await dataGetProductCategoryFuture.GetDataProductsCategory(
+      final data = await dataGetProductCategoryFuture.getDataProductsCategory(
         testing: true, 
         testingToken: tokenUserPenjual,
         categoriesId: idCategory, 
@@ -47,7 +47,7 @@ void main(){
     });
     
     test("Unit Test Service Get Data Categori Product Pembeli Token Not Null", () async{
-      final data = await dataGetProductCategoryFuture.TokenNotNull(
+      final data = await dataGetProductCategoryFuture.tokenNotNull(
         testing: true, 
         tokens: tokenUserPembeli,
         categoriesId: idCategory,
@@ -56,7 +56,7 @@ void main(){
     });
 
     test("Unit Test Service Get Data Categori Product Penjual Token Not Null", () async{
-      final data = await dataGetProductCategoryFuture.TokenNotNull(
+      final data = await dataGetProductCategoryFuture.tokenNotNull(
         testing: true, 
         tokens: tokenUserPenjual,
         categoriesId: idCategory,
@@ -69,7 +69,7 @@ void main(){
         'Authorization': 'Bearer $tokenUserPembeli',
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      final data = await dataGetProductCategoryFuture.RolePembeli(
+      final data = await dataGetProductCategoryFuture.rolePembeli(
         testing: true, 
         headers: headers,
         categoriesId: idCategory,
@@ -82,7 +82,7 @@ void main(){
         'Authorization': 'Bearer $tokenUserPenjual',
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      final data = await dataGetProductCategoryFuture.RolePenjual(
+      final data = await dataGetProductCategoryFuture.rolePenjual(
         testing: true, 
         headers: headers,
         categoriesId: idCategory,
@@ -100,7 +100,7 @@ void main(){
         'page' : '1',
         'limit' : '5',
       };
-      final data = await dataGetProductCategoryFuture.GetDataProductUsers(
+      final data = await dataGetProductCategoryFuture.getDataProductUsers(
         testing: true, 
         headers: headers, 
         link: 'detailPembeli',
@@ -119,7 +119,7 @@ void main(){
         'page' : '1',
         'limit' : '5',
       };
-      final data = await dataGetProductCategoryFuture.GetDataProductUsers(
+      final data = await dataGetProductCategoryFuture.getDataProductUsers(
         testing: true, 
         headers: headers, 
         link: 'detailPenjual',

@@ -28,18 +28,18 @@ class ComponenContentDialog_ImageAndTitleTextAndButtonYesAndButtonNo extends Sta
         children: [
           Lottie.asset(
             image,
-            height: themeBox.defaultHeightBox150,
-            width: themeBox.defaultWidthBox152,
+            height: ThemeBox.defaultHeightBox150,
+            width: ThemeBox.defaultWidthBox152,
           ),
           Text(titleText, style: whiteTextStyle.copyWith(fontWeight: semiBold, fontSize: defaultFont14)),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox10),
+            padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ComponenBasicButton(
                   paddingVertical: 0, 
-                  borderRadius: themeBox.defaultRadius5, 
+                  borderRadius: ThemeBox.defaultRadius5, 
                   content: Icon(
                     Icons.check,
                     color: kBlackColor,
@@ -50,7 +50,7 @@ class ComponenContentDialog_ImageAndTitleTextAndButtonYesAndButtonNo extends Sta
                 ),
                 ComponenBasicButton(
                   paddingVertical: 0, 
-                  borderRadius: themeBox.defaultRadius5, 
+                  borderRadius: ThemeBox.defaultRadius5, 
                   content: Icon(
                     Icons.close,
                     color: kBlackColor,

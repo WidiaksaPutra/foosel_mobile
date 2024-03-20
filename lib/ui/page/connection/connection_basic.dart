@@ -2,8 +2,8 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_connection_example.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_connection.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_example.dart';
+import 'package:foosel/blocs/bloc_default/state/state_connection.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/ui/widgets/componen_loading.dart';
 
@@ -38,8 +38,9 @@ class ConnectionBasic extends StatelessWidget{
           }
         }
         else{
-          nullAcces = ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200);
-          nullAcces = BlocBuilder<cubitConnectionExample, DataStateConnection>(
+          ThemeBox(context);
+          nullAcces = ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200);
+          nullAcces = BlocBuilder<CubitConnectionExample, DataStateConnection>(
             builder: (context, state) => (state.connectionBoolean == true)
             ? statusConnect()
             : statusDisconnect(),

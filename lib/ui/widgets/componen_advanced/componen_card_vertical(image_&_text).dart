@@ -19,20 +19,20 @@ class ComponenCardVertical_ImageAndText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: themeBox.defaultHeightBox30),
+      margin: EdgeInsets.only(bottom: ThemeBox.defaultHeightBox30),
       child: Row(        
         mainAxisAlignment: MainAxisAlignment.start,
         children:[
           ComponenBasicImage(
-            heightImage: themeBox.defaultHeightBox120,
-            widthImage: themeBox.defaultWidthBox120,
-            radiusImage: themeBox.defaultRadius12, 
+            heightImage: ThemeBox.defaultHeightBox120,
+            widthImage: ThemeBox.defaultWidthBox120,
+            radiusImage: ThemeBox.defaultRadius12, 
             connection: connection, 
             gambar: gambar, 
             backgroundColor: kWhiteColor, 
             onTap: () {},
           ),
-          SizedBox(width: themeBox.defaultWidthBox12),
+          SizedBox(width: ThemeBox.defaultWidthBox12),
           Expanded(
             child: ComponenTextColumn_CrossStartAndMainSpaceEvenlyAndGray2WhiteBlueAndFont12Font16Font14AndRegularSemiBoldMedium(
               nama: nama, 

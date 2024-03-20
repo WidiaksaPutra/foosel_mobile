@@ -1,4 +1,4 @@
-import 'package:foosel/interface/interface_local/service/interface_get_data_detail_product.dart';
+import 'package:foosel/service/api_products/interfaces/interface_get_data_detail_product.dart';
 import 'package:foosel/service/api_products/injection_product.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -7,10 +7,10 @@ import '../../default_test/data_dummy_test.dart';
 void main(){
   group("Unit Test Service Get Detail Product", () { 
     setupDInjectionProduct();
-    final interfaceGetDataDetailProduct dataGetDetailProduct = getItInstance<interfaceGetDataDetailProduct>();
+    final InterfaceGetDataDetailProduct dataGetDetailProduct = getItInstance<InterfaceGetDataDetailProduct>();
 
     test("Unit Test Service Get Data Detail Product Null", () async{
-      final data = await dataGetDetailProduct.GetDataDetailProduct(
+      final data = await dataGetDetailProduct.getDataDetailProduct(
         testing: true, 
         tokenId: idProducts,
       );
@@ -18,12 +18,12 @@ void main(){
     });
 
     test("Unit Test Service Get Data Detail Product Token Null", () async{
-      final data = await dataGetDetailProduct.TokenNull(testing: true, tokenId: idProducts);
+      final data = await dataGetDetailProduct.tokenNull(testing: true, tokenId: idProducts);
       expect(data, equals("berhasil"));
     });
 
     test("Unit Test Service Get Data Detail Product Pembeli", () async{
-      final data = await dataGetDetailProduct.GetDataDetailProduct(
+      final data = await dataGetDetailProduct.getDataDetailProduct(
         testing: true, 
         testingToken: tokenUserPembeli,
         tokenId: idProducts,
@@ -32,7 +32,7 @@ void main(){
     });
 
     test("Unit Test Service Get Data Detail Product Penjual", () async{
-      final data = await dataGetDetailProduct.GetDataDetailProduct(
+      final data = await dataGetDetailProduct.getDataDetailProduct(
         testing: true, 
         testingToken: tokenUserPenjual,
         tokenId: idProducts,
@@ -41,7 +41,7 @@ void main(){
     });
 
     test("Unit Test Service Get Data Detail Product Pembeli Token Not Null", () async{
-      final data = await dataGetDetailProduct.TokenNotNull(
+      final data = await dataGetDetailProduct.tokenNotNull(
         testing: true, 
         tokens: tokenUserPembeli,
         tokenId: idProducts,
@@ -50,7 +50,7 @@ void main(){
     });
 
     test("Unit Test Service Get Data Detail Product Penjual Token Not Null", () async{
-      final data = await dataGetDetailProduct.TokenNotNull(
+      final data = await dataGetDetailProduct.tokenNotNull(
         testing: true, 
         tokens: tokenUserPenjual,
         tokenId: idProducts,
@@ -63,7 +63,7 @@ void main(){
         'Authorization': 'Bearer $tokenUserPembeli',
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      final data = await dataGetDetailProduct.RolePembeli(
+      final data = await dataGetDetailProduct.rolePembeli(
         testing: true, 
         headers: headers,
         tokenId: idProducts,
@@ -76,7 +76,7 @@ void main(){
         'Authorization': 'Bearer $tokenUserPenjual',
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      final data = await dataGetDetailProduct.RolePenjual(
+      final data = await dataGetDetailProduct.rolePenjual(
         testing: true, 
         headers: headers,
         tokenId: idProducts,
@@ -92,7 +92,7 @@ void main(){
       Map<String, String> parameterApi = {
       'token_id' : idProducts,
       };
-      final data = await dataGetDetailProduct.GetDataProductUsers(
+      final data = await dataGetDetailProduct.getDataProductUsers(
         testing: true, 
         headers: headers, 
         link: 'detailPembeli',
@@ -109,7 +109,7 @@ void main(){
       Map<String, String> parameterApi = {
       'token_id' : idProducts,
       };
-      final data = await dataGetDetailProduct.GetDataProductUsers(
+      final data = await dataGetDetailProduct.getDataProductUsers(
         testing: true, 
         headers: headers, 
         link: 'detailPenjual',

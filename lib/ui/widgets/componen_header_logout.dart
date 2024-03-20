@@ -16,9 +16,9 @@ class ComponenHeaderLogout extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    
+    ThemeBox(context);
     return Container(
-      margin: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox30),
+      margin: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -42,7 +42,7 @@ class ComponenHeaderLogout extends StatelessWidget{
               ),
             ),
           ),
-          SizedBox(width: themeBox.defaultWidthBox20),
+          SizedBox(width: ThemeBox.defaultWidthBox20),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,8 +56,8 @@ class ComponenHeaderLogout extends StatelessWidget{
             onPressed: onPressed,
             icon: Image.asset(
               logoutIcon,
-              height: themeBox.defaultHeightBox20,
-              width: themeBox.defaultWidthBox20,
+              height: ThemeBox.defaultHeightBox20,
+              width: ThemeBox.defaultWidthBox20,
             ),
           )
         ],

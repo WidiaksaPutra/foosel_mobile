@@ -3,7 +3,7 @@ import 'package:foosel/blocs/bloc_bottom_nav_pembeli/state_bottom_nav_pembeli.da
 
 class CubitDetailProdukNavPembeli extends Cubit<DataStateDetailProdukNavPembeli>{
   CubitDetailProdukNavPembeli() : super(DataDetailProdukNavPembeli(jenisDetail: ''));
-  DetailProdukNavPembeli({
+  detailProdukNavPembeli({
     required String jenisDetail,
     required dynamic readDetail
   }){

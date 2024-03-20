@@ -3,16 +3,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_categories/event_categories.dart';
-import 'package:foosel/blocs/bloc_categories/state_categories.dart';
 import 'package:foosel/blocs/bloc_categories/interfaces_category.dart';
-import 'package:foosel/interface/interface_local/service/interface_get_data_products_category.dart';
+import 'package:foosel/blocs/bloc_categories/state_categories.dart';
+import 'package:foosel/service/api_products/interfaces/interface_get_data_products_category.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 
 ScrollController scrollController = ScrollController();
 late bool loadingScrolling = false;
 late List dataList = [];
-class BlocKlasifikasiCategoriesConnect extends Bloc<DataEventKlasifikasi, DataStateCategori> implements interfacesProductsCategoryConnect{
-  final interfaceGetDataProductsCategory dataGetProductCategoryFuture = getItInstance<interfaceGetDataProductsCategory>();
+class BlocKlasifikasiCategoriesConnect extends Bloc<DataEventKlasifikasi, DataStateCategori> implements InterfacesProductsCategoryConnect{
+  final InterfaceGetDataProductsCategory dataGetProductCategoryFuture = getItInstance<InterfaceGetDataProductsCategory>();
   BlocKlasifikasiCategoriesConnect() : super(
     DataCategori(
       dataKlassifikasiCategories: dataList, 
@@ -22,15 +22,15 @@ class BlocKlasifikasiCategoriesConnect extends Bloc<DataEventKlasifikasi, DataSt
     )
   ){
     on<KlasifikasiCategories>((event, emit) async{
-      await GetDataCategoryProduct(categoryKey: event.categoryKey);
-      await ScrollControlCategoryProduct(categoryKey: event.categoryKey);
+      await getDataCategoryProduct(categoryKey: event.categoryKey);
+      await scrollControlCategoryProduct(categoryKey: event.categoryKey);
     });
   }
-  
+
   @override
-  GetDataCategoryProduct({required String categoryKey}) async{
+  getDataCategoryProduct({required String categoryKey}) async {
     loadingScrolling = false;
-    dataList = await dataGetProductCategoryFuture.GetDataProductsCategory(categoriesId: categoryKey, fresh: true);
+    dataList = await dataGetProductCategoryFuture.getDataProductsCategory(categoriesId: categoryKey, fresh: true);
     emit(
       DataCategori(
         dataKlassifikasiCategories: dataList, 
@@ -42,11 +42,11 @@ class BlocKlasifikasiCategoriesConnect extends Bloc<DataEventKlasifikasi, DataSt
   }
   
   @override
-  ScrollControlCategoryProduct({required String categoryKey}) async{
+  scrollControlCategoryProduct({required String categoryKey}) {
     scrollController.addListener(() async {
       if(scrollController.position.pixels == scrollController.position.maxScrollExtent && loadingScrolling == false){
         loadingScrolling = true;
-        dataList = await dataGetProductCategoryFuture.GetDataProductsCategory(categoriesId: categoryKey, fresh: false);
+        dataList = await dataGetProductCategoryFuture.getDataProductsCategory(categoriesId: categoryKey, fresh: false);
         emit(
           DataCategori(
             dataKlassifikasiCategories: dataList, 

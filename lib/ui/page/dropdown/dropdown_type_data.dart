@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_categories/main/cubit_main_data_noscroll_categories.dart';
 import 'package:foosel/blocs/bloc_categories/state_categories.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_form_not_null_barang.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_form_not_null_barang.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/ui/widgets/componen_advanced/componen_text_drop_down.dart';
 import 'package:foosel/ui/widgets/componen_loading.dart';
@@ -21,7 +21,7 @@ class DropdownTypeData extends StatefulWidget {
   @override
   State<DropdownTypeData> createState() => _DropdownTypeDataState();
 }
-class _DropdownTypeDataState extends State<DropdownTypeData> with defaultSharedPref{
+class _DropdownTypeDataState extends State<DropdownTypeData> with SharedPref{
   late List<String> listData;
   late String first;
 
@@ -59,7 +59,7 @@ class _DropdownTypeDataState extends State<DropdownTypeData> with defaultSharedP
 
   @override
   Widget build(BuildContext context) {
-    themeBox(context);
+    ThemeBox(context);
     return Expanded(
       child: BlocBuilder<CubitMainDataNoscrollCategories, DataStateCategoriNameNoscroll>(
         builder: (context, state){
@@ -72,7 +72,7 @@ class _DropdownTypeDataState extends State<DropdownTypeData> with defaultSharedP
           return (state.loading == true && state.dataNameCategory.isNotEmpty)
           ? ComponenTextDropDown(labelText: "Type Product", list: listData,
             viewDropdownButton: first.toString(), onClicked: dropDownClick)
-          : ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50);
+          : ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox50);
         }
       ),
     );

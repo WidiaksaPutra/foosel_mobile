@@ -22,12 +22,12 @@ class ComponenContentDialog_ImageAndTitleTextAndText extends StatelessWidget {
         children: [
           Lottie.asset(
             image,
-            height: themeBox.defaultHeightBox150,
-            width: themeBox.defaultWidthBox152,
+            height: ThemeBox.defaultHeightBox150,
+            width: ThemeBox.defaultWidthBox152,
           ),
           Text(titleText, style: whiteTextStyle.copyWith(fontWeight: semiBold, fontSize: defaultFont18)),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox12),
+            padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox12),
             child: Text(text, style: grayTextStyle2.copyWith(fontWeight: regular, fontSize: defaultFont14)),
           ),
         ],

@@ -1,6 +1,8 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_message/event_message.dart';
 import 'package:foosel/blocs/bloc_message/main/bloc_main_detail_message_connect.dart';
 import 'package:foosel/blocs/bloc_message/main/cubit_nav_message.dart';
@@ -10,18 +12,18 @@ import 'package:foosel/ui/page/message/detail_message/real_time_chat.dart';
 import 'package:foosel/ui/widgets/componen_bottom_chat_message.dart';
 import 'package:foosel/ui/widgets/componen_loading.dart';
 
-class BodyDetailMessage extends StatelessWidget with defaultSharedPref{
+class BodyDetailMessage extends StatelessWidget with SharedPref{
   BodyDetailMessage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     late bool productPreview;
     sharedPref();
-    
     Widget bodyTop(){
       // Size size = MediaQuery.of(context).size;
       productPreview = true;
-      return BlocBuilder<cubitNavMessageDetail, DataStateNavMessageDetail>(
+      return BlocBuilder<CubitNavMessageDetail, DataStateNavMessageDetail>(
         builder: (context, state){
           return (state.tokenPenerima != "")
           ? Expanded(
@@ -29,7 +31,7 @@ class BodyDetailMessage extends StatelessWidget with defaultSharedPref{
               // height: size.height,
               child: RealTimeChat(),
             )
-          : Expanded(child: ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200));
+          : Expanded(child: ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200));
         }
       );
     }
@@ -40,15 +42,15 @@ class BodyDetailMessage extends StatelessWidget with defaultSharedPref{
         hintText: "Typle Message...",
         // productPreview: ComponenProductPreview(image: "asset/image/sampel_sepatu_home_small.png", title: "COURT VISIO COURT VISIO", harga: "5715", productPreview: productPreview), 
         boolProductPreview: productPreview,
-        iconBottom: BlocBuilder<cubitNavMessageDetail, DataStateNavMessageDetail>(
+        iconBottom: BlocBuilder<CubitNavMessageDetail, DataStateNavMessageDetail>(
           builder: (context, state){
             return (state.tokenPenerima != "")
             ? IconButton(
-                padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox13, vertical: themeBox.defaultHeightBox13),
+                padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox13, vertical: ThemeBox.defaultHeightBox13),
                 icon: Image.asset(
                   "asset/icon/icon_send_message.png",
-                  height: themeBox.defaultHeightBox16,
-                  width: themeBox.defaultWidthBox19,
+                  height: ThemeBox.defaultHeightBox16,
+                  width: ThemeBox.defaultWidthBox19,
                 ),
                 onPressed: () {
                   context.read<BlocDetailMessageConnect>().add(
@@ -60,7 +62,7 @@ class BodyDetailMessage extends StatelessWidget with defaultSharedPref{
                   prefs.remove("message");
                 },
               )
-            : ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50);
+            : ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox50);
           }
         ),
       );
@@ -86,11 +88,11 @@ class BodyDetailMessage extends StatelessWidget with defaultSharedPref{
 //         // productPreview: ComponenProductPreview(image: "asset/image/sampel_sepatu_home_small.png", title: "COURT VISIO COURT VISIO", harga: "5715", productPreview: productPreview), 
 //         boolProductPreview: productPreview,
 //         iconBottom: IconButton(
-//           padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox13, vertical: themeBox.defaultHeightBox13),
+//           padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox13, vertical: ThemeBox.defaultHeightBox13),
 //           icon: Image.asset(
 //             "asset/icon/icon_send_message.png",
-//             height: themeBox.defaultHeightBox16,
-//             width: themeBox.defaultWidthBox19,
+//             height: ThemeBox.defaultHeightBox16,
+//             width: ThemeBox.defaultWidthBox19,
 //           ),
 //           onPressed: () {
 //             // context.read<BlocDetailMessageConnect>().add(
@@ -103,15 +105,15 @@ class BodyDetailMessage extends StatelessWidget with defaultSharedPref{
 //             prefs.remove("message");
 //           },
 //         ),
-//         // iconBottom: BlocBuilder<cubitNavMessageDetail, DataStateNavMessageDetail>(
+//         // iconBottom: BlocBuilder<CubitNavMessageDetail, DataStateNavMessageDetail>(
 //         //   builder: (context, state){
 //         //     return (state.emailPenerima != "" && state.tokenPenerima != "")
 //         //     ? IconButton(
-//         //         padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox13, vertical: themeBox.defaultHeightBox13),
+//         //         padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox13, vertical: ThemeBox.defaultHeightBox13),
 //         //         icon: Image.asset(
 //         //           "asset/icon/icon_send_message.png",
-//         //           height: themeBox.defaultHeightBox16,
-//         //           width: themeBox.defaultWidthBox19,
+//         //           height: ThemeBox.defaultHeightBox16,
+//         //           width: ThemeBox.defaultWidthBox19,
 //         //         ),
 //         //         onPressed: () {
 //         //           context.read<BlocDetailMessageConnect>().add(
@@ -132,7 +134,7 @@ class BodyDetailMessage extends StatelessWidget with defaultSharedPref{
 //       return ComponenLoadingChatMessage(
 //         hintText: "Loading....",
 //         iconBottom: IconButton(
-//           padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox13, vertical: themeBox.defaultHeightBox13),
+//           padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox13, vertical: ThemeBox.defaultHeightBox13),
 //           icon: CircularProgressIndicator(color: kWhiteColor),
 //           onPressed: () {},
 //         )

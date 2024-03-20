@@ -16,6 +16,7 @@ class ComponenBoxWhite extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     return Container(
       margin: EdgeInsets.only(
         top: marginTop,
@@ -25,7 +26,7 @@ class ComponenBoxWhite extends StatelessWidget {
         borderRadius: BorderRadius.circular(borderRadiusBox.r),
         border: Border.all(
           color: colorCard,
-          width: themeBox.defaultWidthBox02,
+          width: ThemeBox.defaultWidthBox02,
         ),
         boxShadow: [
           BoxShadow(

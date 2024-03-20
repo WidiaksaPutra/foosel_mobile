@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_penjual/cubit_bottom_nav_penjual.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_penjual/state_bottom_nav_pembeli.dart';
-import 'package:foosel/blocs/bloc_default/default/connection_dialog.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/class/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_logout/cubit_logout.dart';
 import 'package:foosel/blocs/bloc_logout/state_logout.dart';
 import 'package:foosel/blocs/bloc_message/main/cubit_main_list_jumlah_badges.dart';
@@ -29,20 +29,21 @@ import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:badges/badges.dart' as badges;
 
-class BottomNavPenjual extends HookWidget with defaultSharedPref {
+class BottomNavPenjual extends HookWidget with SharedPref {
   BottomNavPenjual({ Key? key }) : super(key: key);
   late Size size;
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     var loadingLogout = useState<bool>(false);
     var currentButton = useState<int>(0);
     size = MediaQuery.of(context).size;
     sharedPref();
-    return BlocBuilder<cubitBottomNavPenjual, DataStateBottomNavigasiPenjual>(
+    return BlocBuilder<CubitBottomNavPenjual, DataStateBottomNavigasiPenjual>(
       builder: (context, state){
         currentButton.value = state.currentButton;
-        return BlocBuilder<cubitLogout,StateDataLogout>(
+        return BlocBuilder<CubitLogout,StateDataLogout>(
           builder: (context, state){
             loadingLogout.value = state.loadingLogout;
             return Scaffold(
@@ -64,14 +65,14 @@ class BottomNavPenjual extends HookWidget with defaultSharedPref {
     required BuildContext contexts,
   }){
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-    stream: contexts.read<cubitListMessageConnect>().getStreamFirebaseListMessage,
+    stream: contexts.read<CubitListMessageConnect>().getStreamFirebaseListMessage,
     builder: (context1, snapshot){
       if(snapshot.connectionState == ConnectionState.active){
-        contexts.read<cubitListMessageConnect>().getListMessage(snapshot.data!.docs);
+        contexts.read<CubitListMessageConnect>().getListMessage(snapshot.data!.docs);
         return contentMessage;
       }else return Lottie.asset(
         "asset/animations/loading_horizontal_lottie.json",
-        height: themeBox.defaultHeightBox50,
+        height: ThemeBox.defaultHeightBox50,
       );
     });
   }
@@ -92,7 +93,7 @@ class BottomNavPenjual extends HookWidget with defaultSharedPref {
           backgroundColor: kBlackColor,
           type: BottomNavigationBarType.fixed,
           onTap: (value){            
-            contexts.read<cubitBottomNavPenjual>().navigation(currentButton: value);
+            contexts.read<CubitBottomNavPenjual>().navigation(currentButton: value);
           },
           items: [            
             BottomNavigationBarItem(
@@ -100,10 +101,10 @@ class BottomNavPenjual extends HookWidget with defaultSharedPref {
                 padding: const EdgeInsets.only(top: 10),
                 child: message(
                   contexts: contexts,
-                  contentMessage: BlocBuilder<cubitListMessageConnect, DataStateListMessage>(
+                  contentMessage: BlocBuilder<CubitListMessageConnect, DataStateListMessage>(
                     builder: (context2, listMessage){
                       if(listMessage.loading == false && listMessage.dataUser.isNotEmpty){
-                        contexts.read<cubitJumlahBadges>().getBadgesMessage(listMessage.dataUser);
+                        contexts.read<CubitJumlahBadges>().getBadgesMessage(listMessage.dataUser);
                       }
                       return Image.asset(
                         "asset/icon/home_icon.png",
@@ -122,10 +123,10 @@ class BottomNavPenjual extends HookWidget with defaultSharedPref {
                 padding: const EdgeInsets.only(top: 10),
                 child: message(
                   contexts: contexts,
-                  contentMessage: BlocBuilder<cubitListMessageConnect, DataStateListMessage>(
+                  contentMessage: BlocBuilder<CubitListMessageConnect, DataStateListMessage>(
                     builder: (context2, listMessage){
                       if(listMessage.loading == false && listMessage.dataUser.isNotEmpty){
-                        return BlocBuilder<cubitJumlahBadges, DataStateBadges>(
+                        return BlocBuilder<CubitJumlahBadges, DataStateBadges>(
                           builder: (context3, jumlahBadges){
                           if(jumlahBadges.loading == false && jumlahBadges.totalBadges.toString() != "0"){
                             prefs.setString("navBadges", jumlahBadges.totalBadges.toString());
@@ -230,7 +231,7 @@ class BottomNavPenjual extends HookWidget with defaultSharedPref {
     switch(currentButton){
       case 1 :
         return AppBar(
-          toolbarHeight: themeBox.defaultHeightBox80,
+          toolbarHeight: ThemeBox.defaultHeightBox80,
           backgroundColor: kPrimaryColor,
           shadowColor: kBlackColor6,
           automaticallyImplyLeading: false,
@@ -240,7 +241,7 @@ class BottomNavPenjual extends HookWidget with defaultSharedPref {
         );
       case 2 : 
         return AppBar(
-          toolbarHeight: themeBox.defaultHeightBox80,
+          toolbarHeight: ThemeBox.defaultHeightBox80,
           backgroundColor: kPrimaryColor,
           shadowColor: kBlackColor6,
           automaticallyImplyLeading: false,
@@ -250,19 +251,24 @@ class BottomNavPenjual extends HookWidget with defaultSharedPref {
         );
       case 3 :
         return AppBar(
-          toolbarHeight: themeBox.defaultHeightBox80,
+          toolbarHeight: ThemeBox.defaultHeightBox80,
           backgroundColor: kPrimaryColor,
           shadowColor: kBlackColor6,
           automaticallyImplyLeading: false,
           title: Center(
-            child: Text("Add Barang", style: whiteTextStyle.copyWith(fontSize: defaultFont18, fontWeight: medium)),
+            child: Expanded(
+              child: Text("Add Barang", 
+                style: whiteTextStyle.copyWith(fontSize: defaultFont18, fontWeight: medium),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ),
         );
       case 4 :
       ClassConnectionDialog connection = ClassConnectionDialog();
       if(loadingLogout == true){Future.delayed(Duration(seconds: 3),()=>loadingLogout = false);}
       return AppBar(
-        toolbarHeight: themeBox.defaultHeightBox124,
+        toolbarHeight: ThemeBox.defaultHeightBox124,
         backgroundColor: kPrimaryColor,
         shadowColor: kBlackColor6,
         centerTitle: false,
@@ -276,9 +282,9 @@ class BottomNavPenjual extends HookWidget with defaultSharedPref {
                 title: stateUserConn.dataUser.name.toString(), 
                 email: stateUserConn.dataUser.email.toString(),
                 logoutIcon: "asset/icon/logout_bottom.png", 
-                onPressed: () => contexts.read<cubitLogout>().logout(context: contexts),
+                onPressed: () => contexts.read<CubitLogout>().logout(context: contexts),
               )
-            : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox100)),
+            : Center(child: ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox100)),
             childDisconnect: (BuildContext context1, stateUserDisconn) => (stateUserDisconn.loading == true)
             ? ComponenHeaderLogout(
                 image: "asset/icon/profile_user.png", 
@@ -288,9 +294,9 @@ class BottomNavPenjual extends HookWidget with defaultSharedPref {
                 onPressed: (){}
                 // voidDialogBasic(context: context, text: 'Koneksi Internet Terputus', titleText: 'penggunaan aplikasi akan dibatasi karena aplikasi dalam mode offline', image: 'asset/icon/bad_connaction.png', onTap: () {  }),
               )
-            : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox100)),
+            : Center(child: ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox100)),
           )
-        : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox100)),
+        : Center(child: ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox100)),
       );
     }
     return null;
@@ -329,7 +335,7 @@ class BottomNavPenjual extends HookWidget with defaultSharedPref {
       return HomeMenuUser();
       case 1 :
       removeAddProduct();
-      contexts.read<cubitListMessageConnect>().updateListMessage();
+      contexts.read<CubitListMessageConnect>().updateListMessage();
       return MessageList();
       case 2 :
       removeAddProduct();

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_pembeli/cubit_detail_produk_nav_pembeli.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_connection_example.dart';
-import 'package:foosel/blocs/bloc_default/default/show_snack_bar.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_connection.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_example.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_show_snack_bar.dart';
+import 'package:foosel/blocs/bloc_default/state/state_connection.dart';
 import 'package:foosel/blocs/bloc_detail_products/cubit_detail_navigasi_product.dart';
 import 'package:foosel/blocs/bloc_detail_products/detail_product/cubit_detail_product_connect.dart';
 import 'package:foosel/blocs/bloc_detail_products/state_products.dart';
@@ -19,15 +19,16 @@ import 'package:foosel/ui/widgets/componen_loading.dart';
 import 'package:foosel/ui/widgets/componen_page_kosong.dart';
 import 'package:go_router/go_router.dart';
 
-class Like extends StatelessWidget with showSnackBar{
+class Like extends StatelessWidget with ShowSnackBar{
   Like({Key? key}) : super(key: key);
 
   void read(BuildContext context) async{
-    await context.read<cubitConnectionExample>().connectCheck(readBlocConnect: {}, readBlocDisconnect: {});
+    await context.read<CubitConnectionExample>().connectCheck(readBlocConnect: {}, readBlocDisconnect: {});
   }
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     read(context);
     Size size = MediaQuery.of(context).size;
     return BlocBuilder<CubitGetLike, DataStateGetLike>(
@@ -48,45 +49,45 @@ class Like extends StatelessWidget with showSnackBar{
                 scrollDirection: Axis.vertical,
                 itemCount: state.getData.length,
                 itemBuilder: (BuildContext context , int index){
-                  context.read<cubitDetailNavigasiProduct>().navigationDetailProduct();
-                  return BlocBuilder<cubitDetailNavigasiProduct, DataStateDetailProduct>(
+                  context.read<CubitDetailNavigasiProduct>().navigationDetailProduct();
+                  return BlocBuilder<CubitDetailNavigasiProduct, DataStateDetailProduct>(
                     builder: (context2, state0) => GestureDetector(
                       onTap: () {
-                        context.read<cubitConnectionExample>().connectCheck(
-                          readBlocConnect: {context.read<CubitDetailProdukNavPembeli>().DetailProdukNavPembeli(
+                        context.read<CubitConnectionExample>().connectCheck(
+                          readBlocConnect: {context.read<CubitDetailProdukNavPembeli>().detailProdukNavPembeli(
                             jenisDetail: "Like",
-                            readDetail: context.read<CubitDetailProductConnect>().GetDetailProductConnect(idProduct: state.getData[index]['tokenId'].toString()),
+                            readDetail: context.read<CubitDetailProductConnect>().getDetailProductConnect(idProduct: state.getData[index]['tokenId'].toString()),
                           )},
-                          readBlocDisconnect: {context.read<CubitDetailProdukNavPembeli>().DetailProdukNavPembeli(
+                          readBlocDisconnect: {context.read<CubitDetailProdukNavPembeli>().detailProdukNavPembeli(
                             jenisDetail: "Like", 
-                            readDetail: context.read<CubitGetLike>().GetDataLikeWhereIdLocal(tokenId: state.getData[index]['tokenId'].toString())
+                            readDetail: context.read<CubitGetLike>().getDataLikeWhereIdLocal(tokenId: state.getData[index]['tokenId'].toString())
                           )},
                         );
                         context.go(state0.navigation);
                       },
                       child:  Column(
                         children: [
-                          BlocBuilder<cubitConnectionExample, DataStateConnection>(
-                            builder: (context3, stateConnect) => BlocBuilder<cubitLike, DataStateLike>(
+                          BlocBuilder<CubitConnectionExample, DataStateConnection>(
+                            builder: (context3, stateConnect) => BlocBuilder<CubitLike, DataStateLike>(
                               builder: (context4, state1) => ComponenCardVertical_ImageAndTextAndLike(
                                 image: state.getData[index]['imagePath'].toString(), 
                                 title: state.getData[index]['name'].toString(), 
                                 harga: state.getData[index]['price'].toString(),  
                                 startList: false, 
                                 onPressedLike: () {
-                                  context.read<cubitLike>().GetLikeDelete(tokenId: state.getData[index]['tokenId'].toString());
+                                  context.read<CubitLike>().getLikeDelete(tokenId: state.getData[index]['tokenId'].toString());
                                   voidShowSnackBar(
                                     context: context, 
                                     color: (state1.statusLike == true) ? kRedColor : kBlueColor2,
-                                    vertical: themeBox.defaultHeightBox12, 
-                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(themeBox.defaultRadius8), topRight: Radius.circular(themeBox.defaultRadius8)), 
+                                    vertical: ThemeBox.defaultHeightBox12, 
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(ThemeBox.defaultRadius8), topRight: Radius.circular(ThemeBox.defaultRadius8)), 
                                     behavior: SnackBarBehavior.floating,
                                     duration: const Duration(milliseconds: 1000),
                                     content: Text((state1.statusLike == true) ? "Has been removed from the Wishlist" : "Has been added to the Wishlist", 
                                       style: whiteTextStyle.copyWith(fontWeight: regular, fontSize: defaultFont12),
                                       textAlign: TextAlign.center),
                                   );          
-                                  context.read<CubitGetLike>().GetDataLike();
+                                  context.read<CubitGetLike>().getDataLike();
                                 }, 
                                 connection: stateConnect.connectionBoolean, 
                               )
@@ -101,7 +102,7 @@ class Like extends StatelessWidget with showSnackBar{
             ]
           ],
         )
-      : ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200),
+      : ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200),
     );
   }
 }

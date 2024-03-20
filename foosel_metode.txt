@@ -1,0 +1,19 @@
+- SOLID
+- Depedency Injection
+- OOP
+- Flutter Hooks
+- sqlFlite CRUD
+- Firebase
+	- Firestore Firebase
+	- FCM
+- Rest Api CRUD Laravel
+- Http
+- Bloc&Cubit State Management
+- imagePicker
+- Lottie animation
+- notive badges
+- go notivication
+- clean code
+- Unit Test
+- connectivity & internet_connection_checker
+- MVVM/MVC/MVP

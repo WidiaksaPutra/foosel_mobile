@@ -22,25 +22,26 @@ class ComponenCartItemDetailVertical extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     return GestureDetector(
       onTap: onTapCard,
       child: Container(
-        margin: EdgeInsets.only(top: themeBox.defaultHeightBox12),
-        padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox20, horizontal: themeBox.defaultHeightBox12),
+        margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox12),
+        padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox20, horizontal: ThemeBox.defaultHeightBox12),
         decoration: BoxDecoration(
           color: kBlackColor,
-          borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+          borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
         ),
         child: Row(
           children:[
             Padding(
-              padding: EdgeInsets.only(right: themeBox.defaultWidthBox12),
+              padding: EdgeInsets.only(right: ThemeBox.defaultWidthBox12),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+                borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
                 child: Image.network(
                   "${Api.linkURL}/$image", 
-                  height: themeBox.defaultHeightBox60, 
-                  width: themeBox.defaultWidthBox60, 
+                  height: ThemeBox.defaultHeightBox60, 
+                  width: ThemeBox.defaultWidthBox60, 
                   alignment: Alignment.centerLeft,
                   fit: BoxFit.cover,
                 ),

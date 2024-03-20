@@ -1,12 +1,12 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:foosel/blocs/bloc_default/default/size_device.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_size_device.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/shared/theme_font.dart';
 import 'package:foosel/shared/theme_text_style.dart';
 
-class ComponenCardVerticalUserTransaksi extends StatelessWidget with sizeDevice{
+class ComponenCardVerticalUserTransaksi extends StatelessWidget with SizeDevice{
   String icon, textTitle;
   VoidCallback onTap, onLongPress;
   ComponenCardVerticalUserTransaksi({Key? key,
@@ -18,22 +18,22 @@ class ComponenCardVerticalUserTransaksi extends StatelessWidget with sizeDevice{
   
   @override
   Widget build(BuildContext context) {
-    getsizeDevice(context);
-    themeBox(context);
+    ThemeBox(context).getsizeDevice(context);
+    ThemeBox(context);
     return Container(
-      margin: EdgeInsets.only(top: themeBox.defaultHeightBox22, left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30),
+      margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox22, left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30),
       child: GestureDetector(
         onLongPress: onLongPress,
         onTap: onTap,
         child: Row(
           children:[
             Padding(
-              padding: EdgeInsets.only(right: themeBox.defaultWidthBox12),
+              padding: EdgeInsets.only(right: ThemeBox.defaultWidthBox12),
               child: ClipOval(
                 child: Image.network(
                   icon.toLowerCase(), 
-                  height: themeBox.defaultHeightBox54, 
-                  width: themeBox.defaultWidthBox54, 
+                  height: ThemeBox.defaultHeightBox54, 
+                  width: ThemeBox.defaultWidthBox54, 
                   fit: BoxFit.cover,
                 ),
               ),

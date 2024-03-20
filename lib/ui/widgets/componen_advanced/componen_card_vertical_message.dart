@@ -25,12 +25,12 @@ class ComponenMessageCardVertical extends StatelessWidget {
       child: Row(
         children:[
           Padding(
-            padding: EdgeInsets.only(right: themeBox.defaultWidthBox12),
+            padding: EdgeInsets.only(right: ThemeBox.defaultWidthBox12),
             child: ClipOval(
               child: Image.network(
                 icon.toLowerCase(), 
-                height: themeBox.defaultHeightBox54, 
-                width: themeBox.defaultWidthBox54, 
+                height: ThemeBox.defaultHeightBox54, 
+                width: ThemeBox.defaultWidthBox54, 
                 fit: BoxFit.cover,
               ),
             ),
@@ -46,7 +46,7 @@ class ComponenMessageCardVertical extends StatelessWidget {
             )
           ),
           Padding(
-            padding: EdgeInsets.only(left: themeBox.defaultWidthBox38),
+            padding: EdgeInsets.only(left: ThemeBox.defaultWidthBox38),
             child: Text(textTailing, style: grayTextStyle2.copyWith(fontWeight: regular, fontSize: defaultFont10), textAlign: TextAlign.end, overflow: TextOverflow.ellipsis),
           ),
         ]

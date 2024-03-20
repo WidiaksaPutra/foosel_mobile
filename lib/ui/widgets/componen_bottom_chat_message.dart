@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/shared/theme_color.dart';
 import 'package:foosel/shared/theme_font.dart';
 import 'package:foosel/shared/theme_text_style.dart';
 
-class ComponenBottomChatMessage extends StatelessWidget with defaultSharedPref{
+class ComponenBottomChatMessage extends StatelessWidget with SharedPref{
   Widget iconBottom;
   // productPreview
   String hintText, nameController;
@@ -14,9 +14,10 @@ class ComponenBottomChatMessage extends StatelessWidget with defaultSharedPref{
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     sharedPref();
     return Container(
-      margin: EdgeInsets.only(top: themeBox.defaultHeightBox20),
+      margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -30,11 +31,11 @@ class ComponenBottomChatMessage extends StatelessWidget with defaultSharedPref{
               children: [
                 Expanded(
                   child: Container(
-                    margin: EdgeInsets.only(right: themeBox.defaultWidthBox20, left: themeBox.defaultWidthBox20, bottom: themeBox.defaultHeightBox20),
-                    padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox16, vertical: themeBox.defaultHeightBox12),
+                    margin: EdgeInsets.only(right: ThemeBox.defaultWidthBox20, left: ThemeBox.defaultWidthBox20, bottom: ThemeBox.defaultHeightBox20),
+                    padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox16, vertical: ThemeBox.defaultHeightBox12),
                     decoration: BoxDecoration(
                       color: kBlackColor,
-                      borderRadius: BorderRadius.circular(themeBox.defaultRadius12)
+                      borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12)
                     ),
                     child: TextFormField(
                       keyboardType: TextInputType.multiline,
@@ -52,10 +53,10 @@ class ComponenBottomChatMessage extends StatelessWidget with defaultSharedPref{
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(right: themeBox.defaultWidthBox20, bottom: themeBox.defaultHeightBox20),
+                  margin: EdgeInsets.only(right: ThemeBox.defaultWidthBox20, bottom: ThemeBox.defaultHeightBox20),
                   decoration: BoxDecoration(
                     color: kPurpleColor,
-                    borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+                    borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
                   ),
                   child: iconBottom,
                 ),

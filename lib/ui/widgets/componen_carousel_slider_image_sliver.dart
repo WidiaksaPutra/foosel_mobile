@@ -18,7 +18,7 @@ class ComponenCarouselSliderImageSliver extends HookWidget {
   Widget build(BuildContext context) {
     final currentIndex = useState<int>(0);
     final index = useState<int>(-1);
-    themeBox(context);
+    ThemeBox(context);
     return Container(
       color: kGreyColor6,
       child: Column(
@@ -54,11 +54,11 @@ class ComponenCarouselSliderImageSliver extends HookWidget {
               (e) {
                 index.value++;
                 return Container(
-                  margin: EdgeInsets.only(right: themeBox.defaultWidthBox4),
-                  width: (currentIndex.value == index.value) ? themeBox.defaultWidthBox16 : themeBox.defaultWidthBox4,
-                  height: themeBox.defaultHeightBox4,
+                  margin: EdgeInsets.only(right: ThemeBox.defaultWidthBox4),
+                  width: (currentIndex.value == index.value) ? ThemeBox.defaultWidthBox16 : ThemeBox.defaultWidthBox4,
+                  height: ThemeBox.defaultHeightBox4,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(themeBox.defaultRadius10),
+                    borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10),
                     color: (currentIndex.value == index.value) ? kPurpleColor : kGreyColor5,
                   ),
                 );

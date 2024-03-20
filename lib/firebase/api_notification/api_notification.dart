@@ -1,12 +1,11 @@
 import 'dart:convert';
 
-import 'package:foosel/interface/interface_local/firebase/interface_insert_notification_firebase.dart';
+import 'package:foosel/firebase/api_notification/interface_insert_notification_firebase.dart';
 import 'package:http/http.dart' as http;
 
-class notificationFirebase implements interfaceInsertNotificationFirebase{
-  
+class NotificationFirebase implements InterfaceInsertNotificationFirebase{
   @override
-  InsertNotificationFirebase({
+  insertNotificationFirebase({
     required String? deviceToken, 
     required String title, 
     required String body,

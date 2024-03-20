@@ -1,15 +1,13 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/shared/theme_color.dart';
 import 'package:foosel/shared/theme_font.dart';
 import 'package:foosel/shared/theme_text_style.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
-import 'package:flutter_multi_formatter/formatters/money_input_formatter.dart';
-import 'package:intl/intl.dart';
-
-class ComponenMoneyFormField extends StatelessWidget with defaultSharedPref {
+class ComponenMoneyFormField extends StatelessWidget with SharedPref {
   String labelText, hintText, iconText, nameController;
   bool hiddenText;
   final keyboardType;
@@ -25,7 +23,7 @@ class ComponenMoneyFormField extends StatelessWidget with defaultSharedPref {
     crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(labelText, style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16)),
-        SizedBox(height: themeBox.defaultHeightBox12),
+        SizedBox(height: ThemeBox.defaultHeightBox12),
         TextFormField(
           keyboardType: keyboardType,
           inputFormatters: [CurrencyInputFormatter()],
@@ -41,15 +39,15 @@ class ComponenMoneyFormField extends StatelessWidget with defaultSharedPref {
             filled: true,//untuk menerangkan fillColor
             fillColor: kBlackColor4,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+              borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
               borderSide: BorderSide.none,
             ),
             prefixIcon: Padding(
-              padding: EdgeInsets.only(left: themeBox.defaultWidthBox12, right: themeBox.defaultWidthBox12),
+              padding: EdgeInsets.only(left: ThemeBox.defaultWidthBox12, right: ThemeBox.defaultWidthBox12),
               child: Image.asset(
                 iconText, 
-                width: themeBox.defaultWidthBox18, 
-                height: themeBox.defaultHeightBox19,
+                width: ThemeBox.defaultWidthBox18, 
+                height: ThemeBox.defaultHeightBox19,
               ),
             ),
           ),

@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_message/main/bloc_main_detail_message_connect.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
@@ -11,11 +11,12 @@ import 'package:foosel/ui/widgets/componen_chat_bubble_basic.dart';
 import 'package:foosel/ui/widgets/componen_loading.dart';
 import 'package:foosel/ui/widgets/componen_page_kosong.dart';
 
-class RealTimeChat extends StatelessWidget with defaultSharedPref{
+class RealTimeChat extends StatelessWidget with SharedPref{
   RealTimeChat({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     Size size = MediaQuery.of(context).size;
     sharedPref();
     context.read<BlocDetailMessageConnect>().getStreamFirebaseChatMessage;
@@ -48,7 +49,7 @@ class RealTimeChat extends StatelessWidget with defaultSharedPref{
               },
             );
           }else{
-            return ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200);
+            return ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200);
           }
         }else{
           return Expanded(

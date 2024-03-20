@@ -7,13 +7,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:foosel/blocs/bloc_categories/event_categories.dart';
 import 'package:foosel/blocs/bloc_categories/main/connect/bloc_main_klasifikasi_categories_connect.dart';
 import 'package:foosel/blocs/bloc_default/bloc_button_up/cubit_button_up.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_navigation_list_image_barang.dart';
-import 'package:foosel/blocs/bloc_default/default/default_navigasi_role.dart';
-import 'package:foosel/blocs/bloc_default/default/show_snack_bar.dart';
-import 'package:foosel/blocs/bloc_default/event_default/event_form_products.dart';
-import 'package:foosel/blocs/bloc_default/default/connection_dialog.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_navigation_list_image_barang.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_navigation_list_image_barang.dart';
+import 'package:foosel/blocs/bloc_default/event/event_form_products.dart';
+import 'package:foosel/blocs/bloc_default/class/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_navigasi_role.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_show_snack_bar.dart';
+import 'package:foosel/blocs/bloc_default/state/state_navigation_list_image_barang.dart';
 import 'package:foosel/blocs/bloc_update_product/main/bloc_upload_update_product.dart';
 import 'package:foosel/blocs/bloc_update_product/state_update_barang.dart';
 import 'package:foosel/shared/theme_box.dart';
@@ -28,10 +28,11 @@ import 'package:foosel/ui/widgets/componen_loading.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
-class HeadInsertUpdateImage extends HookWidget with defaultSharedPref, navigasiRole, navigasiRoleBarRead, showSnackBar{
+class HeadInsertUpdateImage extends HookWidget with SharedPref, NavigasiRole, NavigasiRoleBarRead, ShowSnackBar{
   HeadInsertUpdateImage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     navigasiRBR(context: context, value: 0);
     navigasiR();
 
@@ -56,8 +57,11 @@ class HeadInsertUpdateImage extends HookWidget with defaultSharedPref, navigasiR
       }
     }
 
-    Widget title() => Text("Add Image",
-      style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont18)
+    Widget title() => Expanded(
+      child: Text("Add Image",
+        style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont18)
+        , overflow: TextOverflow.ellipsis,
+      ),
     );
 
     Widget getUpdate() => BlocBuilder<CubitNavigationListImageBarang, DataStateNavigationListImageBarang>(
@@ -80,7 +84,7 @@ class HeadInsertUpdateImage extends HookWidget with defaultSharedPref, navigasiR
                 oldImage: prefs.getString('oldImage').toString(),
               ),
             );
-            await context.read<cubitUpButton>().upButton(
+            await context.read<CubitUpButton>().upButton(
               currentBody: 0, 
               currentTop: 0,
               readBloc: {context.read<BlocKlasifikasiCategoriesConnect>().add(KlasifikasiCategories(categoryKey: "0"))}, 
@@ -90,8 +94,8 @@ class HeadInsertUpdateImage extends HookWidget with defaultSharedPref, navigasiR
         },
         icon: Image.asset(
           "asset/icon/submit_icon.png",
-          height: themeBox.defaultHeightBox13,
-          width: themeBox.defaultWidthBox18,
+          height: ThemeBox.defaultHeightBox13,
+          width: ThemeBox.defaultWidthBox18,
         ),
       ),
     );
@@ -99,7 +103,7 @@ class HeadInsertUpdateImage extends HookWidget with defaultSharedPref, navigasiR
     PreferredSizeWidget header(){
       ClassConnectionDialog connection = ClassConnectionDialog();
       return AppBar(
-        toolbarHeight: themeBox.defaultHeightBox90,
+        toolbarHeight: ThemeBox.defaultHeightBox90,
         backgroundColor: kPrimaryColor,
         shadowColor: kBlackColor6,
         centerTitle: false,
@@ -119,10 +123,10 @@ class HeadInsertUpdateImage extends HookWidget with defaultSharedPref, navigasiR
                       getUpdate(),
                     ]
                   )
-                : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50));
+                : Center(child: ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox50));
               }
             )
-          : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50)),
+          : Center(child: ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox50)),
           childDisconnect: (context, stateUserDisconn) => (stateUserDisconn.loading == true)
           ? Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -130,11 +134,11 @@ class HeadInsertUpdateImage extends HookWidget with defaultSharedPref, navigasiR
                 CompenenGetBackX(onPressed: () => context.go(navigation)),
                 title(),
                 SizedBox(
-                  width: themeBox.defaultWidthBox45,
+                  width: ThemeBox.defaultWidthBox45,
                 )
               ]
             )
-          : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50)),
+          : Center(child: ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox50)),
         ),
       );
     }
@@ -148,8 +152,8 @@ class HeadInsertUpdateImage extends HookWidget with defaultSharedPref, navigasiR
             voidShowSnackBar(
               context: context,
               color: (stateUploadSnack.responApi == "berhasil") ? kGreenColor : kRedColor,
-              vertical: themeBox.defaultHeightBox12,
-              borderRadius: BorderRadius.circular(themeBox.defaultRadius8),
+              vertical: ThemeBox.defaultHeightBox12,
+              borderRadius: BorderRadius.circular(ThemeBox.defaultRadius8),
               behavior: SnackBarBehavior.floating,
               duration: const Duration(milliseconds: 1000),
               content: (stateUploadSnack.responApi == "berhasil")
@@ -174,7 +178,7 @@ class HeadInsertUpdateImage extends HookWidget with defaultSharedPref, navigasiR
               selectImage: selectImage, 
               selectImageCamera: selectImageCamera,
             ) 
-          : ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200);
+          : ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200);
         } 
       )
     );

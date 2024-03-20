@@ -25,15 +25,15 @@ class ComponenContentDialog_ImageAndTitleTextAndButtonText extends StatelessWidg
         children: [
           Lottie.asset(
             image,
-            height: themeBox.defaultHeightBox150,
-            width: themeBox.defaultWidthBox152,
+            height: ThemeBox.defaultHeightBox150,
+            width: ThemeBox.defaultWidthBox152,
           ),
           Text(text, style: whiteTextStyle.copyWith(fontWeight: semiBold, fontSize: defaultFont18)),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox10),
+            padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox10),
             child: ComponenBasicButton(
               paddingVertical: 0, 
-              borderRadius: themeBox.defaultRadius5, 
+              borderRadius: ThemeBox.defaultRadius5, 
               content: Icon(
                 Icons.refresh,
                 color: kBlackColor,

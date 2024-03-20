@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-abstract class insertTransaksiLocal{
-  SaveLocalDataTransaksi({
+abstract class InterfacesInsertTransaksiLocal{
+  saveLocalDataTransaksi({
     required String tokenId, 
     required String emailPenjual,
     required String emailPembeli,
@@ -16,8 +16,8 @@ abstract class insertTransaksiLocal{
   });
 }
 
-abstract class insertTransaksi{
-  SaveDataTransaksi({
+abstract class InterfacesInsertTransaksi{
+  saveDataTransaksi({
     required String emailPenjual,
     required String emailPembeli,
     required String productsId,
@@ -30,29 +30,29 @@ abstract class insertTransaksi{
   });
 }
 
-abstract class updateTransaksi{
-  UpdateDataTransaksi({
+abstract class InterfacesUpdateTransaksi{
+  updateDataTransaksi({
     required String transactionsId,
     required String status,
     required BuildContext context,
   });
 }
 
-abstract class getTransaksiLocal{
-  GetDataTransaksi();
-  GetDataTransaksiWhereId({required String tokenId});
+abstract class InterfacesGetTransaksiLocal{
+  getDataTransaksi();
+  getDataTransaksiWhereId({required String tokenId});
 }
 
-abstract class getTransaksiHistory{
-  GetDataTransaksiHistory();
+abstract class InterfacesGetTransaksiHistory{
+  getDataTransaksiHistory();
 }
 
-abstract class deleteTransaksi{
-  DeleteDataTransaksi({required String tokenId});
+abstract class InterfacesDeleteTransaksi{
+  deleteDataTransaksi({required String tokenId});
 }
 
-abstract class updateTransaksiLocal{
-  UpdateDataTransaksiLocal({
+abstract class InterfacesUpdateTransaksiLocal{
+  updateDataTransaksiLocal({
     required String tokenId,
     required int jumlah,
     required String hargaTotal,

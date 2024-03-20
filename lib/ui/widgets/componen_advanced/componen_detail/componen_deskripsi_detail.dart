@@ -16,7 +16,7 @@ class ComponenTextDetail extends StatelessWidget {
       children: [
         Text(title, style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont14)),
         Padding(
-          padding: EdgeInsets.only(bottom: themeBox.defaultHeightBox30),
+          padding: EdgeInsets.only(bottom: ThemeBox.defaultHeightBox30),
           child: Text(data, style: grayTextStyle2.copyWith(fontWeight: light, fontSize: defaultFont14)),
         ),
       ],

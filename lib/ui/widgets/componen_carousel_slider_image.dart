@@ -21,7 +21,7 @@ class ComponenCarouselSliderImage extends HookWidget {
   Widget build(BuildContext context) {
     final currentIndex = useState<int>(0);
     final index = useState<int>(-1);
-    themeBox(context);
+    ThemeBox(context);
     return Container(
       color: kGreyColor6,
       child: Column(
@@ -30,22 +30,22 @@ class ComponenCarouselSliderImage extends HookWidget {
             items: (connect == true)
             ? imageProduct.map(
                 (imageProduct) => ClipRRect(
-                  borderRadius: BorderRadius.circular(themeBox.defaultRadius10), // Mengatur borderRadius menjadi setengah dari lebar/tinggi
+                  borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10), // Mengatur borderRadius menjadi setengah dari lebar/tinggi
                   child: Image.network(
                     "${Api.linkURL}/${imageProduct.toString()}",
                     width: sizeWidth,
-                    height: themeBox.defaultHeightBox340,
+                    height: ThemeBox.defaultHeightBox340,
                     fit: BoxFit.cover,
                   )
                 ),
               ).toList()
             : imageProduct.map(
                 (imageProduct) => ClipRRect(
-                  borderRadius: BorderRadius.circular(themeBox.defaultRadius10), // Mengatur borderRadius menjadi setengah dari lebar/tinggi
+                  borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10), // Mengatur borderRadius menjadi setengah dari lebar/tinggi
                   child: Image.asset(
                     imageProduct,
                     width: sizeWidth,
-                    height: themeBox.defaultHeightBox340,
+                    height: ThemeBox.defaultHeightBox340,
                     fit: BoxFit.cover,
                   )
                 ),
@@ -65,11 +65,11 @@ class ComponenCarouselSliderImage extends HookWidget {
               (e) {
                 index.value++;
                 return Container(
-                  margin: EdgeInsets.only(right: themeBox.defaultWidthBox4),
-                  width: (currentIndex.value == index.value) ? themeBox.defaultWidthBox16 : themeBox.defaultWidthBox4,
-                  height: themeBox.defaultHeightBox4,
+                  margin: EdgeInsets.only(right: ThemeBox.defaultWidthBox4),
+                  width: (currentIndex.value == index.value) ? ThemeBox.defaultWidthBox16 : ThemeBox.defaultWidthBox4,
+                  height: ThemeBox.defaultHeightBox4,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(themeBox.defaultRadius10),
+                    borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10),
                     color: (currentIndex.value == index.value) ? kPurpleColor : kGreyColor5,
                   ),
                 );

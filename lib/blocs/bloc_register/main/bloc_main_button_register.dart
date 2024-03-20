@@ -1,10 +1,10 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_default/event_default/event_form_user.dart';
+import 'package:foosel/blocs/bloc_default/event/event_form_user.dart';
 import 'package:foosel/blocs/bloc_register/event_register.dart';
 import 'package:foosel/blocs/bloc_register/state_register.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_multipe_form.dart';
+import 'package:foosel/blocs/bloc_default/state/state_multipe_form.dart';
 import 'package:foosel/shared/theme_konstanta.dart';
 
 class BlocButtonRegisterUser extends Bloc<DataEventFormRegister, DataStateMultiFormUser>{

@@ -1,4 +1,4 @@
-import 'package:foosel/interface/interface_local/service/interface_get_transaksi.dart';
+import 'package:foosel/service/api_transaksi/interfaces/interface_get_transaksi.dart';
 import 'package:foosel/service/api_transaksi/injection_transaksi.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -7,9 +7,9 @@ import '../../default_test/data_dummy_test.dart';
 void main(){
   group("Unit Test Service Get Transaksi", () { 
     setupDInjectionTransaksi();
-    final interfaceGetTransaksi dataGetTransaksi = getItInstance<interfaceGetTransaksi>();
+    final InterfaceGetTransaksi dataGetTransaksi = getItInstance<InterfaceGetTransaksi>();
     test("Unit Test Service Get Data Transaksi Penjual", () async{
-      final data = await dataGetTransaksi.GetTransaksi(
+      final data = await dataGetTransaksi.getTransaksi(
         testing: true,
         testingToken: tokenUserPenjual,
         email: emailPenjual,
@@ -17,7 +17,7 @@ void main(){
       expect(data, equals("berhasil"));
     });
     test("Unit Test Service Get Data Transaksi Pembeli", () async{
-      final data = await dataGetTransaksi.GetTransaksi(
+      final data = await dataGetTransaksi.getTransaksi(
         testing: true,
         testingToken: tokenUserPembeli,
         email: emailPembeli,
@@ -29,7 +29,7 @@ void main(){
         'Authorization': 'Bearer $tokenUserPembeli',
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      final data = await dataGetTransaksi.RolePembeli(
+      final data = await dataGetTransaksi.rolePembeli(
         headers: headers,
         testing: true,
         email: emailPembeli,
@@ -41,7 +41,7 @@ void main(){
         'Authorization': 'Bearer $tokenUserPenjual',
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      final data = await dataGetTransaksi.RolePenjual(
+      final data = await dataGetTransaksi.rolePenjual(
         headers: headers,
         testing: true,
         email: emailPenjual,
@@ -56,7 +56,7 @@ void main(){
       Map<String, String> parameterApi = {
         'email_pembeli' : emailPembeli,
       };
-      final data = await dataGetTransaksi.GetDataTransaksi(
+      final data = await dataGetTransaksi.getDataTransaksi(
         testing: true, 
         headers: headers, 
         link: 'fetchTransaksiPembeli',
@@ -72,7 +72,7 @@ void main(){
       Map<String, String> parameterApi = {
         'email_penjual' : emailPenjual,
       };
-      final data = await dataGetTransaksi.GetDataTransaksi(
+      final data = await dataGetTransaksi.getDataTransaksi(
         testing: true, 
         headers: headers, 
         link: 'fetchTransaksiPenjual',

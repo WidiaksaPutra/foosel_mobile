@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_pembeli/cubit_detail_produk_nav_pembeli.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_penjual/cubit_detail_produk_nav_penjual.dart';
-import 'package:foosel/blocs/bloc_default/default/bloc_form_button_not_null_barang.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc_form_button_not_null_barang.dart';
 import 'package:foosel/blocs/bloc_add_product/main/bloc_upload_add_product.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_connection_basic.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_form_not_null_barang.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_navigation_list_image_barang.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_basic.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_form_not_null_barang.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_navigation_list_image_barang.dart';
 import 'package:foosel/blocs/bloc_all_products/main/bloc_main_all_products_connect.dart';
 import 'package:foosel/blocs/bloc_all_products/main/cubit_main_list_all_products_disconnect.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_pembeli/cubit_bottom_nav_pembeli.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_penjual/cubit_bottom_nav_penjual.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_connection_example.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_example.dart';
 import 'package:foosel/blocs/bloc_categories/main/connect/bloc_main_klasifikasi_categories_connect.dart';
 import 'package:foosel/blocs/bloc_categories/main/connect/bloc_main_name_categories_connect.dart';
 import 'package:foosel/blocs/bloc_categories/main/cubit_connection_name_categories.dart';
@@ -19,9 +19,8 @@ import 'package:foosel/blocs/bloc_categories/main/cubit_main_data_noscroll_categ
 import 'package:foosel/blocs/bloc_categories/main/disconnect/bloc_main_klasifikasi_categories_disconnect.dart';
 import 'package:foosel/blocs/bloc_categories/main/disconnect/bloc_main_name_categories_disconnect.dart';
 import 'package:foosel/blocs/bloc_default/bloc_button_up/cubit_button_up.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_connection.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_connection_navigasi.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_name_categories_refresh.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_connection.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_navigasi.dart';
 import 'package:foosel/blocs/bloc_delete_product/cubit_delete_product.dart';
 import 'package:foosel/blocs/bloc_detail_products/cubit_detail_navigasi_product.dart';
 import 'package:foosel/blocs/bloc_detail_products/detail_product/cubit_detail_product_connect.dart';
@@ -66,6 +65,7 @@ import 'package:foosel/helpers/categories/injection_categories_local.dart';
 import 'package:foosel/helpers/like/injection_like_local.dart';
 import 'package:foosel/helpers/products/injection_product_local.dart';
 import 'package:foosel/helpers/transaksi/injection_transaksi_local.dart';
+import 'package:foosel/helpers/user/injection_user_local.dart';
 import 'package:foosel/routes/page_routes.dart';
 import 'package:foosel/service/api_categories/injection_categories.dart';
 import 'package:foosel/service/api_login/injection_login.dart';
@@ -74,14 +74,11 @@ import 'package:foosel/service/api_products/injection_product.dart';
 import 'package:foosel/service/api_register/injection_register.dart';
 import 'package:foosel/service/api_transaksi/injection_transaksi.dart';
 import 'package:foosel/service/api_user/injection_user.dart';
-import 'package:foosel/shared/theme_box.dart';
-
 class MultiBlocProviderGetX extends StatelessWidget {
   const MultiBlocProviderGetX({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    themeBox(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -162,23 +159,27 @@ class MultiBlocProviderGetX extends StatelessWidget {
           },
         ),
         BlocProvider(
-          create: (context) => cubitUpButton(),
+          create: (context) => CubitUpButton(),
         ),
+        // BlocProvider(
+        //   create: (context) => CubitRefresh(),
+        // ),
         BlocProvider(
-          create: (context) => CubitRefresh(),
-        ),
-        BlocProvider(
-          create: (context) => cubitConnectionNavigasi(),
+          create: (context) => CubitConnectionNavigasi(),
         ),
         BlocProvider(
           create: (context){
             setupDInjectionUserFirebase();
             setupDInjectionUser();
+            setupDInjectionUserLocal();
             return CubitMainUserConnect();
           },
         ),
         BlocProvider(
-          create: (context) => CubitMainUserDisconnect(),
+          create: (context){
+            setupDInjectionUserLocal();
+            return CubitMainUserDisconnect();
+          },
         ),
         BlocProvider(
           create: (context){
@@ -188,22 +189,22 @@ class MultiBlocProviderGetX extends StatelessWidget {
           }
         ),
         BlocProvider(
-          create: (context) => cubitConnectionExample(),
+          create: (context) => CubitConnectionExample(),
         ),
         BlocProvider(
-          create: (context) => cubitConnectionNameCategories(),
+          create: (context) => CubitConnectionNameCategories(),
         ),
         BlocProvider(
-          create: (context) => cubitConnectionMainUser(),
+          create: (context) => CubitConnectionMainUser(),
         ),
         BlocProvider(
-          create: (context) => cubitConnection(),
+          create: (context) => CubitConnection(),
         ),
         BlocProvider(
           create: (context) {
             setupDInjectionUserFirebase();
             setupDiComponenChatFirebase();
-            return cubitListMessageConnect();
+            return CubitListMessageConnect();
           },
         ),
         BlocProvider(
@@ -212,7 +213,7 @@ class MultiBlocProviderGetX extends StatelessWidget {
             setupDInjectionChatFirebase();
             setupDiComponenChatFirebase();
             setupDInjectionNotificationFirebase();
-            return cubitTitleMessageConnect();
+            return CubitTitleMessageConnect();
           }
         ),
         BlocProvider(
@@ -254,28 +255,28 @@ class MultiBlocProviderGetX extends StatelessWidget {
             setupDInjectionLogout();
             setupDInjectionLikeLocal();
             setupDInjectionTransaksiLocal();
-            return cubitLogout();
+            return CubitLogout();
           },
         ),
         BlocProvider(
-          create: (context) => cubitBottomNavPembeli(),
+          create: (context) => CubitBottomNavPembeli(),
         ),
         BlocProvider(
-          create: (context) => cubitBottomNavPenjual(),
+          create: (context) => CubitBottomNavPenjual(),
         ),
         BlocProvider(
           create: (context) => CubitNavigationListImageBarang(),
         ),
         BlocProvider(
-          create: (context) => cubitNavMessageDetail(),
+          create: (context) => CubitNavMessageDetail(),
         ),
         BlocProvider(
-          create: (context) => cubitDetailNavigasiProduct(),
+          create: (context) => CubitDetailNavigasiProduct(),
         ),
         BlocProvider(
           create: (context){
             setupDInjectionLikeLocal();
-            return cubitInsertLike();
+            return CubitInsertLike();
           },
         ),
         BlocProvider(
@@ -287,7 +288,7 @@ class MultiBlocProviderGetX extends StatelessWidget {
         BlocProvider(
           create: (context){
             setupDInjectionLikeLocal();
-            return cubitLike();
+            return CubitLike();
           },
         ),
         BlocProvider(
@@ -295,7 +296,7 @@ class MultiBlocProviderGetX extends StatelessWidget {
             setupDInjectionTransaksiLocal();
             setupDInjectionLikeLocal();
             setupDInjectionProduct();
-            return cubitDeleteProduct();
+            return CubitDeleteProduct();
           }
         ),
         BlocProvider(
@@ -311,7 +312,7 @@ class MultiBlocProviderGetX extends StatelessWidget {
           create: (context) => CubitDetailProdukNavPenjual(),
         ),
         BlocProvider(
-          create: (context) => cubitConnectionBasic(),
+          create: (context) => CubitConnectionBasic(),
         ),
         BlocProvider(
           create: (context){
@@ -385,7 +386,7 @@ class MultiBlocProviderGetX extends StatelessWidget {
         BlocProvider(
           create: (context){
             setupDInjectionChatFirebase();
-            return cubitJumlahBadges();
+            return CubitJumlahBadges();
           },
         ),
         BlocProvider(

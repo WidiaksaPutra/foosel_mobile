@@ -11,18 +11,19 @@ class ComponenCartCardTotal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     return Container(
-      margin: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox30),
-      padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox20, horizontal: themeBox.defaultHeightBox20),
+      margin: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox30),
+      padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox20, horizontal: ThemeBox.defaultHeightBox20),
       decoration: BoxDecoration(
         color: kBlackColor,
-        borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+        borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Payment Summary", style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16)),
-          SizedBox(height: themeBox.defaultHeightBox12),
+          SizedBox(height: ThemeBox.defaultHeightBox12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -31,7 +32,7 @@ class ComponenCartCardTotal extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox13),
+            padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox13),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -48,8 +49,8 @@ class ComponenCartCardTotal extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: EdgeInsets.only(top: themeBox.defaultHeightBox11, bottom: themeBox.defaultHeightBox10),
-            child: Divider(height: themeBox.defaultHeightBox12, thickness: 1, color: kBlackColor10),
+            padding: EdgeInsets.only(top: ThemeBox.defaultHeightBox11, bottom: ThemeBox.defaultHeightBox10),
+            child: Divider(height: ThemeBox.defaultHeightBox12, thickness: 1, color: kBlackColor10),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

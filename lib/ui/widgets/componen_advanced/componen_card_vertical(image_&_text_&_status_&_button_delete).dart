@@ -34,11 +34,11 @@ class ComponenCardVertical_ImageAndTextAndStatusAndButtonDelete extends Stateles
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: themeBox.defaultHeightBox30, left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30),
-      padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox10, horizontal: themeBox.defaultHeightBox16),
+      margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox30, left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30),
+      padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox10, horizontal: ThemeBox.defaultHeightBox16),
       decoration: BoxDecoration(
         color: kBlackColor,
-        borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+        borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
       ),
       child: GestureDetector(
         onTap: onTapCard,
@@ -47,21 +47,21 @@ class ComponenCardVertical_ImageAndTextAndStatusAndButtonDelete extends Stateles
             Row(
               children:[
                 Padding(
-                  padding: EdgeInsets.only(right: themeBox.defaultWidthBox12),
+                  padding: EdgeInsets.only(right: ThemeBox.defaultWidthBox12),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(themeBox.defaultRadius8),
+                    borderRadius: BorderRadius.circular(ThemeBox.defaultRadius8),
                     child: (connection == false)
                     ? Image.asset(
                         "asset/image/disconnect_image.jpg", 
-                        height: themeBox.defaultHeightBox60,
-                        width: themeBox.defaultWidthBox60,
+                        height: ThemeBox.defaultHeightBox60,
+                        width: ThemeBox.defaultWidthBox60,
                         alignment: Alignment.centerLeft,
                         fit: BoxFit.cover,
                       )
                     : Image.network(
                         "${Api.linkURL}/$image", 
-                        height: themeBox.defaultHeightBox60, 
-                        width: themeBox.defaultWidthBox60,
+                        height: ThemeBox.defaultHeightBox60, 
+                        width: ThemeBox.defaultWidthBox60,
                         alignment: Alignment.centerLeft,
                         fit: BoxFit.cover,
                       )
@@ -85,7 +85,7 @@ class ComponenCardVertical_ImageAndTextAndStatusAndButtonDelete extends Stateles
                       if(kondisi != bukanTujuanKondisi)...[
                         ComponenBasicButton(
                           paddingVertical: 0, 
-                          borderRadius: themeBox.defaultRadius5, 
+                          borderRadius: ThemeBox.defaultRadius5, 
                           content: Icon(
                             Icons.delete,
                             color: kBlackColor,

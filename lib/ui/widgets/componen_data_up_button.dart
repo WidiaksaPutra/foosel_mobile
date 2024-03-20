@@ -20,19 +20,20 @@ class ComponenDataUpButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     return GestureDetector(//kegunaannya untuk menambah listener seperti onTap, onScale, dls
       //kegunaannya hampir mirip dengan TextButton, perbedaannya GestureDetector memiliki fitur listener yang lebih lengkap.
       onTap: onTap,
-      child: BlocBuilder<cubitUpButton, StateDataUpButton>(builder: (context, stateDesign) 
+      child: BlocBuilder<CubitUpButton, StateDataUpButton>(builder: (context, stateDesign) 
         => AnimatedContainer(//perbedaannya continer tidak menyediakan duration yang mendukung pembuatan animasi, adanya duratian
       //menyebabkan tansisi dari bentuk 1 ke bentuk ke 2 menjadi lebih halus seperti animasi.
         duration: const Duration(milliseconds: 300),
-        margin: (index == dataLength-1) ? EdgeInsets.only(right: themeBox.defaultWidthBox30) : EdgeInsets.only(right: themeBox.defaultWidthBox16),
-        padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox12, vertical: themeBox.defaultHeightBox10),
+        margin: (index == dataLength-1) ? EdgeInsets.only(right: ThemeBox.defaultWidthBox30) : EdgeInsets.only(right: ThemeBox.defaultWidthBox16),
+        padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox12, vertical: ThemeBox.defaultHeightBox10),
         decoration: BoxDecoration(
           color: (stateDesign.currentTop == index) ? kPurpleColor : null,
-          border: Border.all(color: kBlackColor5, width: (stateDesign.currentTop == index) ? themeBox.defaultWidthBox0 : themeBox.defaultWidthBox05),
-          borderRadius: BorderRadius.circular(themeBox.defaultRadius12)
+          border: Border.all(color: kBlackColor5, width: (stateDesign.currentTop == index) ? ThemeBox.defaultWidthBox0 : ThemeBox.defaultWidthBox05),
+          borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12)
         ),
         child: Center(child: Text(dataName, style: (stateDesign.currentTop == index) 
         ? whiteTextStyle.copyWith(fontSize: defaultFont13, fontWeight: medium) 

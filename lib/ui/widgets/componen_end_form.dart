@@ -1,11 +1,13 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/shared/theme_font.dart';
 import 'package:foosel/shared/theme_text_style.dart';
 import 'package:go_router/go_router.dart';
 
-class ComponenEndForm extends StatelessWidget with defaultSharedPref{
+class ComponenEndForm extends StatelessWidget with SharedPref{
   String labelGray, labelPurple;
   String navigasiPage, navBack;
   BuildContext contextGo;
@@ -20,12 +22,13 @@ class ComponenEndForm extends StatelessWidget with defaultSharedPref{
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     sharedPref();
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Padding(
-          padding: EdgeInsets.only(bottom: themeBox.defaultHeightBox30),
+          padding: EdgeInsets.only(bottom: ThemeBox.defaultHeightBox30),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

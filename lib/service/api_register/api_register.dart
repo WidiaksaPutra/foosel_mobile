@@ -1,13 +1,13 @@
 import 'dart:convert';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:foosel/interface/interface_local/service/interface_post_register.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
+import 'package:foosel/service/api_register/interface_post_register.dart';
 import 'package:foosel/model/register.dart';
 import 'package:foosel/service/api_konstanta.dart';
 
-class apiRegister with defaultSharedPref implements interfacePostRegister{
+class ApiRegister with SharedPref implements InterfacePostRegister{
 
   @override
-  PostRegister({
+  postRegister({
     bool testing = false,
     required String name, 
     required String username, 

@@ -1,14 +1,14 @@
 import 'dart:convert';
-import 'package:foosel/interface/interface_local/service/interface_get_data_category.dart';
+import 'package:foosel/service/api_categories/interface_get_data_category.dart';
 import 'package:foosel/model/categories.dart';
 import 'package:foosel/service/api_konstanta.dart';
 
-class apiCategories implements interfaceGetDataCategory{
+class ApiCategories implements InterfaceGetDataCategory{
   late List<Datum> dataListCategories = [];
   late int pages = 4;
 
   @override
-  Future<List<Datum>> GetDataCategory({
+  Future<List<Datum>> getDataCategory({
     bool testing = false,
     required bool loadingApiService,
   }) async{
@@ -39,7 +39,7 @@ class apiCategories implements interfaceGetDataCategory{
   }
   
   @override
-  Future<List<Datum>> GetDataCategoryNoParameters({
+  Future<List<Datum>> getDataCategoryNoParameters({
     bool testing = false,
     required bool loadingApiService,
   }) async{

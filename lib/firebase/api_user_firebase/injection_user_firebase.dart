@@ -1,24 +1,24 @@
-import 'package:foosel/firebase/api_user_firebase/delete_api_user_firebase.dart';
-import 'package:foosel/firebase/api_user_firebase/get_api_user_firebase.dart';
-import 'package:foosel/firebase/api_user_firebase/insert_api_user_firebase.dart';
-import 'package:foosel/firebase/api_user_firebase/update_api_user_firebase.dart';
-import 'package:foosel/interface/interface_local/firebase/interface_delete_user_firebase.dart';
-import 'package:foosel/interface/interface_local/firebase/interface_get_user_firebase.dart';
-import 'package:foosel/interface/interface_local/firebase/interface_insert_user_firebase.dart';
-import 'package:foosel/interface/interface_local/firebase/interface_update_user_firebase.dart';
+import 'package:foosel/firebase/api_user_firebase/api/delete_api_user_firebase.dart';
+import 'package:foosel/firebase/api_user_firebase/api/get_api_user_firebase.dart';
+import 'package:foosel/firebase/api_user_firebase/api/insert_api_user_firebase.dart';
+import 'package:foosel/firebase/api_user_firebase/api/update_api_user_firebase.dart';
+import 'package:foosel/firebase/api_user_firebase/interfaces/interface_delete_user_firebase.dart';
+import 'package:foosel/firebase/api_user_firebase/interfaces/interface_get_user_firebase.dart';
+import 'package:foosel/firebase/api_user_firebase/interfaces/interface_insert_user_firebase.dart';
+import 'package:foosel/firebase/api_user_firebase/interfaces/interface_update_user_firebase.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 
 void setupDInjectionUserFirebase(){
-  if(!getItInstance.isRegistered<interfaceInsertUserFirebase>()){
-    getItInstance.registerFactory<interfaceInsertUserFirebase>(() => insertUserFirebase());
+  if(!getItInstance.isRegistered<InterfaceInsertUserFirebase>()){
+    getItInstance.registerFactory<InterfaceInsertUserFirebase>(() => InsertUserFirebase());
   }
-  if(!getItInstance.isRegistered<interfaceUpdateUserFirebase>()){
-    getItInstance.registerFactory<interfaceUpdateUserFirebase>(() => updateUserFirebase());
+  if(!getItInstance.isRegistered<InterfaceUpdateUserFirebase>()){
+    getItInstance.registerFactory<InterfaceUpdateUserFirebase>(() => UpdateUserFirebase());
   }
-  if(!getItInstance.isRegistered<interfaceGetUserFirebase>()){
-    getItInstance.registerFactory<interfaceGetUserFirebase>(() => getUserFirebase());
+  if(!getItInstance.isRegistered<InterfaceGetUserFirebase>()){
+    getItInstance.registerFactory<InterfaceGetUserFirebase>(() => GetUserFirebase());
   }
-  if(!getItInstance.isRegistered<interfaceDeleteUserFirebase>()){
-    getItInstance.registerFactory<interfaceDeleteUserFirebase>(() => deleteUserFirebase());
+  if(!getItInstance.isRegistered<InterfaceDeleteUserFirebase>()){
+    getItInstance.registerFactory<InterfaceDeleteUserFirebase>(() => DeleteUserFirebase());
   }
 }

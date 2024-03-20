@@ -31,11 +31,11 @@ class ComponenCardVertical_ImageAndTextAndButtonRejectedAndButtonSuccess extends
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: themeBox.defaultHeightBox30, left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30),
-      padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox10, horizontal: themeBox.defaultHeightBox16),
+      margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox30, left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30),
+      padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox10, horizontal: ThemeBox.defaultHeightBox16),
       decoration: BoxDecoration(
         color: kBlackColor,
-        borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+        borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
       ),
       child: GestureDetector(
         onTap: onTapCard,
@@ -44,21 +44,21 @@ class ComponenCardVertical_ImageAndTextAndButtonRejectedAndButtonSuccess extends
             Row(
               children:[
                 Padding(
-                  padding: EdgeInsets.only(right: themeBox.defaultWidthBox12),
+                  padding: EdgeInsets.only(right: ThemeBox.defaultWidthBox12),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+                    borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
                     child: (connection == true)
                     ? Image.network(
                         "${Api.linkURL}/$image", 
-                        height: themeBox.defaultHeightBox60, 
-                        width: themeBox.defaultWidthBox60,
+                        height: ThemeBox.defaultHeightBox60, 
+                        width: ThemeBox.defaultWidthBox60,
                         alignment: Alignment.centerLeft,
                         fit: BoxFit.cover,
                       )
                     : Image.asset(
                         "asset/image/disconnect_image.jpg", 
-                        height: themeBox.defaultHeightBox60,
-                        width: themeBox.defaultWidthBox60,
+                        height: ThemeBox.defaultHeightBox60,
+                        width: ThemeBox.defaultWidthBox60,
                         alignment: Alignment.centerLeft,
                         fit: BoxFit.cover,
                       ),
@@ -81,7 +81,7 @@ class ComponenCardVertical_ImageAndTextAndButtonRejectedAndButtonSuccess extends
                     children: [
                       ComponenBasicButton(
                         paddingVertical: 0, 
-                        borderRadius: themeBox.defaultRadius5, 
+                        borderRadius: ThemeBox.defaultRadius5, 
                         content: Icon(
                           Icons.check,
                           color: kBlackColor,
@@ -92,7 +92,7 @@ class ComponenCardVertical_ImageAndTextAndButtonRejectedAndButtonSuccess extends
                       ),
                       ComponenBasicButton(
                         paddingVertical: 0, 
-                        borderRadius: themeBox.defaultRadius5, 
+                        borderRadius: ThemeBox.defaultRadius5, 
                         content: Icon(
                           Icons.close,
                           color: kBlackColor,

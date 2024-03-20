@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foosel/blocs/bloc_default/default/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/class/connection_dialog.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/ui/page/connection/connection_home_menu_klasifikasi.dart';
 import 'package:foosel/ui/page/default/ui/list_horizontal_home.dart';
@@ -12,11 +12,12 @@ class BodyHomeMenuKlasifikasi extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){    
+    ThemeBox(context);
     ClassConnectionDialog connection = ClassConnectionDialog();
     return ConnectionHomeMenuKlasifikasi(
       connection: connection.basicConnection,
       childDisconnect: (context, state) => (state.loadingKlassifikasi == true)
-      ? Center(child: ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200))
+      ? Center(child: ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200))
       : ListHorizontalHome(
           lengthList: state.dataKlassifikasiCategories.length, 
           data: state.dataKlassifikasiCategories,
@@ -26,7 +27,7 @@ class BodyHomeMenuKlasifikasi extends StatelessWidget{
           heightPage: hightListView,
         ),
       childConnect: (context, state) => (state.loadingKlassifikasi == true)
-      ? Center(child: ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200))
+      ? Center(child: ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200))
       : ListVerticalHome(
           lengthList: state.dataKlassifikasiCategories.length, 
           data: state.dataKlassifikasiCategories,

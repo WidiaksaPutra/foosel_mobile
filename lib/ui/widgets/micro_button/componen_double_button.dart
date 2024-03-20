@@ -22,11 +22,11 @@ class ComponenDoubleButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Container(
-          padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox10, vertical: themeBox.defaultHeightBox4),
-          margin: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox10),
+          padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox10, vertical: ThemeBox.defaultHeightBox4),
+          margin: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox10),
           decoration: BoxDecoration(
             color: colorButton,
-            borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+            borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
           ),
           child: TextButton(
             onPressed: (){
@@ -36,11 +36,11 @@ class ComponenDoubleButton extends StatelessWidget {
           ),  
         ),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox10, vertical: themeBox.defaultHeightBox4),
-          margin: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox10),
+          padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox10, vertical: ThemeBox.defaultHeightBox4),
+          margin: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox10),
           decoration: BoxDecoration(
             color: colorButton2,
-            borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+            borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
           ),
           child: TextButton(
             onPressed: (){

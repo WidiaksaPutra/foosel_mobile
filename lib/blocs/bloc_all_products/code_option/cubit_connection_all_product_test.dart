@@ -7,8 +7,8 @@
 // import 'package:foosel/blocs/bloc_all_products/main/cubit_main_product_refresh.dart';
 // import 'package:foosel/blocs/bloc_default/bloc_state_default/bloc_state_connection.dart';
 
-// class cubitConnectionAllProduct extends Cubit<dynamic>{
-//   cubitConnectionAllProduct() : super(DataStateConnection(false));
+// class CubitConnectionAllProduct extends Cubit<dynamic>{
+//   CubitConnectionAllProduct() : super(DataStateConnection(false));
 //   connectCheck(BuildContext context, dynamic connection) async{
 //     try {
 //       final result = await InternetAddress.lookup('example.com');

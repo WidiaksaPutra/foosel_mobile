@@ -20,12 +20,13 @@ class ComponenContainerHarga extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     return Container(
-      margin: EdgeInsets.only(top: themeBox.defaultHeightBox20, bottom: themeBox.defaultHeightBox30),
-      padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox16, horizontal: themeBox.defaultWidthBox16),                          
+      margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox20, bottom: ThemeBox.defaultHeightBox30),
+      padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox16, horizontal: ThemeBox.defaultWidthBox16),                          
       decoration: BoxDecoration(
         color: kBlackColor4,
-        borderRadius: BorderRadius.circular(themeBox.defaultRadius4)
+        borderRadius: BorderRadius.circular(ThemeBox.defaultRadius4)
       ),
       child: Column(
         children: [

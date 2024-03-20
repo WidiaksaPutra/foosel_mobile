@@ -1,6 +1,6 @@
 import 'package:image_picker/image_picker.dart';
 
-mixin imageSingleAccess{
+mixin ImageSingleAccess{
   imageSingle({
     required String namaProduct,
     required String deskripsi,

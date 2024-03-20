@@ -2,19 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_snackBar_form.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/state/state_snackBar_form.dart';
 import 'package:foosel/blocs/bloc_user/event_user.dart';
-import 'package:foosel/helpers/login/helper_login.dart';
-import 'package:foosel/interface/interface_local/service/interface_update_user.dart';
+import 'package:foosel/service/api_user/interfaces/interface_update_user.dart';
 import 'package:foosel/shared/theme_color.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 import 'package:foosel/shared/theme_konstanta.dart';
 import 'package:go_router/go_router.dart';
 
 late String statusUpdate = "";
-class BlocMainUpdateUserConnect extends Bloc<DataEventUser, StateSnackBar> with helperLogin, defaultSharedPref{
-  final interfaceUpdateUser dataUpdateUser = getItInstance<interfaceUpdateUser>();
+class BlocMainUpdateUserConnect extends Bloc<DataEventUser, StateSnackBar> with SharedPref{
+  final InterfaceUpdateUser dataUpdateUser = getItInstance<InterfaceUpdateUser>();
   BlocMainUpdateUserConnect() : super(DataStateInitialSnackBar()){
     on<DataEventUpdateUser>((event, emit) async{
       await buttonUpdate(
@@ -52,10 +51,7 @@ class BlocMainUpdateUserConnect extends Bloc<DataEventUser, StateSnackBar> with 
         ),
       )
     : {
-        if(email != ""){
-          await updateDataEmailLogin(email),
-        },
-        statusUpdate = await dataUpdateUser.UpdateUser(email: email, name: name, username: username, alamat: alamat),
+        statusUpdate = await dataUpdateUser.updateUser(email: email, name: name, username: username, alamat: alamat),
         (statusUpdate == "berhasil")
         ? emit(
             DataStateSnackBar(
@@ -91,3 +87,10 @@ class BlocMainUpdateUserConnect extends Bloc<DataEventUser, StateSnackBar> with 
     prefs.remove('emailUpdate');
   }
 }
+
+
+
+
+// if(email != ""){
+//   await updateDataEmailLogin(email),
+// },

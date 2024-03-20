@@ -28,8 +28,8 @@
 
 //   @override
 //   Widget build(BuildContext context) {
-//     context.read<cubitConnectionExample>().connectCheck(readBlocConnect: {}, readBlocDisconnect: {});
-//     context.read<cubitDetailNavigasiProduct>().navigationDetailProduct();
+//     context.read<CubitConnectionExample>().connectCheck(readBlocConnect: {}, readBlocDisconnect: {});
+//     context.read<CubitDetailNavigasiProduct>().navigationDetailProduct();
 //     // getLocation();
 //     final CameraPosition _kGooglePlex = CameraPosition(
 //       target: LatLng(-8.7160175, 115.1641399),
@@ -59,26 +59,26 @@
 //         listCart: false,
 //       ),
 //       body: Container(
-//         margin: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox30),
+//         margin: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox30),
 //         child: BlocBuilder<CubitGetTransaksi, DataStateGetTransaksi>(
 //           builder: (context1, state){
 //             return ListView(
 //               children: [
 //                 Padding(
-//                   padding: EdgeInsets.only(top: themeBox.defaultHeightBox30),
+//                   padding: EdgeInsets.only(top: ThemeBox.defaultHeightBox30),
 //                   child: Text("List Items", style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16)),
 //                 ),
 //                 Column(
 //                   children: [
 //                     for(int i = 0 ; i < state.getData.length; i++)...[
-//                       BlocBuilder<cubitDetailNavigasiProduct, DataStateDetailProduct>(
+//                       BlocBuilder<CubitDetailNavigasiProduct, DataStateDetailProduct>(
 //                         builder: (context, state1) => ComponenCartItemDetailVertical(
 //                           image: state.getData[i]['imagePath'].toString(),
 //                           harga: state.getData[i]['hargaTotal'].toString(),
 //                           textTitle: state.getData[i]['name'].toString(),
 //                           jumlah: state.getData[i]['jumlah'].toString(),
 //                           onTapCard: () {
-//                             context.read<cubitConnectionExample>().connectCheck(
+//                             context.read<CubitConnectionExample>().connectCheck(
 //                               readBlocConnect: {context.read<CubitDetailProdukNavPembeli>().DetailProdukNavPembeli(
 //                                 jenisDetail: "Transaksi",
 //                                 readDetail: context.read<CubitDetailProductConnect>().GetDetailProductConnect(state.getData[i]['tokenId'].toString())
@@ -103,15 +103,15 @@
 //                   contentBox: Container(
 //                     width: double.infinity,
 //                     margin: EdgeInsets.symmetric(
-//                       horizontal: themeBox.defaultWidthBox20,
-//                       vertical: themeBox.defaultHeightBox20,
+//                       horizontal: ThemeBox.defaultWidthBox20,
+//                       vertical: ThemeBox.defaultHeightBox20,
 //                     ),
 //                     child: Column(
 //                       crossAxisAlignment: CrossAxisAlignment.center,
 //                       children: [
 //                         Text("Lokasi", style: whiteTextStyle.copyWith(fontSize: defaultFont16, fontWeight: bold)),
 //                         Padding(
-//                           padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox20),
+//                           padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox20),
 //                           child: const Divider(color: kGreyColor3, thickness: 1),
 //                         ),
 //                         ClipRRect(

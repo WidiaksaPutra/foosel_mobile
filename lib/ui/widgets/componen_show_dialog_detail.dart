@@ -20,11 +20,11 @@ class ShowDialogDetail extends StatelessWidget {
       return showDialog(
         context: context, 
         builder: ((BuildContext context) => Container(
-          margin: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
-          padding: EdgeInsets.only(left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30, top: themeBox.defaultHeightBox30, bottom: themeBox.defaultHeightBox20),
+          margin: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
+          padding: EdgeInsets.only(left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, top: ThemeBox.defaultHeightBox30, bottom: ThemeBox.defaultHeightBox20),
           decoration: BoxDecoration(
             color: kBlackColor6,
-            borderRadius: BorderRadius.circular(themeBox.defaultRadius30),
+            borderRadius: BorderRadius.circular(ThemeBox.defaultRadius30),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -35,8 +35,8 @@ class ShowDialogDetail extends StatelessWidget {
                   onTap: () => context.go(navBack),
                   child: Image.asset(
                     'asset/icon/close_icon.png',
-                    height: themeBox.defaultHeightBox10,
-                    width: themeBox.defaultWidthBox10,
+                    height: ThemeBox.defaultHeightBox10,
+                    width: ThemeBox.defaultWidthBox10,
                   ),
                 ),
               ),
@@ -48,15 +48,15 @@ class ShowDialogDetail extends StatelessWidget {
                     children: [
                       Image.asset(
                         'asset/icon/icon_success_dialog.png',
-                        height: themeBox.defaultHeightBox100,
-                        width: themeBox.defaultWidthBox100,
+                        height: ThemeBox.defaultHeightBox100,
+                        width: ThemeBox.defaultWidthBox100,
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox12),
+                        padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox12),
                         child: Text("Hurray :)", style: whiteTextStyle.copyWith(fontWeight: semiBold, fontSize: defaultFont18)),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: themeBox.defaultHeightBox20),
+                        padding: EdgeInsets.only(bottom: ThemeBox.defaultHeightBox20),
                         child: Text("Item added successfully", style: grayTextStyle2.copyWith(fontWeight: regular, fontSize: defaultFont14)),
                       ),
                     ],
@@ -66,10 +66,10 @@ class ShowDialogDetail extends StatelessWidget {
               TextButton(
                 onPressed:() => context.go(navigationCart),
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox10, horizontal: themeBox.defaultWidthBox10),
+                  padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox10, horizontal: ThemeBox.defaultWidthBox10),
                   decoration: BoxDecoration(
                     color: kPurpleColor,
-                    borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+                    borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
                   ),
                   child: Text("View My Cart", style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16),),
                 )

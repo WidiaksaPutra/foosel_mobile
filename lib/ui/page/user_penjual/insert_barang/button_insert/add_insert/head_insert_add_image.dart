@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:foosel/blocs/bloc_add_product/main/bloc_upload_add_product.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_navigation_list_image_barang.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_navigation_list_image_barang.dart';
 import 'package:foosel/blocs/bloc_add_product/state_add_barang.dart';
-import 'package:foosel/blocs/bloc_default/default/default_navigasi_role.dart';
-import 'package:foosel/blocs/bloc_default/default/show_snack_bar.dart';
-import 'package:foosel/blocs/bloc_default/event_default/event_form_products.dart';
-import 'package:foosel/blocs/bloc_default/default/connection_dialog.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_navigation_list_image_barang.dart';
+import 'package:foosel/blocs/bloc_default/event/event_form_products.dart';
+import 'package:foosel/blocs/bloc_default/class/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_navigasi_role.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_show_snack_bar.dart';
+import 'package:foosel/blocs/bloc_default/state/state_navigation_list_image_barang.dart';
+import 'package:foosel/routes/route_name.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/shared/theme_color.dart';
 import 'package:foosel/shared/theme_font.dart';
@@ -24,10 +25,11 @@ import 'package:foosel/ui/widgets/componen_loading.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
-class HeadInsertAddImage extends HookWidget with defaultSharedPref, navigasiRole, navigasiRoleBarRead, showSnackBar{
+class HeadInsertAddImage extends HookWidget with SharedPref, NavigasiRole, NavigasiRoleBarRead, ShowSnackBar{
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     navigasiRBR(context: context, value: 3);
     navigasiR();
     sharedPref();
@@ -53,8 +55,11 @@ class HeadInsertAddImage extends HookWidget with defaultSharedPref, navigasiRole
       }
     }
 
-    Widget title() => Text("Add Image",
-      style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont18)
+    Widget title() => Expanded(
+      child: Text("Add Image",
+        style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont18),
+        overflow: TextOverflow.ellipsis,
+      ),
     );
 
     Widget getUpdate() => BlocBuilder<CubitNavigationListImageBarang, DataStateNavigationListImageBarang>(
@@ -79,8 +84,8 @@ class HeadInsertAddImage extends HookWidget with defaultSharedPref, navigasiRole
         },
         icon: Image.asset(
           "asset/icon/submit_icon.png",
-          height: themeBox.defaultHeightBox13,
-          width: themeBox.defaultWidthBox18,
+          height: ThemeBox.defaultHeightBox13,
+          width: ThemeBox.defaultWidthBox18,
         ),
       ),
     );
@@ -88,7 +93,7 @@ class HeadInsertAddImage extends HookWidget with defaultSharedPref, navigasiRole
     PreferredSizeWidget header(){
       ClassConnectionDialog connection = ClassConnectionDialog();
       return AppBar(
-        toolbarHeight: themeBox.defaultHeightBox90,
+        toolbarHeight: ThemeBox.defaultHeightBox90,
         backgroundColor: kPrimaryColor,
         shadowColor: kBlackColor6,
         centerTitle: false,
@@ -117,10 +122,10 @@ class HeadInsertAddImage extends HookWidget with defaultSharedPref, navigasiRole
                       getUpdate(),
                     ]
                   )
-                : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50));
+                : Center(child: ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox50));
               }
             )
-          : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50)),
+          : Center(child: ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox50)),
           childDisconnect: (context, stateUserDisconn) => (stateUserDisconn.loading == true)
           ? Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -137,11 +142,11 @@ class HeadInsertAddImage extends HookWidget with defaultSharedPref, navigasiRole
                 ),
                 title(),
                 SizedBox(
-                  width: themeBox.defaultWidthBox45,
+                  width: ThemeBox.defaultWidthBox45,
                 )
               ]
             )
-          : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50)),
+          : Center(child: ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox50)),
         ),
       );
     }
@@ -155,8 +160,8 @@ class HeadInsertAddImage extends HookWidget with defaultSharedPref, navigasiRole
             voidShowSnackBar(
               context: context,
               color: (stateUploadSnack.responApi == "berhasil") ? kGreenColor : kRedColor,
-              vertical: themeBox.defaultHeightBox12,
-              borderRadius: BorderRadius.circular(themeBox.defaultRadius8),
+              vertical: ThemeBox.defaultHeightBox12,
+              borderRadius: BorderRadius.circular(ThemeBox.defaultRadius8),
               behavior: SnackBarBehavior.floating,
               duration: const Duration(milliseconds: 1000),
               content: (stateUploadSnack.responApi == "berhasil")
@@ -181,7 +186,7 @@ class HeadInsertAddImage extends HookWidget with defaultSharedPref, navigasiRole
               selectImage: selectImage, 
               selectImageCamera: selectImageCamera,
             ) 
-          : ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200);
+          : ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200);
         } 
       )
     );

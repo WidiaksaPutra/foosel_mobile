@@ -24,12 +24,12 @@ class ComponenTextDropDown extends StatelessWidget{
     crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(labelText, style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16)),
-        SizedBox(height: themeBox.defaultHeightBox12),
+        SizedBox(height: ThemeBox.defaultHeightBox12),
         Container(
-          padding: EdgeInsets.only(left: themeBox.defaultWidthBox12, right: themeBox.defaultWidthBox12, top: themeBox.defaultWidthBox8),
+          padding: EdgeInsets.only(left: ThemeBox.defaultWidthBox12, right: ThemeBox.defaultWidthBox12, top: ThemeBox.defaultWidthBox8),
           decoration: BoxDecoration(
             color: kBlackColor4,
-            borderRadius: BorderRadius.circular(themeBox.defaultRadius12), 
+            borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12), 
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton(
@@ -37,7 +37,7 @@ class ComponenTextDropDown extends StatelessWidget{
               hint: (viewDropdownButton.isNotEmpty) ? Center(child: Text(viewDropdownButton, style: grayTextStyle.copyWith(fontSize: defaultFont14, fontWeight: medium))) : null,
               style: grayTextStyle.copyWith(fontWeight: regular, fontSize: defaultFont14),
               items: list.map(buildMenuItems).toList(),
-              borderRadius: BorderRadius.circular(themeBox.defaultRadius15),
+              borderRadius: BorderRadius.circular(ThemeBox.defaultRadius15),
               underline: SizedBox(),
               isExpanded: true,
               onChanged: (value){

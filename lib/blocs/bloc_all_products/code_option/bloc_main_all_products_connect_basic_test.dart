@@ -9,7 +9,7 @@
 // import 'package:foosel/service/api_products/api_get_products_popular.dart';
 // import 'package:foosel/service/api_transaction_item.dart';
 
-// class BlocAllProductConnect extends Bloc<dataEventAllProduct,DataStateAllProduct> with apiGetProducts, apiGetProductsPopular, apiTransactionItem, helperProducts, helperProductsPopular, defaultSharedPref implements InterfaceScrollList{
+// class BlocAllProductConnect extends Bloc<dataEventAllProduct,DataStateAllProduct> with apiGetProducts, apiGetProductsPopular, apiTransactionItem, helperProducts, helperProductsPopular, DefaultSharedPref implements InterfaceScrollList{
 //   BlocAllProductConnect() : super(DataAllProduct([], false, false, false, [], false)){
 //     // StreamBuilder streamData = StreamBuilder(
 //     //   stream: getProducts(), 

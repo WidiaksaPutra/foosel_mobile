@@ -1,22 +1,22 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_message/state_message.dart';
-import 'package:foosel/interface/interface_local/firebase/interface_get_user_firebase.dart';
-import 'package:foosel/interface/interface_local/firebase/interface_insert_chat_firebase.dart';
-import 'package:foosel/interface/interface_local/firebase/interface_insert_notification_firebase.dart';
+import 'package:foosel/firebase/api_user_firebase/interfaces/interface_get_user_firebase.dart';
+import 'package:foosel/firebase/api_chat_firebase/interfaces/interface_insert_chat_firebase.dart';
+import 'package:foosel/firebase/api_notification/interface_insert_notification_firebase.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 
 late List userList = [];
-class cubitTitleMessageConnect extends Cubit<DataStateTitleMessage> with defaultSharedPref{
-  final interfaceInsertNotificationFirebase dataInsertNotificationFirebase = getItInstance<interfaceInsertNotificationFirebase>();
-  final interfaceGetUserFirebase dataGetUserFirebase = getItInstance<interfaceGetUserFirebase>();
-  final interfaceInsertChatFirebase dataInsertChatFirebase = getItInstance<interfaceInsertChatFirebase>();
-  cubitTitleMessageConnect() : super(DataTitleMessage("","","",true));
+class CubitTitleMessageConnect extends Cubit<DataStateTitleMessage> with SharedPref{
+  final InterfaceInsertNotificationFirebase dataInsertNotificationFirebase = getItInstance<InterfaceInsertNotificationFirebase>();
+  final InterfaceGetUserFirebase dataGetUserFirebase = getItInstance<InterfaceGetUserFirebase>();
+  final InterfaceInsertChatFirebase dataInsertChatFirebase = getItInstance<InterfaceInsertChatFirebase>();
+  CubitTitleMessageConnect() : super(DataTitleMessage("","","",true));
   getTitleMessage({required dynamic users, required String message}) async{
     await sharedPref();
     String emailPenerima = await prefs.getString('emailPenerima').toString();
     emit(DataTitleMessage("","","",true));
-    userList = await dataGetUserFirebase.GetUserFirebase(email: prefs.getString('email').toString(), users: users);
+    userList = await dataGetUserFirebase.getUserFirebase(email: prefs.getString('email').toString(), users: users);
     Future.delayed(
       const Duration(milliseconds: 1000),
       (){
@@ -45,12 +45,12 @@ class cubitTitleMessageConnect extends Cubit<DataStateTitleMessage> with default
     required String prefEmail
   }) async{
     if(message != ""){
-      await dataInsertChatFirebase.InsertChatFirebase(
+      await dataInsertChatFirebase.insertChatFirebase(
         emailPengirim: prefEmail, 
         emailPenerima: emailPenerima, 
         messager: message,
       );
-      await dataInsertNotificationFirebase.InsertNotificationFirebase(
+      await dataInsertNotificationFirebase.insertNotificationFirebase(
         deviceToken: tokenPenerima,
         body: message,
         title: prefEmail,

@@ -11,8 +11,8 @@
 
 // ScrollController scrollController = ScrollController();
 // class BlocAllProductConnect extends Bloc<dataEventAllProduct,DataStateAllProduct> implements interfacesAllProductConnect{
-//   interfaceGetDataProduct dataGetProduct;
-//   interfaceInsertDataProductsLocal dataGetProductLocal;
+//   InterfaceGetDataProduct dataGetProduct;
+//   InterfaceInsertDataProductsLocal dataGetProductLocal;
 //   interfaceDeleteDataStorageLocal dataDeleteProductLocal;
 //   BlocAllProductConnect(this.dataGetProduct, this.dataGetProductLocal, this.dataDeleteProductLocal) : super(
 //     DataAllProduct(

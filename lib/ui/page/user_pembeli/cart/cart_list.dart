@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_pembeli/cubit_detail_produk_nav_pembeli.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_connection_example.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_connection.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_example.dart';
+import 'package:foosel/blocs/bloc_default/state/state_connection.dart';
 import 'package:foosel/blocs/bloc_detail_products/cubit_detail_navigasi_product.dart';
 import 'package:foosel/blocs/bloc_detail_products/detail_product/cubit_detail_product_connect.dart';
 import 'package:foosel/blocs/bloc_detail_products/state_products.dart';
@@ -32,16 +32,16 @@ class Cart extends StatelessWidget{
   Cart({Key? key}) : super(key: key);
 
   void read(BuildContext context) async{
-    await context.read<CubitGetTransaksiLocal>().GetDataTransaksi();
-    await context.read<cubitDetailNavigasiProduct>().navigationDetailProduct();
-    await context.read<CubitGetTransaksiProduct>().GetDataTransaksiHistory();
-    await context.read<CubitGetTransaksiProductLocal>().GetDataTransaksi();
-    await context.read<cubitConnectionExample>().connectCheck(readBlocConnect: {}, readBlocDisconnect: {});
+    await context.read<CubitGetTransaksiLocal>().getDataTransaksi();
+    await context.read<CubitDetailNavigasiProduct>().navigationDetailProduct();
+    await context.read<CubitGetTransaksiProduct>().getDataTransaksiHistory();
+    await context.read<CubitGetTransaksiProductLocal>().getDataTransaksi();
+    await context.read<CubitConnectionExample>().connectCheck(readBlocConnect: {}, readBlocDisconnect: {});
   }
 
   Widget cardListTransaction(dynamic data){
-    return BlocBuilder<cubitConnectionExample, DataStateConnection>(
-      builder: (context, stateConnect) => BlocBuilder<cubitDetailNavigasiProduct, DataStateDetailProduct>(
+    return BlocBuilder<CubitConnectionExample, DataStateConnection>(
+      builder: (context, stateConnect) => BlocBuilder<CubitDetailNavigasiProduct, DataStateDetailProduct>(
         builder: (context, state1) => ComponenCardVertical_ImageAndTextAndButtonAddAndButtonMinAndButtonDelete(
           image: data['imagePath'].toString(),
           iconAdd: "asset/icon/add_item.png",
@@ -51,43 +51,43 @@ class Cart extends StatelessWidget{
           harga: data['hargaTotal'].toString(),
           jumlah: data['jumlah'].toString(),
           onTapAdd: () {
-            context.read<CubitUpdateTransaksiLocal>().UpdateDataTransaksiLocal(
+            context.read<CubitUpdateTransaksiLocal>().updateDataTransaksiLocal(
               tokenId: data['tokenId'].toString(), 
               jumlah: double.parse(data['jumlah'].toString()).toInt()+1, 
               hargaTotal: ((double.parse(data['hargaSatuan'].toString()).toInt()) * (double.parse(data['jumlah'].toString()).toInt()+1)).toString(),
             );
-            context.read<CubitGetTransaksiLocal>().GetDataTransaksi();
+            context.read<CubitGetTransaksiLocal>().getDataTransaksi();
           },
           onTapMin: () {
             if(double.parse(data['jumlah'].toString()).toInt() == 1){
-              context.read<CubitDeleteTransaksiLocal>().DeleteDataTransaksi(tokenId: data['tokenId'].toString());
-              context.read<CubitGetTransaksiLocal>().GetDataTransaksi();
+              context.read<CubitDeleteTransaksiLocal>().deleteDataTransaksi(tokenId: data['tokenId'].toString());
+              context.read<CubitGetTransaksiLocal>().getDataTransaksi();
             }
             if(double.parse(data['jumlah'].toString()).toInt() > 1){
-              context.read<CubitUpdateTransaksiLocal>().UpdateDataTransaksiLocal(
+              context.read<CubitUpdateTransaksiLocal>().updateDataTransaksiLocal(
                 tokenId: data['tokenId'].toString(), 
                 jumlah: double.parse(data['jumlah'].toString()).toInt()-1, 
                 hargaTotal: ((double.parse(data['hargaSatuan'].toString()).toInt()) * (double.parse(data['jumlah'].toString()).toInt()-1)).toString(),
               );
-              context.read<CubitGetTransaksiLocal>().GetDataTransaksi();
+              context.read<CubitGetTransaksiLocal>().getDataTransaksi();
             }
           },
           onTapDelete: () {
-            context.read<CubitDeleteTransaksiLocal>().DeleteDataTransaksi(tokenId: data['tokenId'].toString());
-            context.read<CubitGetTransaksiLocal>().GetDataTransaksi();
+            context.read<CubitDeleteTransaksiLocal>().deleteDataTransaksi(tokenId: data['tokenId'].toString());
+            context.read<CubitGetTransaksiLocal>().getDataTransaksi();
           }, 
           onTapCard: () {
-            context.read<cubitConnectionExample>().connectCheck(
-              readBlocConnect: {context.read<CubitDetailProdukNavPembeli>().DetailProdukNavPembeli(
+            context.read<CubitConnectionExample>().connectCheck(
+              readBlocConnect: {context.read<CubitDetailProdukNavPembeli>().detailProdukNavPembeli(
                 jenisDetail: "Transaksi",
                 readDetail: {
-                  context.read<CubitDetailProductConnect>().GetDetailProductConnect(idProduct: data['tokenId'].toString()),
-                  context.read<CubitGetTransaksiLocal>().GetDataTransaksiWhereId(tokenId: data['tokenId'].toString()),
+                  context.read<CubitDetailProductConnect>().getDetailProductConnect(idProduct: data['tokenId'].toString()),
+                  context.read<CubitGetTransaksiLocal>().getDataTransaksiWhereId(tokenId: data['tokenId'].toString()),
                 }
               )},
-              readBlocDisconnect: {context.read<CubitDetailProdukNavPembeli>().DetailProdukNavPembeli(
+              readBlocDisconnect: {context.read<CubitDetailProdukNavPembeli>().detailProdukNavPembeli(
                 jenisDetail: "Transaksi", 
-                readDetail: context.read<CubitGetTransaksiLocal>().GetDataTransaksiWhereId(tokenId: data['tokenId'].toString())
+                readDetail: context.read<CubitGetTransaksiLocal>().getDataTransaksiWhereId(tokenId: data['tokenId'].toString())
               )},
             );
             context.go(state1.navigation);
@@ -100,14 +100,15 @@ class Cart extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     Size size = MediaQuery.of(context).size;
     read(context);
 
     Widget History(){
       return Padding(
-        padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox22),
+        padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox22),
         child: ComponenDashBorderBox(
-          borderRadiusBox: themeBox.defaultRadius5, 
+          borderRadiusBox: ThemeBox.defaultRadius5, 
           borderSideColor: kWhiteColor, 
           borderSideWidth: 1.0, 
           dashLengthBox: 5.0,
@@ -115,15 +116,15 @@ class Cart extends StatelessWidget{
             onPressed: () => context.go(RouteName.cartHistory),
             child: Padding(
               padding: EdgeInsets.symmetric(
-                vertical: themeBox.defaultHeightBox20,
-                horizontal: themeBox.defaultWidthBox20,
+                vertical: ThemeBox.defaultHeightBox20,
+                horizontal: ThemeBox.defaultWidthBox20,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.update, color: kWhiteColor, weight: themeBox.defaultWidthBox35),
+                      Icon(Icons.update, color: kWhiteColor, weight: ThemeBox.defaultWidthBox35),
                       Text(" History", style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16)),
                     ],
                   ),
@@ -147,7 +148,7 @@ class Cart extends StatelessWidget{
             onPressed: () => context.go(RouteName.bottomNavPembeli),
           ),
           bottomNavigationBar: (state.getData.isNotEmpty)
-          ? BlocBuilder<cubitConnectionExample, DataStateConnection>(
+          ? BlocBuilder<CubitConnectionExample, DataStateConnection>(
               builder: (context, stateConnect) => ComponenBottomCartButton(
                 connection: stateConnect.connectionBoolean,
                 harga: state.totalHarga.toString(),
@@ -156,7 +157,7 @@ class Cart extends StatelessWidget{
                 onPressed: () async{
                   if(state.getData.isNotEmpty){
                     for(int i = 0; i < state.getData.length; i++){
-                      await context.read<CubitDetailProductConnect>().GetDetailProductConnect(idProduct: state.getData[i]['tokenId'].toString());
+                      await context.read<CubitDetailProductConnect>().getDetailProductConnect(idProduct: state.getData[i]['tokenId'].toString());
                     }
                     context.go(RouteName.cartDetail);
                   }
@@ -169,8 +170,8 @@ class Cart extends StatelessWidget{
               physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
-                  SizedBox(height: themeBox.defaultHeightBox16,),
-                  BlocBuilder<cubitConnectionExample, DataStateConnection>(
+                  SizedBox(height: ThemeBox.defaultHeightBox16,),
+                  BlocBuilder<CubitConnectionExample, DataStateConnection>(
                     builder: (context, stateConnect) => (stateConnect.connectionBoolean == true)
                     ? BlocBuilder<CubitGetTransaksiProduct, DataStateGetTransaksi>(
                         builder: (context2, state) => (state.loading == false)
@@ -178,7 +179,7 @@ class Cart extends StatelessWidget{
                         : Center(
                             child: Lottie.asset(
                               "asset/animations/loading_horizontal_lottie.json",
-                              height: themeBox.defaultHeightBox100,
+                              height: ThemeBox.defaultHeightBox100,
                             ),
                           ),
                       )
@@ -188,7 +189,7 @@ class Cart extends StatelessWidget{
                         : Center(
                             child: Lottie.asset(
                               "asset/animations/loading_horizontal_lottie.json",
-                              height: themeBox.defaultHeightBox100,
+                              height: ThemeBox.defaultHeightBox100,
                             ),
                           ),
                       )
@@ -209,7 +210,7 @@ class Cart extends StatelessWidget{
                 ],
               ),
             )
-          : ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200)
+          : ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200)
         );
       }
     );

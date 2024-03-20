@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foosel/blocs/bloc_default/default/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/class/connection_dialog.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/ui/page/default/ui/list_horizontal_home.dart';
 import 'package:foosel/ui/page/connection/connection_product.dart';
@@ -11,12 +11,12 @@ class BodyHomeMenu extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    themeBox(context);
+    ThemeBox(context);
     ClassConnectionDialog connection = ClassConnectionDialog();
     return ConnectionProduct(
       connection: connection.basicConnection,
       childProduct: (context, state) => (state.loadingApi == true)
-      ? Center(child: ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200))
+      ? Center(child: ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200))
       : ListHorizontalHome(
           lengthList: state.getData.length, 
           data: state.getData,
@@ -26,7 +26,7 @@ class BodyHomeMenu extends StatelessWidget{
           heightPage: heightPage,
         ),
       childProductDisconnect: (context, state) => (state.loadingApi == true)
-      ? Center(child: ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200))
+      ? Center(child: ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200))
       : ListHorizontalHome(
           lengthList: state.getData.length, 
           data: state.getData,

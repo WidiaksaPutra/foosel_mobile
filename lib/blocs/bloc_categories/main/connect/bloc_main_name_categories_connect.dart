@@ -2,21 +2,21 @@
 
 import 'package:flutter/material.dart';
 import 'package:foosel/blocs/bloc_categories/event_categories.dart';
-import 'package:foosel/blocs/bloc_categories/state_categories.dart';
 import 'package:foosel/blocs/bloc_categories/interfaces_category.dart';
-import 'package:foosel/interface/interface_local/helpers/interface_delete_data_category_storage_local.dart';
-import 'package:foosel/interface/interface_local/helpers/interface_insert_data_category_local.dart';
-import 'package:foosel/interface/interface_local/service/interface_get_data_category.dart';
+import 'package:foosel/blocs/bloc_categories/state_categories.dart';
+import 'package:foosel/helpers/categories/interfaces/interface_delete_data_category_local.dart';
+import 'package:foosel/helpers/categories/interfaces/interface_insert_data_category_local.dart';
+import 'package:foosel/service/api_categories/interface_get_data_category.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 
 ScrollController scrollController = ScrollController();
 late dynamic dataList = [];
 late bool loadingScrolling = false;
-class BlocNameCategoriesConnect extends Bloc<DataEventKlasifikasi, DataStateNameCategories> implements interfacesCategoryNameConnect{
-  final interfaceGetDataCategory dataGetNameCategoryFuture = getItInstance<interfaceGetDataCategory>();
-  final interfaceInsertDataCategoryLocal dataInsertCategoryLocal = getItInstance<interfaceInsertDataCategoryLocal>();
-  final interfaceDeleteDataCategoryStorageLocal dataDeleteCategoryLocal = getItInstance<interfaceDeleteDataCategoryStorageLocal>();
+class BlocNameCategoriesConnect extends Bloc<DataEventKlasifikasi, DataStateNameCategories> implements InterfacesCategoryNameConnect{
+  final InterfaceGetDataCategory dataGetNameCategoryFuture = getItInstance<InterfaceGetDataCategory>();
+  final InterfaceInsertDataCategoryLocal dataInsertCategoryLocal = getItInstance<InterfaceInsertDataCategoryLocal>();
+  final InterfaceDeleteDataCategoryLocal dataDeleteCategoryLocal = getItInstance<InterfaceDeleteDataCategoryLocal>();
   BlocNameCategoriesConnect() : super(
     DataNameCategories(
       dataNameCategories: dataList, 
@@ -26,16 +26,16 @@ class BlocNameCategoriesConnect extends Bloc<DataEventKlasifikasi, DataStateName
     )
   ){
     on<NameCategories>((event, emit) async{
-      await GetNameCategories();
-      await ScrollControlNameCategories();
-      await SaveLocalDataCategories();
+      await getNameCategories();
+      await scrollControlNameCategories();
+      await saveLocalDataCategories();
     });
   }
 
   @override
-  GetNameCategories() async{
+  getNameCategories() async{
     loadingScrolling = false;
-    dataList = await dataGetNameCategoryFuture.GetDataCategory(loadingApiService: true);
+    dataList = await dataGetNameCategoryFuture.getDataCategory(loadingApiService: true);
     emit(
       DataNameCategories(
         dataNameCategories: dataList, 
@@ -47,11 +47,11 @@ class BlocNameCategoriesConnect extends Bloc<DataEventKlasifikasi, DataStateName
   }
 
   @override
-  ScrollControlNameCategories() async{
+  scrollControlNameCategories() async{
     scrollController.addListener(() async {
       if(scrollController.position.pixels == scrollController.position.maxScrollExtent && loadingScrolling == false){
         loadingScrolling = true;
-        dataList = await dataGetNameCategoryFuture.GetDataCategory(loadingApiService: true);
+        dataList = await dataGetNameCategoryFuture.getDataCategory(loadingApiService: true);
         emit(
           DataNameCategories(
             dataNameCategories: dataList, 
@@ -77,11 +77,14 @@ class BlocNameCategoriesConnect extends Bloc<DataEventKlasifikasi, DataStateName
   }
 
   @override
-  SaveLocalDataCategories() async{
-    await dataDeleteCategoryLocal.DeleteDataCategoryLocal();
+  saveLocalDataCategories() async{
+    await dataDeleteCategoryLocal.deleteDataCategoryLocal();
     if(dataList.length != 0){
       dataList.forEach((data) async{
-        await dataInsertCategoryLocal.InsertDataLocal(id: data.id.toString(), name: data.name.toString());
+        await dataInsertCategoryLocal.insertDataCategoryLocal(
+          id: data.id.toString(),
+          name: data.name.toString(),
+        );
       });
     }
   }

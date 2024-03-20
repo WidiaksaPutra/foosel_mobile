@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-mixin DataEventUser{}
+abstract class DataEventUser{}
 
-class DataEventUpdateUser with DataEventUser{
+class DataEventUpdateUser implements DataEventUser{
   late String name, email, username, alamat;
   final String navigation;
   final BuildContext context;

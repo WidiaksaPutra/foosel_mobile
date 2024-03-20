@@ -6,9 +6,9 @@ import 'package:foosel/blocs/bloc_categories/main/cubit_connection_name_categori
 import 'package:foosel/blocs/bloc_categories/main/disconnect/bloc_main_name_categories_disconnect.dart';
 import 'package:foosel/blocs/bloc_default/bloc_button_up/cubit_button_up.dart';
 import 'package:foosel/blocs/bloc_default/bloc_button_up/state_button_up.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_connection_basic.dart';
-import 'package:foosel/blocs/bloc_default/default/size_device.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_connection.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_basic.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_size_device.dart';
+import 'package:foosel/blocs/bloc_default/state/state_connection.dart';
 import 'package:foosel/routes/route_name.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/shared/theme_color.dart';
@@ -25,34 +25,34 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lottie/lottie.dart';
 
-class MenuGuest extends HookWidget with sizeDevice{
+class MenuGuest extends HookWidget with SizeDevice{
   @override
   Widget build(BuildContext context) {
-    themeBox(context);
+    ThemeBox(context);
     getsizeDevice(context);
     late double heightPage = sizeHeight;
     if(heightPage < 0.0){heightPage = 0.0;};
-    context.read<cubitConnectionBasic>().connectCheck(context);
+    context.read<CubitConnectionBasic>().connectCheck(context);
     return Scaffold(
       backgroundColor: kPrimaryColor,
       body: SafeArea(
-        child: BlocBuilder<cubitConnectionBasic, DataStateConnection>(
+        child: BlocBuilder<CubitConnectionBasic, DataStateConnection>(
           builder:(context, state) => (state.connectionBoolean == true)
           ? CustomScrollView(
               physics: BouncingScrollPhysics(),
               slivers: [
                 SliverAppBar(
-                  toolbarHeight: themeBox.defaultHeightBox90,
+                  toolbarHeight: ThemeBox.defaultHeightBox90,
                   bottom: PreferredSize( 
                     preferredSize: Size.fromHeight(0),
                     child: Container(
-                      height: themeBox.defaultHeightBox80,
-                      padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox20, horizontal: themeBox.defaultWidthBox20),
+                      height: ThemeBox.defaultHeightBox80,
+                      padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox20, horizontal: ThemeBox.defaultWidthBox20),
                       decoration: BoxDecoration(
                         color: kPrimaryColor,
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(themeBox.defaultRadius30),
-                          topRight: Radius.circular(themeBox.defaultRadius30),
+                          topLeft: Radius.circular(ThemeBox.defaultRadius30),
+                          topRight: Radius.circular(ThemeBox.defaultRadius30),
                         ),
                       ),
                       child: HomeUpButton(),
@@ -60,7 +60,7 @@ class MenuGuest extends HookWidget with sizeDevice{
                   ),
                   pinned: true,
                   backgroundColor: kPrimaryColor,
-                  expandedHeight: themeBox.defaultHeightBox200,
+                  expandedHeight: ThemeBox.defaultHeightBox200,
                   flexibleSpace: FlexibleSpaceBar(
                     background: Stack(
                       children: [
@@ -69,14 +69,14 @@ class MenuGuest extends HookWidget with sizeDevice{
                           imageProduct: coverFoosel,
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: themeBox.defaultHeightBox30, left: themeBox.defaultWidthBox20),
+                          margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox30, left: ThemeBox.defaultWidthBox20),
                           child: ComponenHeadHomeMenu(
                             button: (){
                               context.go(RouteName.login);
-                              cubitUpButton().close();
+                              CubitUpButton().close();
                               BlocNameCategoriesConnect().close();
                               BlocNameCategoriesDisconnect().close();
-                              cubitConnectionNameCategories().close();
+                              CubitConnectionNameCategories().close();
                             },
                           ),
                         ),
@@ -85,7 +85,7 @@ class MenuGuest extends HookWidget with sizeDevice{
                   ),
                 ),
                 SliverFillRemaining(
-                  child: BlocBuilder<cubitUpButton, StateDataUpButton>(builder: (context, stateDesign) 
+                  child: BlocBuilder<CubitUpButton, StateDataUpButton>(builder: (context, stateDesign) 
                     => (stateDesign.currentBody == 0) 
                     ? BodyHomeMenu(heightPage: heightPage) 
                     : BodyHomeMenuKlasifikasi(heightPage: heightPage),
@@ -98,24 +98,24 @@ class MenuGuest extends HookWidget with sizeDevice{
             children: [
               Lottie.asset(
                 'asset/animations/vektor_search_lottie.json',
-                height: themeBox.defaultHeightBox340,
+                height: ThemeBox.defaultHeightBox340,
               ),
               Text("device tidak terkoneksi ke internet...", style: whiteTextStyle.copyWith(fontWeight: regular, fontSize: 14)),
-              SizedBox(height: themeBox.defaultHeightBox12,),
+              SizedBox(height: ThemeBox.defaultHeightBox12,),
               Row(
                 children: [
-                  SizedBox(width: themeBox.defaultWidthBox10,),
+                  SizedBox(width: ThemeBox.defaultWidthBox10,),
                   Expanded(
                     child: ComponenBasicButton(
                       content: Text("Login", style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16)), 
                       primaryColor: kPurpleColor,
                       secondaryColor: kBlueColor,
-                      borderRadius: themeBox.defaultRadius8, 
-                      paddingVertical: themeBox.defaultHeightBox5,
+                      borderRadius: ThemeBox.defaultRadius8, 
+                      paddingVertical: ThemeBox.defaultHeightBox5,
                       onPressed: () => context.go(RouteName.login), 
                     ),
                   ),
-                  SizedBox(width: themeBox.defaultWidthBox10,),
+                  SizedBox(width: ThemeBox.defaultWidthBox10,),
                 ],
               ),
             ],),

@@ -14,39 +14,40 @@ class ComponenChatBubbleProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     return Row(
       mainAxisAlignment: (jenisUserMessage == true) ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Flexible(//?
           child: Container(
-            margin: EdgeInsets.only(top:(bSpace == true) ? themeBox.defaultHeightBox30 : themeBox.defaultHeightBox12 , right: (jenisUserMessage == true) ? themeBox.defaultWidthBox30 : 0, left: (jenisUserMessage == true) ? 0 : themeBox.defaultWidthBox30),
-            padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox12, horizontal: themeBox.defaultWidthBox12),
+            margin: EdgeInsets.only(top:(bSpace == true) ? ThemeBox.defaultHeightBox30 : ThemeBox.defaultHeightBox12 , right: (jenisUserMessage == true) ? ThemeBox.defaultWidthBox30 : 0, left: (jenisUserMessage == true) ? 0 : ThemeBox.defaultWidthBox30),
+            padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox12, horizontal: ThemeBox.defaultWidthBox12),
             constraints: BoxConstraints(
               maxWidth: MediaQuery.of(context).size.width*0.6,
             ),
             decoration: BoxDecoration(
               color: (jenisUserMessage == true) ? kPurpleBlackColor : kBlackColor,
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular((jenisUserMessage == true) ? themeBox.defaultRadius12 : 0),
-                topRight: Radius.circular((jenisUserMessage == true) ? 0 : themeBox.defaultRadius12), 
-                bottomLeft: Radius.circular(themeBox.defaultRadius12), 
-                bottomRight: Radius.circular(themeBox.defaultRadius12),
+                topLeft: Radius.circular((jenisUserMessage == true) ? ThemeBox.defaultRadius12 : 0),
+                topRight: Radius.circular((jenisUserMessage == true) ? 0 : ThemeBox.defaultRadius12), 
+                bottomLeft: Radius.circular(ThemeBox.defaultRadius12), 
+                bottomRight: Radius.circular(ThemeBox.defaultRadius12),
               ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(bottom: themeBox.defaultHeightBox20),
+                  padding: EdgeInsets.only(bottom: ThemeBox.defaultHeightBox20),
                   child: Row(children: [
                       Padding(
-                        padding: EdgeInsets.only(right: themeBox.defaultWidthBox8),
+                        padding: EdgeInsets.only(right: ThemeBox.defaultWidthBox8),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+                          borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
                           child: Image.asset(
                             image,
-                            height: themeBox.defaultHeightBox70,
-                            width: themeBox.defaultWidthBox70,
+                            height: ThemeBox.defaultHeightBox70,
+                            width: ThemeBox.defaultWidthBox70,
                           ),
                         ),
                       ),
@@ -55,7 +56,7 @@ class ComponenChatBubbleProduct extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(dataName, style: whiteTextStyle.copyWith(fontWeight: regular, fontSize: defaultFont14)),
-                            SizedBox(height: themeBox.defaultHeightBox4),
+                            SizedBox(height: ThemeBox.defaultHeightBox4),
                             Text(formatCurrencyShort.format(double.parse(dataHarga.toString()).toInt()), style: blueTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont14)),
                           ]
                         ),
@@ -69,13 +70,13 @@ class ComponenChatBubbleProduct extends StatelessWidget {
                   GestureDetector(
                     onTap: () {},
                     child: Container(
-                      padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox10, horizontal: themeBox.defaultWidthBox14),
+                      padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox10, horizontal: ThemeBox.defaultWidthBox14),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: kPurpleColor,
-                          width: themeBox.defaultWidthBox1,
+                          width: ThemeBox.defaultWidthBox1,
                         ),
-                        borderRadius: BorderRadius.circular(themeBox.defaultRadius8)
+                        borderRadius: BorderRadius.circular(ThemeBox.defaultRadius8)
                       ),
                       child: Text("Add to Cart", style: purpleTextStyle.copyWith(fontWeight: regular, fontSize: defaultFont14), overflow: TextOverflow.ellipsis,),
                     ),
@@ -83,10 +84,10 @@ class ComponenChatBubbleProduct extends StatelessWidget {
                   GestureDetector(
                     onTap: () {},
                     child: Container(
-                      padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox10, horizontal: themeBox.defaultWidthBox14),
+                      padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox10, horizontal: ThemeBox.defaultWidthBox14),
                       decoration: BoxDecoration(
                         color: kPurpleColor,
-                        borderRadius: BorderRadius.circular(themeBox.defaultRadius8)
+                        borderRadius: BorderRadius.circular(ThemeBox.defaultRadius8)
                       ),
                       child: Text("Buy Now", style: purpleBlackTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont14), overflow: TextOverflow.ellipsis,),
                     ),

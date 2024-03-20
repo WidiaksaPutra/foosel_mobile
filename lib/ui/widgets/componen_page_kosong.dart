@@ -31,14 +31,14 @@ class ComponenPageKosongBasic extends StatelessWidget {
             children: [
               Lottie.asset(
                 image,
-                height: themeBox.defaultHeightBox250,
+                height: ThemeBox.defaultHeightBox250,
               ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox20),
+                margin: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox20),
                 child: Column(
                   children: [
                     Text(titleText, style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16)),
-                    SizedBox(height: themeBox.defaultHeightBox12),
+                    SizedBox(height: ThemeBox.defaultHeightBox12),
                     Text(messageText, style: grayTextStyle2.copyWith(fontWeight: regular, fontSize: defaultFont14)),
                   ]
                 ),
@@ -74,15 +74,15 @@ class ComponenPageKosongBasic extends StatelessWidget {
 //           mainAxisAlignment: MainAxisAlignment.center,
 //           children: [
 //             Container(
-//               margin: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox20),
+//               margin: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox20),
 //               child: Column(
 //                 children: [
 //                   Lottie.asset(
 //                     image,
-//                     height: themeBox.defaultHeightBox250,
+//                     height: ThemeBox.defaultHeightBox250,
 //                   ),
 //                   Text(titleText, style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16)),
-//                   SizedBox(height: themeBox.defaultHeightBox12),
+//                   SizedBox(height: ThemeBox.defaultHeightBox12),
 //                   Text(messageText, style: grayTextStyle2.copyWith(fontWeight: regular, fontSize: defaultFont14)),
 //                 ]
 //               ),

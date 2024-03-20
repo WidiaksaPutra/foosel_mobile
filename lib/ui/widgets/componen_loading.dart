@@ -29,13 +29,15 @@ class ComponenLoadingLottieHorizontal extends StatelessWidget {
     );
   }
 }
-mixin loadingScrollData{
-  Widget loadingScrollHeight({
+mixin LoadingScrollData{
+  Widget LoadingScrollHeight({
     required bool loadingScrollName, 
     required double withLoading, 
     required double heightLoading, 
     required double rightLoading,
+    required BuildContext context,
   }){
+    ThemeBox(context);
     // ignore: curly_braces_in_flow_control_structures
     return (loadingScrollName)
     ? Positioned(
@@ -44,7 +46,7 @@ mixin loadingScrollData{
           height: heightLoading,
           width: withLoading,
           child: Center(
-            child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox100),
+            child: ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox100),
           ),
         )
       )
@@ -60,7 +62,7 @@ mixin loadingScrollData{
 //   @override
 //   Widget build(BuildContext context) {
 //     return Container(
-//       margin: EdgeInsets.only(top: themeBox.defaultHeightBox20),
+//       margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox20),
 //       child: Column(
 //         mainAxisAlignment: MainAxisAlignment.end,
 //         children: [
@@ -70,11 +72,11 @@ mixin loadingScrollData{
 //               children: [
 //                 Expanded(
 //                   child: Container(
-//                     margin: EdgeInsets.only(right: themeBox.defaultWidthBox20, left: themeBox.defaultWidthBox20, bottom: themeBox.defaultHeightBox20),
-//                     padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox16, vertical: themeBox.defaultHeightBox12),
+//                     margin: EdgeInsets.only(right: ThemeBox.defaultWidthBox20, left: ThemeBox.defaultWidthBox20, bottom: ThemeBox.defaultHeightBox20),
+//                     padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox16, vertical: ThemeBox.defaultHeightBox12),
 //                     decoration: BoxDecoration(
 //                       color: kBlackColor,
-//                       borderRadius: BorderRadius.circular(themeBox.defaultRadius12)
+//                       borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12)
 //                     ),
 //                     child: TextFormField(
 //                       readOnly: true,
@@ -90,10 +92,10 @@ mixin loadingScrollData{
 //                   ),
 //                 ),
 //                 Container(
-//                   margin: EdgeInsets.only(right: themeBox.defaultWidthBox20, bottom: themeBox.defaultHeightBox20),
+//                   margin: EdgeInsets.only(right: ThemeBox.defaultWidthBox20, bottom: ThemeBox.defaultHeightBox20),
 //                   decoration: BoxDecoration(
 //                     color: kPurpleColor,
-//                     borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+//                     borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
 //                   ),
 //                   child: iconBottom,
 //                 ),

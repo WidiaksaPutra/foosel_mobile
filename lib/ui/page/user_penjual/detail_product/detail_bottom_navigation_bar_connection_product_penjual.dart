@@ -5,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_categories/event_categories.dart';
 import 'package:foosel/blocs/bloc_categories/main/connect/bloc_main_klasifikasi_categories_connect.dart';
 import 'package:foosel/blocs/bloc_default/bloc_button_up/cubit_button_up.dart';
-import 'package:foosel/blocs/bloc_default/default/default_navigasi_role.dart';
-import 'package:foosel/blocs/bloc_default/default/show_dialog_basic.dart';
-import 'package:foosel/blocs/bloc_default/default/show_snack_bar.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_dialog_basic.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_navigasi_role.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_show_snack_bar.dart';
 import 'package:foosel/blocs/bloc_delete_product/cubit_delete_product.dart';
 import 'package:foosel/blocs/bloc_delete_product/state_delete_product.dart';
 import 'package:foosel/blocs/bloc_detail_products/detail_product/cubit_detail_product_connect.dart';
@@ -24,27 +24,28 @@ import 'package:foosel/ui/widgets/componen_basic/componen_basic_button.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 
-class DetailBottomNavigationBarConnectionProductPenjual extends HookWidget with dialogBasic, navigasiRole, navigasiRoleBarRead, showSnackBar{
+class DetailBottomNavigationBarConnectionProductPenjual extends HookWidget with DialogBasic, NavigasiRole, NavigasiRoleBarRead, ShowSnackBar{
   DetailBottomNavigationBarConnectionProductPenjual({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     final statusDelete = useState(false);
     return BlocBuilder<CubitDetailProductConnect, DataStateProducts>(
       builder: (context1, state) => Container(
-        padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox10),
+        padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox10),
         color: kPrimaryColor,
         child: (state.jenisDetail == true)
         ? Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ComponenBasicButton(
-                paddingVertical: themeBox.defaultHeightBox10, 
-                borderRadius: themeBox.defaultRadius5, 
+                paddingVertical: ThemeBox.defaultHeightBox10, 
+                borderRadius: ThemeBox.defaultRadius5, 
                 content: Text("Update", style: blackTextStyle.copyWith(fontWeight: regular)), 
                 onPressed: () async{
-                  await context.read<CubitDetailProductConnect>().GetDetailProductConnect(idProduct: state.dataProducts.tokenId.toString());
-                  await context.read<cubitUpButton>().upButton(
+                  await context.read<CubitDetailProductConnect>().getDetailProductConnect(idProduct: state.dataProducts.tokenId.toString());
+                  await context.read<CubitUpButton>().upButton(
                     currentBody: 0, 
                     currentTop: 0,
                     readBloc: {context.read<BlocKlasifikasiCategoriesConnect>().add(KlasifikasiCategories(categoryKey: "0"))}, 
@@ -56,30 +57,30 @@ class DetailBottomNavigationBarConnectionProductPenjual extends HookWidget with 
                 secondaryColor: kGreyColor,
               ),
               ComponenBasicButton(
-                paddingVertical: themeBox.defaultHeightBox10, 
-                borderRadius: themeBox.defaultRadius5, 
+                paddingVertical: ThemeBox.defaultHeightBox10, 
+                borderRadius: ThemeBox.defaultRadius5, 
                 content: Text("Delete", style: blackTextStyle.copyWith(fontWeight: regular)), 
                 onPressed: () {
                   voidDialogBasic(
                     context: context, 
-                    margin: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
-                    padding: EdgeInsets.only(left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30, top: themeBox.defaultHeightBox30),
-                    borderRadius: BorderRadius.circular(themeBox.defaultRadius10),
+                    margin: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
+                    padding: EdgeInsets.only(left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, top: ThemeBox.defaultHeightBox30),
+                    borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10),
                     color: kBlackColor6,
                     closeIconStatus: true,
                     barrierDismissible: false,
-                    contentDialog: BlocBuilder<cubitDeleteProduct, StateDeleteProduct>(
+                    contentDialog: BlocBuilder<CubitDeleteProduct, StateDeleteProduct>(
                       builder: (context2, state2) => (state2.loadingDeleteProduct == false)
                       ? (statusDelete.value == false)
                         ? ComponenContentDialog_ImageAndTitleTextAndButtonYesAndButtonNo(
                             image: 'asset/animations/peringatan_lottie.json',
                             titleText: apakahProductDihapus,
                             onTapYes: () async{
-                              await context.read<cubitDeleteProduct>().DeleteDataProduct(
+                              await context.read<CubitDeleteProduct>().deleteDataProduct(
                                 idProduct: state.dataProducts.tokenId.toString(), 
                                 image: state.dataProducts.urlImage.toString(),
                               );
-                              await context.read<cubitUpButton>().upButton(
+                              await context.read<CubitUpButton>().upButton(
                                 currentBody: 0, 
                                 currentTop: 0,
                                 readBloc: {context.read<BlocKlasifikasiCategoriesConnect>().add(KlasifikasiCategories(categoryKey: "0"))}, 

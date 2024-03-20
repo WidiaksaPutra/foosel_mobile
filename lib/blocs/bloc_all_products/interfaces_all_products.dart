@@ -1,9 +1,9 @@
-abstract class interfacesAllProductConnect{
-  GetDataAllProduct(int pages);
-  SaveLocalDataAllProduct();
-  ScrollControlAllProduct(int pages);
+abstract class InterfacesAllProductConnect{
+  getDataAllProduct({required int pages});
+  scrollControlAllProduct({required int pages});
+  saveLocalDataAllProduct();
 }
 
-abstract class interfacesListAllProductDisconnect{
-  GetListDataAllProduct();
+abstract class InterfacesListAllProductDisconnect{
+  getListDataAllProduct();
 }

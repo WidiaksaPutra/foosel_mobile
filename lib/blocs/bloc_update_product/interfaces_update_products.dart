@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-abstract class interfacesButtonUpdateProduct{
-  ButtonUploadProduct({
+abstract class InterfacesButtonUpdateProduct{
+  buttonUploadProduct({
     required String tokenId,
     required String nameProduct,
     required String price,

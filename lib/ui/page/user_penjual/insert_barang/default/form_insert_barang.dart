@@ -1,10 +1,10 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_default/default/bloc_form_button_not_null_barang.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_form_not_null_barang.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_form_products.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_multipe_form.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc_form_button_not_null_barang.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_form_not_null_barang.dart';
+import 'package:foosel/blocs/bloc_default/state/state_form_products.dart';
+import 'package:foosel/blocs/bloc_default/state/state_multipe_form.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/shared/theme_font.dart';
 import 'package:foosel/shared/theme_text_style.dart';
@@ -28,6 +28,7 @@ class FormInsertBarang extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     if(hintNameProduct == ''){
       hintNameProduct = 'Merek & Nama Productmu';
     }
@@ -54,7 +55,7 @@ class FormInsertBarang extends StatelessWidget{
               builder: (context, state1) => ComponenFormKosong(formVisible: state1.formVisibleNameProduct, message: state1.message),
             ),
         ),
-        SizedBox(height: themeBox.defaultHeightBox30),
+        SizedBox(height: ThemeBox.defaultHeightBox30),
         DropdownTypeData(
           namaType: hintDropdownProduct!, 
           indexType: hintDropdownIdProduct!, 
@@ -67,7 +68,7 @@ class FormInsertBarang extends StatelessWidget{
               builder: (context, state) => ComponenFormKosong(formVisible: state.formVisibleType, message: state.message),
             ),
         ),
-        SizedBox(height: themeBox.defaultHeightBox30),
+        SizedBox(height: ThemeBox.defaultHeightBox30),
         ComponenTextFormField_TextFormAndHintGrey14AndRadius12AndFillColorBlack(
           maxLines: 5,
           labelText: "Deskripsi Product",
@@ -84,7 +85,7 @@ class FormInsertBarang extends StatelessWidget{
               builder: (context, state1) => ComponenFormKosong(formVisible: state1.formVisibleDescription, message: state1.message),
             ),
         ),
-        SizedBox(height: themeBox.defaultHeightBox30),
+        SizedBox(height: ThemeBox.defaultHeightBox30),
         ComponenTextFormField_TextFormAndHintGrey14AndRadius12AndFillColorBlack(
           labelText: "Harga Product",
           labelStyle: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16),

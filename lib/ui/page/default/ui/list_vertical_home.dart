@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_penjual/cubit_detail_produk_nav_penjual.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_connection_example.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_example.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_detail_products/cubit_detail_navigasi_product.dart';
 import 'package:foosel/blocs/bloc_detail_products/detail_product/cubit_detail_product_connect.dart';
 import 'package:foosel/blocs/bloc_detail_products/state_products.dart';
@@ -12,7 +12,7 @@ import 'package:foosel/ui/page/user_penjual/bottomNav/home_menu_action_card_prod
 import 'package:foosel/ui/widgets/componen_loading.dart';
 import 'package:go_router/go_router.dart';
 
-class ListVerticalHome extends StatelessWidget with loadingScrollData, defaultSharedPref{
+class ListVerticalHome extends StatelessWidget with LoadingScrollData, SharedPref{
   late int lengthList;
   late List data;
   late dynamic scrollControl;
@@ -30,7 +30,7 @@ class ListVerticalHome extends StatelessWidget with loadingScrollData, defaultSh
   @override
   Widget build(BuildContext context) {
     sharedPref();
-    themeBox(context);
+    ThemeBox(context);
     return (data.isNotEmpty)
     ? SizedBox(
         height: hightListView,
@@ -38,12 +38,12 @@ class ListVerticalHome extends StatelessWidget with loadingScrollData, defaultSh
         //layoutbuilder memberikan ukuran berdasarkan parent/induk dari layout builder, contohnya pada kasus ini induknya adalah continer maka ukuran maksimum layout builder mengikuti ukuran maksimum yang dimiliki container.
         //sedangkan mediaquery merupakah ukuran layar secara menyeluruh.
           builder: (context, constraints) {
-            context.read<cubitDetailNavigasiProduct>().navigationDetailProduct();
-            return BlocBuilder<cubitDetailNavigasiProduct, DataStateDetailProduct>(
+            context.read<CubitDetailNavigasiProduct>().navigationDetailProduct();
+            return BlocBuilder<CubitDetailNavigasiProduct, DataStateDetailProduct>(
               builder: (context, state) => Stack(
                 children: [
                   ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox20),
+                    padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox20),
                     controller: scrollControl,
                     physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.vertical,
@@ -61,11 +61,11 @@ class ListVerticalHome extends StatelessWidget with loadingScrollData, defaultSh
                       onTap: (){
                         prefs.setString('detailTokenId', data[index].tokenId.toString());
                         prefs.setString('navDetailRole', state.navigation);
-                        context.read<cubitConnectionExample>().connectCheck(
+                        context.read<CubitConnectionExample>().connectCheck(
                           readBlocConnect: {
-                            context.read<CubitDetailProdukNavPenjual>().DetailProdukNavPenjual(
+                            context.read<CubitDetailProdukNavPenjual>().detailProdukNavPenjual(
                               jenisDetail: "AllProduct",
-                              readDetail: context.read<CubitDetailProductConnect>().GetDetailProductConnect(idProduct: data[index].tokenId.toString()),
+                              readDetail: context.read<CubitDetailProductConnect>().getDetailProductConnect(idProduct: data[index].tokenId.toString()),
                             ),
                           }, 
                           readBlocDisconnect: {}
@@ -74,10 +74,11 @@ class ListVerticalHome extends StatelessWidget with loadingScrollData, defaultSh
                       },
                     );},
                   ),
-                  loadingScrollHeight(
-                    heightLoading: themeBox.defaultHeightBox300, 
+                  LoadingScrollHeight(
+                    context: context,
+                    heightLoading: ThemeBox.defaultHeightBox300, 
                     loadingScrollName: loading, 
-                    rightLoading: themeBox.defaultWidthBox20, 
+                    rightLoading: ThemeBox.defaultWidthBox20, 
                     withLoading: constraints.maxWidth,
                   ),
                 ],
@@ -86,7 +87,7 @@ class ListVerticalHome extends StatelessWidget with loadingScrollData, defaultSh
           }
         ),
       )
-    : Center(child: ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200));
+    : Center(child: ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200));
   }
 }
 

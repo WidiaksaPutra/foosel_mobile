@@ -12,15 +12,16 @@ class ComponenChatBubbleBasic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     return Row(
       mainAxisAlignment: (jenisUserMessage == userPenerima) ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Container(
           margin: EdgeInsets.only(
             // top:(bSpace == true) ? defaultHeightBox30 : defaultHeightBox12,
-            top: themeBox.defaultHeightBox12,
-            right: (jenisUserMessage == userPenerima) ? themeBox.defaultWidthBox30 : 0,
-            left: (jenisUserMessage == userPenerima) ? 0 : themeBox.defaultWidthBox30
+            top: ThemeBox.defaultHeightBox12,
+            right: (jenisUserMessage == userPenerima) ? ThemeBox.defaultWidthBox30 : 0,
+            left: (jenisUserMessage == userPenerima) ? 0 : ThemeBox.defaultWidthBox30
           ),
           constraints: BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width*0.6,
@@ -28,17 +29,17 @@ class ComponenChatBubbleBasic extends StatelessWidget {
           decoration: BoxDecoration(
             color: (jenisUserMessage == userPenerima) ? kPurpleBlackColor : kBlackColor,
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular((jenisUserMessage == userPenerima) ? themeBox.defaultRadius12 : 0),
-              topRight: Radius.circular((jenisUserMessage == userPenerima) ? 0 : themeBox.defaultRadius12), 
-              bottomLeft: Radius.circular(themeBox.defaultRadius12), 
-              bottomRight: Radius.circular(themeBox.defaultRadius12),
+              topLeft: Radius.circular((jenisUserMessage == userPenerima) ? ThemeBox.defaultRadius12 : 0),
+              topRight: Radius.circular((jenisUserMessage == userPenerima) ? 0 : ThemeBox.defaultRadius12), 
+              bottomLeft: Radius.circular(ThemeBox.defaultRadius12), 
+              bottomRight: Radius.circular(ThemeBox.defaultRadius12),
             ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Padding(
-                padding: EdgeInsets.only(top: themeBox.defaultWidthBox16, left: themeBox.defaultHeightBox12, right: themeBox.defaultHeightBox12),
+                padding: EdgeInsets.only(top: ThemeBox.defaultWidthBox16, left: ThemeBox.defaultHeightBox12, right: ThemeBox.defaultHeightBox12),
                 child: Text(dataMessage, style: whiteTextStyle.copyWith(fontWeight: regular, fontSize: defaultFont14)),
               ),
               Row(
@@ -48,25 +49,25 @@ class ComponenChatBubbleBasic extends StatelessWidget {
                   (jenisUserMessage == userPenerima)
                   ? (dataIsRead == true)
                     ? Padding(
-                        padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox5),
+                        padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox5),
                         child: Icon(
                           Icons.check, 
                           color: kBlueColor, 
-                          size: themeBox.defaultWidthBox20,
+                          size: ThemeBox.defaultWidthBox20,
                         ),
                       )
                     : Padding(
-                        padding: EdgeInsets.symmetric(horizontal: themeBox.defaultWidthBox5),
+                        padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox5),
                         child: Icon(
                           Icons.check, 
                           color: kGreyColor, 
-                          size: themeBox.defaultWidthBox20,
+                          size: ThemeBox.defaultWidthBox20,
                         ),
                       )
-                  : SizedBox(width: themeBox.defaultWidthBox5),
+                  : SizedBox(width: ThemeBox.defaultWidthBox5),
                 ],
               ),
-              SizedBox(height: themeBox.defaultWidthBox8),
+              SizedBox(height: ThemeBox.defaultWidthBox8),
             ]
           ),
         ),

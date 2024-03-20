@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:foosel/blocs/bloc_default/default/size_device.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_size_device.dart';
 
-class themeBox with sizeDevice{
+class ThemeBox with SizeDevice{
   // radius
   static late double defaultRadius12 = 12.0.r;
   static late double defaultRadius20 = 20.0.r;
@@ -110,7 +110,7 @@ class themeBox with sizeDevice{
   static late double defaultWidthBox22;
   static late double defaultWidthBox1_5;
 
-  themeBox(BuildContext context){
+  ThemeBox(BuildContext context){
     getsizeDevice(context);
     //height
     defaultHeightBox50 = getHaight(50.0).h;

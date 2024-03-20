@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_all_products/event_all_products.dart';import 'package:foosel/blocs/bloc_all_products/main/bloc_main_all_products_connect.dart';
 import 'package:foosel/blocs/bloc_all_products/main/cubit_main_list_all_products_disconnect.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_connection.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_connection_example.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_product_basic.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/state/state_connection.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_example.dart';
+import 'package:foosel/blocs/bloc_default/state/state_product_basic.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/ui/widgets/componen_loading.dart';
 
 // ignore: must_be_immutable
-class ConnectionProduct extends StatelessWidget with defaultSharedPref{
+class ConnectionProduct extends StatelessWidget with SharedPref{
   late dynamic childProduct, childProductDisconnect, connection;
   ConnectionProduct({Key? key,
     required this.connection,
@@ -32,12 +32,13 @@ class ConnectionProduct extends StatelessWidget with defaultSharedPref{
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     Widget statusConnect(ConnectivityResult? data){
       shared(data);
       return BlocConsumer<BlocAllProductConnect, DataStateProductBasic>(
         listener:(context, state) {
           if(state.loadingApi == true){
-            Center(child: ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200));
+            Center(child: ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200));
           }
         },
         builder: childProduct,
@@ -50,7 +51,7 @@ class ConnectionProduct extends StatelessWidget with defaultSharedPref{
       return BlocConsumer<CubitMainListAllProductsDisconnect, DataStateProductBasic>(
         listener:(context, state) {
           if(state.loadingApi == true){
-            Center(child: ComponenLoadingLottieBasic(height: themeBox.defaultHeightBox200));
+            Center(child: ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200));
           }
         },
         builder: childProductDisconnect
@@ -73,7 +74,7 @@ class ConnectionProduct extends StatelessWidget with defaultSharedPref{
           else{
             Future.delayed(
               const Duration(milliseconds: 1000),
-              () => context.read<CubitMainListAllProductsDisconnect>().GetListDataAllProduct(),
+              () => context.read<CubitMainListAllProductsDisconnect>().getListDataAllProduct(),
             );
             return statusDisconnect(snapshot.data);
           }
@@ -81,14 +82,14 @@ class ConnectionProduct extends StatelessWidget with defaultSharedPref{
           Future.delayed(
             const Duration(milliseconds: 1000),
             (){
-              context.read<cubitConnectionExample>().connectCheck(
+              context.read<CubitConnectionExample>().connectCheck(
                 readBlocConnect: {context.read<BlocAllProductConnect>().add(Product())}, 
-                readBlocDisconnect: {context.read<CubitMainListAllProductsDisconnect>().GetListDataAllProduct()}
+                readBlocDisconnect: {context.read<CubitMainListAllProductsDisconnect>().getListDataAllProduct()}
               );
               nullAcces = ComponenLoadingLottieBasic(height: 100);
             }
           );
-          nullAcces = BlocBuilder<cubitConnectionExample, DataStateConnection>(
+          nullAcces = BlocBuilder<CubitConnectionExample, DataStateConnection>(
             builder: (context, state) => (state.connectionBoolean == true)
             ? statusConnect(ConnectivityResult.wifi)
             : statusDisconnect(ConnectivityResult.none),

@@ -23,30 +23,30 @@ class ComponenCardVertical_ImageAndTextAndLike extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: (startList == true) ? themeBox.defaultHeightBox30 : themeBox.defaultHeightBox20, left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30),
-      padding: EdgeInsets.only(top: themeBox.defaultHeightBox10, bottom: themeBox.defaultHeightBox14, left: themeBox.defaultWidthBox12, right: themeBox.defaultWidthBox23),
+      margin: EdgeInsets.only(top: (startList == true) ? ThemeBox.defaultHeightBox30 : ThemeBox.defaultHeightBox20, left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30),
+      padding: EdgeInsets.only(top: ThemeBox.defaultHeightBox10, bottom: ThemeBox.defaultHeightBox14, left: ThemeBox.defaultWidthBox12, right: ThemeBox.defaultWidthBox23),
       decoration: BoxDecoration(
         color: kBlackColor,
-        borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+        borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
       ),
       child: Row(
         children:[
           Padding(
-            padding: EdgeInsets.only(right: themeBox.defaultWidthBox12),
+            padding: EdgeInsets.only(right: ThemeBox.defaultWidthBox12),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+              borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
               child: (connection == true)
               ? Image.network(
                   image, 
-                  height: themeBox.defaultHeightBox60,
-                  width: themeBox.defaultWidthBox60,
+                  height: ThemeBox.defaultHeightBox60,
+                  width: ThemeBox.defaultWidthBox60,
                   alignment: Alignment.centerLeft,
                   fit: BoxFit.cover,
                 )
               : Image.asset(
                   "asset/image/disconnect_image.jpg", 
-                  height: themeBox.defaultHeightBox60,
-                  width: themeBox.defaultWidthBox60,
+                  height: ThemeBox.defaultHeightBox60,
+                  width: ThemeBox.defaultWidthBox60,
                   alignment: Alignment.centerLeft,
                   fit: BoxFit.cover,
                 ),
@@ -63,13 +63,13 @@ class ComponenCardVertical_ImageAndTextAndLike extends StatelessWidget {
             )
           ), 
           Padding(
-            padding: EdgeInsets.only(left: themeBox.defaultWidthBox45),
+            padding: EdgeInsets.only(left: ThemeBox.defaultWidthBox45),
             child: IconButton(
               onPressed: onPressedLike, 
               icon: Image.asset(
                 "asset/icon/love_icon3.png",
-                width: themeBox.defaultWidthBox34,
-                height: themeBox.defaultHeightBox34,
+                width: ThemeBox.defaultWidthBox34,
+                height: ThemeBox.defaultHeightBox34,
               ),
             ),
           ),

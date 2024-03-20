@@ -1,21 +1,21 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_transaksi/interfaces_transaksi.dart';
 import 'package:foosel/blocs/bloc_transaksi/transaksi_api/state_transaksi.dart';
-import 'package:foosel/interface/interface_local/service/interface_get_transaksi.dart';
+import 'package:foosel/service/api_transaksi/interfaces/interface_get_transaksi.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late List<Map<String, dynamic>> dataUserTransaksiProducts = [];
-class CubitGetTransaksiUserPembeli extends Cubit<DataStateGetTransaksi> with getTransaksiHistory{
-  final interfaceGetTransaksi dataGetTransaksi = getItInstance<interfaceGetTransaksi>();
+class CubitGetTransaksiUserPembeli extends Cubit<DataStateGetTransaksi> implements InterfacesGetTransaksiHistory{
+  final InterfaceGetTransaksi dataGetTransaksi = getItInstance<InterfaceGetTransaksi>();
   CubitGetTransaksiUserPembeli() : super(DataGetTransaksi(loading: true, dataTransaksi: []));
 
   @override
-  GetDataTransaksiHistory() async{
+  getDataTransaksiHistory() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     dataUserTransaksiProducts.clear();
     emit(DataGetTransaksi(loading: true, dataTransaksi: []));
-    List dataListTransaksi = await dataGetTransaksi.GetTransaksi(email: prefs.getString('email').toString());
+    List dataListTransaksi = await dataGetTransaksi.getTransaksi(email: prefs.getString('email').toString());
     if(dataListTransaksi.isNotEmpty){
       await _addListGetDataTransaksiHistory(dataListTransaksi);
     }

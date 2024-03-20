@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
-import 'package:foosel/blocs/bloc_default/default/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/class/connection_dialog.dart';
 import 'package:foosel/shared/theme_color.dart';
 import 'package:foosel/ui/page/connection/connection_basic.dart';
 import 'package:foosel/ui/page/user_penjual/detail_product/detail_body_connection_product_penjual.dart';

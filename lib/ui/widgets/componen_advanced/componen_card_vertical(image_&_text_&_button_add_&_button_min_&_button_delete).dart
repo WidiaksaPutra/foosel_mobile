@@ -30,11 +30,11 @@ class ComponenCardVertical_ImageAndTextAndButtonAddAndButtonMinAndButtonDelete e
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: themeBox.defaultHeightBox30, left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30),
-      padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox10, horizontal: themeBox.defaultHeightBox16),
+      margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox30, left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30),
+      padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox10, horizontal: ThemeBox.defaultHeightBox16),
       decoration: BoxDecoration(
         color: kBlackColor,
-        borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+        borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
       ),
       child: GestureDetector(
         onTap: onTapCard,
@@ -43,21 +43,21 @@ class ComponenCardVertical_ImageAndTextAndButtonAddAndButtonMinAndButtonDelete e
             Row(
               children:[
                 Padding(
-                  padding: EdgeInsets.only(right: themeBox.defaultWidthBox12),
+                  padding: EdgeInsets.only(right: ThemeBox.defaultWidthBox12),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+                    borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
                     child: (connection == true)
                     ? Image.network(
                         "${Api.linkURL}/$image", 
-                        height: themeBox.defaultHeightBox60, 
-                        width: themeBox.defaultWidthBox60,
+                        height: ThemeBox.defaultHeightBox60, 
+                        width: ThemeBox.defaultWidthBox60,
                         alignment: Alignment.centerLeft,
                         fit: BoxFit.cover,
                       )
                     : Image.asset(
                         "asset/image/disconnect_image.jpg", 
-                        height: themeBox.defaultHeightBox60,
-                        width: themeBox.defaultWidthBox60,
+                        height: ThemeBox.defaultHeightBox60,
+                        width: ThemeBox.defaultWidthBox60,
                         alignment: Alignment.centerLeft,
                         fit: BoxFit.cover,
                       ),
@@ -80,8 +80,8 @@ class ComponenCardVertical_ImageAndTextAndButtonAddAndButtonMinAndButtonDelete e
                       onTap: onTapAdd, 
                       child: Image.asset(
                         iconAdd,
-                        height: themeBox.defaultHeightBox16, 
-                        width: themeBox.defaultWidthBox16,
+                        height: ThemeBox.defaultHeightBox16, 
+                        width: ThemeBox.defaultWidthBox16,
                         alignment: Alignment.centerLeft
                       ),
                     ),
@@ -90,8 +90,8 @@ class ComponenCardVertical_ImageAndTextAndButtonAddAndButtonMinAndButtonDelete e
                       onTap: onTapMin, 
                       child: Image.asset(
                         iconMin, 
-                        height: themeBox.defaultHeightBox16, 
-                        width: themeBox.defaultWidthBox16,
+                        height: ThemeBox.defaultHeightBox16, 
+                        width: ThemeBox.defaultWidthBox16,
                         alignment: Alignment.centerLeft
                       ),
                     ),
@@ -100,15 +100,15 @@ class ComponenCardVertical_ImageAndTextAndButtonAddAndButtonMinAndButtonDelete e
               ]
             ),
             Padding(
-              padding: EdgeInsets.only(top: themeBox.defaultHeightBox12),
+              padding: EdgeInsets.only(top: ThemeBox.defaultHeightBox12),
               child: GestureDetector(
                 onTap: onTapDelete,
                 child: Row(
                   children:[
                     Image.asset(
                       "asset/icon/icon_subtract.png",
-                      width: themeBox.defaultWidthBox10,
-                      height: themeBox.defaultHeightBox12,
+                      width: ThemeBox.defaultWidthBox10,
+                      height: ThemeBox.defaultHeightBox12,
                     ),
                     Text(" Remove", style: redTextStyle.copyWith(fontWeight: light, fontSize: defaultFont12)),
                   ]

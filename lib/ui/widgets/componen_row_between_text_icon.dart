@@ -19,8 +19,8 @@ class ComponenTextIcon extends StatelessWidget {
           Text(buttonName, style: grayTextStyle2.copyWith(fontWeight: regular, fontSize: 13)),
           Image.asset(
             icon,
-            height: themeBox.defaultHeightBox12,
-            width: themeBox.defaultWidthBox12,
+            height: ThemeBox.defaultHeightBox12,
+            width: ThemeBox.defaultWidthBox12,
           ),
         ]
       ),

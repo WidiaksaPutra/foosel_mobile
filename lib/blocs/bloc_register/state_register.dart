@@ -1,4 +1,4 @@
-import 'package:foosel/blocs/bloc_default/state_default/state_multipe_form.dart';
+import 'package:foosel/blocs/bloc_default/state/state_multipe_form.dart';
 
 class DataStateFormRegister extends DataStateMultiFormUser{
   DataStateFormRegister({

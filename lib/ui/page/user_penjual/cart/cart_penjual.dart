@@ -1,9 +1,9 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_connection_example.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_connection.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_example.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/state/state_connection.dart';
 import 'package:foosel/blocs/bloc_transaksi/transaksi_api/cubit_get_transaksi_user_pembeli.dart';
 import 'package:foosel/blocs/bloc_transaksi/transaksi_api/state_transaksi.dart';
 import 'package:foosel/routes/route_name.dart';
@@ -14,13 +14,13 @@ import 'package:foosel/ui/widgets/componen_advanced/componen_content_dialog(imag
 import 'package:foosel/ui/widgets/componen_page_kosong.dart';
 import 'package:go_router/go_router.dart';
 
-class CartPenjual extends StatelessWidget with defaultSharedPref{
+class CartPenjual extends StatelessWidget with SharedPref{
   CartPenjual({Key? key}) : super(key: key);
 
   void read(BuildContext context){
-    context.read<cubitConnectionExample>().connectCheck(
+    context.read<CubitConnectionExample>().connectCheck(
       readBlocConnect: {
-        context.read<CubitGetTransaksiUserPembeli>().GetDataTransaksiHistory(),
+        context.read<CubitGetTransaksiUserPembeli>().getDataTransaksiHistory(),
       }, 
       readBlocDisconnect: {}
     );
@@ -28,12 +28,13 @@ class CartPenjual extends StatelessWidget with defaultSharedPref{
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     sharedPref();
     Size size = MediaQuery.of(context).size;
     read(context);
     return Scaffold(
       backgroundColor: kBlackColor6,
-      body: BlocBuilder<cubitConnectionExample, DataStateConnection>(
+      body: BlocBuilder<CubitConnectionExample, DataStateConnection>(
         builder: (context, stateConnect) => (stateConnect.connectionBoolean == true)
         ? BlocBuilder<CubitGetTransaksiUserPembeli, DataStateGetTransaksi>(
             builder: (context, state){ 
@@ -53,7 +54,7 @@ class CartPenjual extends StatelessWidget with defaultSharedPref{
                             context.go(RouteName.cartProduct);
                           },
                         ),
-                        Divider(height: themeBox.defaultHeightBox12, thickness: 1, color: kBlackColor8, indent: themeBox.defaultWidthBox30, endIndent: themeBox.defaultWidthBox30),
+                        Divider(height: ThemeBox.defaultHeightBox12, thickness: 1, color: kBlackColor8, indent: ThemeBox.defaultWidthBox30, endIndent: ThemeBox.defaultWidthBox30),
                       ],
                     ),
                   )

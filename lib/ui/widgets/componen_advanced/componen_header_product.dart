@@ -11,7 +11,7 @@ Widget headerDetailProduct({
   required String icon,
 }){
   return Container(
-    height: themeBox.defaultHeightBox62,
+    height: ThemeBox.defaultHeightBox62,
     color: kGreyColor6,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -23,8 +23,8 @@ Widget headerDetailProduct({
           icon: (guestUser == false)
           ? Image.asset(
               icon,
-              height: themeBox.defaultHeightBox22,
-              width: themeBox.defaultWidthBox20,
+              height: ThemeBox.defaultHeightBox22,
+              width: ThemeBox.defaultWidthBox20,
             )
           : Text(""),
         ),

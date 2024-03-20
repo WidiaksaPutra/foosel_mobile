@@ -2,14 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_default/event_default/event_form_user.dart';
-import 'package:foosel/blocs/bloc_default/default/connection_dialog.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/event/event_form_user.dart';
+import 'package:foosel/blocs/bloc_default/class/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_register/main/bloc_main_button_register.dart';
 import 'package:foosel/blocs/bloc_register/main/bloc_main_data_register.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_form_user.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_multipe_form.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_snackBar_form.dart';
+import 'package:foosel/blocs/bloc_default/state/state_form_user.dart';
+import 'package:foosel/blocs/bloc_default/state/state_multipe_form.dart';
+import 'package:foosel/blocs/bloc_default/state/state_snackBar_form.dart';
 import 'package:foosel/blocs/bloc_register/main/cubit_main_form_register.dart';
 import 'package:foosel/routes/route_name.dart';
 import 'package:foosel/shared/theme_box.dart';
@@ -26,12 +26,12 @@ import 'package:foosel/ui/widgets/componen_list_view.dart';
 import 'package:foosel/ui/widgets/componen_text_button_315x50.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-class Register extends HookWidget with defaultSharedPref{
+class Register extends HookWidget with SharedPref{
   Register({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context){
-    themeBox(context);
+    ThemeBox(context);
     var _isRadioSelected = useState<bool>(true);
     sharedPref();
     
@@ -124,7 +124,7 @@ class Register extends HookWidget with defaultSharedPref{
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text("Digunakan Sebagai :", style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16)),
-        SizedBox(height: themeBox.defaultHeightBox12),
+        SizedBox(height: ThemeBox.defaultHeightBox12),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -210,31 +210,31 @@ class Register extends HookWidget with defaultSharedPref{
                     ComponenHeadForm(labelWhite: "Sign Up", labelGrey: "Register and Happy Shoping"),
                     Expanded(
                       child: ComponenListViewVertical(
-                        sizeHeightBox: constraint.maxHeight-themeBox.defaultHeightBox70, 
+                        sizeHeightBox: constraint.maxHeight-ThemeBox.defaultHeightBox70, 
                         content: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              margin: EdgeInsets.only(left: themeBox.defaultWidthBox30, right: themeBox.defaultWidthBox30, top: themeBox.defaultHeightBox60),
+                              margin: EdgeInsets.only(left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, top: ThemeBox.defaultHeightBox60),
                               child: Column(
                                 children: [
                                   labelFullName(),
                                   outputFullName(),
-                                  SizedBox(height: themeBox.defaultHeightBox30),
+                                  SizedBox(height: ThemeBox.defaultHeightBox30),
                                   labelUsername(),
                                   outputUsername(),
-                                  SizedBox(height: themeBox.defaultHeightBox30),
+                                  SizedBox(height: ThemeBox.defaultHeightBox30),
                                   labelEmail(),
                                   outputEmail(),
-                                  SizedBox(height: themeBox.defaultHeightBox30),
+                                  SizedBox(height: ThemeBox.defaultHeightBox30),
                                   labelAlamat(),
                                   outputAlamat(),
-                                  SizedBox(height: themeBox.defaultHeightBox30),
+                                  SizedBox(height: ThemeBox.defaultHeightBox30),
                                   labelPassword(),
                                   outputPassword(),
-                                  SizedBox(height: themeBox.defaultHeightBox30),
+                                  SizedBox(height: ThemeBox.defaultHeightBox30),
                                   jenisUser(),
-                                  SizedBox(height: themeBox.defaultHeightBox30),
+                                  SizedBox(height: ThemeBox.defaultHeightBox30),
                                   buttonRegister(),
                                 ],
                               ), 

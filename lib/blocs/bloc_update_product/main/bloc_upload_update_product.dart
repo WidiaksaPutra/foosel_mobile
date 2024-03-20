@@ -1,22 +1,22 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 
 import 'package:flutter/material.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
-import 'package:foosel/blocs/bloc_default/event_default/event_form_products.dart';
+import 'package:foosel/blocs/bloc_default/event/event_form_products.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_update_product/event_update_barang.dart';
 import 'package:foosel/blocs/bloc_update_product/interfaces_update_products.dart';
 import 'package:foosel/blocs/bloc_update_product/state_update_barang.dart';
-import 'package:foosel/interface/interface_local/service/interface_update_data_product.dart';
+import 'package:foosel/service/api_products/interfaces/interface_update_data_product.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 late BuildContext context1;
-class BlocUploadUpdateProduct extends Bloc<DataEventUpdateBarang, StateUpdateBarang> with interfacesButtonUpdateProduct, defaultSharedPref{
-  final interfaceUpdateDataProduct updateDataProduct = getItInstance<interfaceUpdateDataProduct>();
+class BlocUploadUpdateProduct extends Bloc<DataEventUpdateBarang, StateUpdateBarang> with SharedPref implements InterfacesButtonUpdateProduct{
+  final InterfaceUpdateDataProduct updateDataProduct = getItInstance<InterfaceUpdateDataProduct>();
   BlocUploadUpdateProduct() : super(UpdateBarang(loading: false, snackBar: false, responApi: '-')){
     on<ButtonFormProducts>((event, emit) async{
-      ButtonUploadProduct(
+      buttonUploadProduct(
         tokenId: event.tokenId,
         nameProduct: event.nameProduct,
         price: event.price,
@@ -31,7 +31,7 @@ class BlocUploadUpdateProduct extends Bloc<DataEventUpdateBarang, StateUpdateBar
   }
 
   @override
-  ButtonUploadProduct({
+  buttonUploadProduct({
     required String tokenId,
     required String nameProduct, 
     required String price, 
@@ -44,7 +44,7 @@ class BlocUploadUpdateProduct extends Bloc<DataEventUpdateBarang, StateUpdateBar
   }) async {
     emit(UpdateBarang(loading: true, snackBar: false, responApi: '-'));
     await sharedPref();
-    String responUpdateProducts = await updateDataProduct.UpdateDataProduct(
+    String responUpdateProducts = await updateDataProduct.updateDataProduct(
       tokenId: tokenId,
       email: prefs.getString('email').toString(),
       description: description, 

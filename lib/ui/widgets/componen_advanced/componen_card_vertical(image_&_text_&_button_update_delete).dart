@@ -23,21 +23,21 @@ class ComponenCardVertical_ImageAndTextAndButtonUpdateDelete extends StatelessWi
 
   @override
   Widget build(BuildContext context) {
-    themeBox(context);
+    ThemeBox(context);
     return Container(
-      margin: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox20),
+      margin: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox20),
       child: Row(
         children:[
           ComponenBasicImage(
-            heightImage: themeBox.defaultHeightBox120,
-            widthImage: themeBox.defaultWidthBox120,
-            radiusImage: themeBox.defaultRadius12, 
+            heightImage: ThemeBox.defaultHeightBox120,
+            widthImage: ThemeBox.defaultWidthBox120,
+            radiusImage: ThemeBox.defaultRadius12, 
             connection: connection, 
             gambar: gambar, 
             backgroundColor: kWhiteColor, 
             onTap: onTapImage,
           ),
-          SizedBox(width: themeBox.defaultWidthBox12),
+          SizedBox(width: ThemeBox.defaultWidthBox12),
           Expanded(
             child: ComponenTextColumn_CrossStartAndMainSpaceEvenlyAndGray2WhiteBlueAndFont12Font16Font14AndRegularSemiBoldMedium(
               nama: nama, 
@@ -52,7 +52,7 @@ class ComponenCardVertical_ImageAndTextAndButtonUpdateDelete extends StatelessWi
               children: [
                 ComponenBasicButton(
                   paddingVertical: 0, 
-                  borderRadius: themeBox.defaultRadius5, 
+                  borderRadius: ThemeBox.defaultRadius5, 
                   content: Icon(
                     Icons.update,
                     color: kBlackColor,
@@ -61,10 +61,10 @@ class ComponenCardVertical_ImageAndTextAndButtonUpdateDelete extends StatelessWi
                   primaryColor: kYellowColor, 
                   secondaryColor: kGreyColor,
                 ),
-                SizedBox(height: themeBox.defaultHeightBox5),
+                SizedBox(height: ThemeBox.defaultHeightBox5),
                 ComponenBasicButton(
                   paddingVertical: 0, 
-                  borderRadius: themeBox.defaultRadius5, 
+                  borderRadius: ThemeBox.defaultRadius5, 
                   content: Icon(
                     Icons.delete,
                     color: kBlackColor,

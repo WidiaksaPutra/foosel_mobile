@@ -12,9 +12,10 @@ class ComponenHeadHomeMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    ThemeBox(context);
+    
     final InputBorder inputBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(themeBox.defaultRadius8),
+      borderRadius: BorderRadius.circular(ThemeBox.defaultRadius8),
       borderSide: BorderSide(color: kPurpleColor),
     );
 
@@ -24,7 +25,7 @@ class ComponenHeadHomeMenu extends StatelessWidget {
     );
 
     return Container(
-      margin: EdgeInsets.only(right: themeBox.defaultWidthBox30),
+      margin: EdgeInsets.only(right: ThemeBox.defaultWidthBox30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -32,8 +33,8 @@ class ComponenHeadHomeMenu extends StatelessWidget {
             content: Icon(Icons.input, color: kWhiteColor), 
             primaryColor: kPurpleColor,
             secondaryColor: kBlueColor,
-            borderRadius: themeBox.defaultRadius8, 
-            paddingVertical: themeBox.defaultHeightBox5,
+            borderRadius: ThemeBox.defaultRadius8, 
+            paddingVertical: ThemeBox.defaultHeightBox5,
             onPressed: button, 
           ),
         ],

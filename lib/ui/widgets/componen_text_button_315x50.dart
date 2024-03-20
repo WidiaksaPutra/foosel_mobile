@@ -11,10 +11,10 @@ class ComponenTextButton_315x50 extends StatelessWidget{
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: themeBox.defaultHeightBox6),
+      padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox6),
       decoration: BoxDecoration(
         color: colorButton,
-        borderRadius: BorderRadius.circular(themeBox.defaultRadius12),
+        borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
       ),
       child: textButton,
     );

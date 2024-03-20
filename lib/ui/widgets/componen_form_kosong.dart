@@ -11,10 +11,11 @@ class ComponenFormKosong extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     return Visibility(
       visible: formVisible,
       child: Padding(
-        padding: EdgeInsets.only(top: themeBox.defaultHeightBox5),
+        padding: EdgeInsets.only(top: ThemeBox.defaultHeightBox5),
         child: Row(
           children: [
             SvgPicture.asset(
@@ -22,7 +23,7 @@ class ComponenFormKosong extends StatelessWidget {
               height: 14,
               width: 14,
             ),
-            SizedBox(width: themeBox.defaultWidthBox4),
+            SizedBox(width: ThemeBox.defaultWidthBox4),
             Expanded(child: Text(message, style: redTextStyle.copyWith(fontSize: defaultFont12, fontWeight: regular), overflow: TextOverflow.ellipsis,)),
           ]
         ),

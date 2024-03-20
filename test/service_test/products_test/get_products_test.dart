@@ -1,15 +1,14 @@
-import 'package:foosel/interface/interface_local/service/interface_get_data_product.dart';
+import 'package:foosel/service/api_products/interfaces/interface_get_data_product.dart';
 import 'package:foosel/service/api_products/injection_product.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../../default_test/data_dummy_test.dart';
-
 void main(){
   group("Unit Test Service Get Products", () { 
     setupDInjectionProduct();
-    final interfaceGetDataProduct dataGetProduct = getItInstance<interfaceGetDataProduct>();
+    final InterfaceGetDataProduct dataGetProduct = getItInstance<InterfaceGetDataProduct>();
     test("Unit Test Service Get Data Products Null", () async{
-      final data = await dataGetProduct.GetDataProduct(
+      final data = await dataGetProduct.getDataProduct(
         testing: true, 
         pages: 5,
       );
@@ -17,7 +16,7 @@ void main(){
     });
 
     test("Unit Test Service Get Data Products Token Null", () async{
-      final data = await dataGetProduct.TokenNull(
+      final data = await dataGetProduct.tokenNull(
         testing: true,  
         pages: 5,
       );
@@ -25,7 +24,7 @@ void main(){
     });
 
     test("Unit Test Service Get Data Products Pembeli", () async{
-      final data = await dataGetProduct.GetDataProduct(
+      final data = await dataGetProduct.getDataProduct(
         testing: true, 
         testingToken: tokenUserPembeli,
         pages: 5,
@@ -34,7 +33,7 @@ void main(){
     });
 
     test("Unit Test Service Get Data Products Penjual", () async{
-      final data = await dataGetProduct.GetDataProduct(
+      final data = await dataGetProduct.getDataProduct(
         testing: true, 
         testingToken: tokenUserPenjual,
         pages: 5,
@@ -43,7 +42,7 @@ void main(){
     });
     
     test("Unit Test Service Get Data Product Pembeli Token Not Null", () async{
-      final data = await dataGetProduct.TokenNotNull(
+      final data = await dataGetProduct.tokenNotNull(
         testing: true, 
         tokens: tokenUserPembeli,
         pages: 5,
@@ -52,7 +51,7 @@ void main(){
     });
 
     test("Unit Test Service Get Data Product Penjual Token Not Null", () async{
-      final data = await dataGetProduct.TokenNotNull(
+      final data = await dataGetProduct.tokenNotNull(
         testing: true, 
         tokens: tokenUserPenjual,
         pages: 5,
@@ -65,7 +64,7 @@ void main(){
         'Authorization': 'Bearer $tokenUserPembeli',
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      final data = await dataGetProduct.RolePembeli(
+      final data = await dataGetProduct.rolePembeli(
         testing: true, 
         headers: headers,
         pages: 5,
@@ -78,7 +77,7 @@ void main(){
         'Authorization': 'Bearer $tokenUserPenjual',
         'Content-Type': 'application/json; charset=UTF-8',
       };
-      final data = await dataGetProduct.RolePenjual(
+      final data = await dataGetProduct.rolePenjual(
         testing: true, 
         headers: headers,
         pages: 5,
@@ -96,7 +95,7 @@ void main(){
         'page' : '1',
         'limit' : '5',
       };
-      final data = await dataGetProduct.GetDataProductUsers(
+      final data = await dataGetProduct.getDataProductUsers(
         testing: true, 
         headers: headers, 
         link: 'detailPembeli',
@@ -115,7 +114,7 @@ void main(){
         'page' : '1',
         'limit' : '5',
       };
-      final data = await dataGetProduct.GetDataProductUsers(
+      final data = await dataGetProduct.getDataProductUsers(
         testing: true, 
         headers: headers, 
         link: 'detailPenjual',

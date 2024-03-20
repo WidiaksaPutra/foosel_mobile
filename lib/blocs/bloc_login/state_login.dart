@@ -1,6 +1,6 @@
 // part of 'bloc_main_login.dart';//semua import dialihkan ke package ini.
 
-import 'package:foosel/blocs/bloc_default/state_default/state_multipe_form.dart';
+import 'package:foosel/blocs/bloc_default/state/state_multipe_form.dart';
 
 class DataMultiStateForm extends DataStateMultiFormUser{
   DataMultiStateForm(

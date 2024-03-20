@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_pembeli/cubit_bottom_nav_pembeli.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_pembeli/state_bottom_nav_pembeli.dart';
-import 'package:foosel/blocs/bloc_default/default/connection_dialog.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/class/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_like/cubit_get_like.dart';
 import 'package:foosel/blocs/bloc_logout/cubit_logout.dart';
 import 'package:foosel/blocs/bloc_logout/state_logout.dart';
@@ -26,10 +26,9 @@ import 'package:foosel/ui/page/user_profile/profile.dart';
 import 'package:foosel/ui/widgets/componen_header_logout.dart';
 import 'package:foosel/ui/widgets/componen_loading.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:badges/badges.dart' as badges;
 
-class BottomNavPembeli extends StatelessWidget with defaultSharedPref{
+class BottomNavPembeli extends StatelessWidget with SharedPref{
   late bool loadingLogout = false;
   late BuildContext contexts;
   late Size size;
@@ -37,13 +36,14 @@ class BottomNavPembeli extends StatelessWidget with defaultSharedPref{
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     contexts = context;
     size = MediaQuery.of(context).size;
     sharedPref();
-    return BlocBuilder<cubitBottomNavPembeli, DataStateBottomNavigasiPembeli>(
+    return BlocBuilder<CubitBottomNavPembeli, DataStateBottomNavigasiPembeli>(
       builder: (context, state){
         currentButton = state.currentButton;
-        return BlocBuilder<cubitLogout,StateDataLogout>(
+        return BlocBuilder<CubitLogout,StateDataLogout>(
           builder: (context, state1){
             loadingLogout = state1.loadingLogout;
             return Scaffold(
@@ -62,14 +62,14 @@ class BottomNavPembeli extends StatelessWidget with defaultSharedPref{
 
   Widget message({required Widget contentMessage}){
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-    stream: contexts.read<cubitListMessageConnect>().getStreamFirebaseListMessage,
+    stream: contexts.read<CubitListMessageConnect>().getStreamFirebaseListMessage,
     builder: (context1, snapshot){
       if(snapshot.connectionState == ConnectionState.active){
-        contexts.read<cubitListMessageConnect>().getListMessage(snapshot.data!.docs);
+        contexts.read<CubitListMessageConnect>().getListMessage(snapshot.data!.docs);
         return contentMessage;
       }else return Lottie.asset(
         "asset/animations/loading_horizontal_lottie.json",
-        height: themeBox.defaultHeightBox50,
+        height: ThemeBox.defaultHeightBox50,
       );
     });   
   }
@@ -85,16 +85,16 @@ class BottomNavPembeli extends StatelessWidget with defaultSharedPref{
           backgroundColor: kBlackColor,
           type: BottomNavigationBarType.fixed,
           onTap: (value){
-            contexts.read<cubitBottomNavPembeli>().navigation(currentButton: value);
+            contexts.read<CubitBottomNavPembeli>().navigation(currentButton: value);
           },
           items: [
             BottomNavigationBarItem(
               icon: Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: message(contentMessage: BlocBuilder<cubitListMessageConnect, DataStateListMessage>(
+                child: message(contentMessage: BlocBuilder<CubitListMessageConnect, DataStateListMessage>(
                 builder: (context2, listMessage){
                   if(listMessage.loading == false && listMessage.dataUser.isNotEmpty){
-                    contexts.read<cubitJumlahBadges>().getBadgesMessage(listMessage.dataUser);
+                    contexts.read<CubitJumlahBadges>().getBadgesMessage(listMessage.dataUser);
                   }
                   return Image.asset(
                     "asset/icon/home_icon.png",
@@ -109,10 +109,10 @@ class BottomNavPembeli extends StatelessWidget with defaultSharedPref{
             BottomNavigationBarItem(
               icon: Padding(
                 padding: const EdgeInsets.only(right: 44, top: 10),
-                child: message(contentMessage: BlocBuilder<cubitListMessageConnect, DataStateListMessage>(
+                child: message(contentMessage: BlocBuilder<CubitListMessageConnect, DataStateListMessage>(
                   builder: (context2, listMessage){
                     if(listMessage.loading == false && listMessage.dataUser.isNotEmpty){
-                      return BlocBuilder<cubitJumlahBadges, DataStateBadges>(
+                      return BlocBuilder<CubitJumlahBadges, DataStateBadges>(
                         builder: (context3, jumlahBadges){
                         if(jumlahBadges.loading == false && jumlahBadges.totalBadges.toString() != "0"){
                           prefs.setString("navBadges", jumlahBadges.totalBadges.toString());
@@ -200,7 +200,7 @@ class BottomNavPembeli extends StatelessWidget with defaultSharedPref{
     switch(currentButton){
       case 1 :
         return AppBar(
-          toolbarHeight: themeBox.defaultHeightBox80,
+          toolbarHeight: ThemeBox.defaultHeightBox80,
           backgroundColor: kPrimaryColor,
           shadowColor: kBlackColor6,
           automaticallyImplyLeading: false,
@@ -210,7 +210,7 @@ class BottomNavPembeli extends StatelessWidget with defaultSharedPref{
         );
       case 2 :
         return AppBar(
-          toolbarHeight: themeBox.defaultHeightBox80,
+          toolbarHeight: ThemeBox.defaultHeightBox80,
           backgroundColor: kPrimaryColor,
           shadowColor: kBlackColor6,
           automaticallyImplyLeading: false,
@@ -222,7 +222,7 @@ class BottomNavPembeli extends StatelessWidget with defaultSharedPref{
       ClassConnectionDialog connection = ClassConnectionDialog();
       if(loadingLogout == true){Future.delayed(Duration(seconds: 3),()=>loadingLogout = false);}
       return AppBar(
-        toolbarHeight: themeBox.defaultHeightBox124,
+        toolbarHeight: ThemeBox.defaultHeightBox124,
         backgroundColor: kPrimaryColor,
         shadowColor: kBlackColor6,
         centerTitle: false,
@@ -236,9 +236,9 @@ class BottomNavPembeli extends StatelessWidget with defaultSharedPref{
                 title: stateUserConn.dataUser.name.toString(), 
                 email: stateUserConn.dataUser.email.toString(),
                 logoutIcon: "asset/icon/logout_bottom.png", 
-                onPressed: () => contexts.read<cubitLogout>().logout(context: contexts),
+                onPressed: () => contexts.read<CubitLogout>().logout(context: contexts),
               )
-            : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox100)),
+            : Center(child: ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox100)),
             childDisconnect: (BuildContext context1, stateUserDisconn) => (stateUserDisconn.loading == true)
             ? ComponenHeaderLogout(
                 image: "asset/icon/profile_user.png", 
@@ -255,9 +255,9 @@ class BottomNavPembeli extends StatelessWidget with defaultSharedPref{
                   // );
                 }
               )
-            : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox100)),
+            : Center(child: ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox100)),
           )
-        : Center(child: ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox100)),
+        : Center(child: ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox100)),
       );
     }
     return null;
@@ -278,11 +278,11 @@ class BottomNavPembeli extends StatelessWidget with defaultSharedPref{
       // messageList();
       return HomeMenuUser();
       case 1 :
-      contexts.read<cubitListMessageConnect>().updateListMessage();
+      contexts.read<CubitListMessageConnect>().updateListMessage();
       return MessageList();
       case 2 :
       // messageList();
-      contexts.read<CubitGetLike>().GetDataLike();
+      contexts.read<CubitGetLike>().getDataLike();
       return Like();
       case 3 :
       // messageList();

@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_default/default/connection_dialog.dart';
-import 'package:foosel/blocs/bloc_default/default/default_navigasi_role.dart';
-import 'package:foosel/blocs/bloc_default/default/default_shared_pref.dart';
+import 'package:foosel/blocs/bloc_default/class/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_navigasi_role.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_user/event_user.dart';
 import 'package:foosel/blocs/bloc_user/main/connect/bloc_main_update_user_connect.dart';
 import 'package:foosel/shared/theme_box.dart';
@@ -19,7 +19,7 @@ import 'package:go_router/go_router.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class EditProfile extends StatelessWidget with defaultSharedPref, navigasiRole, navigasiRoleBarRead{
+class EditProfile extends StatelessWidget with SharedPref, NavigasiRole, NavigasiRoleBarRead{
   EditProfile({Key? key}) : super(key: key);
 
   void navigasi(BuildContext context) async{
@@ -34,6 +34,7 @@ class EditProfile extends StatelessWidget with defaultSharedPref, navigasiRole, 
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     navigasi(context);
     navigasiR();
     sharedPref();
@@ -60,15 +61,15 @@ class EditProfile extends StatelessWidget with defaultSharedPref, navigasiRole, 
       },
       icon: Image.asset(
         "asset/icon/submit_icon.png",
-        height: themeBox.defaultHeightBox13,
-        width: themeBox.defaultWidthBox18,
+        height: ThemeBox.defaultHeightBox13,
+        width: ThemeBox.defaultWidthBox18,
       ),
     ); 
 
     PreferredSizeWidget header(){
       ClassConnectionDialog connection = ClassConnectionDialog();
       return AppBar(
-        toolbarHeight: themeBox.defaultHeightBox90,
+        toolbarHeight: ThemeBox.defaultHeightBox90,
         backgroundColor: kPrimaryColor,
         shadowColor: kBlackColor6,
         centerTitle: false,
@@ -85,7 +86,7 @@ class EditProfile extends StatelessWidget with defaultSharedPref, navigasiRole, 
                 getUpdate(),
               ]
             )
-          : ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50),
+          : ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox50),
           childDisconnect: (context1, stateUserDisconn) => (stateUserDisconn.loading == true)
           ? Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,11 +94,11 @@ class EditProfile extends StatelessWidget with defaultSharedPref, navigasiRole, 
                 CompenenGetBackX(onPressed: () => context.go(navigation)),
                 title(),
                 SizedBox(
-                  width: themeBox.defaultWidthBox45,
+                  width: ThemeBox.defaultWidthBox45,
                 )
               ]
             )
-          : ComponenLoadingLottieHorizontal(height: themeBox.defaultHeightBox50)
+          : ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox50)
         ),
       );
     }

@@ -1,1 +1,1 @@
-mixin DataEventUpdateBarang{} 
+abstract class DataEventUpdateBarang{} 

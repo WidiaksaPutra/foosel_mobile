@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-abstract class insertLike{
-  SaveLocalDataLike({
+abstract class InsertLike{
+  saveLocalDataLike({
     required String tokenId, 
     required String name,
     required String email,
@@ -11,19 +11,19 @@ abstract class insertLike{
     required String imagePath,
   });
   
-  SaveImageToLocalPath(String imageUrl);
+  // SaveImageToLocalPath(String imageUrl);
 }
 
-abstract class getLike{
-  GetDataLike();
-  GetDataLikeWhereIdLocal({required String tokenId});
+abstract class GetLike{
+  getDataLike();
+  getDataLikeWhereIdLocal({required String tokenId});
 }
 
-abstract class like{
-  GetLikeInit({
+abstract class Like{
+  getLikeInit({
     required String tokenId,
   });
-  GetLikeOnClick({
+  getLikeOnClick({
     required String name,
     required String email,
     required String categoryName,
@@ -35,5 +35,5 @@ abstract class like{
     required bool like,
   });
 
-  GetLikeDelete({required String tokenId});
+  getLikeDelete({required String tokenId});
 }

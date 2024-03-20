@@ -19,7 +19,7 @@ class ComponenText2 extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(labelText, style: grayTextStyle2.copyWith(fontWeight: regular, fontSize: defaultFont13)),
-          SizedBox(height: themeBox.defaultHeightBox4),
+          SizedBox(height: ThemeBox.defaultHeightBox4),
           TextFormField(
             readOnly: true,
             decoration: InputDecoration(

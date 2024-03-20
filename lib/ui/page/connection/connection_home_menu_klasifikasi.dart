@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_categories/state_categories.dart';
 import 'package:foosel/blocs/bloc_categories/main/connect/bloc_main_klasifikasi_categories_connect.dart';
-import 'package:foosel/blocs/bloc_default/default/cubit_connection_navigasi.dart';
+import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_navigasi.dart';
 import 'package:foosel/blocs/bloc_categories/main/disconnect/bloc_main_klasifikasi_categories_disconnect.dart';
-import 'package:foosel/blocs/bloc_default/state_default/state_connection.dart';
+import 'package:foosel/blocs/bloc_default/state/state_connection.dart';
 
 class ConnectionHomeMenuKlasifikasi extends StatelessWidget{
   late dynamic childDisconnect, childConnect, connection;
@@ -37,8 +37,8 @@ class ConnectionHomeMenuKlasifikasi extends StatelessWidget{
     }
 
     // return statusConnect();
-    context.read<cubitConnectionNavigasi>().klasifikasiConnection('homeUpConnect');
-    return BlocBuilder<cubitConnectionNavigasi, DataStateConnection>(
+    context.read<CubitConnectionNavigasi>().klasifikasiConnection('homeUpConnect');
+    return BlocBuilder<CubitConnectionNavigasi, DataStateConnection>(
       builder: (context, state){
         if(state.connectionBoolean == true){
           return statusConnect();
