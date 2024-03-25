@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_pembeli/cubit_detail_produk_nav_pembeli.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_penjual/cubit_detail_produk_nav_penjual.dart';
-import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_example.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_connection_example.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_roles.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_size_device.dart';
@@ -16,13 +16,11 @@ import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/ui/widgets/componen_advanced/componen_card_horizontal.dart';
 import 'package:foosel/ui/widgets/componen_loading.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-class ListHorizontalHome extends HookWidget with SizeDevice, SharedPref, LoadingScrollData, RoleAcces{
+class ListHorizontalHome extends StatelessWidget with SizeDevice, SharedPref, LoadingScrollData, RoleAcces{
   late int lengthList;
   late dynamic data;
   late dynamic scrollControl;
   late bool loading, connection;
-  late double heightPage;
 
   ListHorizontalHome({Key? key,
     required this.lengthList,
@@ -30,7 +28,6 @@ class ListHorizontalHome extends HookWidget with SizeDevice, SharedPref, Loading
     required this.scrollControl,
     required this.connection,
     required this.loading,
-    required this.heightPage,
   }) : super(key: key);
 
   @override
@@ -39,19 +36,22 @@ class ListHorizontalHome extends HookWidget with SizeDevice, SharedPref, Loading
     ThemeBox(context);
     getsizeDevice(context);
     rolesUser();
+    late double heightPage = sizeHeight - ThemeBox.defaultHeightBox50;
+    if(heightPage < 0.0){heightPage = 0.0;};
     final int columnCount = (sizeWidth / ThemeBox.defaultWidthBox215).round();
     final double widthGambar = sizeWidth / columnCount;
     context.read<CubitDetailNavigasiProduct>().navigationDetailProduct();
     return (data.isNotEmpty)
-    ? LayoutBuilder(
-        builder: (context, constraints) {
-          return BlocBuilder<CubitDetailNavigasiProduct, DataStateDetailProduct>(
-            builder: (context, state) => Stack(
-              children: [
-                SizedBox(
-                  height: heightPage,
-                  width: sizeWidth,
-                  child: GridView.builder(
+    ? SizedBox(
+        height: heightPage,
+        width: sizeWidth,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            context.read<CubitDetailNavigasiProduct>().navigationDetailProduct();
+            return BlocBuilder<CubitDetailNavigasiProduct, DataStateDetailProduct>(
+              builder: (context, state) => Stack(
+                children: [
+                  GridView.builder(
                   physics: BouncingScrollPhysics(),
                   padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox20),
                   itemCount: lengthList,
@@ -118,18 +118,18 @@ class ListHorizontalHome extends HookWidget with SizeDevice, SharedPref, Loading
                       }, 
                     )
                   ),
-                ),
-                LoadingScrollHeight(
-                  context: context,
-                  heightLoading: ThemeBox.defaultHeightBox200, 
-                  loadingScrollName: loading, 
-                  rightLoading: ThemeBox.defaultWidthBox20, 
-                  withLoading: constraints.maxWidth,
-                ),
-              ],
-            )
-          );
-        }
+                  LoadingScrollHeight(
+                    context: context,
+                    heightLoading: ThemeBox.defaultHeightBox200, 
+                    loadingScrollName: loading, 
+                    rightLoading: ThemeBox.defaultWidthBox20, 
+                    withLoading: constraints.maxWidth,
+                  ),
+                ],
+              )
+            );
+          }
+        ),
       )
     : Center(child: ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200));
   }

@@ -1,8 +1,8 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_default/bloc/bloc_form_button_not_null_barang.dart';
-import 'package:foosel/blocs/bloc_default/bloc/cubit_form_not_null_barang.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/bloc_form_button_not_null_barang.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_form_not_null_barang.dart';
 import 'package:foosel/blocs/bloc_default/state/state_form_products.dart';
 import 'package:foosel/blocs/bloc_default/state/state_multipe_form.dart';
 import 'package:foosel/shared/theme_box.dart';

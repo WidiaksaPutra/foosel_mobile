@@ -19,12 +19,12 @@ import 'package:go_router/go_router.dart';
 
 // part 'bloc_event_login.dart';
 // part 'bloc_state_login.dart';
-late String respons = "";
-late dynamic dataUser;
+late String _respons = "";
+late dynamic _dataUser;
 class BlocButtonLoginData extends Bloc<DataEventFormLogin, StateSnackBar> with SharedPref, NavigasiRole, NavigasiRoleBarRead{
-  final InterfaceGetLogin dataGetLogin = getItInstance<InterfaceGetLogin>();
-  final InterfaceGetUser dataGetUser = getItInstance<InterfaceGetUser>();
-  final InterfaceInsertUserFirebase dataUserFirebase = getItInstance<InterfaceInsertUserFirebase>();
+  final InterfaceGetLogin _dataGetLogin = getItInstance<InterfaceGetLogin>();
+  final InterfaceGetUser _dataGetUser = getItInstance<InterfaceGetUser>();
+  final InterfaceInsertUserFirebase _dataUserFirebase = getItInstance<InterfaceInsertUserFirebase>();
   BlocButtonLoginData() : super(DataStateInitialSnackBar()){
     on<ButtonFormUser>((event, emit) async{
       await buttonSnackBar(event.email, event.password, event.context);
@@ -51,14 +51,14 @@ class BlocButtonLoginData extends Bloc<DataEventFormLogin, StateSnackBar> with S
             ),
           );
           prefs.setString('email', email);
-          respons = await dataGetLogin.getLogin(email: email, password: password);
-          if(respons == "berhasil"){
-            dataUser = await dataGetUser.getUser();
+          _respons = await _dataGetLogin.getLogin(email: email, password: password);
+          if(_respons == "berhasil"){
+            _dataUser = await _dataGetUser.getUser();
             await FirebaseMessaging.instance.deleteToken();
             var fcmToken = await FirebaseMessaging.instance.getToken();
-            dataUserFirebase.insertUserFirebase(
+            _dataUserFirebase.insertUserFirebase(
               tokenNotive: fcmToken.toString(), 
-              dataProfil: dataUser,
+              dataProfil: _dataUser,
             );
             prefs.setString('fcmToken', fcmToken.toString());
             await navigasiR();
@@ -72,7 +72,7 @@ class BlocButtonLoginData extends Bloc<DataEventFormLogin, StateSnackBar> with S
                 snackBar: true,
                 responMessage: snackBarLoginBerhasil, 
                 colorSnackBar: kGreenColor, 
-                responApi: respons,
+                responApi: _respons,
                 snackBar2: false,
                 responMessage2: "",
                 colorSnackBar2: kWhiteColor,
@@ -81,7 +81,7 @@ class BlocButtonLoginData extends Bloc<DataEventFormLogin, StateSnackBar> with S
             prefs.remove('emailLogin');
             prefs.remove('passwordLogin');
           }
-          if(respons == "gagal"){
+          if(_respons == "gagal"){
             prefs.remove('email');
             emit(
               DataStateSnackBar(
@@ -91,14 +91,14 @@ class BlocButtonLoginData extends Bloc<DataEventFormLogin, StateSnackBar> with S
                 snackBar: true,
                 responMessage: snackBarLoginSalah, 
                 colorSnackBar: kRedColor, 
-                responApi: respons,
+                responApi: _respons,
                 snackBar2: false,
                 responMessage2: "",
                 colorSnackBar2: kWhiteColor,
               ),
             );
           }
-          if(respons == "error"){
+          if(_respons == "error"){
             prefs.remove('email');
             emit(
               DataStateSnackBar(
@@ -108,13 +108,13 @@ class BlocButtonLoginData extends Bloc<DataEventFormLogin, StateSnackBar> with S
                 snackBar: true,
                 responMessage: snackBarLoginGagal, 
                 colorSnackBar: kRedColor, 
-                responApi: respons,
+                responApi: _respons,
                 snackBar2: false,
                 responMessage2: "",
                 colorSnackBar2: kWhiteColor,
               ),
             );
-          }
+          } 
         }
       }
     }

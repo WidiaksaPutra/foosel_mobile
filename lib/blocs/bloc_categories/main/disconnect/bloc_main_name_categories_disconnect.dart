@@ -8,16 +8,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/helpers/categories/interfaces/interface_get_data_category_local.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 
-ScrollController scrollController = ScrollController();
-late List dataList = [];
+ScrollController _scrollController = ScrollController();
+late List _dataList = [];
 class BlocNameCategoriesDisconnect extends Bloc<DataEventKlasifikasi, DataStateNameCategories> implements InterfacesCategoryNameDisconnect{
-  final InterfaceGetDataCategoryLocal dataGetNameCategoriesLocal = getItInstance<InterfaceGetDataCategoryLocal>();
+  final InterfaceGetDataCategoryLocal _dataGetNameCategoriesLocal = getItInstance<InterfaceGetDataCategoryLocal>();
   BlocNameCategoriesDisconnect() : super(
     DataNameCategories(
-      dataNameCategories: [], 
+      dataNameCategories: _dataList, 
       loadingNameCategories: true, 
       loadingScrollNameCategories: false,
-      scrollControl: false,
+      scrollControl: _scrollController,
     )
   ){
     on<NameCategories>((event, emit) async{
@@ -26,14 +26,14 @@ class BlocNameCategoriesDisconnect extends Bloc<DataEventKlasifikasi, DataStateN
   }
   
   @override
-  getDataNameCategoriesLocal() async{
-    dataList = await dataGetNameCategoriesLocal.getDataCategoryLocal();
+  Future<void> getDataNameCategoriesLocal() async{
+    _dataList = await _dataGetNameCategoriesLocal.getDataCategoryLocal();
     emit(
       DataNameCategories(
-        dataNameCategories: dataList, 
+        dataNameCategories: _dataList,
         loadingNameCategories: false, 
         loadingScrollNameCategories: false,
-        scrollControl: scrollController,
+        scrollControl: _scrollController,
       ),
     );
   }

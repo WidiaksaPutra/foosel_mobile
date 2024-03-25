@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
-import 'package:foosel/blocs/bloc_default/class/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/class/class/connection_dialog.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_size_device.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/ui/page/connection/connection_profile.dart';

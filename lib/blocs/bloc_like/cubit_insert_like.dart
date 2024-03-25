@@ -5,11 +5,11 @@ import 'package:foosel/helpers/like/interfaces/interface_insert_data_like_local.
 import 'package:foosel/shared/theme_global_variabel.dart';
 
 class CubitInsertLike extends Cubit<dynamic> implements InsertLike{
-  final InterfaceInsertDataLikeLocal dataInsertLike = getItInstance<InterfaceInsertDataLikeLocal>();
+  final InterfaceInsertDataLikeLocal _dataInsertLike = getItInstance<InterfaceInsertDataLikeLocal>();
   CubitInsertLike() : super("");
   
   @override
-  saveLocalDataLike({
+  Future<void> saveLocalDataLike({
     required String tokenId,
     required String name,
     required String email,
@@ -18,7 +18,7 @@ class CubitInsertLike extends Cubit<dynamic> implements InsertLike{
     required String price,
     required String imagePath,
   }) async{
-    await dataInsertLike.insertDataLikeLocal(
+    await _dataInsertLike.insertDataLikeLocal(
       tokenId: tokenId,
       name: name,
       email: email,

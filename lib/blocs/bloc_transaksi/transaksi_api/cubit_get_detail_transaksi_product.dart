@@ -6,19 +6,19 @@ import 'package:foosel/service/api_transaksi/interfaces/interface_get_transaksi.
 import 'package:foosel/shared/theme_global_variabel.dart';
 
 class CubitGetDetailTransaksiProduct extends Cubit<DataStateGetTransaksi>{
-  final InterfaceGetTransaksi dataGetTransaksi = getItInstance<InterfaceGetTransaksi>();
+  final InterfaceGetTransaksi _dataGetTransaksi = getItInstance<InterfaceGetTransaksi>();
   CubitGetDetailTransaksiProduct() : super(DataGetTransaksi(loading: false, dataTransaksi: []));
   
   @override
   getDataTransaksiDetail({required String transactionsId}) async{
-    late List dataListTransaksi = [];
+    late List _dataListTransaksi = [];
     emit(DataGetTransaksi(loading: true, dataTransaksi: []));
-    dataListTransaksi = await dataGetTransaksi.getTransaksi(transactionsId: transactionsId);
+    _dataListTransaksi = await _dataGetTransaksi.getTransaksi(transactionsId: transactionsId);
     Future.delayed(Duration(seconds: 10));
-    if(dataListTransaksi.isNotEmpty){
-      emit(DataGetTransaksi(loading: false, dataTransaksi: dataListTransaksi));
+    if(_dataListTransaksi.isNotEmpty){
+      emit(DataGetTransaksi(loading: false, dataTransaksi: _dataListTransaksi));
     }else{
-      emit(DataGetTransaksi(loading: false, dataTransaksi: dataListTransaksi));
+      emit(DataGetTransaksi(loading: false, dataTransaksi: _dataListTransaksi));
     }
   }
 }

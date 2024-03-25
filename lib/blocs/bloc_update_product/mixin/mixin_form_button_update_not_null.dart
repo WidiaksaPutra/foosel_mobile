@@ -9,80 +9,80 @@ mixin FormButtonUpdateNotNull{
     required String type,
     required String typeId,
   }) async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String nameOld = prefs.getString('namaProduct').toString();
-    String deskripsiOld = prefs.getString('deskripsi').toString();
-    String priceOld = prefs.getString('price').toString();
-    String typeProductOld = prefs.getString('typeProduct').toString();
-    if(nameOld == 'null' && deskripsiOld == 'null' && priceOld == 'null' && typeProductOld == 'null'){
-      prefs.setString('namaProduct', nameProduct);
-      prefs.setString('deskripsi', description);
-      prefs.setString('price', price);
-      prefs.setString('typeProduct', type);
-      prefs.setString('indexDropdown', typeId);
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    String _nameOld = _prefs.getString('namaProduct').toString();
+    String _deskripsiOld = _prefs.getString('deskripsi').toString();
+    String _priceOld = _prefs.getString('price').toString();
+    String _typeProductOld = _prefs.getString('typeProduct').toString();
+    if(_nameOld == 'null' && _deskripsiOld == 'null' && _priceOld == 'null' && _typeProductOld == 'null'){
+      _prefs.setString('namaProduct', nameProduct);
+      _prefs.setString('deskripsi', description);
+      _prefs.setString('price', price);
+      _prefs.setString('typeProduct', type);
+      _prefs.setString('indexDropdown', typeId);
     }
-    if(nameOld == 'null' && deskripsiOld != 'null' && priceOld != 'null' && typeProductOld == 'null'){
-      prefs.setString('namaProduct', nameProduct);
-      prefs.setString('typeProduct', type);
-      prefs.setString('indexDropdown', typeId);
+    if(_nameOld == 'null' && _deskripsiOld != 'null' && _priceOld != 'null' && _typeProductOld == 'null'){
+      _prefs.setString('namaProduct', nameProduct);
+      _prefs.setString('typeProduct', type);
+      _prefs.setString('indexDropdown', typeId);
     }
-    else if(nameOld == 'null' && deskripsiOld != 'null' && priceOld == 'null' && typeProductOld == 'null'){
-      prefs.setString('namaProduct', nameProduct);
-      prefs.setString('price', price);
-      prefs.setString('typeProduct', type);
-      prefs.setString('indexDropdown', typeId);
+    else if(_nameOld == 'null' && _deskripsiOld != 'null' && _priceOld == 'null' && _typeProductOld == 'null'){
+      _prefs.setString('namaProduct', nameProduct);
+      _prefs.setString('price', price);
+      _prefs.setString('typeProduct', type);
+      _prefs.setString('indexDropdown', typeId);
     }
-    else if(nameOld != 'null' && deskripsiOld == 'null' && priceOld == 'null' && typeProductOld == 'null'){
-      prefs.setString('deskripsi', description);
-      prefs.setString('price', price);
-      prefs.setString('typeProduct', type);
-      prefs.setString('indexDropdown', typeId);
+    else if(_nameOld != 'null' && _deskripsiOld == 'null' && _priceOld == 'null' && _typeProductOld == 'null'){
+      _prefs.setString('deskripsi', description);
+      _prefs.setString('price', price);
+      _prefs.setString('typeProduct', type);
+      _prefs.setString('indexDropdown', typeId);
     }
-    else if(nameOld == 'null' && deskripsiOld == 'null' && priceOld != 'null' && typeProductOld == 'null'){
-      prefs.setString('namaProduct', nameProduct);
-      prefs.setString('deskripsi', description);
-      prefs.setString('typeProduct', type);
-      prefs.setString('indexDropdown', typeId);
+    else if(_nameOld == 'null' && _deskripsiOld == 'null' && _priceOld != 'null' && _typeProductOld == 'null'){
+      _prefs.setString('namaProduct', nameProduct);
+      _prefs.setString('deskripsi', description);
+      _prefs.setString('typeProduct', type);
+      _prefs.setString('indexDropdown', typeId);
     }
-    else if(nameOld != 'null' && deskripsiOld == 'null' && priceOld != 'null' && typeProductOld == 'null'){
-      prefs.setString('deskripsi', description);
-      prefs.setString('typeProduct', type);
-      prefs.setString('indexDropdown', typeId);
+    else if(_nameOld != 'null' && _deskripsiOld == 'null' && _priceOld != 'null' && _typeProductOld == 'null'){
+      _prefs.setString('deskripsi', description);
+      _prefs.setString('typeProduct', type);
+      _prefs.setString('indexDropdown', typeId);
     }
-    else if(nameOld != 'null' && deskripsiOld != 'null' && priceOld == 'null' && typeProductOld == 'null'){
-      prefs.setString('price', price);
-      prefs.setString('typeProduct', type);
-      prefs.setString('indexDropdown', typeId);
+    else if(_nameOld != 'null' && _deskripsiOld != 'null' && _priceOld == 'null' && _typeProductOld == 'null'){
+      _prefs.setString('price', price);
+      _prefs.setString('typeProduct', type);
+      _prefs.setString('indexDropdown', typeId);
     }
-    else if(nameOld != 'null' && deskripsiOld != 'null' && priceOld != 'null' && typeProductOld == 'null'){
-      prefs.setString('typeProduct', type);
-      prefs.setString('indexDropdown', typeId);
+    else if(_nameOld != 'null' && _deskripsiOld != 'null' && _priceOld != 'null' && _typeProductOld == 'null'){
+      _prefs.setString('typeProduct', type);
+      _prefs.setString('indexDropdown', typeId);
     }
-    else if(nameOld == 'null' && deskripsiOld == 'null' && priceOld == 'null' && typeProductOld != 'null'){
-      prefs.setString('namaProduct', nameProduct);
-      prefs.setString('deskripsi', description);
-      prefs.setString('price', price);
+    else if(_nameOld == 'null' && _deskripsiOld == 'null' && _priceOld == 'null' && _typeProductOld != 'null'){
+      _prefs.setString('namaProduct', nameProduct);
+      _prefs.setString('deskripsi', description);
+      _prefs.setString('price', price);
     }
-    else if(nameOld == 'null' && deskripsiOld != 'null' && priceOld != 'null' && typeProductOld != 'null'){
-      prefs.setString('namaProduct', nameProduct);
+    else if(_nameOld == 'null' && _deskripsiOld != 'null' && _priceOld != 'null' && _typeProductOld != 'null'){
+      _prefs.setString('namaProduct', nameProduct);
     }
-    else if(nameOld == 'null' && deskripsiOld != 'null' && priceOld == 'null' && typeProductOld != 'null'){
-      prefs.setString('namaProduct', nameProduct);
-      prefs.setString('price', price);
+    else if(_nameOld == 'null' && _deskripsiOld != 'null' && _priceOld == 'null' && _typeProductOld != 'null'){
+      _prefs.setString('namaProduct', nameProduct);
+      _prefs.setString('price', price);
     }
-    else if(nameOld != 'null' && deskripsiOld == 'null' && priceOld == 'null' && typeProductOld != 'null'){
-      prefs.setString('deskripsi', description);
-      prefs.setString('price', price);
+    else if(_nameOld != 'null' && _deskripsiOld == 'null' && _priceOld == 'null' && _typeProductOld != 'null'){
+      _prefs.setString('deskripsi', description);
+      _prefs.setString('price', price);
     }
-    else if(nameOld == 'null' && deskripsiOld == 'null' && priceOld != 'null' && typeProductOld != 'null'){
-      prefs.setString('namaProduct', nameProduct);
-      prefs.setString('deskripsi', description);
+    else if(_nameOld == 'null' && _deskripsiOld == 'null' && _priceOld != 'null' && _typeProductOld != 'null'){
+      _prefs.setString('namaProduct', nameProduct);
+      _prefs.setString('deskripsi', description);
     }
-    else if(nameOld != 'null' && deskripsiOld == 'null' && priceOld != 'null' && typeProductOld != 'null'){
-      prefs.setString('deskripsi', description);
+    else if(_nameOld != 'null' && _deskripsiOld == 'null' && _priceOld != 'null' && _typeProductOld != 'null'){
+      _prefs.setString('deskripsi', description);
     }
-    else if(nameOld != 'null' && deskripsiOld != 'null' && priceOld == 'null' && typeProductOld != 'null'){
-      prefs.setString('price', price);
+    else if(_nameOld != 'null' && _deskripsiOld != 'null' && _priceOld == 'null' && _typeProductOld != 'null'){
+      _prefs.setString('price', price);
     }
   }
 }

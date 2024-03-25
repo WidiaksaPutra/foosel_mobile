@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_penjual/cubit_detail_produk_nav_penjual.dart';
-import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_example.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_connection_example.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_dialog_basic.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_navigasi_role.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
@@ -38,7 +38,7 @@ class CartProduct extends HookWidget with DialogBasic, NavigasiRoleBarRead, Shar
       readBlocConnect: context.read<CubitGetTransaksiProduct>().getDataTransaksiHistory(), 
       readBlocDisconnect: {},
     );
-    await context.read<CubitDetailNavigasiProduct>().navigationDetailProduct();
+    context.read<CubitDetailNavigasiProduct>().navigationDetailProduct();
   }
 
   @override

@@ -10,12 +10,11 @@ import 'package:foosel/service/api_products/interfaces/interface_post_data_produ
 import 'package:foosel/shared/theme_global_variabel.dart';
 import 'package:image_picker/image_picker.dart';
 
-late BuildContext context1;
-class BlocUploadInsertProduct extends Bloc<DataEventAddBarang, StateAddPostBarang> with SharedPref implements InterfacesButtonUploadProduct{
-  final InterfacePostDataProduct postDataProduct = getItInstance<InterfacePostDataProduct>();
+class BlocUploadInsertProduct extends Bloc<DataEventAddBarang, StateAddPostBarang> with SharedPref implements InterfacesUploadProduct{
+  final InterfacePostDataProduct _postDataProduct = getItInstance<InterfacePostDataProduct>();
   BlocUploadInsertProduct() : super(AddPostBarang(loading: false, snackBar: false, responApi: '-')){
     on<ButtonFormProducts>((event, emit) async{
-      buttonUploadProduct(
+      uploadProduct(
         nameProduct: event.nameProduct,
         price: event.price,
         description: event.description,
@@ -28,7 +27,7 @@ class BlocUploadInsertProduct extends Bloc<DataEventAddBarang, StateAddPostBaran
   }
 
   @override
-  buttonUploadProduct({
+  Future<void> uploadProduct({
     required String nameProduct, 
     required String price, 
     required String description, 
@@ -39,7 +38,7 @@ class BlocUploadInsertProduct extends Bloc<DataEventAddBarang, StateAddPostBaran
   }) async {
     emit(AddPostBarang(loading: true, snackBar: false, responApi: '-'));
     await sharedPref();
-    String responPostProducts = await postDataProduct.postDataProduct(
+    String _responPostProducts = await _postDataProduct.postDataProduct(
       email: prefs.getString('email').toString(),
       description: description, 
       name: nameProduct,
@@ -48,15 +47,19 @@ class BlocUploadInsertProduct extends Bloc<DataEventAddBarang, StateAddPostBaran
       images: images,
       type: type,
     );
-    if(responPostProducts == "berhasil"){
-      emit(AddPostBarang(loading: false, snackBar: true, responApi: responPostProducts));
-      prefs.remove('namaProduct');
-      prefs.remove('deskripsi');
-      prefs.remove('price');
-      prefs.remove('typeProduct');
-      prefs.remove('indexDropdown');
+    if(_responPostProducts == "berhasil"){
+      emit(AddPostBarang(loading: false, snackBar: true, responApi: _responPostProducts));
+      _clearPrefs();
     }else{
-      emit(AddPostBarang(loading: false, snackBar: true, responApi: responPostProducts));
+      emit(AddPostBarang(loading: false, snackBar: true, responApi: _responPostProducts));
     }
+  }
+
+  void _clearPrefs(){
+    prefs.remove('namaProduct');
+    prefs.remove('deskripsi');
+    prefs.remove('price');
+    prefs.remove('typeProduct');
+    prefs.remove('indexDropdown');
   }
 }

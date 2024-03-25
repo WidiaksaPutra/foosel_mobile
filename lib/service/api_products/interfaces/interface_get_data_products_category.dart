@@ -1,5 +1,6 @@
+
 abstract class InterfaceGetDataProductsCategory{
-  getDataProductsCategory({ 
+  getDataProductsCategory({
     bool testing = false,
     String testingToken = "",
     required String categoriesId, 

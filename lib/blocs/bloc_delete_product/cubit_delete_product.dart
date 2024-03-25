@@ -8,29 +8,29 @@ import 'package:foosel/service/api_products/interfaces/interface_delete_data_pro
 import 'package:foosel/service/api_transaksi/interfaces/interface_delete_transaksi.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 
-class CubitDeleteProduct extends Cubit<StateDeleteProduct> with InterfaceDeleteProduct{
-  final InterfaceDeleteDataProduct dataDeleteProduct = getItInstance<InterfaceDeleteDataProduct>();
-  final InterfaceDeleteTransaksi dataDeleteTransaksi = getItInstance<InterfaceDeleteTransaksi>();
-  final InterfaceDeleteDataProductTransaksiLocal dataDeleteProductTransaksiLocal = getItInstance<InterfaceDeleteDataProductTransaksiLocal>();
-  final InterfaceDeleteDataTransaksiLocal dataDeleteTransaksiLocal = getItInstance<InterfaceDeleteDataTransaksiLocal>();
-  final InterfaceGetDataLikeLocal dataGetLike = getItInstance<InterfaceGetDataLikeLocal>();
+class CubitDeleteProduct extends Cubit<StateDeleteProduct> implements InterfaceDeleteProduct{
+  final InterfaceDeleteDataProduct _dataDeleteProduct = getItInstance<InterfaceDeleteDataProduct>();
+  final InterfaceDeleteTransaksi _dataDeleteTransaksi = getItInstance<InterfaceDeleteTransaksi>();
+  final InterfaceDeleteDataProductTransaksiLocal _dataDeleteProductTransaksiLocal = getItInstance<InterfaceDeleteDataProductTransaksiLocal>();
+  final InterfaceDeleteDataTransaksiLocal _dataDeleteTransaksiLocal = getItInstance<InterfaceDeleteDataTransaksiLocal>();
+  final InterfaceGetDataLikeLocal _dataGetLike = getItInstance<InterfaceGetDataLikeLocal>();
   CubitDeleteProduct() : super(DeleteProduct(loadingDeleteProduct: false, statusAlert: '-'));
 
   @override
-  deleteDataProduct({
+  Future<void> deleteDataProduct({
     required String idProduct, 
     required String image,
   }) async {
     emit(DeleteProduct(loadingDeleteProduct: true, statusAlert: '-'));
-    String statusApiProduct = await dataDeleteProduct.deleteDataProduct(idProduct: idProduct, image: image); 
-    bool loadingDeleteProduct = await dataDeleteProduct.loadingDeleteDataProduct();
-    await dataDeleteTransaksi.deleteTransaksi(productsId: idProduct);
-    bool loadingDeleteTransaksi = await dataDeleteTransaksi.loadingDeleteDataTransaksi();
-    if(loadingDeleteProduct == false && loadingDeleteTransaksi == false){
-      await dataDeleteTransaksiLocal.deleteDataTransaksiLocalWhereId(tokenId: idProduct);
-      await dataDeleteProductTransaksiLocal.deleteDataProductTransaksiWhereIdProduct(tokenProduct: idProduct);
-      await dataGetLike.getDataLikeWhereIdLocal(tokenId: idProduct);
-      emit(DeleteProduct(loadingDeleteProduct: loadingDeleteProduct, statusAlert: statusApiProduct));
+    String _statusApiProduct = await _dataDeleteProduct.deleteDataProduct(idProduct: idProduct, image: image); 
+    bool _loadingDeleteProduct = await _dataDeleteProduct.loadingDeleteDataProduct();
+    await _dataDeleteTransaksi.deleteTransaksi(productsId: idProduct);
+    bool _loadingDeleteTransaksi = await _dataDeleteTransaksi.loadingDeleteDataTransaksi();
+    if(_loadingDeleteProduct == false && _loadingDeleteTransaksi == false){
+      await _dataDeleteTransaksiLocal.deleteDataTransaksiLocalWhereId(tokenId: idProduct);
+      await _dataDeleteProductTransaksiLocal.deleteDataProductTransaksiWhereIdProduct(tokenProduct: idProduct);
+      await _dataGetLike.getDataLikeWhereIdLocal(tokenId: idProduct);
+      emit(DeleteProduct(loadingDeleteProduct: _loadingDeleteProduct, statusAlert: _statusApiProduct));
     }
   }
 }

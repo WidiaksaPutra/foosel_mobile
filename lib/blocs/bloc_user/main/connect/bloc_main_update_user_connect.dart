@@ -11,9 +11,9 @@ import 'package:foosel/shared/theme_global_variabel.dart';
 import 'package:foosel/shared/theme_konstanta.dart';
 import 'package:go_router/go_router.dart';
 
-late String statusUpdate = "";
+late String _statusUpdate = "";
 class BlocMainUpdateUserConnect extends Bloc<DataEventUser, StateSnackBar> with SharedPref{
-  final InterfaceUpdateUser dataUpdateUser = getItInstance<InterfaceUpdateUser>();
+  final InterfaceUpdateUser _dataUpdateUser = getItInstance<InterfaceUpdateUser>();
   BlocMainUpdateUserConnect() : super(DataStateInitialSnackBar()){
     on<DataEventUpdateUser>((event, emit) async{
       await buttonUpdate(
@@ -51,8 +51,8 @@ class BlocMainUpdateUserConnect extends Bloc<DataEventUser, StateSnackBar> with 
         ),
       )
     : {
-        statusUpdate = await dataUpdateUser.updateUser(email: email, name: name, username: username, alamat: alamat),
-        (statusUpdate == "berhasil")
+        _statusUpdate = await _dataUpdateUser.updateUser(email: email, name: name, username: username, alamat: alamat),
+        (_statusUpdate == "berhasil")
         ? emit(
             DataStateSnackBar(
               context.go(navigation),

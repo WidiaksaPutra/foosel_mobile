@@ -1,12 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foosel/blocs/bloc_bottom_nav_pembeli/interfaces_bottom_nav_pembeli.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_pembeli/state_bottom_nav_pembeli.dart';
 
-class CubitDetailProdukNavPembeli extends Cubit<DataStateDetailProdukNavPembeli>{
+class CubitDetailProdukNavPembeli extends Cubit<DataStateDetailProdukNavPembeli> implements InterfacesDetailProdukNavPembeli{
   CubitDetailProdukNavPembeli() : super(DataDetailProdukNavPembeli(jenisDetail: ''));
-  detailProdukNavPembeli({
+  @override
+  Future<void> detailProdukNavPembeli({
     required String jenisDetail,
     required dynamic readDetail
-  }){
+  }) async{
     if(jenisDetail == "AllProduct"){
       readDetail;
       emit(DataDetailProdukNavPembeli(jenisDetail: jenisDetail));

@@ -7,7 +7,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 
 class ApiGetProductsCategori with SharedPref implements InterfaceGetDataProductsCategory{
   late List dataProducts = [];
-  late int pages = 1;
+  late int pages = 6;
   late String tokens;
 
   @override
@@ -19,7 +19,7 @@ class ApiGetProductsCategori with SharedPref implements InterfaceGetDataProducts
   }) async {
     try{
       if(fresh == true){
-        pages = 1;
+        pages = 6;
         dataProducts.clear();
       }
       if(dataProducts.isNotEmpty && (categoriesId != dataProducts[0].category!.id.toString())){
@@ -60,8 +60,8 @@ class ApiGetProductsCategori with SharedPref implements InterfaceGetDataProducts
     };
     Map<String, String> parameterApi = {
       'categories_id' : await categoriesId,
-      'page' : pages.toString(),
-      'limit' : '5',
+      'page' : '1',
+      'limit' : pages.toString(),
     };
     await getDataProductUsers(
       parameterApi: parameterApi, 
@@ -103,8 +103,8 @@ class ApiGetProductsCategori with SharedPref implements InterfaceGetDataProducts
   }) async {
     Map<String, String> parameterApi = {
       'categories_id' : categoriesId,
-      'page' : pages.toString(),
-      'limit' : '5',
+      'page' : '1',
+      'limit' : pages.toString(),
     };
     await getDataProductUsers(
       parameterApi: parameterApi, 
@@ -121,8 +121,8 @@ class ApiGetProductsCategori with SharedPref implements InterfaceGetDataProducts
   }) async {
     Map<String, String> parameterApi = {
       'categories_id' : categoriesId,
-      'page' : pages.toString(),
-      'limit' : '5',
+      'page' : '1',
+      'limit' : pages.toString(),
     };
     await getDataProductUsers(
       parameterApi: parameterApi,
@@ -146,7 +146,8 @@ class ApiGetProductsCategori with SharedPref implements InterfaceGetDataProducts
     if(responseProducts.statusCode == 200){
       final parse = await json.decode(responseProducts.body);
       Products productsDataModel = await Products.fromJson(parse);
-      pages++;
+      pages = pages+2;
+      dataProducts.clear();
       dataProducts.addAll(await productsDataModel.data!.data.toList());
       return (testing == false) ? dataProducts : "berhasil";
     }else{

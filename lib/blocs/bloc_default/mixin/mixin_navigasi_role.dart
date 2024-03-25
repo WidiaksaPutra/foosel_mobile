@@ -9,11 +9,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 mixin NavigasiRole{
   late String navigation = "";
   navigasiR() async{
-    final tokenUser = await SharedPreferences.getInstance();
-    Map<String, dynamic> decodeTokenUser = JwtDecoder.decode(tokenUser.getString('token').toString());
-    if(decodeTokenUser['roles'].toString() == "PEMBELI"){
+    final _tokenUser = await SharedPreferences.getInstance();
+    Map<String, dynamic> _decodeTokenUser = JwtDecoder.decode(_tokenUser.getString('token').toString());
+    if(_decodeTokenUser['roles'].toString() == "PEMBELI"){
       navigation = RouteName.bottomNavPembeli;
-    }else if(decodeTokenUser['roles'].toString() == "PENJUAL"){
+    }else if(_decodeTokenUser['roles'].toString() == "PENJUAL"){
       navigation = RouteName.bottomNavPenjual;
     }
   }
@@ -21,11 +21,11 @@ mixin NavigasiRole{
 
 mixin NavigasiRoleBarRead{
   navigasiRBR({required BuildContext context, required int value}) async{
-    final tokenUser = await SharedPreferences.getInstance();
-    Map<String, dynamic> decodeTokenUser = JwtDecoder.decode(tokenUser.getString('token').toString());
-    if(decodeTokenUser['roles'].toString() == "PEMBELI"){
+    final _tokenUser = await SharedPreferences.getInstance();
+    Map<String, dynamic> _decodeTokenUser = JwtDecoder.decode(_tokenUser.getString('token').toString());
+    if(_decodeTokenUser['roles'].toString() == "PEMBELI"){
       context.read<CubitBottomNavPembeli>().navigation(currentButton: value);
-    }else if(decodeTokenUser['roles'].toString() == "PENJUAL"){
+    }else if(_decodeTokenUser['roles'].toString() == "PENJUAL"){
       context.read<CubitBottomNavPenjual>().navigation(currentButton: value);
     }
   }

@@ -9,28 +9,28 @@ import 'package:foosel/service/api_user/interfaces/interface_get_user.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 
 class CubitMainUserConnect extends Cubit<DataStateUser> with SharedPref{
-  final InterfaceGetUser dataGetUser = getItInstance<InterfaceGetUser>();
-  final InterfaceUpdateUserFirebase dataUpdateUserFirebase = getItInstance<InterfaceUpdateUserFirebase>();
-  final InterfaceDeleteDataUserLocal dataDeleteUserLocal = getItInstance<InterfaceDeleteDataUserLocal>();
-  final InterfaceGetDataUserLocal dataGetUserLocal = getItInstance<InterfaceGetDataUserLocal>();
-  final InterfaceInsertDataUserLocal dataInsertUserLocal = getItInstance<InterfaceInsertDataUserLocal>();
+  final InterfaceGetUser _dataGetUser = getItInstance<InterfaceGetUser>();
+  final InterfaceUpdateUserFirebase _dataUpdateUserFirebase = getItInstance<InterfaceUpdateUserFirebase>();
+  final InterfaceDeleteDataUserLocal _dataDeleteUserLocal = getItInstance<InterfaceDeleteDataUserLocal>();
+  final InterfaceGetDataUserLocal _dataGetUserLocal = getItInstance<InterfaceGetDataUserLocal>();
+  final InterfaceInsertDataUserLocal _dataInsertUserLocal = getItInstance<InterfaceInsertDataUserLocal>();
   CubitMainUserConnect() : super(DataUser(false, {}));
   fetchUser() async{
-    await dataDeleteUserLocal.deleteDataUser();
+    await _dataDeleteUserLocal.deleteDataUser();
     await sharedPref();
-    await dataUpdateUserFirebase.updateUserFirebase(email: prefs.getString('email').toString(), statusUser: "Offline");
-    final dataUser = await dataGetUser.getUser();
-    emit(DataUser(true, await dataUser));
-    late List<Map<String, dynamic>> dataGetLocal = []; 
-    final dataLocal = await dataGetUserLocal.getDataUser();
-    dataGetLocal = dataLocal;
-    if(dataGetLocal.isEmpty){
-      await dataInsertUserLocal.insertDataUser(
-        email: dataUser.email.toString(),
-        name: dataUser.name.toString(),
+    await _dataUpdateUserFirebase.updateUserFirebase(email: prefs.getString('email').toString(), statusUser: "Offline");
+    final _dataUser = await _dataGetUser.getUser();
+    emit(DataUser(true, await _dataUser));
+    late List<Map<String, dynamic>> _dataGetLocal = []; 
+    final _dataLocal = await _dataGetUserLocal.getDataUser();
+    _dataGetLocal = _dataLocal;
+    if(_dataGetLocal.isEmpty){
+      await _dataInsertUserLocal.insertDataUser(
+        email: _dataUser.email.toString(),
+        name: _dataUser.name.toString(),
         phone: '0',
-        profilePhoto: dataUser.profilePhotoPath.toString(),
-        username: dataUser.username.toString(),
+        profilePhoto: _dataUser.profilePhotoPath.toString(),
+        username: _dataUser.username.toString(),
       );
     }
   }

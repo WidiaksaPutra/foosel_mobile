@@ -45,7 +45,7 @@ class DetailBottomNavigationBarConnectionProductPenjual extends HookWidget with 
                 content: Text("Update", style: blackTextStyle.copyWith(fontWeight: regular)), 
                 onPressed: () async{
                   await context.read<CubitDetailProductConnect>().getDetailProductConnect(idProduct: state.dataProducts.tokenId.toString());
-                  await context.read<CubitUpButton>().upButton(
+                  context.read<CubitUpButton>().upButton(
                     currentBody: 0, 
                     currentTop: 0,
                     readBloc: {context.read<BlocKlasifikasiCategoriesConnect>().add(KlasifikasiCategories(categoryKey: "0"))}, 
@@ -80,7 +80,7 @@ class DetailBottomNavigationBarConnectionProductPenjual extends HookWidget with 
                                 idProduct: state.dataProducts.tokenId.toString(), 
                                 image: state.dataProducts.urlImage.toString(),
                               );
-                              await context.read<CubitUpButton>().upButton(
+                              context.read<CubitUpButton>().upButton(
                                 currentBody: 0, 
                                 currentTop: 0,
                                 readBloc: {context.read<BlocKlasifikasiCategoriesConnect>().add(KlasifikasiCategories(categoryKey: "0"))}, 

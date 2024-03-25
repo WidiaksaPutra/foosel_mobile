@@ -2,7 +2,7 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_example.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_connection_example.dart';
 import 'package:foosel/blocs/bloc_default/state/state_connection.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/ui/widgets/componen_loading.dart';

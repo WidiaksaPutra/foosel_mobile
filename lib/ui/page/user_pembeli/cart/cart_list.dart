@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_pembeli/cubit_detail_produk_nav_pembeli.dart';
-import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_example.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_connection_example.dart';
 import 'package:foosel/blocs/bloc_default/state/state_connection.dart';
 import 'package:foosel/blocs/bloc_detail_products/cubit_detail_navigasi_product.dart';
 import 'package:foosel/blocs/bloc_detail_products/detail_product/cubit_detail_product_connect.dart';
@@ -33,7 +33,7 @@ class Cart extends StatelessWidget{
 
   void read(BuildContext context) async{
     await context.read<CubitGetTransaksiLocal>().getDataTransaksi();
-    await context.read<CubitDetailNavigasiProduct>().navigationDetailProduct();
+    context.read<CubitDetailNavigasiProduct>().navigationDetailProduct();
     await context.read<CubitGetTransaksiProduct>().getDataTransaksiHistory();
     await context.read<CubitGetTransaksiProductLocal>().getDataTransaksi();
     await context.read<CubitConnectionExample>().connectCheck(readBlocConnect: {}, readBlocDisconnect: {});

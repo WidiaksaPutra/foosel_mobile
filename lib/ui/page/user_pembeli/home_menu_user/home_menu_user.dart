@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_default/bloc_button_up/cubit_button_up.dart';
 import 'package:foosel/blocs/bloc_default/bloc_button_up/state_button_up.dart';
-import 'package:foosel/blocs/bloc_default/mixin/mixin_size_device.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/shared/theme_color.dart';
 import 'package:foosel/shared/theme_konstanta.dart';
@@ -13,14 +12,11 @@ import 'package:foosel/ui/page/user_pembeli/home_menu_user/body_home_menu.dart';
 import 'package:foosel/ui/page/user_pembeli/home_menu_user/body_home_menu_klasifikasi.dart';
 import 'package:foosel/ui/widgets/componen_carousel_slider_image_sliver.dart';
 
-class HomeMenuUser extends StatelessWidget with SizeDevice{
+class HomeMenuUser extends StatelessWidget{
   HomeMenuUser({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     ThemeBox(context);
-    getsizeDevice(context);
-    late double heightPage = sizeHeight;
-    if(heightPage < 0.0){heightPage = 0.0;};
     return Scaffold(
       backgroundColor: kPrimaryColor,
       body: CustomScrollView(
@@ -61,8 +57,8 @@ class HomeMenuUser extends StatelessWidget with SizeDevice{
           SliverFillRemaining(
             child: BlocBuilder<CubitUpButton, StateDataUpButton>(builder: (context, stateDesign) 
               => (stateDesign.currentBody == 0) 
-              ? BodyHomeMenu(heightPage: heightPage) 
-              : BodyHomeMenuKlasifikasi(heightPage: heightPage),
+              ? BodyHomeMenu() 
+              : BodyHomeMenuKlasifikasi(),
             ),
           ),
         ],

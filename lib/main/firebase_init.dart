@@ -15,7 +15,7 @@ class FirebaseInit extends StatelessWidget {
           return const Text("Error");
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return CircularProgressIndicator();
         }
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {

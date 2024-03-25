@@ -4,27 +4,27 @@ import 'package:foosel/blocs/bloc_transaksi/transaksi_api/state_transaksi.dart';
 import 'package:foosel/helpers/transaksi/interfaces/interface_get_data_product_transaksi_local.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 
-late List dataTransaksi = [];
+late List _dataTransaksi = [];
 class CubitGetTransaksiProductLocal extends Cubit<DataStateGetTransaksi> implements InterfacesGetTransaksiLocal{
-  final InterfaceGetDataProductTransaksiLocal dataGetTransaksiLocal = getItInstance<InterfaceGetDataProductTransaksiLocal>();
+  final InterfaceGetDataProductTransaksiLocal _dataGetTransaksiLocal = getItInstance<InterfaceGetDataProductTransaksiLocal>();
   CubitGetTransaksiProductLocal() : super(DataGetTransaksi(loading: false, dataTransaksi: []));
 
   @override
   getDataTransaksi() async{
-    dataTransaksi.clear();
+    _dataTransaksi.clear();
     emit(DataGetTransaksi(loading: true, dataTransaksi: []));
-    dataTransaksi.addAll(await dataGetTransaksiLocal.getDataProductTransaksiLocal());
-    emit(DataGetTransaksi(loading: false, dataTransaksi: dataTransaksi));
+    _dataTransaksi.addAll(await _dataGetTransaksiLocal.getDataProductTransaksiLocal());
+    emit(DataGetTransaksi(loading: false, dataTransaksi: _dataTransaksi));
   }
 
   @override
   getDataTransaksiWhereId({required String tokenId}) async{
-    dataTransaksi.clear();
-    emit(DataGetTransaksi(loading: true, dataTransaksi: dataTransaksi));
+    _dataTransaksi.clear();
+    emit(DataGetTransaksi(loading: true, dataTransaksi: _dataTransaksi));
     if(tokenId.isNotEmpty){
-      dataTransaksi.addAll(await dataGetTransaksiLocal.getDataProductTransaksiWhereIdLocal(tokenTransaksi: tokenId));
+      _dataTransaksi.addAll(await _dataGetTransaksiLocal.getDataProductTransaksiWhereIdLocal(tokenTransaksi: tokenId));
       // dataTransaksi.addAll(await dataGetTransaksiLocal.GetDataProductTransaksiLocal());
-      emit(DataGetTransaksi(loading: false, dataTransaksi: dataTransaksi));
+      emit(DataGetTransaksi(loading: false, dataTransaksi: _dataTransaksi));
     }
   }
 }

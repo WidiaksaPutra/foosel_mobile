@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_pembeli/cubit_bottom_nav_pembeli.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_pembeli/state_bottom_nav_pembeli.dart';
-import 'package:foosel/blocs/bloc_default/class/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/class/class/connection_dialog.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_like/cubit_get_like.dart';
 import 'package:foosel/blocs/bloc_logout/cubit_logout.dart';

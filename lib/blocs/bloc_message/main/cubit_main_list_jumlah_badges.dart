@@ -5,19 +5,19 @@ import 'package:foosel/firebase/api_chat_firebase/interfaces/interface_get_chat_
 import 'package:foosel/shared/theme_global_variabel.dart';
 
 class CubitJumlahBadges extends Cubit<DataStateBadges> with SharedPref{
-  final InterfaceGetChatFirebase dataGetChatFirebase = getItInstance<InterfaceGetChatFirebase>();
+  final InterfaceGetChatFirebase _dataGetChatFirebase = getItInstance<InterfaceGetChatFirebase>();
   CubitJumlahBadges() : super(DataBadges(notivBadges: [], totalBadges: 0, loading: false));
   getBadgesMessage(List data) async{
-    late List listData = [];
-    late int total = 0;
+    late List _listData = [];
+    late int _total = 0;
     sharedPref();
-    emit(DataBadges(notivBadges: listData, totalBadges: total, loading: true));
+    emit(DataBadges(notivBadges: _listData, totalBadges: _total, loading: true));
     for(int i = 0; i < data.length; i++){
-      listData.add(await dataGetChatFirebase.getJumlahFalseMessage(
+      _listData.add(await _dataGetChatFirebase.getJumlahFalseMessage(
       emailPengirim: prefs.getString('email').toString(),
       emailPenerima: data[i].email.toString()));
-      total += double.parse(listData[i].toString()).toInt();
+      _total += double.parse(_listData[i].toString()).toInt();
     }
-    emit(DataBadges(notivBadges: listData, totalBadges: total, loading: false));
+    emit(DataBadges(notivBadges: _listData, totalBadges: _total, loading: false));
   }
 }

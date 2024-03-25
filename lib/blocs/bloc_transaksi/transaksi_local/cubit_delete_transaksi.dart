@@ -5,14 +5,14 @@ import 'package:foosel/helpers/transaksi/interfaces/interface_delete_data_transa
 import 'package:foosel/shared/theme_global_variabel.dart';
 
 class CubitDeleteTransaksiLocal extends Cubit<DataStatePostTransaksiLocal> implements InterfacesDeleteTransaksi{
-  final InterfaceDeleteDataTransaksiLocal dataDeleteTransaksiLocal = getItInstance<InterfaceDeleteDataTransaksiLocal>();
+  final InterfaceDeleteDataTransaksiLocal _dataDeleteTransaksiLocal = getItInstance<InterfaceDeleteDataTransaksiLocal>();
   CubitDeleteTransaksiLocal() : super(DataPostTransaksiLocal(loadingTransaksi: true, status: false));
   
   @override
   deleteDataTransaksi({required String tokenId}) async{
     emit(DataPostTransaksiLocal(loadingTransaksi: true, status: false));
-    final respons = await dataDeleteTransaksiLocal.deleteDataTransaksiLocalWhereId(tokenId: tokenId);
-    if(respons == 0){
+    final _respons = await _dataDeleteTransaksiLocal.deleteDataTransaksiLocalWhereId(tokenId: tokenId);
+    if(_respons == 0){
       emit(DataPostTransaksiLocal(loadingTransaksi: false, status: true));
     }else{
       emit(DataPostTransaksiLocal(loadingTransaksi: false, status: false));

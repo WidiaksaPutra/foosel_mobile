@@ -7,7 +7,7 @@ mixin ImageSingleAccess{
     required String price,
     required String typeProduct,
   }) async{
-    final ImagePicker imagePicker = ImagePicker();
+    final ImagePicker _imagePicker = ImagePicker();
     if(namaProduct != 'null' 
     && deskripsi != 'null'
     && deskripsi.length < 255
@@ -16,7 +16,7 @@ mixin ImageSingleAccess{
     && typeProduct != "All Product"
     && typeProduct != 'null'
     && price.length <= 16){
-      return await imagePicker.pickImage(source: ImageSource.gallery, maxWidth: 800, maxHeight: 600);
+      return await _imagePicker.pickImage(source: ImageSource.gallery, maxWidth: 800, maxHeight: 600);
     }else{
       return null;
     }

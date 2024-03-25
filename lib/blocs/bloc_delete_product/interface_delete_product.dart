@@ -1,5 +1,5 @@
 abstract class InterfaceDeleteProduct{
-  deleteDataProduct({
+  Future<void> deleteDataProduct({
     required String idProduct, 
     required String image,
   });

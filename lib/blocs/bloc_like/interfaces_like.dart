@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 abstract class InsertLike{
-  saveLocalDataLike({
+  Future<void> saveLocalDataLike({
     required String tokenId, 
     required String name,
     required String email,
@@ -15,15 +15,15 @@ abstract class InsertLike{
 }
 
 abstract class GetLike{
-  getDataLike();
-  getDataLikeWhereIdLocal({required String tokenId});
+  Future<void> getDataLike();
+  Future<void> getDataLikeWhereIdLocal({required String tokenId});
 }
 
 abstract class Like{
-  getLikeInit({
+  Future<void> getLikeInit({
     required String tokenId,
   });
-  getLikeOnClick({
+  Future<void> getLikeOnClick({
     required String name,
     required String email,
     required String categoryName,
@@ -35,5 +35,5 @@ abstract class Like{
     required bool like,
   });
 
-  getLikeDelete({required String tokenId});
+  Future<void> getLikeDelete({required String tokenId});
 }

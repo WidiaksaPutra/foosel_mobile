@@ -1,9 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foosel/blocs/bloc_default/bloc_button_up/interfaces_up_button.dart';
 import 'package:foosel/blocs/bloc_default/bloc_button_up/state_button_up.dart';
 
-class CubitUpButton extends Cubit<StateDataUpButton>{
+class CubitUpButton extends Cubit<StateDataUpButton> implements InterfacesUpButton{
   CubitUpButton() : super(StateUpButton(0,0));
-  upButton({
+  void upButton({
     required int index, 
     required int currentTop, 
     required int currentBody, 

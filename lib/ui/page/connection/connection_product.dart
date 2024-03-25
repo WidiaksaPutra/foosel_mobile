@@ -5,7 +5,7 @@ import 'package:foosel/blocs/bloc_all_products/event_all_products.dart';import '
 import 'package:foosel/blocs/bloc_all_products/main/cubit_main_list_all_products_disconnect.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_default/state/state_connection.dart';
-import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_example.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_connection_example.dart';
 import 'package:foosel/blocs/bloc_default/state/state_product_basic.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/ui/widgets/componen_loading.dart';
@@ -21,20 +21,20 @@ class ConnectionProduct extends StatelessWidget with SharedPref{
   
   dynamic nullAcces = null;
 
-  void shared(ConnectivityResult? data) async{
-    await sharedPref();
-    if(data == ConnectivityResult.none){
-      await prefs.setBool('homeUpConnect', false);
-    }else{
-      await prefs.setBool('homeUpConnect', true);
-    }
-  }
+  // void shared(ConnectivityResult? data) async{
+  //   await sharedPref();
+  //   if(data == ConnectivityResult.none){
+  //     await prefs.setBool('homeUpConnect', false);
+  //   }else{
+  //     await prefs.setBool('homeUpConnect', true);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     ThemeBox(context);
     Widget statusConnect(ConnectivityResult? data){
-      shared(data);
+      // shared(data);
       return BlocConsumer<BlocAllProductConnect, DataStateProductBasic>(
         listener:(context, state) {
           if(state.loadingApi == true){
@@ -47,7 +47,7 @@ class ConnectionProduct extends StatelessWidget with SharedPref{
 
     Widget statusDisconnect(ConnectivityResult? data){
       connection(context: context, onTap: (){Navigator.of(context).pop();}, buttonConnection: false);
-      shared(data);
+      // shared(data);
       return BlocConsumer<CubitMainListAllProductsDisconnect, DataStateProductBasic>(
         listener:(context, state) {
           if(state.loadingApi == true){
@@ -67,9 +67,7 @@ class ConnectionProduct extends StatelessWidget with SharedPref{
               const Duration(milliseconds: 1000),
               () => context.read<BlocAllProductConnect>().add(Product()),
             );
-            return BlocBuilder<BlocAllProductConnect, DataStateProductBasic>(
-              builder: (context, fresh) => statusConnect(snapshot.data)
-            );
+            return statusConnect(snapshot.data);
           }
           else{
             Future.delayed(

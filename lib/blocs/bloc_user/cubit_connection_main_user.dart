@@ -10,8 +10,8 @@ class CubitConnectionMainUser extends Cubit<DataStateConnection> with SharedPref
   CubitConnectionMainUser() : super(DataConnection(false));
   connectCheck(BuildContext context) async{
     try {
-      final result = await InternetAddress.lookup('example.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      final _result = await InternetAddress.lookup('example.com');
+      if (_result.isNotEmpty && _result[0].rawAddress.isNotEmpty) {
         await context.read<CubitMainUserConnect>().fetchUser();
         emit(DataConnection(true));
       }

@@ -14,7 +14,7 @@ import 'package:foosel/shared/theme_konstanta.dart';
 import 'package:go_router/go_router.dart';
 
 class BlocButtonRegisterData extends Bloc<DataEventFormRegister, StateSnackBar> with SharedPref, ColorRandom{
-  final InterfacePostRegister dataPostRegister = getItInstance<InterfacePostRegister>();
+  final InterfacePostRegister _dataPostRegister = getItInstance<InterfacePostRegister>();
   BlocButtonRegisterData() : super(DataStateInitialSnackBar()){
     on<ButtonFormUser>((event, emit) async{
       await buttonSnackBar(
@@ -57,19 +57,19 @@ class BlocButtonRegisterData extends Bloc<DataEventFormRegister, StateSnackBar> 
         ),
       );
       await prosesColorRandom();
-      String rColor = colorData;
-      List<String> inisial = email.split('');
-      String respons = await dataPostRegister.postRegister(
+      String _rColor = colorData;
+      List<String> _inisial = email.split('');
+      String _respons = await _dataPostRegister.postRegister(
         email: email, 
         alamat: alamat,
         password: password, 
         name: fullName, 
         username: username, 
         roles: userRole, 
-        gambarUser: "https://ui-avatars.com/api/?name=${inisial[0].toUpperCase()}&color=FFFFFF&background=$rColor",
+        gambarUser: "https://ui-avatars.com/api/?name=${_inisial[0].toUpperCase()}&color=FFFFFF&background=$_rColor",
         // splitGambarUser[0].toString()
       );
-      if(respons == "berhasil"){
+      if(_respons == "berhasil"){
         emit(
           DataStateSnackBar(
             context.go(navigation),
@@ -78,7 +78,7 @@ class BlocButtonRegisterData extends Bloc<DataEventFormRegister, StateSnackBar> 
             snackBar: true,
             responMessage: snackBarRegisterBerhasil, 
             colorSnackBar: kGreenColor, 
-            responApi: respons,
+            responApi: _respons,
             snackBar2: false,
             responMessage2: "",
             colorSnackBar2: kWhiteColor,
@@ -89,7 +89,7 @@ class BlocButtonRegisterData extends Bloc<DataEventFormRegister, StateSnackBar> 
         prefs.remove('fullNameRegister');
         prefs.remove('usernameRegister');
       }
-      if(respons == "gagal"){
+      if(_respons == "gagal"){
         emit(
           DataStateSnackBar(
             "",
@@ -98,14 +98,14 @@ class BlocButtonRegisterData extends Bloc<DataEventFormRegister, StateSnackBar> 
             snackBar: true,
             responMessage: snackBarRegisterSudahTersedia, 
             colorSnackBar: kRedColor, 
-            responApi: respons,
+            responApi: _respons,
             snackBar2: false,
             responMessage2: "",
             colorSnackBar2: kWhiteColor,
           ),
         );
       }
-      if(respons == "error"){
+      if(_respons == "error"){
         emit(
           DataStateSnackBar(
             "",
@@ -114,7 +114,7 @@ class BlocButtonRegisterData extends Bloc<DataEventFormRegister, StateSnackBar> 
             snackBar: true,
             responMessage: snackBarRegistrasiGagal, 
             colorSnackBar: kRedColor, 
-            responApi: respons,
+            responApi: _respons,
             snackBar2: false,
             responMessage2: "",
             colorSnackBar2: kWhiteColor,

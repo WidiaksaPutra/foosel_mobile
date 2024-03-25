@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_example.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_connection_example.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_dialog_basic.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_default/state/state_connection.dart';

@@ -69,7 +69,7 @@ class HomeMenuActionCardProductPenjual extends HookWidget with DialogBasic, Navi
                       idProduct: idProduct, 
                       image: gambar,
                     );
-                    await context.read<CubitUpButton>().upButton(
+                    context.read<CubitUpButton>().upButton(
                       currentBody: 0, 
                       currentTop: 0,
                       readBloc: {context.read<BlocKlasifikasiCategoriesConnect>().add(KlasifikasiCategories(categoryKey: "0"))}, 

@@ -6,6 +6,7 @@ class NameCategories implements DataEventKlasifikasi{
 
 class KlasifikasiCategories implements DataEventKlasifikasi{
   late String categoryKey;
+  late int pages = 6;
   // late bool connect;
-  KlasifikasiCategories({required this.categoryKey});
+  KlasifikasiCategories({pages, required this.categoryKey});
 }

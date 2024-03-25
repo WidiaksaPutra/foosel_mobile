@@ -8,31 +8,31 @@ import 'package:foosel/shared/theme_global_variabel.dart';
 
 late List userList = [];
 class CubitTitleMessageConnect extends Cubit<DataStateTitleMessage> with SharedPref{
-  final InterfaceInsertNotificationFirebase dataInsertNotificationFirebase = getItInstance<InterfaceInsertNotificationFirebase>();
-  final InterfaceGetUserFirebase dataGetUserFirebase = getItInstance<InterfaceGetUserFirebase>();
-  final InterfaceInsertChatFirebase dataInsertChatFirebase = getItInstance<InterfaceInsertChatFirebase>();
+  final InterfaceInsertNotificationFirebase _dataInsertNotificationFirebase = getItInstance<InterfaceInsertNotificationFirebase>();
+  final InterfaceGetUserFirebase _dataGetUserFirebase = getItInstance<InterfaceGetUserFirebase>();
+  final InterfaceInsertChatFirebase _dataInsertChatFirebase = getItInstance<InterfaceInsertChatFirebase>();
   CubitTitleMessageConnect() : super(DataTitleMessage("","","",true));
   getTitleMessage({required dynamic users, required String message}) async{
     await sharedPref();
-    String emailPenerima = await prefs.getString('emailPenerima').toString();
+    String _emailPenerima = await prefs.getString('emailPenerima').toString();
     emit(DataTitleMessage("","","",true));
-    userList = await dataGetUserFirebase.getUserFirebase(email: prefs.getString('email').toString(), users: users);
+    userList = await _dataGetUserFirebase.getUserFirebase(email: prefs.getString('email').toString(), users: users);
     Future.delayed(
       const Duration(milliseconds: 1000),
       (){
         if(userList.isNotEmpty){
           for(int index = 0; index < userList.length; index++){
-            if(userList[index].email == emailPenerima){
+            if(userList[index].email == _emailPenerima){
               emit(DataTitleMessage(userList[index].gambar.toString(), userList[index].status.toString(), userList[index].nama.toString(), false));
               break;
             }
             if(index == userList.length-1){
-              insertFirebaseChatMessage(emailPenerima: emailPenerima, message: message, prefEmail: prefs.getString('email').toString(), tokenPenerima: "");
+              insertFirebaseChatMessage(emailPenerima: _emailPenerima, message: message, prefEmail: prefs.getString('email').toString(), tokenPenerima: "");
               break;
             }
           }
         }else{
-          insertFirebaseChatMessage(emailPenerima: emailPenerima, message: message, prefEmail: prefs.getString('email').toString(), tokenPenerima: "");
+          insertFirebaseChatMessage(emailPenerima: _emailPenerima, message: message, prefEmail: prefs.getString('email').toString(), tokenPenerima: "");
         }
       } 
     );
@@ -45,12 +45,12 @@ class CubitTitleMessageConnect extends Cubit<DataStateTitleMessage> with SharedP
     required String prefEmail
   }) async{
     if(message != ""){
-      await dataInsertChatFirebase.insertChatFirebase(
+      await _dataInsertChatFirebase.insertChatFirebase(
         emailPengirim: prefEmail, 
         emailPenerima: emailPenerima, 
         messager: message,
       );
-      await dataInsertNotificationFirebase.insertNotificationFirebase(
+      await _dataInsertNotificationFirebase.insertNotificationFirebase(
         deviceToken: tokenPenerima,
         body: message,
         title: prefEmail,

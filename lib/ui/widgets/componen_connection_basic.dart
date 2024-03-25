@@ -1,7 +1,7 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_default/bloc/cubit_connection.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_connection.dart';
 import 'package:go_router/go_router.dart';
 
 class ComponenConnectionBasic extends StatelessWidget{

@@ -14,25 +14,24 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CubitLogout extends Cubit<StateDataLogout> with NavigasiRole{
-  final InterfaceGetLogout dataGetLogout = getItInstance<InterfaceGetLogout>();
-  final InterfaceUpdateUserFirebase dataUpdateUserFirebase = getItInstance<InterfaceUpdateUserFirebase>();
-  final InterfaceDeleteDataLikeLocal dataDeleteLike = getItInstance<InterfaceDeleteDataLikeLocal>();
-  final InterfaceDeleteDataTransaksiLocal dataTransaksiLocal = getItInstance<InterfaceDeleteDataTransaksiLocal>();
-  final InterfaceDeleteDataProductTransaksiLocal dataDeleteProductTransaksi = getItInstance<InterfaceDeleteDataProductTransaksiLocal>();
-  final InterfaceDeleteDataCategoryLocal dataDeleteCategoryLocal = getItInstance<InterfaceDeleteDataCategoryLocal>();
+  final InterfaceGetLogout _dataGetLogout = getItInstance<InterfaceGetLogout>();
+  final InterfaceUpdateUserFirebase _dataUpdateUserFirebase = getItInstance<InterfaceUpdateUserFirebase>();
+  final InterfaceDeleteDataLikeLocal _dataDeleteLike = getItInstance<InterfaceDeleteDataLikeLocal>();
+  final InterfaceDeleteDataTransaksiLocal _dataTransaksiLocal = getItInstance<InterfaceDeleteDataTransaksiLocal>();
+  final InterfaceDeleteDataProductTransaksiLocal _dataDeleteProductTransaksi = getItInstance<InterfaceDeleteDataProductTransaksiLocal>();
+  final InterfaceDeleteDataCategoryLocal _dataDeleteCategoryLocal = getItInstance<InterfaceDeleteDataCategoryLocal>();
   CubitLogout() : super(DataLogout(loadingLogout: false));
   logout({required BuildContext context}) async{
     navigasiR();
     emit(DataLogout(loadingLogout: true));
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final statusLogout = await dataGetLogout.getLogout(); 
+    final statusLogout = await _dataGetLogout.getLogout(); 
     if(await statusLogout == "berhasil"){
-      await dataUpdateUserFirebase.updateUserFirebase(email: prefs.getString('email').toString(), statusUser: "Offline");
-      await dataDeleteLike.deleteDataLikeLocal();
-      await dataTransaksiLocal.deleteDataTransaksiLocal();
-      await dataDeleteProductTransaksi.deleteDataProductTransaksiLocal();
-      await dataDeleteCategoryLocal.deleteDataCategoryLocal();
-
+      await _dataUpdateUserFirebase.updateUserFirebase(email: prefs.getString('email').toString(), statusUser: "Offline");
+      await _dataDeleteLike.deleteDataLikeLocal();
+      await _dataTransaksiLocal.deleteDataTransaksiLocal();
+      await _dataDeleteProductTransaksi.deleteDataProductTransaksiLocal();
+      await _dataDeleteCategoryLocal.deleteDataCategoryLocal();
       prefs.remove('emailPenerima');
       prefs.remove('detailTokenId');
       prefs.remove('navDetailRole');
@@ -41,6 +40,8 @@ class CubitLogout extends Cubit<StateDataLogout> with NavigasiRole{
       prefs.remove('homeUpConnect');
       prefs.remove('email');
       prefs.remove("navBadges");
+      prefs.remove("categoriesIdConnect");
+      prefs.remove("categoriesIdDisconnect");
       context.go(RouteName.homeGuest);
       emit(DataLogout(loadingLogout: false));
     }

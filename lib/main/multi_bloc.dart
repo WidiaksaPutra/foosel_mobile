@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_pembeli/cubit_detail_produk_nav_pembeli.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_penjual/cubit_detail_produk_nav_penjual.dart';
-import 'package:foosel/blocs/bloc_default/bloc/bloc_form_button_not_null_barang.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/bloc_form_button_not_null_barang.dart';
 import 'package:foosel/blocs/bloc_add_product/main/bloc_upload_add_product.dart';
-import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_basic.dart';
-import 'package:foosel/blocs/bloc_default/bloc/cubit_form_not_null_barang.dart';
-import 'package:foosel/blocs/bloc_default/bloc/cubit_navigation_list_image_barang.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_connection_basic.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_connection_navigasi.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_form_not_null_barang.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_navigation_list_image_barang.dart';
 import 'package:foosel/blocs/bloc_all_products/main/bloc_main_all_products_connect.dart';
 import 'package:foosel/blocs/bloc_all_products/main/cubit_main_list_all_products_disconnect.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_pembeli/cubit_bottom_nav_pembeli.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_penjual/cubit_bottom_nav_penjual.dart';
-import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_example.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_connection_example.dart';
 import 'package:foosel/blocs/bloc_categories/main/connect/bloc_main_klasifikasi_categories_connect.dart';
 import 'package:foosel/blocs/bloc_categories/main/connect/bloc_main_name_categories_connect.dart';
 import 'package:foosel/blocs/bloc_categories/main/cubit_connection_name_categories.dart';
@@ -19,8 +20,7 @@ import 'package:foosel/blocs/bloc_categories/main/cubit_main_data_noscroll_categ
 import 'package:foosel/blocs/bloc_categories/main/disconnect/bloc_main_klasifikasi_categories_disconnect.dart';
 import 'package:foosel/blocs/bloc_categories/main/disconnect/bloc_main_name_categories_disconnect.dart';
 import 'package:foosel/blocs/bloc_default/bloc_button_up/cubit_button_up.dart';
-import 'package:foosel/blocs/bloc_default/bloc/cubit_connection.dart';
-import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_navigasi.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_connection.dart';
 import 'package:foosel/blocs/bloc_delete_product/cubit_delete_product.dart';
 import 'package:foosel/blocs/bloc_detail_products/cubit_detail_navigasi_product.dart';
 import 'package:foosel/blocs/bloc_detail_products/detail_product/cubit_detail_product_connect.dart';
@@ -296,6 +296,7 @@ class MultiBlocProviderGetX extends StatelessWidget {
             setupDInjectionTransaksiLocal();
             setupDInjectionLikeLocal();
             setupDInjectionProduct();
+            setupDInjectionTransaksi();
             return CubitDeleteProduct();
           }
         ),
@@ -360,7 +361,8 @@ class MultiBlocProviderGetX extends StatelessWidget {
         ),
         BlocProvider(
           create: (context){
-            setupDInjectionTransaksi();
+            setupDInjectionProduct();
+            setupDInjectionTransaksiLocal();
             return CubitDeleteTransaksi();
           }
         ),

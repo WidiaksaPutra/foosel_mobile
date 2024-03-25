@@ -10,11 +10,11 @@ import 'package:foosel/shared/theme_global_variabel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CubitPostTransaksi extends Cubit<DataStatePostTransaksi> implements InterfacesInsertTransaksi{
-  final InterfacePostTransaksi dataInsertTransaksi = getItInstance<InterfacePostTransaksi>();
-  final InterfaceDeleteDataTransaksiLocal dataDeleteTransaksiLocal = getItInstance<InterfaceDeleteDataTransaksiLocal>();
-  final InterfaceInsertDataProductTransaksiLocal dataInsertTransaksiProductLocal = getItInstance<InterfaceInsertDataProductTransaksiLocal>();
-  final InterfaceGetTransaksi dataGetTransaksi = getItInstance<InterfaceGetTransaksi>();
-  final InterfaceDeleteDataProductTransaksiLocal dataDeleteTransaksi = getItInstance<InterfaceDeleteDataProductTransaksiLocal>();
+  final InterfacePostTransaksi _dataInsertTransaksi = getItInstance<InterfacePostTransaksi>();
+  final InterfaceDeleteDataTransaksiLocal _dataDeleteTransaksiLocal = getItInstance<InterfaceDeleteDataTransaksiLocal>();
+  final InterfaceInsertDataProductTransaksiLocal _dataInsertTransaksiProductLocal = getItInstance<InterfaceInsertDataProductTransaksiLocal>();
+  final InterfaceGetTransaksi _dataGetTransaksi = getItInstance<InterfaceGetTransaksi>();
+  final InterfaceDeleteDataProductTransaksiLocal _dataDeleteTransaksi = getItInstance<InterfaceDeleteDataProductTransaksiLocal>();
   CubitPostTransaksi() : super(DataPostTransaksi(loadingTransaksi: false, status: false));
   
   @override
@@ -29,9 +29,9 @@ class CubitPostTransaksi extends Cubit<DataStatePostTransaksi> implements Interf
     required String quantity, 
     required String status,
   }) async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
     emit(DataPostTransaksi(loadingTransaksi: true, status: false));
-    String respons = await dataInsertTransaksi.postTransaksi(
+    String _respons = await _dataInsertTransaksi.postTransaksi(
       usersEmailPembeli: emailPembeli, 
       usersEmailPenjual: emailPenjual, 
       productsId: productsId, 
@@ -42,11 +42,11 @@ class CubitPostTransaksi extends Cubit<DataStatePostTransaksi> implements Interf
       total: total, 
       totalPrice: totalPrice,
     );
-    if(respons == "berhasil"){
-      await dataDeleteTransaksiLocal.deleteDataTransaksiLocal();
-      await dataDeleteTransaksi.deleteDataProductTransaksiLocal();
-      List dataListTransaksi = await dataGetTransaksi.getTransaksi(email: prefs.getString('email').toString());
-      await _insertDataTransaksiHistoryLocal(dataListTransaksi: dataListTransaksi);
+    if(_respons == "berhasil"){
+      await _dataDeleteTransaksiLocal.deleteDataTransaksiLocal();
+      await _dataDeleteTransaksi.deleteDataProductTransaksiLocal();
+      List _dataListTransaksi = await _dataGetTransaksi.getTransaksi(email: _prefs.getString('email').toString());
+      await _insertDataTransaksiHistoryLocal(dataListTransaksi: _dataListTransaksi);
       emit(DataPostTransaksi(loadingTransaksi: false, status: true));
     }else{
       emit(DataPostTransaksi(loadingTransaksi: false, status: false));
@@ -54,9 +54,9 @@ class CubitPostTransaksi extends Cubit<DataStatePostTransaksi> implements Interf
   }
 
   Future<void> _insertDataTransaksiHistoryLocal({required List dataListTransaksi}) async{
-    late int dataLengthListTransaksi = (dataListTransaksi.length <= 10) ? dataListTransaksi.length : 10; 
-    dataListTransaksi.take(dataLengthListTransaksi).forEach((data) async {
-      await dataInsertTransaksiProductLocal.insertDataProductTransaksiLocal(
+    late int _dataLengthListTransaksi = (dataListTransaksi.length <= 10) ? dataListTransaksi.length : 10; 
+    dataListTransaksi.take(_dataLengthListTransaksi).forEach((data) async {
+      await _dataInsertTransaksiProductLocal.insertDataProductTransaksiLocal(
         tokenTransaksi: data.transactionsId.toString(),
         usersEmailPembeli: data.usersEmailPembeli.toString(),
         usersEmailPenjual: data.usersEmailPenjual.toString(),

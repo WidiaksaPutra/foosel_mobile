@@ -13,11 +13,11 @@ import 'package:foosel/shared/theme_global_variabel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BlocDetailMessageConnect extends Bloc<DataEventMessage, DataBlocStateChatMessage> with SharedPref{
-  final InterfaceInsertNotificationFirebase dataInsertNotificationFirebase = getItInstance<InterfaceInsertNotificationFirebase>();
-  final InterfaceInsertChatFirebase dataInsertChatFirebase = getItInstance<InterfaceInsertChatFirebase>();
-  final InterfaceGetChatFirebase dataGetChatFirebase = getItInstance<InterfaceGetChatFirebase>();
-  final InterfaceUpdateChatFirebase dataUpdateChatFirebase = getItInstance<InterfaceUpdateChatFirebase>();
-  final InterfaceSearchIdChatPersonalFirebase dataSearchIdChatPersonal = getItInstance<InterfaceSearchIdChatPersonalFirebase>();
+  final InterfaceInsertNotificationFirebase _dataInsertNotificationFirebase = getItInstance<InterfaceInsertNotificationFirebase>();
+  final InterfaceInsertChatFirebase _dataInsertChatFirebase = getItInstance<InterfaceInsertChatFirebase>();
+  final InterfaceGetChatFirebase _dataGetChatFirebase = getItInstance<InterfaceGetChatFirebase>();
+  final InterfaceUpdateChatFirebase _dataUpdateChatFirebase = getItInstance<InterfaceUpdateChatFirebase>();
+  final InterfaceSearchIdChatPersonalFirebase _dataSearchIdChatPersonal = getItInstance<InterfaceSearchIdChatPersonalFirebase>();
   BlocDetailMessageConnect() : super(DataBlocChatMessage(false)){
     on<DataEventPostMessage>((event, emit) async{
       await sharedPref();
@@ -33,18 +33,18 @@ class BlocDetailMessageConnect extends Bloc<DataEventMessage, DataBlocStateChatM
     required String tokenPenerima,
   }) async{
     emit(DataBlocChatMessage(true));
-    String emailPengirim = prefs.getString('email').toString();
-    String emailPenerima = prefs.getString('emailPenerima').toString();
+    String _emailPengirim = prefs.getString('email').toString();
+    String _emailPenerima = prefs.getString('emailPenerima').toString();
     await insertFirebaseChatMessage(
-      emailPenerima: emailPenerima,
+      emailPenerima: _emailPenerima,
       message: message,
       tokenPenerima: tokenPenerima,
-      prefEmail: emailPengirim,
+      prefEmail: _emailPengirim,
     );
     await getFirebaseChatMessage(
-      emailPenerima: emailPenerima, 
+      emailPenerima: _emailPenerima, 
       message: message,
-      prefEmail: emailPengirim,
+      prefEmail: _emailPengirim,
     );
     emit(DataBlocChatMessage(false));
   }
@@ -56,12 +56,12 @@ class BlocDetailMessageConnect extends Bloc<DataEventMessage, DataBlocStateChatM
     required String prefEmail
   }) async{
     if(message != ""){
-      await dataInsertChatFirebase.insertChatFirebase(
+      await _dataInsertChatFirebase.insertChatFirebase(
         emailPengirim: prefEmail, 
         emailPenerima: emailPenerima, 
         messager: message
       );
-      await dataInsertNotificationFirebase.insertNotificationFirebase(
+      await _dataInsertNotificationFirebase.insertNotificationFirebase(
         deviceToken: tokenPenerima,
         body: message,
         title: prefEmail,
@@ -73,7 +73,7 @@ class BlocDetailMessageConnect extends Bloc<DataEventMessage, DataBlocStateChatM
     required String emailPenerima,
     required String emailPengirim
   }) async{
-    await dataUpdateChatFirebase.updateChatFirebase(emailPenerima: emailPenerima, emailPengirim: emailPengirim);
+    await _dataUpdateChatFirebase.updateChatFirebase(emailPenerima: emailPenerima, emailPengirim: emailPengirim);
   }
 
   getFirebaseChatMessage({
@@ -81,14 +81,14 @@ class BlocDetailMessageConnect extends Bloc<DataEventMessage, DataBlocStateChatM
     required String message, 
     required String prefEmail,
   }) async{
-    await dataGetChatFirebase.getChatFirebase(emailPengirim: prefEmail, emailPenerima: emailPenerima);
+    await _dataGetChatFirebase.getChatFirebase(emailPengirim: prefEmail, emailPenerima: emailPenerima);
   }
   
   Stream<QuerySnapshot<Map<String, dynamic>>> get getStreamFirebaseChatMessage async*{
     SharedPreferences pref = await SharedPreferences.getInstance(); 
     String emailPenerima = pref.getString('emailPenerima').toString();
     String emailPengirim = pref.getString('email').toString();   
-    String chatIdMessage = await dataSearchIdChatPersonal.searchIdChatPersonal(
+    String chatIdMessage = await _dataSearchIdChatPersonal.searchIdChatPersonal(
       emailPengirim: emailPengirim,
       emailPenerima: emailPenerima,
     );

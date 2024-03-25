@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_categories/main/cubit_main_data_noscroll_categories.dart';
 import 'package:foosel/blocs/bloc_categories/state_categories.dart';
-import 'package:foosel/blocs/bloc_default/bloc/cubit_form_not_null_barang.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_form_not_null_barang.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/ui/widgets/componen_advanced/componen_text_drop_down.dart';

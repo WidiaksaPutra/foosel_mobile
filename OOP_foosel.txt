@@ -1,0 +1,117 @@
+OOP Foosel :
+
+pengertian OOP secara umum :
+OOP(Object Oriented Programming) meruapakan paradigma pemrograman dengan konsep objek,
+yang dimana setiap objek terdiri dari atribut dan metode yang digunakan untuk memanipulasi objek.
+
+Konsep OOP :
+- Class
+- Object
+- Encapsulation v
+- Inheritance v
+- Polymorphism v
+- Abstraction
+- Composition
+- Association
+- Aggregation
+- Dependency
+
+Konsep Pengembangan/Tambahan OOP :
+- SOLID Principles
+	- Single Responsibility Principle (SRP)
+	- Open/Closed Principle (OCP)
+	- Liskov Substitution Principle (LSP)
+	- Interface Segregation Principle (ISP)
+	- Dependency Inversion Principle (DIP)
+- Design Patterns
+	- Factory
+	- Singleton
+	- Observer
+	- Strategy
+	- Adapter
+- Metode Pengembangan OOP
+	- Object-Oriented Analysis and Design (OOAD)
+	- Object-Oriented Modeling (OOM)
+- Anti-Patterns
+	- God Class
+	- Spaghetti Code
+- Konsep Lanjutan
+	- Reflection
+	- Metaprogramming
+	- Aspect-Oriented Programming (AOP)
+- Dependency Injection (DI)
+- Template Method Pattern
+- State Pattern
+- Command Pattern
+- Builder Pattern
+- Model-View-ViewModel (MVVM)
+- Database Management in OOP:
+	- Penggunaan ORM (Object-Relational Mapping)
+- Caching Strategies
+- Event-Driven Programming
+- Cross-Cutting Concerns
+
+Berikut adalah beberapa contoh kombinasi konsep OOP yang sering digunakan bersamaan:
+
+- SOLID Principles + Design Patterns
+- Abstraction + Encapsulation + Inheritance + Polymorphism + Design Patterns
+- Object-Oriented Analysis and Design (OOAD) + Design Patterns + Refactoring
+- Dependency Injection + Dependency Inversion Principle + Design Patterns
+- Model-View-Controller (MVC) + Observer Pattern + Design Patterns
+====================================================
+
+- Class adalah blueprint atau cetakan untuk menciptakan objek. Class mendefinisikan atribut (variabel) dan metode (fungsi) yang dimiliki oleh objek. Dalam OOP, objek diciptakan dari sebuah class.
+	contoh class dan isinya:
+class ClassConnectionDialog with DialogBasic, NavigasiRole, NavigasiRoleBarRead{
+  void basicConnection({
+    required BuildContext context,
+    required VoidCallback onTap,
+    required bool buttonConnection,
+  })async {
+    ThemeBox(context);
+    var listener = InternetConnectionChecker().onStatusChange.listen((status){
+      if (status == InternetConnectionStatus.disconnected) {
+        voidDialogBasic(
+          margin: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
+          padding: EdgeInsets.only(left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, top: ThemeBox.defaultHeightBox30),
+          borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10),
+          color: kBlackColor6,
+          context: context, 
+          closeIconStatus: false,
+          barrierDismissible: true,
+          contentDialog: (buttonConnection == false) 
+          ? ComponenContentDialog_ImageAndTitleTextAndText(
+              titleText: 'Koneksi Internet Terputus', 
+              image: 'asset/animations/wifi_disconnect.json',
+              text: 'penggunaan aplikasi akan dibatasi karena aplikasi dalam mode offline',
+            )
+          : ComponenContentDialog_ImageAndTitleTextAndButtonRefresh(
+              text: 'Koneksi Internet Terputus',
+              image: 'asset/animations/wifi_disconnect.json',
+              onTapRefresh: () {
+               navigasiRBR(context: context, value: 0);
+               navigasiR();
+               context.go(navigation);
+              },
+            ),
+          onTapCloseDialog: onTap,
+        );
+      }
+    });
+    Future.delayed(
+      const Duration(seconds: 30),
+      () => listener.cancel(),
+    ); 
+  }
+}
+
+=================================================
+
+- Object adalah hasil instansiasi dari sebuah class. Ketika membuat sebuah objek dari sebuah class, objek tersebut akan memiliki atribut (variabel) dan metode (fungsi) sesuai dengan definisi class tersebut. dan melalui objek tersebut, kita Dapat mengakses atribut dan metode yang didefinisikan dalam class tersebut.
+	contoh 
+ClassConnectionDialog connection = ClassConnectionDialog();
+connection.basicConnection(context: context, onTap: (){Navigator.of(context).pop();}, buttonConnection: false);
+
+==================================================
+
+-

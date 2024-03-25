@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_default/event/event_form_user.dart';
-import 'package:foosel/blocs/bloc_default/class/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/class/class/connection_dialog.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_login/main/bloc_main_button_login.dart';
 import 'package:foosel/blocs/bloc_login/main/bloc_main_data_login.dart';

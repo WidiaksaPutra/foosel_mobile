@@ -7,18 +7,18 @@ import 'package:foosel/firebase/api_user_firebase/interfaces/interface_update_us
 import 'package:foosel/shared/theme_global_variabel.dart';
 
 class CubitListMessageConnect extends Cubit<DataStateListMessage> with SharedPref{
-  final InterfaceGetUserFirebase dataGetUserFirebase = getItInstance<InterfaceGetUserFirebase>();
-  final InterfaceUpdateUserFirebase dataUpdateUserFirebase = getItInstance<InterfaceUpdateUserFirebase>();
+  final InterfaceGetUserFirebase _dataGetUserFirebase = getItInstance<InterfaceGetUserFirebase>();
+  final InterfaceUpdateUserFirebase _dataUpdateUserFirebase = getItInstance<InterfaceUpdateUserFirebase>();
   CubitListMessageConnect() : super(DataListMessage([], true));
   getListMessage(dynamic users) async{
     await sharedPref();
-    final userList = await dataGetUserFirebase.getUserFirebase(email: prefs.getString('email').toString(), users: users);
-    emit(await DataListMessage(userList, false));
+    final _userList = await _dataGetUserFirebase.getUserFirebase(email: prefs.getString('email').toString(), users: users);
+    emit(await DataListMessage(_userList, false));
   }
 
   updateListMessage() async{
     await sharedPref();
-    await dataUpdateUserFirebase.updateUserFirebase(email: prefs.getString('email').toString(), statusUser: "Online");
+    await _dataUpdateUserFirebase.updateUserFirebase(email: prefs.getString('email').toString(), statusUser: "Online");
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> get getStreamFirebaseListMessage{

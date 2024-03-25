@@ -4,47 +4,47 @@ import 'package:foosel/blocs/bloc_transaksi/transaksi_local/state_transaksi.dart
 import 'package:foosel/helpers/transaksi/interfaces/interface_get_data_transaksi_local.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 
-late List dataTransaksi = [];
+late List _dataTransaksi = [];
 class CubitGetTransaksiLocal extends Cubit<DataStateGetTransaksiLocal> implements InterfacesGetTransaksiLocal{
-  final InterfaceGetDataTransaksiLocal dataTransaksiLocal = getItInstance<InterfaceGetDataTransaksiLocal>();
+  final InterfaceGetDataTransaksiLocal _dataTransaksiLocal = getItInstance<InterfaceGetDataTransaksiLocal>();
   CubitGetTransaksiLocal() : super(DataGetTransaksiLocal(
-    getData: dataTransaksi, 
+    getData: _dataTransaksi, 
     loadingTransaksi: true, 
     totalHarga: 0,
   ));
 
   @override
   getDataTransaksi() async{
-    dataTransaksi.clear();
+    _dataTransaksi.clear();
     emit(DataGetTransaksiLocal(
-      getData: dataTransaksi, 
+      getData: _dataTransaksi, 
       loadingTransaksi: true, 
       totalHarga: 0,
     ));
-    dataTransaksi.addAll(await dataTransaksiLocal.getDataTransaksiLocal());
-    late int totalHarga = 0;
-    dataTransaksi.forEach((data) {
-      totalHarga = totalHarga + double.parse(data['hargaTotal'].toString()).toInt();
+    _dataTransaksi.addAll(await _dataTransaksiLocal.getDataTransaksiLocal());
+    late int _totalHarga = 0;
+    _dataTransaksi.forEach((data) {
+      _totalHarga = _totalHarga + double.parse(data['hargaTotal'].toString()).toInt();
     });
     emit(DataGetTransaksiLocal(
       loadingTransaksi: false, 
-      getData: dataTransaksi, 
-      totalHarga: totalHarga,
+      getData: _dataTransaksi, 
+      totalHarga: _totalHarga,
     ));
   }
 
   @override
   getDataTransaksiWhereId({required String tokenId}) async{
-    dataTransaksi.clear();
+    _dataTransaksi.clear();
     emit(DataGetTransaksiLocal(
-      getData: dataTransaksi,
+      getData: _dataTransaksi,
       loadingTransaksi: true, 
       totalHarga: 0,
     ));
-    dataTransaksi.addAll(await dataTransaksiLocal.getDataTransaksiWhereIdLocal(tokenId: tokenId));
+    _dataTransaksi.addAll(await _dataTransaksiLocal.getDataTransaksiWhereIdLocal(tokenId: tokenId));
     emit(DataGetTransaksiLocal(
       loadingTransaksi: false,
-      getData: dataTransaksi, 
+      getData: _dataTransaksi, 
       totalHarga: 0,
     ));
   }

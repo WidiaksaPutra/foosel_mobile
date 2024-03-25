@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foosel/blocs/bloc_default/class/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/class/class/connection_dialog.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/shared/theme_font.dart';
 import 'package:foosel/shared/theme_text_style.dart';

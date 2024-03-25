@@ -4,10 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_categories/main/connect/bloc_main_name_categories_connect.dart';
 import 'package:foosel/blocs/bloc_categories/main/cubit_connection_name_categories.dart';
 import 'package:foosel/blocs/bloc_categories/main/disconnect/bloc_main_name_categories_disconnect.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_connection_basic.dart';
 import 'package:foosel/blocs/bloc_default/bloc_button_up/cubit_button_up.dart';
 import 'package:foosel/blocs/bloc_default/bloc_button_up/state_button_up.dart';
-import 'package:foosel/blocs/bloc_default/bloc/cubit_connection_basic.dart';
-import 'package:foosel/blocs/bloc_default/mixin/mixin_size_device.dart';
 import 'package:foosel/blocs/bloc_default/state/state_connection.dart';
 import 'package:foosel/routes/route_name.dart';
 import 'package:foosel/shared/theme_box.dart';
@@ -22,16 +21,12 @@ import 'package:foosel/ui/widgets/componen_basic/componen_basic_button.dart';
 import 'package:foosel/ui/widgets/componen_carousel_slider_image_sliver.dart';
 import 'package:foosel/ui/widgets/componen_head_home_menu.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lottie/lottie.dart';
 
-class MenuGuest extends HookWidget with SizeDevice{
+class MenuGuest extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     ThemeBox(context);
-    getsizeDevice(context);
-    late double heightPage = sizeHeight;
-    if(heightPage < 0.0){heightPage = 0.0;};
     context.read<CubitConnectionBasic>().connectCheck(context);
     return Scaffold(
       backgroundColor: kPrimaryColor,
@@ -87,8 +82,8 @@ class MenuGuest extends HookWidget with SizeDevice{
                 SliverFillRemaining(
                   child: BlocBuilder<CubitUpButton, StateDataUpButton>(builder: (context, stateDesign) 
                     => (stateDesign.currentBody == 0) 
-                    ? BodyHomeMenu(heightPage: heightPage) 
-                    : BodyHomeMenuKlasifikasi(heightPage: heightPage),
+                    ? BodyHomeMenu() 
+                    : BodyHomeMenuKlasifikasi(),
                   ),
                 ),
               ],

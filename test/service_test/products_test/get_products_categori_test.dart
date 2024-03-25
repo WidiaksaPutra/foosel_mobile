@@ -9,11 +9,11 @@ void main(){
     setupDInjectionProduct();
     final InterfaceGetDataProductsCategory dataGetProductCategoryFuture = getItInstance<InterfaceGetDataProductsCategory>();
     
-    test("Unit Test Service Get Data Products Categori Null", () async{
+    test("Unit Test Service Get Data Categori Products Guest", () async{
       final data = await dataGetProductCategoryFuture.getDataProductsCategory(
         testing: true,
         categoriesId: idCategory, 
-        fresh: true,
+        fresh: true
       );
       expect(data, equals("berhasil"));
     });
@@ -40,7 +40,7 @@ void main(){
       final data = await dataGetProductCategoryFuture.getDataProductsCategory(
         testing: true, 
         testingToken: tokenUserPenjual,
-        categoriesId: idCategory, 
+        categoriesId: idCategory,
         fresh: true,
       );
       expect(data, equals("berhasil"));
@@ -98,7 +98,7 @@ void main(){
       Map<String, String> parameterApi = {
         'categories_id' : idCategory,
         'page' : '1',
-        'limit' : '5',
+        'limit' : '6',
       };
       final data = await dataGetProductCategoryFuture.getDataProductUsers(
         testing: true, 
@@ -117,7 +117,7 @@ void main(){
       Map<String, String> parameterApi = {
         'categories_id' : idCategory,
         'page' : '1',
-        'limit' : '5',
+        'limit' : '6',
       };
       final data = await dataGetProductCategoryFuture.getDataProductUsers(
         testing: true, 

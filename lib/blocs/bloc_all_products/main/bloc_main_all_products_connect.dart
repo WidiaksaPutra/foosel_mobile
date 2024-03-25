@@ -11,56 +11,49 @@ import 'package:foosel/service/api_products/interfaces/interface_get_data_produc
 import 'package:foosel/service/api_konstanta.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 
-ScrollController scrollController = ScrollController();
-late List dataList = [];
-late bool loadingScrolling = false, loadingApi = true;
+ScrollController _scrollController = ScrollController();
+late List _dataList = [];
+late bool _loadingScrolling = false, _loadingApi = true;
 class BlocAllProductConnect extends Bloc<DataEventAllProduct,DataStateProductBasic> implements InterfacesAllProductConnect{
-  final InterfaceGetDataProduct dataGetProduct = getItInstance<InterfaceGetDataProduct>();
-  final InterfaceInsertDataProductsLocal dataGetProductLocal = getItInstance<InterfaceInsertDataProductsLocal>();
-  final InterfaceDeleteDataProductLocal dataDeleteProductLocal = getItInstance<InterfaceDeleteDataProductLocal>();
+  final InterfaceGetDataProduct _dataGetProduct = getItInstance<InterfaceGetDataProduct>();
+  final InterfaceInsertDataProductsLocal _dataGetProductLocal = getItInstance<InterfaceInsertDataProductsLocal>();
+  final InterfaceDeleteDataProductLocal _dataDeleteProductLocal = getItInstance<InterfaceDeleteDataProductLocal>();
   BlocAllProductConnect() : super(
     DataProductBasic(
-      scrollControl: scrollController,
-      getData: dataList,
-      loadingScroll: loadingScrolling,
-      loadingApi: loadingApi,
+      scrollControl: _scrollController,
+      getData: _dataList,
+      loadingScroll: _loadingScrolling,
+      loadingApi: _loadingApi,
     ),
   ){
     on<Product>((event, emit) async{
       await getDataAllProduct(pages: event.pages);
-      await saveLocalDataAllProduct();
-      await scrollControlAllProduct(pages: event.pages);
+      await saveLocalDataAllProduct(); 
+      scrollControlAllProduct(pages: event.pages);
     });
   }
 
   @override
-  getDataAllProduct({required int pages}) async {
-    loadingScrolling = false;
-    dataList = await dataGetProduct.getDataProduct(pages: pages);
-    loadingApi = false;
-    emit(
-      DataProductBasic(
-        scrollControl: scrollController,
-        getData: dataList,
-        loadingScroll: loadingScrolling,
-        loadingApi: loadingApi,
-      ),
-    );
+  Future<void> getDataAllProduct({required int pages}) async {
+    _loadingScrolling = false;
+    _dataList = await _dataGetProduct.getDataProduct(pages: pages);
+    _loadingApi = false;
+    _emitState();
   }
   
   @override
-  saveLocalDataAllProduct() async{
-    await dataDeleteProductLocal.deleteDataProductLocal();
-    if(dataList.length <= 10){
-      for(int i = 0; i < dataList.length; i++) {
-        await dataGetProductLocal.insertDataLocal(
-          description: dataList[i].description.toString(),
-          tokenId: dataList[i].tokenId.toString(),
-          name: dataList[i].name.toString(),
-          email: dataList[i].email.toString(),
-          nameCategory: dataList[i].category!.name.toString(),
-          price: dataList[i].price.toString(),
-          imagePath: "${Api.linkURL}/${dataList[i].urlImage.toString()}",
+  Future<void> saveLocalDataAllProduct() async{
+    await _dataDeleteProductLocal.deleteDataProductLocal();
+    if(_dataList.length <= 10){
+      for(int i = 0; i < _dataList.length; i++) {
+        await _dataGetProductLocal.insertDataLocal(
+          description: _dataList[i].description.toString(),
+          tokenId: _dataList[i].tokenId.toString(),
+          name: _dataList[i].name.toString(),
+          email: _dataList[i].email.toString(),
+          nameCategory: _dataList[i].category!.name.toString(),
+          price: _dataList[i].price.toString(),
+          imagePath: "${Api.linkURL}/${_dataList[i].urlImage.toString()}",
         );
       }
     }  
@@ -68,33 +61,30 @@ class BlocAllProductConnect extends Bloc<DataEventAllProduct,DataStateProductBas
   
   @override
   scrollControlAllProduct({required int pages}) {
-    scrollController.addListener(() async {
-      if(scrollController.position.pixels == scrollController.position.maxScrollExtent && loadingScrolling == false){
-        loadingScrolling = true;
-        pages = pages + 5;
-        dataList = await dataGetProduct.getDataProduct(pages: pages);
-        loadingApi = false;
-        emit(
-          DataProductBasic(
-            scrollControl: scrollController,
-            getData: await dataList, 
-            loadingScroll: loadingScrolling,
-            loadingApi: loadingApi,
-          ),
-        );
+    _scrollController.addListener(() async {
+      if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent && _loadingScrolling == false){
+        _loadingScrolling = true;
+        pages = pages + 4;
+        _dataList = await _dataGetProduct.getDataProduct(pages: pages);
+        _loadingApi = false;
+        _emitState();
         await Future.delayed(
           Duration(milliseconds: 3000),
-          () => loadingScrolling = false,
+          () => _loadingScrolling = false,
         );
-        emit(
-          DataProductBasic(
-            scrollControl: scrollController,
-            getData: await dataList,
-            loadingScroll: loadingScrolling,
-            loadingApi: loadingApi,
-          ),
-        );
+        _emitState();
       }
     });
-  } 
+  }
+
+  void _emitState(){
+    emit(
+      DataProductBasic(
+        scrollControl: _scrollController,
+        getData: _dataList,
+        loadingScroll: _loadingScrolling,
+        loadingApi: _loadingApi,
+      ),
+    );
+  }
 }

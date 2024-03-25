@@ -13,7 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 late BuildContext context1;
 class BlocUploadUpdateProduct extends Bloc<DataEventUpdateBarang, StateUpdateBarang> with SharedPref implements InterfacesButtonUpdateProduct{
-  final InterfaceUpdateDataProduct updateDataProduct = getItInstance<InterfaceUpdateDataProduct>();
+  final InterfaceUpdateDataProduct _updateDataProduct = getItInstance<InterfaceUpdateDataProduct>();
   BlocUploadUpdateProduct() : super(UpdateBarang(loading: false, snackBar: false, responApi: '-')){
     on<ButtonFormProducts>((event, emit) async{
       buttonUploadProduct(
@@ -44,7 +44,7 @@ class BlocUploadUpdateProduct extends Bloc<DataEventUpdateBarang, StateUpdateBar
   }) async {
     emit(UpdateBarang(loading: true, snackBar: false, responApi: '-'));
     await sharedPref();
-    String responUpdateProducts = await updateDataProduct.updateDataProduct(
+    String _responUpdateProducts = await _updateDataProduct.updateDataProduct(
       tokenId: tokenId,
       email: prefs.getString('email').toString(),
       description: description, 
@@ -55,8 +55,8 @@ class BlocUploadUpdateProduct extends Bloc<DataEventUpdateBarang, StateUpdateBar
       images: images,
       type: type,
     );
-    if(responUpdateProducts == "berhasil"){
-      emit(UpdateBarang(loading: false, snackBar: true, responApi: responUpdateProducts));
+    if(_responUpdateProducts == "berhasil"){
+      emit(UpdateBarang(loading: false, snackBar: true, responApi: _responUpdateProducts));
       prefs.remove('namaProduct');
       prefs.remove('deskripsi');
       prefs.remove('price');
@@ -65,7 +65,7 @@ class BlocUploadUpdateProduct extends Bloc<DataEventUpdateBarang, StateUpdateBar
       prefs.remove('tokenId');
       prefs.remove('oldImage');
     }else{
-      emit(UpdateBarang(loading: false, snackBar: true, responApi: responUpdateProducts));
+      emit(UpdateBarang(loading: false, snackBar: true, responApi: _responUpdateProducts));
     }
   }
 }

@@ -7,9 +7,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:foosel/blocs/bloc_categories/event_categories.dart';
 import 'package:foosel/blocs/bloc_categories/main/connect/bloc_main_klasifikasi_categories_connect.dart';
 import 'package:foosel/blocs/bloc_default/bloc_button_up/cubit_button_up.dart';
-import 'package:foosel/blocs/bloc_default/bloc/cubit_navigation_list_image_barang.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_navigation_list_image_barang.dart';
 import 'package:foosel/blocs/bloc_default/event/event_form_products.dart';
-import 'package:foosel/blocs/bloc_default/class/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/class/class/connection_dialog.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_navigasi_role.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_show_snack_bar.dart';
@@ -84,7 +84,7 @@ class HeadInsertUpdateImage extends HookWidget with SharedPref, NavigasiRole, Na
                 oldImage: prefs.getString('oldImage').toString(),
               ),
             );
-            await context.read<CubitUpButton>().upButton(
+            context.read<CubitUpButton>().upButton(
               currentBody: 0, 
               currentTop: 0,
               readBloc: {context.read<BlocKlasifikasiCategoriesConnect>().add(KlasifikasiCategories(categoryKey: "0"))}, 

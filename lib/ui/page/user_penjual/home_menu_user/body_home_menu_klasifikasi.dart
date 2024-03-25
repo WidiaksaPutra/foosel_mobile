@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foosel/blocs/bloc_default/class/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/class/class/connection_dialog.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/ui/page/connection/connection_home_menu_klasifikasi.dart';
 import 'package:foosel/ui/page/default/ui/list_horizontal_home.dart';
@@ -7,8 +7,7 @@ import 'package:foosel/ui/page/default/ui/list_vertical_home.dart';
 import 'package:foosel/ui/widgets/componen_loading.dart';
 
 class BodyHomeMenuKlasifikasi extends StatelessWidget{
-  final double hightListView;
-  const BodyHomeMenuKlasifikasi({Key? key, required this.hightListView}) : super(key: key);
+  const BodyHomeMenuKlasifikasi({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context){    
@@ -23,8 +22,7 @@ class BodyHomeMenuKlasifikasi extends StatelessWidget{
           data: state.dataKlassifikasiCategories,
           scrollControl: state.scrollControl, 
           loading: state.loadingScrollKlassifikasi,
-          connection: false, 
-          heightPage: hightListView,
+          connection: false,
         ),
       childConnect: (context, state) => (state.loadingKlassifikasi == true)
       ? Center(child: ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200))
@@ -33,8 +31,7 @@ class BodyHomeMenuKlasifikasi extends StatelessWidget{
           data: state.dataKlassifikasiCategories,
           scrollControl: state.scrollControl, 
           loading: state.loadingScrollKlassifikasi, 
-          connection: true, 
-          hightListView: hightListView,
+          connection: true,
         ),
     );
   }

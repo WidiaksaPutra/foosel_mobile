@@ -8,16 +8,16 @@ import 'package:foosel/blocs/bloc_categories/state_categories.dart';
 import 'package:foosel/helpers/products/product_all/interfaces/interface_get_data_products_category_local.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 
-ScrollController scrollController = ScrollController();
-late List dataList = [];
+ScrollController _scrollController = ScrollController();
+late List _dataList = [];
 class BlocKlasifikasiCategoriesDisconnect extends Bloc<DataEventKlasifikasi, DataStateCategori> implements InterfacesProductsCategoryDisconnect{
-  final InterfaceGetDataProductsCategoryLocal dataGetProductsCategoryLocal = getItInstance<InterfaceGetDataProductsCategoryLocal>();
+  final InterfaceGetDataProductsCategoryLocal _dataGetProductsCategoryLocal = getItInstance<InterfaceGetDataProductsCategoryLocal>();
   BlocKlasifikasiCategoriesDisconnect() : super(
     DataCategori(
-      dataKlassifikasiCategories: [], 
-      loadingKlassifikasi: true, 
+      dataKlassifikasiCategories: _dataList, 
+      loadingKlassifikasi: true,
       loadingScrollKlassifikasi: false,
-      scrollControl: false,
+      scrollControl: _scrollController,
     )
   ){
     on<KlasifikasiCategories>((event, emit) async{
@@ -26,14 +26,14 @@ class BlocKlasifikasiCategoriesDisconnect extends Bloc<DataEventKlasifikasi, Dat
   }
   
   @override
-  getDataCategoryProductLocal({required String categoryKey}) async{
-    dataList = await dataGetProductsCategoryLocal.getDataLocal(nameCategory: categoryKey);
+  Future<void> getDataCategoryProductLocal({required String categoryKey}) async{
+    _dataList = await _dataGetProductsCategoryLocal.getDataLocal(nameCategory: categoryKey);
     emit(
       DataCategori(
-        dataKlassifikasiCategories: dataList, 
+        dataKlassifikasiCategories: _dataList, 
         loadingKlassifikasi: false, 
         loadingScrollKlassifikasi: false,
-        scrollControl: scrollController,
+        scrollControl: _scrollController,
       ),
     );
   }

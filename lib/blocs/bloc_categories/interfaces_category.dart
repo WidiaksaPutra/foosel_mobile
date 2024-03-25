@@ -1,22 +1,34 @@
+import 'package:flutter/material.dart';
+
 abstract class InterfacesProductsCategoryConnect{
-  getDataCategoryProduct({
+  Future<void> getDataCategoryProduct({
+    required int pages,
     required String categoryKey, 
   });
   scrollControlCategoryProduct({
+    required int pages,
     required String categoryKey, 
   });
 }
 
 abstract class InterfacesCategoryNameConnect{
-  getNameCategories();
-  saveLocalDataCategories();
+  Future<void> getNameCategories();
+  Future<void> saveLocalDataCategories();
   scrollControlNameCategories();
 }
 
 abstract class InterfacesProductsCategoryDisconnect{
-  getDataCategoryProductLocal({required String categoryKey});
+  Future<void> getDataCategoryProductLocal({required String categoryKey});
 }
 
 abstract class InterfacesCategoryNameDisconnect{
-  getDataNameCategoriesLocal();
+  Future<void> getDataNameCategoriesLocal();
+}
+
+abstract class InterfacesConnectionNameCategories{
+  Future<void> connectCheck(BuildContext context, dynamic connection);
+}
+
+abstract class InterfacesMainDataNoscrollCategories{
+  Future<void> fetchCategoriesNoscroll();
 }

@@ -6,8 +6,8 @@ import 'package:foosel/firebase/api_user_firebase/interfaces/interface_delete_us
 import 'package:foosel/shared/theme_global_variabel.dart';
 
 class CubitDeleteMessege extends Cubit<StateDeleteMessage>{
-  final InterfaceDeleteUserFirebase dataDeleteUser = getItInstance<InterfaceDeleteUserFirebase>();
-  final InterfaceDeleteChatFirebase dataDeleteChat = getItInstance<InterfaceDeleteChatFirebase>();
+  final InterfaceDeleteUserFirebase _dataDeleteUser = getItInstance<InterfaceDeleteUserFirebase>();
+  final InterfaceDeleteChatFirebase _dataDeleteChat = getItInstance<InterfaceDeleteChatFirebase>();
   CubitDeleteMessege() : super(DeleteMessage(loadingDeleteMessage: false, statusAlert: false));
   
   @override
@@ -16,9 +16,9 @@ class CubitDeleteMessege extends Cubit<StateDeleteMessage>{
     required String emailPenerima,
   }) async{
     emit(DeleteMessage(loadingDeleteMessage: true, statusAlert: false));
-    bool statusApiChat = await dataDeleteChat.deleteChatFirebase(emailPengirim: emailPengirim, emailPenerima: emailPenerima);
-    bool statusApiUser = await dataDeleteUser.deleteUserFirebase(emailPenerima: emailPenerima, emailPengirim: emailPengirim);
-    if(statusApiUser == true && statusApiChat == true){
+    bool _statusApiChat = await _dataDeleteChat.deleteChatFirebase(emailPengirim: emailPengirim, emailPenerima: emailPenerima);
+    bool _statusApiUser = await _dataDeleteUser.deleteUserFirebase(emailPenerima: emailPenerima, emailPengirim: emailPengirim);
+    if(_statusApiUser == true && _statusApiChat == true){
       emit(DeleteMessage(loadingDeleteMessage: false, statusAlert: true));
     }
   }

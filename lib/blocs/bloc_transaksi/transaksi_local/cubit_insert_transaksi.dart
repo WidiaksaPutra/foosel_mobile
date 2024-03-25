@@ -5,7 +5,7 @@ import 'package:foosel/helpers/transaksi/interfaces/interface_insert_data_transa
 import 'package:foosel/shared/theme_global_variabel.dart';
 
 class CubitInsertTransaksiLocal extends Cubit<DataStatePostTransaksiLocal> implements InterfacesInsertTransaksiLocal{
-  final InterfaceInsertDataTransaksiLocal dataInsertTransaksiLocal = getItInstance<InterfaceInsertDataTransaksiLocal>();
+  final InterfaceInsertDataTransaksiLocal _dataInsertTransaksiLocal = getItInstance<InterfaceInsertDataTransaksiLocal>();
   CubitInsertTransaksiLocal() : super(DataPostTransaksiLocal(loadingTransaksi: true, status: false));
   
   @override
@@ -24,7 +24,7 @@ class CubitInsertTransaksiLocal extends Cubit<DataStatePostTransaksiLocal> imple
   }) async{
     emit(DataPostTransaksiLocal(loadingTransaksi: true, status: false));
     Future.delayed(Duration(seconds: 2));
-    int respons = await dataInsertTransaksiLocal.insertDataTransaksiLocal(
+    int _respons = await _dataInsertTransaksiLocal.insertDataTransaksiLocal(
       emailPenjual: emailPenjual,
       emailPembeli: emailPembeli,
       tokenId: tokenId,
@@ -37,7 +37,7 @@ class CubitInsertTransaksiLocal extends Cubit<DataStatePostTransaksiLocal> imple
       hargaTotal: hargaTotal,
       imagePath: imagePath,
     );
-    if(respons != 0){
+    if(_respons != 0){
       emit(DataPostTransaksiLocal(loadingTransaksi: false, status: true));
     }else{
       emit(DataPostTransaksiLocal(loadingTransaksi: false, status: false));

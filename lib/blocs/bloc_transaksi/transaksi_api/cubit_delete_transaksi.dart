@@ -6,18 +6,18 @@ import 'package:foosel/service/api_transaksi/interfaces/interface_delete_transak
 import 'package:foosel/shared/theme_global_variabel.dart';
 
 class CubitDeleteTransaksi extends Cubit<StateDeleteTransaksi> implements InterfacesDeleteTransaksi{
-  final InterfaceDeleteTransaksi dataDeleteTransaksi = getItInstance<InterfaceDeleteTransaksi>();
-  final InterfaceDeleteDataProductTransaksiLocal dataDeleteTransaksiLocal = getItInstance<InterfaceDeleteDataProductTransaksiLocal>();
+  final InterfaceDeleteTransaksi _dataDeleteTransaksi = getItInstance<InterfaceDeleteTransaksi>();
+  final InterfaceDeleteDataProductTransaksiLocal _dataDeleteTransaksiLocal = getItInstance<InterfaceDeleteDataProductTransaksiLocal>();
   CubitDeleteTransaksi() : super(DeleteTransaksi(loadingDeleteTransaksi: false, statusAlert: '-'));
 
   @override
   deleteDataTransaksi({required String tokenId}) async{
     emit(DeleteTransaksi(loadingDeleteTransaksi: true, statusAlert: '-'));
-    String statusApi = await dataDeleteTransaksi.deleteTransaksi(transactionsId: tokenId); 
-    bool loadingDelete = await dataDeleteTransaksi.loadingDeleteDataTransaksi();
-    if(loadingDelete == false){
-      await dataDeleteTransaksiLocal.deleteDataProductTransaksiWhereIdTransaksi(tokenTransaksi: tokenId);
-      emit(DeleteTransaksi(loadingDeleteTransaksi: loadingDelete, statusAlert: statusApi));
+    String _statusApi = await _dataDeleteTransaksi.deleteTransaksi(transactionsId: tokenId); 
+    bool _loadingDelete = await _dataDeleteTransaksi.loadingDeleteDataTransaksi();
+    if(_loadingDelete == false){
+      await _dataDeleteTransaksiLocal.deleteDataProductTransaksiWhereIdTransaksi(tokenTransaksi: tokenId);
+      emit(DeleteTransaksi(loadingDeleteTransaksi: _loadingDelete, statusAlert: _statusApi));
     }
   }
 }

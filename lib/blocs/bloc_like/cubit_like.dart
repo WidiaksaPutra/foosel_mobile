@@ -8,17 +8,17 @@ import 'package:foosel/helpers/like/interfaces/interface_get_data_like_local.dar
 import 'package:foosel/shared/theme_global_variabel.dart';
 
 class CubitLike extends Cubit<DataStateLike> implements Like{
-  final InterfaceGetDataLikeLocal dataGetLike = getItInstance<InterfaceGetDataLikeLocal>();
-  final InterfaceDeleteDataLikeLocal dataDeleteLike = getItInstance<InterfaceDeleteDataLikeLocal>();
+  final InterfaceGetDataLikeLocal _dataGetLike = getItInstance<InterfaceGetDataLikeLocal>();
+  final InterfaceDeleteDataLikeLocal _dataDeleteLike = getItInstance<InterfaceDeleteDataLikeLocal>();
   CubitLike() : super(DataStateLike(statusLike: false, loadingLike: true));
   
   @override
-  getLikeInit({
+  Future<void> getLikeInit({
     required String tokenId,
   }) async {
     emit(DataStateLike(statusLike: false, loadingLike: true));
-    final dataLocal = await dataGetLike.getDataLikeWhereIdLocal(tokenId: tokenId);
-    if(dataLocal.isEmpty){
+    final _dataLocal = await _dataGetLike.getDataLikeWhereIdLocal(tokenId: tokenId);
+    if(_dataLocal.isEmpty){
       emit(DataStateLike(statusLike: false, loadingLike: false));  
     }else{
       emit(DataStateLike(statusLike: true, loadingLike: false));
@@ -26,7 +26,7 @@ class CubitLike extends Cubit<DataStateLike> implements Like{
   }
   
   @override
-  getLikeOnClick({
+  Future<void> getLikeOnClick({
     required String name,
     required String email, 
     required String categoryName, 
@@ -49,15 +49,15 @@ class CubitLike extends Cubit<DataStateLike> implements Like{
         imagePath: imagePath,
       );
     }else{
-      await dataDeleteLike.deleteDataLikeLocalWhereIdLocal(tokenId: tokenId); 
+      await _dataDeleteLike.deleteDataLikeLocalWhereIdLocal(tokenId: tokenId); 
     }
     emit(DataStateLike(statusLike: like, loadingLike: false));
   }
   
   @override
-  getLikeDelete({required String tokenId}) async{
+  Future<void> getLikeDelete({required String tokenId}) async{
     emit(DataStateLike(statusLike: false, loadingLike: true));
-    await dataDeleteLike.deleteDataLikeLocalWhereIdLocal(tokenId: tokenId);
+    await _dataDeleteLike.deleteDataLikeLocalWhereIdLocal(tokenId: tokenId);
     emit(DataStateLike(statusLike: true, loadingLike: false));
   }
 }

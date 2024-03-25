@@ -1,9 +1,9 @@
 abstract class InterfacesAllProductConnect{
-  getDataAllProduct({required int pages});
+  Future<void> getDataAllProduct({required int pages});
+  Future<void> saveLocalDataAllProduct();
   scrollControlAllProduct({required int pages});
-  saveLocalDataAllProduct();
 }
 
 abstract class InterfacesListAllProductDisconnect{
-  getListDataAllProduct();
+  Future<void> getListDataAllProduct();
 }

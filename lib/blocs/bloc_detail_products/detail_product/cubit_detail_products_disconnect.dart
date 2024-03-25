@@ -3,26 +3,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_default/state/state_product_basic.dart';
+import 'package:foosel/blocs/bloc_detail_products/interfaces/interfaces_cubit_detail_products_disconnect.dart';
 import 'package:foosel/helpers/products/product_all/interfaces/interface_get_data_product_local.dart';
 import 'package:foosel/shared/theme_global_variabel.dart';
 
-ScrollController scrollController = ScrollController();
-class CubitDetailProductsDisconnect extends Cubit<DataStateProductBasic>{
-  final InterfaceGetDataProductLocal dataGetProductLocal = getItInstance<InterfaceGetDataProductLocal>();
+ScrollController _scrollController = ScrollController();
+class CubitDetailProductsDisconnect extends Cubit<DataStateProductBasic> implements InterfacesCubitDetailProductsDisconnect{
+  final InterfaceGetDataProductLocal _dataGetProductLocal = getItInstance<InterfaceGetDataProductLocal>();
   CubitDetailProductsDisconnect() : super(
     DataProductBasic(
-      scrollControl: scrollController, 
+      scrollControl: _scrollController, 
       getData: [],
       loadingScroll: true,
       loadingApi: true,
     ),
   );
-
-  getDetailProductDisconnect({required String tokenId}) async{
-    final dataLocalWhereId = await dataGetProductLocal.getDataProductWhereIdLocal(tokenId: tokenId);
+  @override
+  Future<void> getDetailProductDisconnect({required String tokenId}) async{
+    final _dataLocalWhereId = await _dataGetProductLocal.getDataProductWhereIdLocal(tokenId: tokenId);
     emit(DataProductBasic(
-      scrollControl: scrollController, 
-      getData: dataLocalWhereId,
+      scrollControl: _scrollController, 
+      getData: _dataLocalWhereId,
       loadingScroll: false,
       loadingApi: false,
     ));
