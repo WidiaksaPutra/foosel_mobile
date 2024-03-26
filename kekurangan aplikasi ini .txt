@@ -12,3 +12,20 @@ kekurangan aplikasi ini :
 - belum menyediakan penyimpanan gambar dalam local, dimana gambar yang disimpan masih berupa link yang butuh akses internet
 - hanya diUnit test pada service, penerapan Unit Test masih belum menyeluruh
 - untuk saat ini testing hanya sebatas Unit Test 
+
+
+
+
+
+
+
+
+
+
+
+catatan lain :
+- Caching Gambar
+- Gunakan CDN 
+- Gunakan Optimasi Jaringan
+- format gambar WebP
+- Shimmer Effect

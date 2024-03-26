@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foosel/main/multi_bloc.dart';
+import 'package:foosel/shared/theme_color.dart';
 
 class FirebaseInit extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
@@ -15,7 +16,7 @@ class FirebaseInit extends StatelessWidget {
           return const Text("Error");
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Container(color: kPrimaryColor);
         }
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {

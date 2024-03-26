@@ -256,12 +256,7 @@ class BottomNavPenjual extends HookWidget with SharedPref {
           shadowColor: kBlackColor6,
           automaticallyImplyLeading: false,
           title: Center(
-            child: Expanded(
-              child: Text("Add Barang", 
-                style: whiteTextStyle.copyWith(fontSize: defaultFont18, fontWeight: medium),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
+            child: Text("Add Barang", style: whiteTextStyle.copyWith(fontSize: defaultFont18, fontWeight: medium),            ),
           ),
         );
       case 4 :
