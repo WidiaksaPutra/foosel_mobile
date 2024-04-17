@@ -118,12 +118,30 @@ class CartDetail extends StatelessWidget with DialogBasic{
       ); 
     }
 
+    Widget listCardAlamat(String data){
+      return BlocBuilder<CubitMainUserConnect, DataStateUser>( 
+        builder: (context, state1) =>ComponenCartCardAddress(
+          storeLocation: data,
+          yourLocation:(state1.dataUser.alamat != null)
+          ? state1.dataUser.alamat.toString()
+          : "-",
+        ),
+      );
+    }
+
     return BlocBuilder<CubitGetTransaksiLocal, DataStateGetTransaksiLocal>(
       builder: (context1, state){
+        late List alamat = [];
+        if(state.getData.isNotEmpty){
+          for(int i = 0; i < state.getData.length; i++){
+            if(!alamat.contains(state.getData[i]['alamat'].toString())){
+              alamat.add(state.getData[i]['alamat'].toString());
+            }
+          }
+        }
         return Scaffold(
           backgroundColor: kBlackColor6,
-          appBar: headerCart(
-            context: context, 
+          appBar: PreferredHeaderCart( 
             titleCart: "Checkout Details", 
             statusLeading: true,
             onPressed: () => context.go(RouteName.cart),
@@ -153,21 +171,11 @@ class CartDetail extends StatelessWidget with DialogBasic{
                   for(int i = 0; i < state.getData.length; i++)...[
                     listCard(state.getData[i]),
                   ],
-                  BlocBuilder<CubitMainUserConnect, DataStateUser>( 
-                    builder: (context, state1) => 
-                    BlocBuilder<CubitDetailProductConnect, DataStateProducts>( 
-                      builder: (context, state2){
-                        return ComponenCartCardAddress(
-                          storeLocation:(state2.dataProducts.user!.alamat != null) 
-                          ? state2.dataProducts.user!.alamat.toString()
-                          : "-",
-                          yourLocation:(state1.dataUser.alamat != null)
-                          ? state1.dataUser.alamat.toString()
-                          : "-",
-                        );
-                      }
-                    )
-                  ),
+                ],
+                if(alamat.isNotEmpty)...[
+                  for(int j = 0; j < alamat.length; j++)...[
+                    listCardAlamat(alamat[j].toString()),
+                  ],
                 ],
                 ComponenCartCardTotal(
                   productQuantity: state.getData.length.toString(), 

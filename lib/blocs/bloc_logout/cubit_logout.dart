@@ -21,7 +21,7 @@ class CubitLogout extends Cubit<StateDataLogout> with NavigasiRole{
   final InterfaceDeleteDataProductTransaksiLocal _dataDeleteProductTransaksi = getItInstance<InterfaceDeleteDataProductTransaksiLocal>();
   final InterfaceDeleteDataCategoryLocal _dataDeleteCategoryLocal = getItInstance<InterfaceDeleteDataCategoryLocal>();
   CubitLogout() : super(DataLogout(loadingLogout: false));
-  logout({required BuildContext context}) async{
+  Future<void> logout({required BuildContext context}) async{
     navigasiR();
     emit(DataLogout(loadingLogout: true));
     SharedPreferences prefs = await SharedPreferences.getInstance();

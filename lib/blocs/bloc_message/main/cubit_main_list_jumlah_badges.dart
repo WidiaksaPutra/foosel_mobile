@@ -7,7 +7,7 @@ import 'package:foosel/shared/theme_global_variabel.dart';
 class CubitJumlahBadges extends Cubit<DataStateBadges> with SharedPref{
   final InterfaceGetChatFirebase _dataGetChatFirebase = getItInstance<InterfaceGetChatFirebase>();
   CubitJumlahBadges() : super(DataBadges(notivBadges: [], totalBadges: 0, loading: false));
-  getBadgesMessage(List data) async{
+  Future<void> getBadgesMessage(List data) async{
     late List _listData = [];
     late int _total = 0;
     sharedPref();

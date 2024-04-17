@@ -1,5 +1,5 @@
 abstract class InterfaceGetLogin{
-  getLogin({
+  Future getLogin({
     bool testing = false,
     required String email, 
     required String password,

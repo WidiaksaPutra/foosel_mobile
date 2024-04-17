@@ -18,7 +18,7 @@ class CubitPostTransaksi extends Cubit<DataStatePostTransaksi> implements Interf
   CubitPostTransaksi() : super(DataPostTransaksi(loadingTransaksi: false, status: false));
   
   @override
-  saveDataTransaksi({
+  Future<void> saveDataTransaksi({
     required String emailPembeli, 
     required String emailPenjual, 
     required String productsId,

@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_penjual/cubit_bottom_nav_penjual.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_penjual/state_bottom_nav_pembeli.dart';
+import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_connection_example.dart';
 import 'package:foosel/blocs/bloc_default/class/class/connection_dialog.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_logout/cubit_logout.dart';
@@ -13,6 +14,7 @@ import 'package:foosel/blocs/bloc_logout/state_logout.dart';
 import 'package:foosel/blocs/bloc_message/main/cubit_main_list_jumlah_badges.dart';
 import 'package:foosel/blocs/bloc_message/main/cubit_main_list_message_connect.dart';
 import 'package:foosel/blocs/bloc_message/state_message.dart';
+import 'package:foosel/blocs/bloc_transaksi/transaksi_api/cubit_get_transaksi_user_pembeli.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/shared/theme_color.dart';
 import 'package:foosel/shared/theme_font.dart';
@@ -320,6 +322,15 @@ class BottomNavPenjual extends HookWidget with SharedPref {
     }
   }
 
+  void cartProduct(BuildContext contexts){
+    contexts.read<CubitConnectionExample>().connectCheck(
+      readBlocConnect: {
+        contexts.read<CubitGetTransaksiUserPembeli>().getDataTransaksiHistory(),
+      }, 
+      readBlocDisconnect: {}
+    );
+  }
+
   Widget body({
     required BuildContext contexts,
     required int currentButton,
@@ -334,6 +345,7 @@ class BottomNavPenjual extends HookWidget with SharedPref {
       return MessageList();
       case 2 :
       removeAddProduct();
+      cartProduct(contexts);
       return CartPenjual();
       case 3 :
       removeUpdateProduct();

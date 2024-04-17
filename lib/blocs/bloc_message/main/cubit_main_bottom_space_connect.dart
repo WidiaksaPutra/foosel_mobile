@@ -3,7 +3,7 @@ import 'package:foosel/blocs/bloc_message/state_message.dart';
 
 class CubitBottomSpaceConnect extends Cubit<DataStateCubitBottomSpace>{
   CubitBottomSpaceConnect() : super(DataStateCubitBottomSpace([]));
-  bottomSpace(List chatList){
+  void bottomSpace(List chatList){
     final List<bool> _bSpace = [];
     String _space = "-";
     for(int i = 0; i < chatList.length; i++){

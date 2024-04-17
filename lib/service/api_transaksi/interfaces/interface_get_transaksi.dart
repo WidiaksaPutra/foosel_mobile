@@ -1,20 +1,20 @@
 abstract class InterfaceGetTransaksi{
-  getTransaksi({
+  Future getTransaksi({
     bool testing = false,
     String testingToken = "",
     String email = "", transactionsId = "",
   });
-  rolePenjual({
+  Future rolePenjual({
     bool testing = false,
     String email = "", transactionsId = "",
     required Map<String, String>? headers
   });
-  rolePembeli({
+  Future rolePembeli({
     bool testing = false,
     String email = "", transactionsId = "",
     required Map<String, String>? headers
   });
-  getDataTransaksi({
+  Future getDataTransaksi({
     bool testing = false,
     required Map<String, dynamic> parameterApi,
     required Map<String, String>? headers,

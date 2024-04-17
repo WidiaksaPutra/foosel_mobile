@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CubitDetailNavigasiProduct extends Cubit<DataStateDetailProduct> implements InterfacesCubitDetailNavigasiProduct{
   CubitDetailNavigasiProduct() : super(DataDetailProduct(navigation: ""));
   @override
-  void navigationDetailProduct() async{
+  Future<void> navigationDetailProduct() async{
     SharedPreferences _token = await SharedPreferences.getInstance();
     if(_token.getString('token').toString() != 'null'){
       Map<String, dynamic> _decodeTokenUser = await JwtDecoder.decode(_token.getString('token').toString());

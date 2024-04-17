@@ -26,7 +26,6 @@ import 'package:foosel/ui/widgets/componen_basic/componen_dash_border_box.dart';
 import 'package:foosel/ui/widgets/componen_loading.dart';
 import 'package:foosel/ui/widgets/componen_page_kosong.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lottie/lottie.dart';
 
 class Cart extends StatelessWidget{
   Cart({Key? key}) : super(key: key);
@@ -103,7 +102,6 @@ class Cart extends StatelessWidget{
     ThemeBox(context);
     Size size = MediaQuery.of(context).size;
     read(context);
-
     Widget History(){
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox22),
@@ -113,7 +111,14 @@ class Cart extends StatelessWidget{
           borderSideWidth: 1.0, 
           dashLengthBox: 5.0,
           contentBox: TextButton(
-            onPressed: () => context.go(RouteName.cartHistory),
+            onPressed: (){
+              context.read<CubitConnectionExample>().connectCheck(
+                readBlocConnect: context.read<CubitGetTransaksiProduct>().getDataTransaksiHistory(), 
+                readBlocDisconnect: context.read<CubitGetTransaksiProductLocal>().getDataTransaksi(),
+              );
+              context.read<CubitDetailNavigasiProduct>().navigationDetailProduct();
+              return context.go(RouteName.cartHistory);
+            },
             child: Padding(
               padding: EdgeInsets.symmetric(
                 vertical: ThemeBox.defaultHeightBox20,
@@ -141,8 +146,7 @@ class Cart extends StatelessWidget{
       builder: (context1, state){
         return Scaffold(
           backgroundColor: kBlackColor6,
-          appBar: headerCart(
-            context: context, 
+          appBar: PreferredHeaderCart(
             titleCart: 'Your Cart', 
             statusLeading: true, 
             onPressed: () => context.go(RouteName.bottomNavPembeli),
@@ -174,24 +178,10 @@ class Cart extends StatelessWidget{
                   BlocBuilder<CubitConnectionExample, DataStateConnection>(
                     builder: (context, stateConnect) => (stateConnect.connectionBoolean == true)
                     ? BlocBuilder<CubitGetTransaksiProduct, DataStateGetTransaksi>(
-                        builder: (context2, state) => (state.loading == false)
-                        ? (state.dataTransaksi.isEmpty) ? SizedBox() : History()
-                        : Center(
-                            child: Lottie.asset(
-                              "asset/animations/loading_horizontal_lottie.json",
-                              height: ThemeBox.defaultHeightBox100,
-                            ),
-                          ),
+                        builder: (context2, state) => (state.dataTransaksi.isEmpty) ? SizedBox() : History(),
                       )
                     : BlocBuilder<CubitGetTransaksiProductLocal, DataStateGetTransaksi>(
-                        builder: (context2, state) => (state.loading == false)
-                        ? (state.dataTransaksi.isEmpty) ? SizedBox() : History()
-                        : Center(
-                            child: Lottie.asset(
-                              "asset/animations/loading_horizontal_lottie.json",
-                              height: ThemeBox.defaultHeightBox100,
-                            ),
-                          ),
+                        builder: (context2, state) => (state.dataTransaksi.isEmpty) ? SizedBox() : History(),
                       )
                   ),
                   if(state.getData.isEmpty)...[

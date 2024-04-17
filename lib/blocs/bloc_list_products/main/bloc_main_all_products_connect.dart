@@ -2,8 +2,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_all_products/event_all_products.dart';
-import 'package:foosel/blocs/bloc_all_products/interfaces_all_products.dart';
+import 'package:foosel/blocs/bloc_list_products/event_all_products.dart';
+import 'package:foosel/blocs/bloc_list_products/interfaces_all_products.dart';
 import 'package:foosel/blocs/bloc_default/state/state_product_basic.dart';
 import 'package:foosel/helpers/products/product_all/interfaces/interface_delete_data_product_local.dart';
 import 'package:foosel/helpers/products/product_all/interfaces/interface_insert_data_products_local.dart';
@@ -16,7 +16,7 @@ late List _dataList = [];
 late bool _loadingScrolling = false, _loadingApi = true;
 class BlocAllProductConnect extends Bloc<DataEventAllProduct,DataStateProductBasic> implements InterfacesAllProductConnect{
   final InterfaceGetDataProduct _dataGetProduct = getItInstance<InterfaceGetDataProduct>();
-  final InterfaceInsertDataProductsLocal _dataGetProductLocal = getItInstance<InterfaceInsertDataProductsLocal>();
+  final InterfaceInsertDataProductsLocal _dataInsertProductLocal = getItInstance<InterfaceInsertDataProductsLocal>();
   final InterfaceDeleteDataProductLocal _dataDeleteProductLocal = getItInstance<InterfaceDeleteDataProductLocal>();
   BlocAllProductConnect() : super(
     DataProductBasic(
@@ -46,7 +46,7 @@ class BlocAllProductConnect extends Bloc<DataEventAllProduct,DataStateProductBas
     await _dataDeleteProductLocal.deleteDataProductLocal();
     if(_dataList.length <= 10){
       for(int i = 0; i < _dataList.length; i++) {
-        await _dataGetProductLocal.insertDataLocal(
+        await _dataInsertProductLocal.insertDataLocal(
           description: _dataList[i].description.toString(),
           tokenId: _dataList[i].tokenId.toString(),
           name: _dataList[i].name.toString(),
@@ -60,7 +60,7 @@ class BlocAllProductConnect extends Bloc<DataEventAllProduct,DataStateProductBas
   }
   
   @override
-  scrollControlAllProduct({required int pages}) {
+  void scrollControlAllProduct({required int pages}) {
     _scrollController.addListener(() async {
       if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent && _loadingScrolling == false){
         _loadingScrolling = true;

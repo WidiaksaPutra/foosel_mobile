@@ -1,9 +1,9 @@
 abstract class InterfaceGetChatFirebase{
-  getChatFirebase({
+  Future getChatFirebase({
     required String emailPengirim, 
     required String emailPenerima,
   });
-  getJumlahFalseMessage({
+  Future getJumlahFalseMessage({
     required String emailPengirim,
     required String emailPenerima,
   });

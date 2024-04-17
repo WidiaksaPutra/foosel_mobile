@@ -7,7 +7,7 @@ class ApiPatchTransaksi with SharedPref implements InterfacePatchTransaksi{
   late String tokens;
 
   @override
-  patchTransaksi({
+  Future patchTransaksi({
     bool testing = false,
     String testingToken = "",
     required String transactionsId,

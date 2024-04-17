@@ -6,7 +6,8 @@ import 'package:foosel/shared/theme_font.dart';
 import 'package:foosel/shared/theme_text_style.dart';
 
 class ComponenTextDetail extends StatelessWidget {
-  String title, data;
+  String title; 
+  dynamic data;
   ComponenTextDetail({Key? key, required this.title, required this.data}) : super(key: key);
 
   @override

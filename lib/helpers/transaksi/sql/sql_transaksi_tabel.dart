@@ -14,7 +14,8 @@ class SqlTransaksiTabel{
         hargaSatuan String,
         hargaTotal String,
         jumlah int,
-        imagePath String
+        imagePath String,
+        alamat String
       )
     """);
   }

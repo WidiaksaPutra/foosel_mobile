@@ -10,7 +10,7 @@ class ApiGetUser with SharedPref implements InterfaceGetUser{
   late dynamic dataUser = "-";
 
   @override
-  getUser({bool testing = false}) async {
+  Future getUser({bool testing = false}) async {
     try{
       if(testing == false){
         await sharedPref();

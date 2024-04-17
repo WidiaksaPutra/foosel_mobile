@@ -13,8 +13,9 @@ class InsertChatFirebase implements InterfaceInsertChatFirebase{
   final InterfaceChatAddFirebase dataChatAddFirebase = getItInstance<InterfaceChatAddFirebase>();
   final InterfaceChatAddCollectionFirebase dataChatAddCollectionFirebase = getItInstance<InterfaceChatAddCollectionFirebase>();
   final InterfaceEmptyChatFirebase dataEmptyChatFirebase = getItInstance<InterfaceEmptyChatFirebase>();
+  
   @override
-  insertChatFirebase({
+  Future<void> insertChatFirebase({
     required String emailPengirim, 
     required String emailPenerima, 
     required messager,
@@ -63,5 +64,3 @@ class InsertChatFirebase implements InterfaceInsertChatFirebase{
     }
   }
 }
-
-

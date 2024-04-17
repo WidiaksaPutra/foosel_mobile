@@ -11,5 +11,6 @@ abstract class InterfaceInsertDataTransaksiLocal{
     required String hargaTotal,
     required int jumlah,
     required String imagePath,
+    required dynamic alamat,
   });
 }

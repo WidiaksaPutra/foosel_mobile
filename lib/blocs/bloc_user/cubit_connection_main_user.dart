@@ -8,7 +8,7 @@ import 'package:foosel/blocs/bloc_user/main/disconnect/cubit_main_user_disconnec
 
 class CubitConnectionMainUser extends Cubit<DataStateConnection> with SharedPref{
   CubitConnectionMainUser() : super(DataConnection(false));
-  connectCheck(BuildContext context) async{
+  Future<void> connectCheck(BuildContext context) async{
     try {
       final _result = await InternetAddress.lookup('example.com');
       if (_result.isNotEmpty && _result[0].rawAddress.isNotEmpty) {

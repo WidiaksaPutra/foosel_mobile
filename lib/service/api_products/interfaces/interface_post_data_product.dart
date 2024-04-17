@@ -1,7 +1,7 @@
 import 'package:image_picker/image_picker.dart';
 
 abstract class InterfacePostDataProduct{
-  postDataProduct({
+  Future postDataProduct({
     bool testing = false,
     String testingTokenPenjual = "",
     required String email, 

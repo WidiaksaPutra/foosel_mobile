@@ -8,13 +8,13 @@ class ApiUpdateUser with SharedPref implements InterfaceUpdateUser{
   late String? tokens;
 
   @override
-  updateUser({
+  Future updateUser({
     bool testing = false,
     required String name, 
     required String email, 
     required String username,
     required String alamat,
-  }) async {
+  }) async{
     try{
       if(testing == false){
         await sharedPref();

@@ -10,13 +10,14 @@ class CubitListMessageConnect extends Cubit<DataStateListMessage> with SharedPre
   final InterfaceGetUserFirebase _dataGetUserFirebase = getItInstance<InterfaceGetUserFirebase>();
   final InterfaceUpdateUserFirebase _dataUpdateUserFirebase = getItInstance<InterfaceUpdateUserFirebase>();
   CubitListMessageConnect() : super(DataListMessage([], true));
-  getListMessage(dynamic users) async{
+  
+  Future<void> getListMessage(dynamic users) async{
     await sharedPref();
     final _userList = await _dataGetUserFirebase.getUserFirebase(email: prefs.getString('email').toString(), users: users);
     emit(await DataListMessage(_userList, false));
   }
 
-  updateListMessage() async{
+  Future<void> updateListMessage() async{
     await sharedPref();
     await _dataUpdateUserFirebase.updateUserFirebase(email: prefs.getString('email').toString(), statusUser: "Online");
   }

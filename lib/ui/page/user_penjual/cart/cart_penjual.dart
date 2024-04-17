@@ -4,34 +4,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_connection_example.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_default/state/state_connection.dart';
+import 'package:foosel/blocs/bloc_detail_products/cubit_detail_navigasi_product.dart';
+import 'package:foosel/blocs/bloc_transaksi/transaksi_api/cubit_get_transaksi_product.dart';
 import 'package:foosel/blocs/bloc_transaksi/transaksi_api/cubit_get_transaksi_user_pembeli.dart';
 import 'package:foosel/blocs/bloc_transaksi/transaksi_api/state_transaksi.dart';
 import 'package:foosel/routes/route_name.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/shared/theme_color.dart';
 import 'package:foosel/ui/widgets/componen_advanced/componen_card_vertical_user_transaksi.dart';
-import 'package:foosel/ui/widgets/componen_advanced/componen_content_dialog(image_&_text).dart';
+import 'package:foosel/ui/widgets/componen_loading.dart';
 import 'package:foosel/ui/widgets/componen_page_kosong.dart';
 import 'package:go_router/go_router.dart';
 
 class CartPenjual extends StatelessWidget with SharedPref{
   CartPenjual({Key? key}) : super(key: key);
 
-  void read(BuildContext context){
-    context.read<CubitConnectionExample>().connectCheck(
-      readBlocConnect: {
-        context.read<CubitGetTransaksiUserPembeli>().getDataTransaksiHistory(),
-      }, 
-      readBlocDisconnect: {}
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     ThemeBox(context);
     sharedPref();
     Size size = MediaQuery.of(context).size;
-    read(context);
     return Scaffold(
       backgroundColor: kBlackColor6,
       body: BlocBuilder<CubitConnectionExample, DataStateConnection>(
@@ -51,6 +43,11 @@ class CartPenjual extends StatelessWidget with SharedPref{
                           onLongPress: () {  }, 
                           onTap: (){
                             prefs.setString('usersEmailPembeli', state.dataTransaksi[index]['usersEmailPembeli'].toString());
+                            context.read<CubitDetailNavigasiProduct>().navigationDetailProduct();
+                            context.read<CubitConnectionExample>().connectCheck(
+                              readBlocConnect: context.read<CubitGetTransaksiProduct>().getDataTransaksiProductPenjual(),
+                              readBlocDisconnect: {},
+                            );
                             context.go(RouteName.cartProduct);
                           },
                         ),
@@ -65,10 +62,7 @@ class CartPenjual extends StatelessWidget with SharedPref{
                     sizeHeight: size.height, 
                     sizeWidth: size.width,
                   )
-              : ComponenContentDialog_ImageAndTitleText(
-                  image: 'asset/animations/loading_dialog_lottie.json', 
-                  text: '...',
-                );
+              : Center(child: ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200));
             },
           )
         : ComponenPageKosongBasic(

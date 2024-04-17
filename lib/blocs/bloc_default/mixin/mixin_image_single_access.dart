@@ -1,7 +1,7 @@
 import 'package:image_picker/image_picker.dart';
 
 mixin ImageSingleAccess{
-  imageSingle({
+  Future imageSingle({
     required String namaProduct,
     required String deskripsi,
     required String price,

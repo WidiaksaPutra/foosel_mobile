@@ -1,8 +1,8 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foosel/blocs/bloc_all_products/event_all_products.dart';import 'package:foosel/blocs/bloc_all_products/main/bloc_main_all_products_connect.dart';
-import 'package:foosel/blocs/bloc_all_products/main/cubit_main_list_all_products_disconnect.dart';
+import 'package:foosel/blocs/bloc_list_products/event_all_products.dart';import 'package:foosel/blocs/bloc_list_products/main/bloc_main_all_products_connect.dart';
+import 'package:foosel/blocs/bloc_list_products/main/cubit_main_list_all_products_disconnect.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_default/state/state_connection.dart';
 import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_connection_example.dart';
@@ -35,12 +35,7 @@ class ConnectionProduct extends StatelessWidget with SharedPref{
     ThemeBox(context);
     Widget statusConnect(ConnectivityResult? data){
       // shared(data);
-      return BlocConsumer<BlocAllProductConnect, DataStateProductBasic>(
-        listener:(context, state) {
-          if(state.loadingApi == true){
-            Center(child: ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200));
-          }
-        },
+      return BlocBuilder<BlocAllProductConnect, DataStateProductBasic>(
         builder: childProduct,
       );
     }
@@ -48,13 +43,8 @@ class ConnectionProduct extends StatelessWidget with SharedPref{
     Widget statusDisconnect(ConnectivityResult? data){
       connection(context: context, onTap: (){Navigator.of(context).pop();}, buttonConnection: false);
       // shared(data);
-      return BlocConsumer<CubitMainListAllProductsDisconnect, DataStateProductBasic>(
-        listener:(context, state) {
-          if(state.loadingApi == true){
-            Center(child: ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200));
-          }
-        },
-        builder: childProductDisconnect
+      return BlocBuilder<CubitMainListAllProductsDisconnect, DataStateProductBasic>(
+        builder: childProductDisconnect,
       );
     }
 

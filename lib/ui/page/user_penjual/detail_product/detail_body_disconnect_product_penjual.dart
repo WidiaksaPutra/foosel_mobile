@@ -1,14 +1,10 @@
 // ignore_for_file: must_be_immutable, unused_element
-
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_penjual/cubit_detail_produk_nav_penjual.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_penjual/state_bottom_nav_pembeli.dart';
 import 'package:foosel/blocs/bloc_default/class/class/refresh_dialog.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_navigasi_role.dart';
-import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
-import 'package:foosel/blocs/bloc_default/mixin/mixin_show_snack_bar.dart';
 import 'package:foosel/blocs/bloc_default/state/state_product_basic.dart';
 import 'package:foosel/blocs/bloc_detail_products/detail_product/cubit_detail_products_disconnect.dart';
 import 'package:foosel/blocs/bloc_like/cubit_get_like.dart';
@@ -24,7 +20,7 @@ import 'package:foosel/ui/widgets/componen_advanced/componen_detail/componen_des
 import 'package:foosel/ui/widgets/componen_loading.dart';
 import 'package:go_router/go_router.dart';
 
-class DetailBodyDisconnectProductPenjual extends StatelessWidget with NavigasiRole, NavigasiRoleBarRead, ShowSnackBar, SharedPref{
+class DetailBodyDisconnectProductPenjual extends StatelessWidget with NavigasiRole, NavigasiRoleBarRead{
   DetailBodyDisconnectProductPenjual({Key? key}) : super(key: key);
 
   void listener({
@@ -33,10 +29,6 @@ class DetailBodyDisconnectProductPenjual extends StatelessWidget with NavigasiRo
     required bool loading,
   }){
     if(loading == true){
-      Future.delayed(
-        Duration(seconds: 5),
-        () => ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200),
-      );
       RefreshDialog().basicRefresh(context: context, onTap: () => context.go(navigation));
     }
   }
@@ -44,14 +36,16 @@ class DetailBodyDisconnectProductPenjual extends StatelessWidget with NavigasiRo
   @override
   Widget build(BuildContext context) {
     ThemeBox(context);
-    sharedPref();
     Size size = MediaQuery.of(context).size;
 
-    navigationRole(BuildContext context) async{
+    navigationRole(BuildContext context){
       return BlocBuilder<CubitDetailProdukNavPenjual, DataStateDetailProdukNavPenjual>(
-        builder: (context, state) => (state.jenisDetail == "AllProduct")
-        ? navigasiRBR(context: context, value: 0)
-        : navigasiRBR(context: context, value: 2)
+        builder: (context, state){
+          (state.jenisDetail == "AllProduct")
+          ? navigasiRBR(context: context, value: 0)
+          : navigasiRBR(context: context, value: 2);
+          return SizedBox();
+        }
       );
     }
     navigasiR();
@@ -65,8 +59,7 @@ class DetailBodyDisconnectProductPenjual extends StatelessWidget with NavigasiRo
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          headerDetailProduct(
-            context: context, 
+          HeaderDetailProduct(
             guestUser: true, 
             onPressedBack: () => context.go(navigation), 
             onPressedChart: () => context.go(RouteName.cartDetail),

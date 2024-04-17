@@ -8,7 +8,7 @@ class ApiLogout with SharedPref implements InterfaceGetLogout{
   late String tokens;
 
   @override
-  getLogout({
+  Future getLogout({
     bool testing = false,
     String testingToken = "",
   }) async {

@@ -2,7 +2,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 mixin FormButtonUpdateNotNull{
-  formUpdateNotNull({
+  Future<void> formUpdateNotNull({
     required String nameProduct, 
     required String price, 
     required String description, 

@@ -1,12 +1,11 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:foosel/blocs/bloc_default/mixin/mixin_size_device.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/shared/theme_font.dart';
 import 'package:foosel/shared/theme_text_style.dart';
 
-class ComponenCardVerticalUserTransaksi extends StatelessWidget with SizeDevice{
+class ComponenCardVerticalUserTransaksi extends StatelessWidget{
   String icon, textTitle;
   VoidCallback onTap, onLongPress;
   ComponenCardVerticalUserTransaksi({Key? key,

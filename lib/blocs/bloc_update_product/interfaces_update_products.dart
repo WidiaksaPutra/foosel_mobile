@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 abstract class InterfacesButtonUpdateProduct{
-  buttonUploadProduct({
+  Future<void> buttonUploadProduct({
     required String tokenId,
     required String nameProduct,
     required String price,

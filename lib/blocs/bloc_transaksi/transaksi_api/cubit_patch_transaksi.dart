@@ -13,7 +13,7 @@ class CubitPatchTransaksi extends Cubit<DataStatePatchTransaksi> implements Inte
   CubitPatchTransaksi() : super(DataStatePatchTransaksi(loadingTransaksi: false, status: false));
   
   @override
-  updateDataTransaksi({
+  Future<void> updateDataTransaksi({
     required String transactionsId, 
     required String status,
     required BuildContext context

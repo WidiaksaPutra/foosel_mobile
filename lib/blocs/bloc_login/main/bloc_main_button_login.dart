@@ -9,12 +9,12 @@ import 'package:foosel/shared/theme_konstanta.dart';
 
 class BlocButtonLogin extends Bloc<DataEventFormLogin, DataStateMultiFormUser>{
   BlocButtonLogin() : super(DataStateInitialFormUser()){
-    on<ButtonFormUser>((event, emit) async{
-      await buttonLogin(event.email, event.password, event.navigation);
+    on<ButtonFormUser>((event, emit){
+      buttonLogin(event.email, event.password, event.navigation);
     });
   }
   
-  buttonLogin(String email, String password, String navigation){
+  void buttonLogin(String email, String password, String navigation){
     emit(DataMultiStateForm(false, false, '', ''));
     if(email == "" && password == ""){
       emit(DataMultiStateForm(true, true, emailKosong, passwordKosong));//fungsinya memberikan notive ketika proses pengisian form, jika semua form memang dikosongkan dengan sengaja dan langsung disubmit.

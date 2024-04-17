@@ -1,0 +1,34 @@
+Pola Arsitektur Perangkat Lunak sederhananya pola dari penggunaan data yang diinputkan pada sebuah aplikasi sehingga menghasilkan output.
+Ketika kita menggunakan sebuah aplikasi, data akan kita inputkan pada sebuah view yang ditampilkan pada aplikasi,
+setelah diinputkan di view dan dieksekusi, data tersebut akan diperoses, diperosesnya bisa membutuhkan data dari penyimpanan atau data juga bisa disimpan, sehingga menghasikan output yang telah tersedia,
+cara dari menerima input, memproses dan menghasilkan output data tersebutlah yang bisa dikatakan pola arsitektur.
+Karena cara dari mengeksekusi data tersebut, berupa pola yang dirancang untuk mengatur pemrosesan data pada sebuah perangkat lunak.
+Intinya Pola Arsitektur Perangkat lunak merupakan cara dari View-Proses-Model berintraksi dalam mengolah data.
+
+Model-View-ViewModel merupakan salah satu pola atau cara yang bisa digunakan untuk mengolah data,
+konsep dari MVVM adalah :
+- View, untuk menerima data dari user atau menampilkan data yang diterima dari View Model.
+Data yang diterima dari user bisa diterima lebih dahulu oleh properti yang berhubungan dengan Value baru diproses ke View Model,
+atau bisa juga langsung diterima dan diperoses oleh View Model.
+View biasanya berupa tampilan UI yang bisa menampilkan data atau meng-inputkan data.
+
+- ViewModel merupakan proses yang berisi logic yang bertujuan untuk mengolah data, sesuai dengan tujuan dari logic tersebut,
+dalam ViewModel data bisa disimpan, atau ditampilkan atau bisa berlaku keduanya, yang jelas cara dari data tersebut disimpan atau ditampilkan adalah,
+dengan merubah properti yang terhubung pada View atau Model sebelum ditampilkan atau disimpan, 
+sehingga poperti yang terhubung pada View misalnya, dapat merubah bagian tampilan data yang dibutuhkan.
+Data yang diproses dalam ViewModel juga bisa saja membutuhkan data dari Model untuk menghasilkan output yang tepat.
+Intinya ViewModel bertujuan untuk menyediakan hubungan antara View dan Model, dan juga menyediakan data yang bisa dieksekusi oleh properti yang terhubung oleh View atau Model.
+ViewModel biasanya berupa Class yang berisi Metode yang menyediakan Logic2 tertentu. 
+
+- Model biasanya berhubungan dengan data, karena dalam projek saya kali ini menggunaakan service untuk mengakses data pada API, 
+jadi saya menggunakan model untuk merepresentasikan dan memetakan ketika saya Get data.
+Jadi dari apa yang saya terapkan sekarang, maka model itu biasanya berupa data yang telah dipetakan atau di representasikan berdasarkan Json yang dipanggil.
+
+
+catatan :
+- Perbedaan antara MVC dengan MVVM adalah 
+    - MVC ketika menerima aksi akan langsung diproses oleh controller dan langsung memperbarui tampilan/view secara keseluruhan sebagai outpunya.
+    - sedangkan ViewModel ketika menerima aksi dia bisa diterima oleh varibel yang terdapat didalam View dahulu atau bisa langsung dikirim ke ViewModel untuk diproses,
+    dan output dari ViewModel hanya merubah variabel yang dibutuhkan yang terhubung dengan View yang nantinya secara otomatis memperbarui variabel yang terdapat pada View saja, bukan keseluruhan View.
+- Controller atau ViewModel dapat mengeksekusi Logika yang sama dengan gaya yang sama, 
+tetapi yang membedakannya adalah cara untuk menyimpan atau menampilkan logika tersebut sebagai output, dimana jika Controller bersifat langsung memperbarui keseluruhan, sedangkan ViewModel hanya memperbarui properti yang dibutuhkan saja.

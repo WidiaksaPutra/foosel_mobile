@@ -1,5 +1,5 @@
 abstract class InterfacesFormButtonNotNullBarang{
-  Future<void> formButtonNotNullBarang({
+  void formButtonNotNullBarang({
     required String nameProduct,
     required String price,
     required String description,

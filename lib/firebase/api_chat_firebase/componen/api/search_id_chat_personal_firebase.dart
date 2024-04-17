@@ -10,15 +10,19 @@ class SearchIdChatPersonalFirebase implements InterfaceSearchIdChatPersonalFireb
     required String emailPengirim,
     required String emailPenerima,
   }) async {
-    CollectionReference users = firestore.collection('users');
-    final docUserPengirim = await users.doc(emailPengirim.toString()).get();
-    final docListUserPengirim = (docUserPengirim.data() as Map<String, dynamic>)["chats"] as List;
-    for(var singleChat in docListUserPengirim){
-      if(singleChat["connection"] == emailPenerima){
-        chatIdMessage = singleChat["chat_id"].toString();
-        break;
-      }
-    };
-    return chatIdMessage;
+    try{
+      CollectionReference users = firestore.collection('users');
+      final docUserPengirim = await users.doc(emailPengirim.toString()).get();
+      final docListUserPengirim = (docUserPengirim.data() as Map<String, dynamic>)["chats"] as List;
+      for(var singleChat in docListUserPengirim){
+        if(singleChat["connection"] == emailPenerima){
+          chatIdMessage = singleChat["chat_id"].toString();
+          break;
+        }
+      };
+      return chatIdMessage;
+    }catch (e) {
+      return "error";
+    }
   }
 }

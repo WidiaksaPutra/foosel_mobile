@@ -65,6 +65,21 @@ class HeadInsertAddImage extends HookWidget with SharedPref, NavigasiRole, Navig
       builder: (BuildContext context, state) => IconButton(
         onPressed: () async{
           if(imageFileList.value.length > 5 || imageFileList.value.isEmpty){
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                behavior: SnackBarBehavior.floating,
+                duration: const Duration(seconds: 2),
+                backgroundColor: kRedColor,
+                padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(ThemeBox.defaultRadius8),
+                ),
+                content: Text("data gambar harus diisi dan jumlah gambar maksimal 5",
+                  style: whiteTextStyle.copyWith(fontWeight: regular, fontSize: defaultFont12),
+                  textAlign: TextAlign.center
+                ),
+              ),
+            );
             imageFileList.value = [];
           }else{
             context.read<BlocUploadInsertProduct>().add(
@@ -178,15 +193,13 @@ class HeadInsertAddImage extends HookWidget with SharedPref, NavigasiRole, Navig
             }
           }
         },
-        builder: (context, stateUploadSnack){
-          return (stateUploadSnack.loading == false)
-          ? BodyAddImage(
-              imageFileList: imageFileList.value,
-              selectImage: selectImage, 
-              selectImageCamera: selectImageCamera,
-            ) 
-          : ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200);
-        } 
+        builder: (context, stateUploadSnack) => (stateUploadSnack.loading == true)
+        ? ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200)
+        : BodyAddImage(
+            imageFileList: imageFileList.value,
+            selectImage: selectImage, 
+            selectImageCamera: selectImageCamera,
+          ),
       )
     );
   }

@@ -4,15 +4,19 @@ import 'package:foosel/shared/theme_global_variabel.dart';
 
 class UpdateUserFirebase implements InterfaceUpdateUserFirebase{
   @override
-  updateUserFirebase({
+  Future updateUserFirebase({
     required String email,
     required statusUser,
-  }) {
-    CollectionReference users = firestore.collection('users');
-    users.doc(email).update({
-      'status' : statusUser,
-      'lastTime' : DateTime.now().toLocal(),
-    });
-    return true;
+  }) async{
+    try{
+      CollectionReference users = firestore.collection('users');
+      users.doc(email).update({
+        'status' : statusUser,
+        'lastTime' : DateTime.now().toLocal(),
+      });
+      return true;
+    }catch (e) {
+      return false;
+    }
   }
 }

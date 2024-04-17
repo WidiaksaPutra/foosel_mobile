@@ -1,10 +1,12 @@
+import 'package:foosel/model/categories.dart';
+
 abstract class InterfaceGetDataCategory{
-  getDataCategory({
+  Future<List<Datum>> getDataCategory({
     bool testing = false,
     required bool loadingApiService,
   });
 
-  getDataCategoryNoParameters({
+  Future<List<Datum>> getDataCategoryNoParameters({
     bool testing = false,
     required bool loadingApiService,
   });

@@ -7,7 +7,7 @@ import 'package:foosel/service/api_konstanta.dart';
 class ApiRegister with SharedPref implements InterfacePostRegister{
 
   @override
-  postRegister({
+  Future postRegister({
     bool testing = false,
     required String name, 
     required String username, 
@@ -18,6 +18,7 @@ class ApiRegister with SharedPref implements InterfacePostRegister{
     required String roles,
   }) async{
     try {
+      print("test alamat $alamat");
       final responseRegister = await Api.client.post(Uri.parse('${Api.baseURL}/register?'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

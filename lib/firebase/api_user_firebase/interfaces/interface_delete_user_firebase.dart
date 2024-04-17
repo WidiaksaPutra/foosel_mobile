@@ -1,5 +1,5 @@
 abstract class InterfaceDeleteUserFirebase{
-  deleteUserFirebase({
+  Future deleteUserFirebase({
     required String emailPenerima,
     required String emailPengirim,
   });

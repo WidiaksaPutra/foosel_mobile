@@ -10,7 +10,7 @@ class ApiPostProducts with SharedPref implements InterfacePostDataProduct{
   late String tokens;
 
   @override
-  postDataProduct({
+  Future postDataProduct({
     bool testing = false,
     String testingTokenPenjual = "",
     required String email, 

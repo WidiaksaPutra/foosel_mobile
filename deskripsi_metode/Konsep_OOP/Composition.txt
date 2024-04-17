@@ -1,0 +1,303 @@
+Composition merupakan sebuah objek yang dibuat dari berbagai komponen komponen yang lebih kecil yang dirancang agar reuseability.  
+contoh menggunakan mixin:
+    Ini merupakan penerapan composition dalam pembuatan class RefreshDialog, dimana fitur ini digunakan untuk menampilkan dialog refresh.
+    Dalam pembuatan fitur ini, dibuat dengan menggunakan kombinasi dari beberapa komponen dalam bentuk mixin yaitu DialogBasic, NavigasiRole, NavigasiRoleBarRead.
+  
+    mixin DialogBasic{
+        void voidDialogBasic({
+            required BuildContext context,
+            required VoidCallback onTapCloseDialog,
+            required Widget contentDialog,
+            required bool barrierDismissible,
+            required bool closeIconStatus,
+            required EdgeInsetsGeometry margin,
+            required EdgeInsetsGeometry padding,
+            required Color color,
+            required BorderRadiusGeometry borderRadius,
+        }){
+            ThemeBox(context);
+            showDialog(
+                context: context,
+                barrierDismissible: barrierDismissible,
+                builder: ((BuildContext context) => Container(
+                    margin: margin,
+                    padding: padding,
+                    decoration: BoxDecoration(
+                        color: color,
+                        borderRadius: borderRadius,
+                    ),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                            if(closeIconStatus == true)...[
+                                Align(
+                                    alignment: Alignment.topLeft,
+                                    child: GestureDetector(
+                                        onTap: onTapCloseDialog,
+                                        child: Image.asset(
+                                            'asset/icon/close_icon.png',
+                                            height: ThemeBox.defaultHeightBox10,
+                                            width: ThemeBox.defaultWidthBox10,   
+                                        ),
+                                    ),
+                                ),
+                            ],
+                            Expanded(child: contentDialog),
+                        ],
+                    ),
+                )),
+            );
+        }
+    }
+
+    --------------------------------------------------------------------------------------------------
+
+    mixin NavigasiRole{
+        late String navigation = "";
+        Future<void> navigasiR() async{
+            final _tokenUser = await SharedPreferences.getInstance();
+            Map<String, dynamic> _decodeTokenUser = JwtDecoder.decode(_tokenUser.getString('token').toString());
+            if(_decodeTokenUser['roles'].toString() == "PEMBELI"){
+                navigation = RouteName.bottomNavPembeli;
+            }else if(_decodeTokenUser['roles'].toString() == "PENJUAL"){
+                navigation = RouteName.bottomNavPenjual;
+            }
+        }
+    }
+    
+    ----------------------------------------------------------------------------------------------------
+
+    mixin NavigasiRoleBarRead{
+        Future<void> navigasiRBR({required BuildContext context, required int value}) async{
+            final _tokenUser = await SharedPreferences.getInstance();
+            Map<String, dynamic> _decodeTokenUser = JwtDecoder.decode(_tokenUser.getString('token').toString());
+            if(_decodeTokenUser['roles'].toString() == "PEMBELI"){
+                context.read<CubitBottomNavPembeli>().navigation(currentButton: value);
+            }else if(_decodeTokenUser['roles'].toString() == "PENJUAL"){
+                context.read<CubitBottomNavPenjual>().navigation(currentButton: value);
+            }
+        }
+    }
+
+    ------------------------------------------------------------------------------------------
+
+    class RefreshDialog with DialogBasic, NavigasiRole, NavigasiRoleBarRead implements InterfacesRefreshDialog{
+        @override
+        void basicRefresh({
+            required BuildContext context,
+            required VoidCallback onTap,
+        }){
+            var _listener = InternetConnectionChecker().onStatusChange.listen((status){
+                if (status == InternetConnectionStatus.disconnected) {
+                    ThemeBox(context);
+                    voidDialogBasic(
+                        margin: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
+                        padding: EdgeInsets.only(left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, top: ThemeBox.defaultHeightBox30),
+                        borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10),
+                        color: kBlackColor6,
+                        context: context, 
+                        closeIconStatus: true,
+                        barrierDismissible: false,
+                        contentDialog: ComponenContentDialog_ImageAndTitleTextAndButtonRefresh(
+                        text: 'Halaman Perlu Di Refresh',
+                        image: 'asset/animations/loading_keong_lottie.json',
+                        onTapRefresh: () {
+                            navigasiRBR(context: context, value: 0);
+                            navigasiR();
+                            context.go(navigation);
+                        },
+                        ),
+                        onTapCloseDialog: onTap,
+                    );
+                }
+            });
+            Future.delayed(
+                const Duration(seconds: 30),
+                () => _listener.cancel(),
+            );
+        }
+    }
+
+-------------------------------------------------------------------------------
+
+contoh menggunakan widget:
+    Dalam code widget ini saya menerapkan Composition untuk menampilkan informasi text didalam class ini.
+    Dimana itusemua terdiri dari ComponenTextColumn_CrossStartAndWhiteGray2AndFont18Font12AndSemiBoldRegular, ComponenContainerHarga, ComponenTextDetail,
+    yang menghasilkan isi dari Container yang bertujuan menampilkan informasi text detail dari product.
+    
+    class ComponenTextColumn_CrossStartAndWhiteGray2AndFont18Font12AndSemiBoldRegular extends StatelessWidget {
+      late String title, content;
+      ComponenTextColumn_CrossStartAndWhiteGray2AndFont18Font12AndSemiBoldRegular({Key? key, required this.title, required this.content}) : super(key: key);
+
+      @override
+      Widget build(BuildContext context) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title, style: whiteTextStyle.copyWith(fontSize: defaultFont18, fontWeight: semiBold)),
+            Text(content, style: grayTextStyle2.copyWith(fontSize: defaultFont12, fontWeight: regular)),
+          ],
+        );
+      }
+    }
+
+    ----------------------------------------------------------------------------------------
+
+    class ComponenContainerHarga extends StatelessWidget {
+        late String titleHarga, harga, titleItem, jumlahItem, titleTotalHarga, jumlahTotalHarga;
+        ComponenContainerHarga({Key? key,
+            this.titleItem = "-",
+            this.jumlahItem = "-",
+            this.titleTotalHarga = "-",
+            this.jumlahTotalHarga = "-",
+            required this.titleHarga,
+            required this.harga,
+        }) : super(key: key);
+
+        @override
+        Widget build(BuildContext context) {
+            ThemeBox(context);
+            return Container(
+                margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox20, bottom: ThemeBox.defaultHeightBox30),
+                padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox16, horizontal: ThemeBox.defaultWidthBox16),                          
+                decoration: BoxDecoration(
+                    color: kBlackColor4,
+                    borderRadius: BorderRadius.circular(ThemeBox.defaultRadius4)
+                ),
+                child: Column(
+                    children: [
+                        Row(
+                            children: [
+                                Text(titleHarga, style: whiteTextStyle.copyWith(fontSize: defaultFont14, fontWeight: regular)),
+                                Expanded(
+                                    child: Text(formatCurrency.format(double.parse(harga.toString()).toInt()), 
+                                        style: blueTextStyle.copyWith(fontWeight: semiBold, fontSize: defaultFont16), 
+                                        overflow: TextOverflow.fade, textAlign: TextAlign.end,
+                                    ),
+                                ),
+                            ],
+                        ),
+                        if(titleItem != "-" && jumlahItem != "-")...[
+                            Row(
+                                children: [
+                                    Text(titleItem, style: whiteTextStyle.copyWith(fontSize: defaultFont14, fontWeight: regular)),
+                                    Expanded(
+                                        child: Text(jumlahItem, 
+                                            style: blueTextStyle.copyWith(fontWeight: semiBold, fontSize: defaultFont16), 
+                                            overflow: TextOverflow.fade, textAlign: TextAlign.end,
+                                        ),
+                                    ),
+                                ],
+                            ),
+                        ],
+                        if(titleTotalHarga != "-" && jumlahTotalHarga != "-")...[
+                            Row(
+                                children: [
+                                    Text(titleTotalHarga, style: whiteTextStyle.copyWith(fontSize: defaultFont14, fontWeight: regular)),
+                                    Expanded(
+                                        child: Text(formatCurrency.format(double.parse(jumlahTotalHarga.toString()).toInt()),
+                                            style: blueTextStyle.copyWith(fontWeight: semiBold, fontSize: defaultFont16),
+                                            textAlign: TextAlign.end, overflow: TextOverflow.fade,
+                                        ),
+                                    ),
+                                ],
+                            ),
+                        ]
+                    ],
+                ),
+            );
+        }
+    }
+
+    ----------------------------------------------------------------------------------------------------
+
+    class ComponenTextDetail extends StatelessWidget {
+      String title, data;
+      ComponenTextDetail({Key? key, required this.title, required this.data}) : super(key: key);
+
+      @override
+      Widget build(BuildContext context) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title, style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont14)),
+            Padding(
+              padding: EdgeInsets.only(bottom: ThemeBox.defaultHeightBox30),
+              child: Text(data, style: grayTextStyle2.copyWith(fontWeight: light, fontSize: defaultFont14)),
+            ),
+          ],
+        );
+      }
+    }
+
+    ----------------------------------------------------------------------------------
+
+    class DetailProductGuest extends HookWidget{
+      DetailProductGuest({Key? key}) : super(key: key);
+      
+      @override
+      Widget build(BuildContext context) {
+        ThemeBox(context);
+        Size size = MediaQuery.of(context).size;
+        final listImageProduct = useState([]);
+        final loading = useState(true);
+        return Scaffold(
+          backgroundColor: kGreyColor6,
+          body: BlocConsumer<CubitDetailProductConnect, DataStateProducts>(
+            listener: (context, state){
+              if(state.loading == false){
+                for(int i = 0 ; i < state.dataProducts.galleries!.length ; i++){
+                  listImageProduct.value.add(state.dataProducts.galleries![i].url.toString());
+                }
+                loading.value = state.loading;
+              }
+            },
+            builder: (context, state){
+              return (loading.value == false)
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    HeaderDetailProduct(
+                      context: context,
+                      guestUser: true,
+                      onPressedBack: () {
+                        context.go(RouteName.homeGuest);
+                      },
+                      onPressedChart: () {}, 
+                      icon: 'asset/icon/cart_Icon4.png',// harus dari cart
+                    ),
+                    ComponenCarouselSliderImage(sizeWidth: size.width, imageProduct: listImageProduct.value, connect: true),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox17),
+                        padding: EdgeInsets.only(top: ThemeBox.defaultHeightBox30, left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, bottom: ThemeBox.defaultHeightBox30),
+                        decoration: BoxDecoration(
+                          color: kPrimaryColor,
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(ThemeBox.defaultRadius24), topRight: Radius.circular(ThemeBox.defaultRadius24))
+                        ),
+                        child: SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ComponenTextColumn_CrossStartAndWhiteGray2AndFont18Font12AndSemiBoldRegular(
+                                title: state.dataProducts.name.toString(), 
+                                content: state.dataProducts.category!.name.toString(),
+                              ),
+                              ComponenContainerHarga(titleHarga: "Price starts from", harga: state.dataProducts.price.toString()),
+                              ComponenTextDetail(title: "Description", data: state.dataProducts.description.toString()),
+                              ComponenTextDetail(title: "Email Penjual", data: state.dataProducts.email.toString()),
+                              // ComponenSmallHorizontal(titleImage: "Fimiliar Product"),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200);
+            }
+          ),
+        );
+      }
+    }

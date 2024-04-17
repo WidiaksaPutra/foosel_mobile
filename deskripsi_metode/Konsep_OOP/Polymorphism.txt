@@ -1,0 +1,156 @@
+Polymorphism merupakan konsep yang berfungsi agar pemanggilan objek dapat dipanggil dengan fleksibel. 
+Maksudnya disini suatu objek ketika dipanggil menggunakan tipe data dari class induk, maka varibel dari objek tersebut dapat memanggil objek lainnya yang terdapat didalam class induk.
+Tujuannya agar variabel menjadi fleksibel dalam melakukan perubahan objek yang akan dipanggil.
+
+Terdapat dua jenis polimorfisme yang utama: 
+ - polimorfisme statis (compile-time polymorphism) dan 
+ - polimorfisme dinamis (runtime polymorphism)
+
+- Polimorpism Statis merupakan jenis polymorism yang memiliki konsep, 
+  dimana suatu kelas induk yang memiliki lebih dari satu metode dengan nama yang sama tetapi memiliki parameter berbeda(overloading).
+- Polimorpism Dinamis merupakan jenis polymorism yang memiliki konsep,
+  dimana kelas turunan dapat mengganti atau memodifikasi isi dari metode/prilaku dari metode induk yang diwariskan(overriding)
+
+contoh Polimorpism Dinamis:
+    Dalam contoh ini saya mengimplementasi konsep polymorpism pada abstrak InterfacePostDataProduct, 
+    dimana pada BlocUploadInsertProduct saya menjalankan induk yaitu InterfacePostDataProduct, untuk mengupload dan memberikan respon, 
+    dan abstrak InterfacePostDataProduct juga memiliki sifat Polimorpism Dinamis dalam penggunaannya.
+
+    BlocProvider(
+        create: (context){
+            setupDInjectionProduct();
+            return BlocUploadInsertProduct();
+        },
+    ),
+
+    class BlocUploadInsertProduct extends Bloc<DataEventAddBarang, StateAddPostBarang> with SharedPref implements InterfacesUploadProduct{
+        final InterfacePostDataProduct _postDataProduct = getItInstance<InterfacePostDataProduct>();
+        BlocUploadInsertProduct() : super(AddPostBarang(loading: false, snackBar: false, responApi: '-')){
+            on<ButtonFormProducts>((event, emit) async{
+                uploadProduct(
+                    nameProduct: event.nameProduct,
+                    price: event.price,
+                    description: event.description,
+                    type: event.type,
+                    image: event.image,
+                    images: event.images, 
+                    context: event.context,
+                );
+            });
+        }
+
+        @override
+        Future<void> uploadProduct({
+            required String nameProduct, 
+            required String price, 
+            required String description, 
+            required XFile? image, 
+            required List images, 
+            required String type, 
+            required BuildContext context,
+        }) async{
+            emit(AddPostBarang(loading: true, snackBar: false, responApi: '-'));
+            await sharedPref();
+            String _responPostProducts = await _postDataProduct.postDataProduct(
+                email: prefs.getString('email').toString(),
+                description: description, 
+                name: nameProduct,
+                price: price,
+                image: image,
+                images: images,
+                type: type,
+            );
+            if(_responPostProducts == "berhasil"){
+                emit(AddPostBarang(loading: false, snackBar: true, responApi: _responPostProducts));
+                _clearPrefs();
+            }else{
+                emit(AddPostBarang(loading: false, snackBar: true, responApi: _responPostProducts));
+            }
+        }
+
+        void _clearPrefs(){
+            prefs.remove('namaProduct');
+            prefs.remove('deskripsi');
+            prefs.remove('price');
+            prefs.remove('typeProduct');
+            prefs.remove('indexDropdown');
+        }
+    }
+
+    ------------------------------------------------------------
+
+    void setupDInjectionProduct(){
+        if(!getItInstance.isRegistered<InterfacePostDataProduct>()){
+            getItInstance.registerFactory<InterfacePostDataProduct>(() => ApiPostProducts());
+        }
+    }
+
+    abstract class InterfacePostDataProduct{
+        Future postDataProduct({
+            bool testing = false,
+            String testingTokenPenjual = "",
+            required String email, 
+            required String name, 
+            required String price, 
+            required String description, 
+            required XFile? image, 
+            required List images, 
+            required String type,
+        });
+    }
+
+    --------------------------------------------------------------------------------------------------------------------
+
+    class ApiPostProducts with SharedPref implements InterfacePostDataProduct{
+        late String tokens;
+
+        @override
+        Future postDataProduct({
+            bool testing = false,
+            String testingTokenPenjual = "",
+            required String email, 
+            required String name, 
+            required String price, 
+            required String description, 
+            required XFile? image, 
+            required List images, 
+            required String type,
+        }) async {
+            try {
+                if(testing == false){
+                    await sharedPref();
+                    tokens = prefs.getString('token').toString();
+                }else{
+                    tokens = testingTokenPenjual;
+                }
+                final productPost = await http.MultipartRequest('POST', Uri.parse('${Api.baseURL}/insertProduct?'));
+                for(dynamic img in images){
+                    final minesTypeData = await lookupMimeType(img.path, headerBytes: [0xFF, 0xD8]);
+                    productPost.files.add(await http.MultipartFile.fromPath('images[]', img.path, contentType: MediaType(minesTypeData![0], minesTypeData[1])));
+                }
+                if(testing == false){
+                    final mineTypeData = await lookupMimeType(image!.path, headerBytes: [0xFF, 0xD8]);
+                    final imageFile = await http.MultipartFile.fromPath('image', image.path, contentType: MediaType(mineTypeData![0], mineTypeData[1])).timeout(const Duration(seconds: 10)); 
+                    productPost.files.add(imageFile);
+                }
+                String dataPrice = price.replaceAll(",", "").split('.')[0];
+                productPost.fields['unit_test'] = testing.toString();
+                productPost.fields['email'] = email;
+                productPost.fields['name'] = name;
+                productPost.fields['price'] = dataPrice;
+                productPost.fields['type'] = type;
+                productPost.fields['description'] = description;
+                Map<String, String> headers = {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer $tokens',
+                    'Content-Type': 'application/json; charset=UTF-8',
+                };
+                productPost.headers.addAll(headers);
+                final streamResponse = await productPost.send().timeout(const Duration(seconds: 10));
+                final response = await http.Response.fromStream(streamResponse).timeout(const Duration(seconds: 10));
+                return (response.statusCode == 200) ? "berhasil" : "gagal";
+            } catch (e) {
+                return "error";
+            }
+        }
+    }

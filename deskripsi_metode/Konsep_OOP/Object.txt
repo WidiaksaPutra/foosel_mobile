@@ -1,0 +1,11 @@
+Object adalah hasil instansiasi dari sebuah class. Ketika membuat sebuah objek dari sebuah class, objek tersebut akan memiliki atribut (variabel) dan metode (fungsi) sesuai dengan definisi class tersebut. 
+dan melalui objek tersebut, kita Dapat mengakses atribut dan metode yang didefinisikan dalam class tersebut.
+Singkatnya Objek merupakan cara untuk mengakses class dan isinya.
+
+contoh : 
+  
+  ClassConnectionDialog _connection = ClassConnectionDialog();
+  _connection.basicConnection(context: context, onTap: (){Navigator.of(context).pop();}, buttonConnection: false);
+
+  Dalam contoh diatas, ClassConnectionDialog(); merupakan sebuh Objek.
+  Sedangkan ClassConnectionDialog _connection merupakan variabel yang menjadikan ClassConnectionDialog sebagai tipe data.

@@ -1,5 +1,5 @@
 abstract class InterfaceInsertUserFirebase{
-  insertUserFirebase({
+  Future insertUserFirebase({
     required dynamic tokenNotive, 
     required dynamic dataProfil ,
   });

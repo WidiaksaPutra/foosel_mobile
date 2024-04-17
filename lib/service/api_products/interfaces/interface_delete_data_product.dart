@@ -1,5 +1,5 @@
 abstract class InterfaceDeleteDataProduct{
-  deleteDataProduct({
+  Future<String> deleteDataProduct({
     bool testing = false,
     String testingTokenPenjual = "",
     required String idProduct,

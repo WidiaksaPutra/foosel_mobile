@@ -10,8 +10,8 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
   late bool _formVisibleNameProduct, _formVisiblePrice, _formVisibleDescription, _formVisibleType, _formLengthVisiblePrice;
   late String _messageNameProduct, _messagePrice, _messageDescription, _messageType, _lengthPriceMessage;
   BlocFormButtonNotNullBarang() : super(DataStateInitialFormProduct()){
-    on<ButtonFormProducts>((event, emit) async{
-      await formButtonNotNullBarang(
+    on<ButtonFormProducts>((event, emit){
+      formButtonNotNullBarang(
         nameProduct: event.nameProduct,
         price: event.price,
         description: event.description,
@@ -21,12 +21,12 @@ class BlocFormButtonNotNullBarang extends Bloc<ButtonFormProducts, DataStateMult
   }
   
   @override
-  Future<void> formButtonNotNullBarang({
+  void formButtonNotNullBarang({
     required String nameProduct,
     required String price, 
     required String description, 
     required String type,
-  }) async{
+  }){
     _formVisibleNameProduct = false; _formVisiblePrice = false; _formVisibleDescription = false; _formVisibleType = false; _formLengthVisiblePrice = false;
     _messageNameProduct = ""; _messagePrice = ""; _messageDescription = ""; _messageType = ""; _lengthPriceMessage = "";
     _emitState();

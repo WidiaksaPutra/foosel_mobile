@@ -12,8 +12,8 @@
 - imagePicker
 - Lottie animation
 - notive badges
-- go notivication
+- Go Router
 - clean code
 - Unit Test
 - connectivity & internet_connection_checker
-- MVVM/MVC/MVP
+- MVVM

@@ -1,0 +1,5 @@
+Dependency merupakan konsep yang bertujuan untuk mengelola ketergantungan pada kode, agar menghindari terjadinya spaghetti code.
+Spageti Code merupakan karakteristik code yang seperti spaghetti, yaitu saling terhubung, tapi hubungan antar codenya tidak teratur,
+sulit dipahami, sulit dipelihara, dan sulit diperbaiki karena strukturnya yang rumit dan tidak teratur, karena codenya saling terhubung, dengan keterhubungan yang random.
+Cara dasar untuk mengelola ketergantungan, adalah penggunaan konsep Abstract yang optimal, tetapi dalam code ini, saya menggunakan Dependency Injection untuk menerapkan konsep Dependency.
+Intinya Dependency Injection juga menggunakan Abstract sebagai basicnya untuk menerapkan konsep Dependency. Pengertian dan contoh Dependency Injection akan saya jelaskan secara terpisah didalam konsep SOLID.

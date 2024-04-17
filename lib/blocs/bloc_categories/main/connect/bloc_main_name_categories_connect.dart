@@ -54,7 +54,7 @@ class BlocNameCategoriesConnect extends Bloc<DataEventKlasifikasi, DataStateName
   }
 
   @override
-  scrollControlNameCategories() async{
+  void scrollControlNameCategories() async{
     _scrollController.addListener(() async {
       if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent && _loadingScrolling == false){
         _loadingScrolling = true;

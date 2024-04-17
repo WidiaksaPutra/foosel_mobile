@@ -8,7 +8,7 @@ class CubitUpdateTransaksiLocal extends Cubit<DataStateUpdateTransaksiLocal> imp
   CubitUpdateTransaksiLocal() : super(DataUpdateTransaksiLocal(status: false));
 
   @override
-  updateDataTransaksiLocal({
+  Future<void> updateDataTransaksiLocal({
     required String tokenId,
     required int jumlah,
     required String hargaTotal,

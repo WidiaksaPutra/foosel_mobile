@@ -48,19 +48,18 @@ class DetailBodyConnectionProductPembeli extends HookWidget with NavigasiRole, N
     : (jenisDetail == "TransaksiDetail")
     ? context.go(RouteName.cart)
     : context.go(navigation);
-  }  
+  }
 
   @override
   Widget build(BuildContext context) {
     ThemeBox(context);
     Size size = MediaQuery.of(context).size;
-    var listImageProduct = useState([]);
+    final listImageProduct = useState([]);
     sharedPref();
 
     Future<void> listenerDetailProduct({
       required DataStateProducts state,
       required BuildContext context1,
-      required BuildContext context,
     }) async{
       bool loading = state.loading;
       if(loading == true){
@@ -81,17 +80,14 @@ class DetailBodyConnectionProductPembeli extends HookWidget with NavigasiRole, N
     }
 
     return BlocConsumer<CubitDetailProductConnect, DataStateProducts>(
-      listener: (context1, state) async {
-        await listenerDetailProduct(state: state, context: context, context1: context1).timeout(Duration(seconds: 10));
-      },
+      listener: (context1, state) async => await listenerDetailProduct(state: state, context1: context1).timeout(Duration(seconds: 10)),
       builder: (context1, state) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BlocBuilder<CubitDetailProdukNavPembeli, DataStateDetailProdukNavPembeli>(
             builder: (context2, state){
-              return headerDetailProduct(
-                context: context, 
-                guestUser: false, 
+              return HeaderDetailProduct(
+                guestUser: false,
                 onPressedBack: () => navigationBack(context: context, jenisDetail: state.jenisDetail.toString()), 
                 onPressedChart: () => context.go(RouteName.cart), 
                 icon: 'asset/icon/cart_Icon4.png',
@@ -186,6 +182,7 @@ class DetailBodyConnectionProductPembeli extends HookWidget with NavigasiRole, N
                     ),
                     ComponenTextDetail(title: "Description", data: state.dataProducts.description.toString()),
                     ComponenTextDetail(title: "Email Penjual", data: state.dataProducts.email.toString()),
+                    ComponenTextDetail(title: "Alamat Penjual", data: state.dataProducts.user?.alamat.toString()),
                     // ComponenSmallHorizontal(titleImage: "Fimiliar Product"),
                   ],
                 ),

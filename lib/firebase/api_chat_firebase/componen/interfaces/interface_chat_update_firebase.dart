@@ -1,5 +1,5 @@
 abstract class InterfaceChatUpdateFirebase{
-  chatUpdate({
+  Future<void> chatUpdate({
     required String chatId,
     required int totalChats,
     required int totalRead,

@@ -10,7 +10,7 @@ class CubitGetTransaksiProductLocal extends Cubit<DataStateGetTransaksi> impleme
   CubitGetTransaksiProductLocal() : super(DataGetTransaksi(loading: false, dataTransaksi: []));
 
   @override
-  getDataTransaksi() async{
+  Future<void> getDataTransaksi() async{
     _dataTransaksi.clear();
     emit(DataGetTransaksi(loading: true, dataTransaksi: []));
     _dataTransaksi.addAll(await _dataGetTransaksiLocal.getDataProductTransaksiLocal());
@@ -18,7 +18,7 @@ class CubitGetTransaksiProductLocal extends Cubit<DataStateGetTransaksi> impleme
   }
 
   @override
-  getDataTransaksiWhereId({required String tokenId}) async{
+  Future<void> getDataTransaksiWhereId({required String tokenId}) async{
     _dataTransaksi.clear();
     emit(DataGetTransaksi(loading: true, dataTransaksi: _dataTransaksi));
     if(tokenId.isNotEmpty){

@@ -9,7 +9,7 @@ class CubitUpButton extends Cubit<StateDataUpButton> implements InterfacesUpButt
     required int currentTop, 
     required int currentBody, 
     required dynamic readBloc,
-  }) async{
+  }){
     currentBody = 1;
     if(index == 0){
       currentBody = 0;

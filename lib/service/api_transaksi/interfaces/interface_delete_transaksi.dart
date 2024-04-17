@@ -1,5 +1,5 @@
 abstract class InterfaceDeleteTransaksi{
-  deleteTransaksi({
+  Future deleteTransaksi({
     bool testing = false,
     String transactionsId = "-",
     String productsId = "-",

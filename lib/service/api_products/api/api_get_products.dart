@@ -11,15 +11,16 @@ class ApiGetProducts with SharedPref implements InterfaceGetDataProduct{
   late String tokens;
 
   @override
-  getDataProduct({
+  Future getDataProduct({
     bool testing = false,
     String testingToken = "",
     required int pages
-  })async {
+  }) async{
     try {
       if(testing == false){
         await sharedPref();
         tokens = prefs.getString('token').toString();
+        print("test token $tokens");
       }else{
         (testingToken == "") ? tokens = 'null' : tokens = testingToken;
       }
@@ -43,103 +44,123 @@ class ApiGetProducts with SharedPref implements InterfaceGetDataProduct{
     }
   }
 
-  tokenNull({
+  Future tokenNull({
     bool testing = false,
     required int pages,
-  }) async {
-    Map<String, String> headers = {
-      'Content-Type': 'application/json; charset=UTF-8',
-    };
-    Map<String, String> parameterApi = {
-      'page' : '1',
-      'limit' : pages.toString(),
-    };
-    await getDataProductUsers(
-      parameterApi: parameterApi, 
-      link: 'products', 
-      headers: headers,
-    );
-    return (testing == false) ? dataProducts : "berhasil";
+  }) async{
+    try{
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      Map<String, String> parameterApi = {
+        'page' : '1',
+        'limit' : pages.toString(),
+      };
+      await getDataProductUsers(
+        parameterApi: parameterApi, 
+        link: 'products', 
+        headers: headers,
+      );
+      return (testing == false) ? dataProducts : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
+    }
   }
 
-  tokenNotNull({
+  Future tokenNotNull({
     bool testing = false,
     required String tokens,
     required int pages,
-  }) async {
-    Map<String, dynamic> decodeTokenUser = await JwtDecoder.decode(tokens);
-    String role = decodeTokenUser['roles'].toString();
-    Map<String, String> headers = {
-      'Authorization': 'Bearer $tokens',
-      'Content-Type': 'application/json; charset=UTF-8',
-    };
-    if(role == "PENJUAL"){
-      await rolePenjual(
-        pages: pages,
-        headers: headers,
-      );
-    }else{
-      await rolePembeli(
-        pages: pages,
-        headers: headers,
-      );
+  }) async{
+    try{
+      Map<String, dynamic> decodeTokenUser = await JwtDecoder.decode(tokens);
+      String role = decodeTokenUser['roles'].toString();
+      Map<String, String> headers = {
+        'Authorization': 'Bearer $tokens',
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      if(role == "PENJUAL"){
+        await rolePenjual(
+          pages: pages,
+          headers: headers,
+        );
+      }else{
+        await rolePembeli(
+          pages: pages,
+          headers: headers,
+        );
+      }
+      return (testing == false) ? dataProducts : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
     }
-    return (testing == false) ? dataProducts : "berhasil";
   }
 
-  rolePenjual({
+  Future rolePenjual({
     bool testing = false,
     required int pages,
     required Map<String, String>? headers
-  }) async {
-    Map<String, String> parameterApi = {
-      'page' : '1',
-      'limit' : pages.toString(),
-    };
-    await getDataProductUsers(
-      parameterApi: parameterApi, 
-      link: 'productsPenjual',
-      headers: headers,
-    );
-    return (testing == false) ? dataProducts : "berhasil";
+  }) async{
+    try{
+      Map<String, String> parameterApi = {
+        'page' : '1',
+        'limit' : pages.toString(),
+      };
+      await getDataProductUsers(
+        parameterApi: parameterApi, 
+        link: 'productsPenjual',
+        headers: headers,
+      );
+      return (testing == false) ? dataProducts : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
+    }
   }
 
-  rolePembeli({
+  Future rolePembeli({
     bool testing = false,
     required int pages,
     required Map<String, String>? headers
-  }) async {
-    Map<String, String> parameterApi = {
-      'page' : '1',
-      'limit' : pages.toString(),
-    };
-    await getDataProductUsers(
-      parameterApi: parameterApi,
-      link: 'productsPembeli',
-      headers: headers,
-    );
-    return (testing == false) ? dataProducts : "berhasil";
+  }) async{
+    try{
+      Map<String, String> parameterApi = {
+        'page' : '1',
+        'limit' : pages.toString(),
+      };
+      await getDataProductUsers(
+        parameterApi: parameterApi,
+        link: 'productsPembeli',
+        headers: headers,
+      );
+      return (testing == false) ? dataProducts : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
+    }
   }
 
-  getDataProductUsers({
+  Future getDataProductUsers({
     bool testing = false,
     required Map<String, dynamic> parameterApi,
     required Map<String, String>? headers,
     required String link,
-  }) async {
-    String? parameterString = await Uri(queryParameters: parameterApi).query;
-    final responseProducts = await Api.client.get(
-      Uri.parse('${Api.baseURL}/$link?' + parameterString),
-      headers: headers,
-    ).timeout(const Duration(seconds: 10));
-    if(responseProducts.statusCode == 200){
-      final parse = await json.decode(responseProducts.body);
-      Products productsDataModel = await Products.fromJson(parse);
-      dataProducts.clear();
-      dataProducts.addAll(productsDataModel.data!.data.toList());
-    }else{
-      throw Exception('data gagal');
+  }) async{
+    try{    
+      String? parameterString = await Uri(queryParameters: parameterApi).query;
+      final responseProducts = await Api.client.get(
+        Uri.parse('${Api.baseURL}/$link?' + parameterString),
+        headers: headers,
+      ).timeout(const Duration(seconds: 10));
+      if(responseProducts.statusCode == 200){
+        final parse = await json.decode(responseProducts.body);
+        Products productsDataModel = await Products.fromJson(parse);
+        dataProducts.clear();
+        dataProducts.addAll(productsDataModel.data!.data.toList());
+      }else{
+        throw Exception('data gagal');
+      }
+      return (testing == false) ? dataProducts : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
     }
-    return (testing == false) ? dataProducts : "berhasil";
   }
 }

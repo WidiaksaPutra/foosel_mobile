@@ -35,7 +35,7 @@ class BlocUploadInsertProduct extends Bloc<DataEventAddBarang, StateAddPostBaran
     required List images, 
     required String type, 
     required BuildContext context,
-  }) async {
+  }) async{
     emit(AddPostBarang(loading: true, snackBar: false, responApi: '-'));
     await sharedPref();
     String _responPostProducts = await _postDataProduct.postDataProduct(

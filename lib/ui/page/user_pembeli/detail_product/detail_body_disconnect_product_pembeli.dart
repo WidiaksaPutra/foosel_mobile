@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutable, unused_element
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_default/class/class/refresh_dialog.dart';
@@ -53,10 +52,6 @@ class DetailBodyDisconnectProductPembeli extends StatelessWidget with NavigasiRo
     required bool loading,
   }){
     if(loading == true){
-      Future.delayed(
-        Duration(seconds: 5),
-        () => ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200),
-      );
       RefreshDialog().basicRefresh(context: context, onTap: () => context.go(navigation));
     }
   }
@@ -81,8 +76,7 @@ class DetailBodyDisconnectProductPembeli extends StatelessWidget with NavigasiRo
         children: [
           BlocBuilder<CubitDetailProdukNavPembeli, DataStateDetailProdukNavPembeli>(
             builder: (context2, state2){
-              return headerDetailProduct(
-                context: context, 
+              return HeaderDetailProduct(
                 guestUser: false, 
                 onPressedBack: () => navigationBack(context: context, jenisDetail: state2.jenisDetail.toString()), 
                 onPressedChart: () => context.go(RouteName.cart), 

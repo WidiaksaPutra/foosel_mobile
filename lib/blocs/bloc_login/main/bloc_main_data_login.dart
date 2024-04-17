@@ -31,7 +31,7 @@ class BlocButtonLoginData extends Bloc<DataEventFormLogin, StateSnackBar> with S
     });
   }
 
-  buttonSnackBar(String email, String password, BuildContext context) async{
+  Future<void> buttonSnackBar(String email, String password, BuildContext context) async{
     await sharedPref();
     if(email != "" && password != ""){
       if(email != ""){

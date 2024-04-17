@@ -1,5 +1,4 @@
 import 'package:foosel/service/api_products/api/api_get_products_categori.dart';
-import 'package:foosel/service/api_products/option/api_get_products_categori.dart';
 import 'package:foosel/service/api_products/interfaces/interface_delete_data_product.dart';
 import 'package:foosel/service/api_products/interfaces/interface_get_data_detail_product.dart';
 import 'package:foosel/service/api_products/interfaces/interface_get_data_product.dart';

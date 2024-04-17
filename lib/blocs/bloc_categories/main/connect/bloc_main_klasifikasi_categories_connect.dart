@@ -48,7 +48,7 @@ class BlocKlasifikasiCategoriesConnect extends Bloc<DataEventKlasifikasi, DataSt
   }
   
   @override
-  scrollControlCategoryProduct({
+  void scrollControlCategoryProduct({
     required int pages,
     required String categoryKey,
   }) {

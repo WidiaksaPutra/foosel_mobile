@@ -14,7 +14,7 @@ class CubitGetTransaksiLocal extends Cubit<DataStateGetTransaksiLocal> implement
   ));
 
   @override
-  getDataTransaksi() async{
+  Future<void> getDataTransaksi() async{
     _dataTransaksi.clear();
     emit(DataGetTransaksiLocal(
       getData: _dataTransaksi, 
@@ -34,7 +34,7 @@ class CubitGetTransaksiLocal extends Cubit<DataStateGetTransaksiLocal> implement
   }
 
   @override
-  getDataTransaksiWhereId({required String tokenId}) async{
+  Future<void> getDataTransaksiWhereId({required String tokenId}) async{
     _dataTransaksi.clear();
     emit(DataGetTransaksiLocal(
       getData: _dataTransaksi,

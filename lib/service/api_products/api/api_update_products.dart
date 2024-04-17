@@ -11,7 +11,7 @@ class ApiUpdateProducts with SharedPref implements InterfaceUpdateDataProduct{
   late String tokens;
   
   @override
-  updateDataProduct({
+  Future updateDataProduct({
     bool testing = false,
     String testingTokenPenjual = "",
     required String tokenId, 

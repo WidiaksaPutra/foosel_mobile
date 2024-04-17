@@ -55,10 +55,14 @@ const String childConnectingCheck = "penggunaan aplikasi akan dibatasi karena ap
 
 const String delleteMessageUser = "apakah anda yakin ingin menghapus user message ini..?";
 
-const List coverFoosel = [
+const List coverfoosel = [
   "asset/image/cover_image_1.jpg",
   "asset/image/cover_image_2.jpg",
   "asset/image/cover_image_3.jpg",
   "asset/image/cover_image_4.jpg",
   "asset/image/cover_image_5.jpg",
 ];
+
+const String environment = "DEV";
+
+// const String environment = "LIVE";

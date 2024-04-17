@@ -13,7 +13,7 @@ class RefreshDialog with DialogBasic, NavigasiRole, NavigasiRoleBarRead implemen
   void basicRefresh({
     required BuildContext context,
     required VoidCallback onTap,
-  })async {
+  }){
     var _listener = InternetConnectionChecker().onStatusChange.listen((status){
       if (status == InternetConnectionStatus.disconnected) {
         ThemeBox(context);

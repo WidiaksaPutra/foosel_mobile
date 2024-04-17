@@ -5,7 +5,7 @@ import 'package:foosel/blocs/bloc_default/state/state_connection.dart';
 class CubitConnectionNavigasi extends Cubit<DataStateConnection> with SharedPref implements InterfacesCubitConnectionNavigasi{
   CubitConnectionNavigasi() : super(DataConnection(false));
   @override
-  void klasifikasiConnection(String key) async{
+  Future<void> klasifikasiConnection(String key) async{
     await sharedPref();
     bool _sharedHasil = prefs.getBool(key) as bool;
     emit(DataConnection(_sharedHasil));

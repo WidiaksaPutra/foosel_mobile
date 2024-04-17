@@ -92,26 +92,3 @@ class ListVerticalHome extends StatelessWidget with LoadingScrollData, SharedPre
     : Center(child: ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200));
   }
 }
-
-// final roleData = useState("");
-    // rolesUser();
-    // Timer(
-    //   const Duration(seconds: 2),
-    //   (){
-    //     roleData.value = role;
-    //   }
-    // );
-
-
-
-
-
-
-
-
-
-
-
-// Get.parameters['idProduct'].toString()
-// RouteName.detailProductPembeli}?idProduct=${data[index].tokenId.toString()}
-// ${RouteName.detailProductPembeli}?idProduct=${data[index]['tokenId'].toString()}

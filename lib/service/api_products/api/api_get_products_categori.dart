@@ -11,12 +11,12 @@ class ApiGetProductsCategori with SharedPref implements InterfaceGetDataProducts
   late String tokens;
 
   @override
-  getDataProductsCategory({ 
+  Future getDataProductsCategory({ 
     bool testing = false,
     String testingToken = "",
     required String categoriesId, 
     required bool fresh,
-  }) async {
+  }) async{
     try{
       if(fresh == true){
         pages = 6;
@@ -51,107 +51,127 @@ class ApiGetProductsCategori with SharedPref implements InterfaceGetDataProducts
     }
   }
 
-  tokenNull({
+  Future tokenNull({
     bool testing = false,
     required String categoriesId
-  }) async {
-    Map<String, String> headers = {
-      'Content-Type': 'application/json; charset=UTF-8',
-    };
-    Map<String, String> parameterApi = {
-      'categories_id' : await categoriesId,
-      'page' : '1',
-      'limit' : pages.toString(),
-    };
-    await getDataProductUsers(
-      parameterApi: parameterApi, 
-      link: 'products', 
-      headers: headers, 
-    );
-    return (testing == false) ? dataProducts : "berhasil";
+  }) async{
+    try{
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      Map<String, String> parameterApi = {
+        'categories_id' : await categoriesId,
+        'page' : '1',
+        'limit' : pages.toString(),
+      };
+      await getDataProductUsers(
+        parameterApi: parameterApi, 
+        link: 'products', 
+        headers: headers, 
+      );
+      return (testing == false) ? dataProducts : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
+    }
   }
 
-  tokenNotNull({
+  Future tokenNotNull({
     bool testing = false,
     required String tokens,
     required String categoriesId,
-  }) async {
-    Map<String, dynamic> decodeTokenUser = await JwtDecoder.decode(tokens);
-    String role = decodeTokenUser['roles'].toString();
-    Map<String, String> headers = {
-      'Authorization': 'Bearer $tokens',
-      'Content-Type': 'application/json; charset=UTF-8',
-    };
-    if(role == "PENJUAL"){
-      await rolePenjual(
-        headers: headers, 
-        categoriesId: categoriesId,
-      );
-    }else{
-      await rolePembeli(
-        headers: headers, 
-        categoriesId: categoriesId,
-      );
+  }) async{
+    try{
+      Map<String, dynamic> decodeTokenUser = await JwtDecoder.decode(tokens);
+      String role = decodeTokenUser['roles'].toString();
+      Map<String, String> headers = {
+        'Authorization': 'Bearer $tokens',
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      if(role == "PENJUAL"){
+        await rolePenjual(
+          headers: headers, 
+          categoriesId: categoriesId,
+        );
+      }else{
+        await rolePembeli(
+          headers: headers, 
+          categoriesId: categoriesId,
+        );
+      }
+      return (testing == false) ? dataProducts : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
     }
-    return (testing == false) ? dataProducts : "berhasil";
   }
 
-  rolePenjual({
+  Future rolePenjual({
     bool testing = false,
     required Map<String, String>? headers,
     required String categoriesId,
-  }) async {
-    Map<String, String> parameterApi = {
-      'categories_id' : categoriesId,
-      'page' : '1',
-      'limit' : pages.toString(),
-    };
-    await getDataProductUsers(
-      parameterApi: parameterApi, 
-      link: 'productsPenjual',
-      headers: headers, 
-    );
-    return (testing == false) ? dataProducts : "berhasil";
+  }) async{
+    try{
+      Map<String, String> parameterApi = {
+        'categories_id' : categoriesId,
+        'page' : '1',
+        'limit' : pages.toString(),
+      };
+      await getDataProductUsers(
+        parameterApi: parameterApi, 
+        link: 'productsPenjual',
+        headers: headers, 
+      );
+      return (testing == false) ? dataProducts : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
+    }
   }
 
-  rolePembeli({
+  Future rolePembeli({
     bool testing = false,
     required Map<String, String>? headers,
     required String categoriesId,
-  }) async {
-    Map<String, String> parameterApi = {
-      'categories_id' : categoriesId,
-      'page' : '1',
-      'limit' : pages.toString(),
-    };
-    await getDataProductUsers(
-      parameterApi: parameterApi,
-      link: 'productsPembeli',
-      headers: headers, 
-    );
-    return (testing == false) ? dataProducts : "berhasil";
+  }) async{
+    try{
+      Map<String, String> parameterApi = {
+        'categories_id' : categoriesId,
+        'page' : '1',
+        'limit' : pages.toString(),
+      };
+      await getDataProductUsers(
+        parameterApi: parameterApi,
+        link: 'productsPembeli',
+        headers: headers, 
+      );
+      return (testing == false) ? dataProducts : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
+    }
   }
 
-  getDataProductUsers({
+  Future getDataProductUsers({
     bool testing = false,
     required Map<String, dynamic> parameterApi,
     required Map<String, String>? headers,
     required String link,
-  }) async {
-    String? parameterString = await Uri(queryParameters: parameterApi).query;
-    final responseProducts = await Api.client.get(
-      Uri.parse('${Api.baseURL}/$link?' + parameterString),
-      headers: headers,
-    ).timeout(const Duration(seconds: 10));
-    if(responseProducts.statusCode == 200){
-      final parse = await json.decode(responseProducts.body);
-      Products productsDataModel = await Products.fromJson(parse);
-      pages = pages+2;
-      dataProducts.clear();
-      dataProducts.addAll(await productsDataModel.data!.data.toList());
-      return (testing == false) ? dataProducts : "berhasil";
-    }else{
-      throw Exception('data gagal');
+  }) async{
+    try{
+      String? parameterString = await Uri(queryParameters: parameterApi).query;
+      final responseProducts = await Api.client.get(
+        Uri.parse('${Api.baseURL}/$link?' + parameterString),
+        headers: headers,
+      ).timeout(const Duration(seconds: 10));
+      if(responseProducts.statusCode == 200){
+        final parse = await json.decode(responseProducts.body);
+        Products productsDataModel = await Products.fromJson(parse);
+        pages = pages+2;
+        dataProducts.clear();
+        dataProducts.addAll(await productsDataModel.data!.data.toList());
+        return (testing == false) ? dataProducts : "berhasil";
+      }else{
+        throw Exception('data gagal');
+      }
+    }catch (e) {
+      throw Exception('data error');
     }
   }
 }

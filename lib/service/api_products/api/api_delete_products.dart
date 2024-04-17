@@ -7,12 +7,12 @@ class ApiDeleteProducts with SharedPref implements InterfaceDeleteDataProduct{
   late String? tokens;
 
   @override
-  deleteDataProduct({
+  Future<String> deleteDataProduct({
     bool testing = false,
     String testingTokenPenjual = "",
     required String idProduct,
     required String image,
-  }) async {
+  }) async{
     try {
       if(testing == false){
         await sharedPref();

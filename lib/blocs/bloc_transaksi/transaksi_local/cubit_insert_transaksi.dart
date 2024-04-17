@@ -9,7 +9,7 @@ class CubitInsertTransaksiLocal extends Cubit<DataStatePostTransaksiLocal> imple
   CubitInsertTransaksiLocal() : super(DataPostTransaksiLocal(loadingTransaksi: true, status: false));
   
   @override
-  saveLocalDataTransaksi({
+  Future<void> saveLocalDataTransaksi({
     required String emailPenjual,
     required String emailPembeli,
     required String tokenId, 
@@ -20,7 +20,8 @@ class CubitInsertTransaksiLocal extends Cubit<DataStatePostTransaksiLocal> imple
     required String hargaSatuan,
     required String hargaTotal,
     required int jumlah, 
-    required String imagePath
+    required String imagePath,
+    required dynamic alamat,
   }) async{
     emit(DataPostTransaksiLocal(loadingTransaksi: true, status: false));
     Future.delayed(Duration(seconds: 2));
@@ -35,7 +36,8 @@ class CubitInsertTransaksiLocal extends Cubit<DataStatePostTransaksiLocal> imple
       jumlah: jumlah,
       hargaSatuan: hargaSatuan,
       hargaTotal: hargaTotal,
-      imagePath: imagePath,
+      imagePath: imagePath, 
+      alamat: alamat,
     );
     if(_respons != 0){
       emit(DataPostTransaksiLocal(loadingTransaksi: false, status: true));

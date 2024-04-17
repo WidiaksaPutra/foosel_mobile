@@ -1,3 +1,3 @@
 abstract class InterfaceGetUser{
-  getUser({bool testing = false});
+  Future getUser({bool testing = false});
 }

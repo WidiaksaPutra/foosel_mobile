@@ -7,29 +7,49 @@ import 'package:foosel/service/api_transaksi/interfaces/interface_get_transaksi.
 import 'package:foosel/shared/theme_global_variabel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-late List<Map<String, String>> _dataTransaksiProducts = [];
-late String _userPembeli = "-"; 
-late List _dataTransaksi = [];
-class CubitGetTransaksiProduct extends Cubit<DataStateGetTransaksi> implements InterfacesGetTransaksiHistory{
+late List _dataTransaksi = [], _dataLocal = [], _dataListTransaksi = [];
+class CubitGetTransaksiProduct extends Cubit<DataStateGetTransaksi> implements InterfacesGetTransaksiHistory, InterfacesGetTransaksiProductPenjual{
   final InterfaceGetTransaksi _dataGetTransaksi = getItInstance<InterfaceGetTransaksi>();
   final InterfaceInsertDataProductTransaksiLocal _dataInsertTransaksiProductLocal = getItInstance<InterfaceInsertDataProductTransaksiLocal>();
   final InterfaceGetDataProductTransaksiLocal _dataGetTransaksiLocal = getItInstance<InterfaceGetDataProductTransaksiLocal>();
   CubitGetTransaksiProduct() : super(DataGetTransaksi(loading: false, dataTransaksi: []));
 
   @override
-  getDataTransaksiHistory() async{
-    _dataTransaksiProducts.clear();
+  Future<void> getDataTransaksiHistory() async{
+    await _getDataTransaksi();
+    if(_dataListTransaksi.isNotEmpty){
+      await _insertDataTransaksiHistoryLocal(dataLocal: _dataLocal, dataListTransaksi: _dataListTransaksi);
+      emit(DataGetTransaksi(loading: false, dataTransaksi: _dataListTransaksi));
+    }else{
+      emit(DataGetTransaksi(loading: false, dataTransaksi: _dataListTransaksi));
+    }
+  }
+
+  @override
+  Future<void> getDataTransaksiProductPenjual() async{
+    await _getDataTransaksi();
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    List _dataTransaksiProductPenjual = [];
+    if(_dataListTransaksi.isNotEmpty){
+      await _insertDataTransaksiHistoryLocal(dataLocal: _dataLocal, dataListTransaksi: _dataListTransaksi);
+      if(_prefs.getString('usersEmailPembeli') != null){
+        for(int i = 0; i < _dataListTransaksi.length; i++){
+          if(_dataListTransaksi[i].usersEmailPembeli.toString() == _prefs.getString('usersEmailPembeli')){
+            _dataTransaksiProductPenjual.add(_dataListTransaksi[i]);
+          }  
+        }
+      }
+      emit(DataGetTransaksi(loading: false, dataTransaksi: _dataTransaksiProductPenjual));
+    }else{
+      emit(DataGetTransaksi(loading: false, dataTransaksi: _dataTransaksiProductPenjual));
+    }
+  }
+
+  Future<void> _getDataTransaksi() async{
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     emit(DataGetTransaksi(loading: true, dataTransaksi: []));
-    List _dataLocal = await _dataGetTransaksiLocal.getDataProductTransaksiLocal();
-    List _dataListTransaksi = await _dataGetTransaksi.getTransaksi(email: _prefs.getString('email').toString());
-    if(_dataListTransaksi.isNotEmpty){
-      _insertDataTransaksiHistoryLocal(dataLocal: _dataLocal, dataListTransaksi: _dataListTransaksi);
-      _addListDataTransaksiHistory(_dataListTransaksi);
-      emit(DataGetTransaksi(loading: false, dataTransaksi: _dataTransaksiProducts));
-    }else{
-      emit(DataGetTransaksi(loading: false, dataTransaksi: _dataTransaksiProducts));
-    }
+    _dataLocal = await _dataGetTransaksiLocal.getDataProductTransaksiLocal();
+    _dataListTransaksi = await _dataGetTransaksi.getTransaksi(email: _prefs.getString('email').toString());
   }
 
   Future<void> _insertDataTransaksiHistoryLocal({
@@ -56,30 +76,5 @@ class CubitGetTransaksiProduct extends Cubit<DataStateGetTransaksi> implements I
         );
       });
     }
-  }
-
-  Future<List<Map<String, String>>> _addListDataTransaksiHistory(List dataListTransaksi) async{
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    if(_prefs.getString('usersEmailPembeli') != null){
-      _userPembeli = _prefs.getString('usersEmailPembeli').toString();
-    }
-    for(int index = 0; index < dataListTransaksi.length; index++){
-      _dataTransaksiProducts.add({
-        'tokenTransaksi': dataListTransaksi[index].transactionsId.toString(),
-        'usersEmailPembeli': dataListTransaksi[index].usersEmailPembeli.toString(),
-        'usersEmailPenjual': dataListTransaksi[index].usersEmailPenjual.toString(),	
-        'tokenProduct': dataListTransaksi[index].productsId.toString(),
-        'name': dataListTransaksi[index].productsName.toString(),
-        'description': dataListTransaksi[index].productsDescription.toString(),
-        'nameCategory': dataListTransaksi[index].productCategoriesName.toString(),
-        'price': dataListTransaksi[index].productPrice.toString(),
-        'quantity': dataListTransaksi[index].quantity.toString(),
-        'totalPrice': dataListTransaksi[index].totalPrice.toString(),
-        'status': dataListTransaksi[index].status.toString(),
-        'imagePath': dataListTransaksi[index].productsUrlImage.toString(),
-        'usersEmailPembeliOnClick': _userPembeli,
-      });
-    }
-    return _dataTransaksiProducts;
   }
 }

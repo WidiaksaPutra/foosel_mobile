@@ -7,7 +7,7 @@ class ApiPostTransaksi with SharedPref implements InterfacePostTransaksi{
   late String tokens;
 
   @override
-  postTransaksi({
+  Future postTransaksi({
     bool testing = false,
     String testingToken = "",
     required String usersEmailPembeli,

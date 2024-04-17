@@ -11,7 +11,7 @@ class CubitDeleteMessege extends Cubit<StateDeleteMessage>{
   CubitDeleteMessege() : super(DeleteMessage(loadingDeleteMessage: false, statusAlert: false));
   
   @override
-  deleteDataMessage({
+  Future<void> deleteDataMessage({
     required String emailPengirim,
     required String emailPenerima,
   }) async{

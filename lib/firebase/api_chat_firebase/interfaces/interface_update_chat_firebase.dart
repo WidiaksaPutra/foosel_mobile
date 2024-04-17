@@ -1,5 +1,5 @@
 abstract class InterfaceUpdateChatFirebase{
-  updateChatFirebase({
+  Future<void> updateChatFirebase({
     required String emailPengirim, 
     required String emailPenerima,
   });

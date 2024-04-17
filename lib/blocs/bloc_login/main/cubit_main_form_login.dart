@@ -3,7 +3,7 @@ import 'package:foosel/blocs/bloc_default/state/state_form_user.dart';
 
 class CubitFormLogin extends Cubit<DataStateFormUser>{
   CubitFormLogin() : super(DataStateInitial());
-  emailValidasiEmpty(String email){
+  void emailValidasiEmpty(String email){
     if(email.isEmpty){
       emit(DataStateEmail(true));
     }else{
@@ -11,7 +11,7 @@ class CubitFormLogin extends Cubit<DataStateFormUser>{
     }
   }
 
-  passwordValidasiEmpty(String password){
+  void passwordValidasiEmpty(String password){
     if(password.isEmpty){
       emit(DataStatePassword(true));
     }else{

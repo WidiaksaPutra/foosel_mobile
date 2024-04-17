@@ -7,7 +7,7 @@ import 'package:foosel/service/api_konstanta.dart';
 class ApiLogin with SharedPref implements InterfaceGetLogin{
   
   @override
-  getLogin({
+  Future getLogin({
     bool testing = false, 
     required String email, 
     required String password

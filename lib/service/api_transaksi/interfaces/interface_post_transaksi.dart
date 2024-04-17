@@ -1,5 +1,5 @@
 abstract class InterfacePostTransaksi{
-  postTransaksi({
+  Future postTransaksi({
     bool testing = false,
     String testingToken = "",
     required String usersEmailPembeli,

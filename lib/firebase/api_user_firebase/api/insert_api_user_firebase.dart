@@ -4,30 +4,34 @@ import 'package:foosel/shared/theme_global_variabel.dart';
 
 class InsertUserFirebase implements InterfaceInsertUserFirebase{
   @override
-  insertUserFirebase({
+  Future insertUserFirebase({
     required tokenNotive,
     required dataProfil,
-  }) async {
-    CollectionReference users = firestore.collection('users');
-    final chackuser = await users.doc(dataProfil.email.toString()).get();
-    if(chackuser.data() == null){
-      users.doc(dataProfil.email.toString()).set({
-        'email' : dataProfil.email.toString(),
-        'nama' : dataProfil.name.toString(),
-        'gambar' : dataProfil.profilePhotoPath.toString(),
-        'status' : 'Offline',
-        'lastTime' : DateTime.now().toLocal(),
-        'roles' : dataProfil.roles.toString(),
-        'chats' : [],
-        'token_notive': tokenNotive,
-      });
-    }else{
-      users.doc(dataProfil.email.toString()).update({
-        'status' : 'Offline',
-        'lastTime' : DateTime.now().toLocal(),
-        'token_notive': tokenNotive,
-      });
+  }) async{
+    try{
+      CollectionReference users = firestore.collection('users');
+      final chackuser = await users.doc(dataProfil.email.toString()).get();
+      if(chackuser.data() == null){
+        users.doc(dataProfil.email.toString()).set({
+          'email' : dataProfil.email.toString(),
+          'nama' : dataProfil.name.toString(),
+          'gambar' : dataProfil.profilePhotoPath.toString(),
+          'status' : 'Offline',
+          'lastTime' : DateTime.now().toLocal(),
+          'roles' : dataProfil.roles.toString(),
+          'chats' : [],
+          'token_notive': tokenNotive,
+        });
+      }else{
+        users.doc(dataProfil.email.toString()).update({
+          'status' : 'Offline',
+          'lastTime' : DateTime.now().toLocal(),
+          'token_notive': tokenNotive,
+        });
+      }
+      return true;
+    }catch (e) {
+      return "error";
     }
-    return true;
   }
 }

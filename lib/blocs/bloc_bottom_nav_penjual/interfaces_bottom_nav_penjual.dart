@@ -3,7 +3,7 @@ abstract class InterfacesBottomNavPenjual{
 }
 
 abstract class InterfacesDetailProdukNavPenjual{
-  Future<void> detailProdukNavPenjual({
+  void detailProdukNavPenjual({
     required String jenisDetail,
     required dynamic readDetail
   });

@@ -12,7 +12,6 @@ import 'package:foosel/ui/page/dropdown/dropdown_type_data.dart';
 import 'package:foosel/ui/widgets/componen_advanced/componen_text_form_field(label_white_16_&_text_form_and_hint_grey_14_&_radius_12_&_fill_color_black).dart';
 import 'package:foosel/ui/widgets/componen_form_kosong.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
-import 'package:flutter_multi_formatter/formatters/currency_input_formatter.dart';
 
 class FormInsertBarang extends StatelessWidget{
   late String? hintNameProduct, hintDropdownProduct, hintDropdownIdProduct, hintDeskripsiProduct, hintHargaProduct;

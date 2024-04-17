@@ -6,26 +6,30 @@ import 'package:foosel/shared/theme_global_variabel.dart';
 class DeleteUserFirebase implements InterfaceDeleteUserFirebase{
   final InterfaceSearchIdChatPersonalFirebase dataSearchIdChatPersonal = getItInstance<InterfaceSearchIdChatPersonalFirebase>();
   @override
-  deleteUserFirebase({
+  Future deleteUserFirebase({
     required String emailPenerima,
     required String emailPengirim,    
   }) async{
-    String chatIdMessage = await dataSearchIdChatPersonal.searchIdChatPersonal(
-      emailPenerima: emailPenerima,
-      emailPengirim: emailPengirim,
-    );
-    CollectionReference users = firestore.collection('users');
-    final docRefPengirim = users.doc(emailPengirim.toString());
-    final docRefPenerima = users.doc(emailPenerima.toString());
-    final docPengirim = await docRefPengirim.get();
-    final docPenerima = await docRefPenerima.get();
-    final docListUserPengirim = (docPengirim.data() as Map<String, dynamic>)["chats"] as List;
-    final docListUserPenerima = (docPenerima.data() as Map<String, dynamic>)["chats"] as List;
-    docListUserPengirim.removeWhere((item) => item['chat_id'] == chatIdMessage);
-    docListUserPenerima.removeWhere((item) => item['chat_id'] == chatIdMessage);
-    await docRefPengirim.update({'chats': docListUserPengirim});
-    await docRefPenerima.update({'chats': docListUserPenerima});
-    return true;
+    try{
+      String chatIdMessage = await dataSearchIdChatPersonal.searchIdChatPersonal(
+        emailPenerima: emailPenerima,
+        emailPengirim: emailPengirim,
+      );
+      CollectionReference users = firestore.collection('users');
+      final docRefPengirim = users.doc(emailPengirim.toString());
+      final docRefPenerima = users.doc(emailPenerima.toString());
+      final docPengirim = await docRefPengirim.get();
+      final docPenerima = await docRefPenerima.get();
+      final docListUserPengirim = (docPengirim.data() as Map<String, dynamic>)["chats"] as List;
+      final docListUserPenerima = (docPenerima.data() as Map<String, dynamic>)["chats"] as List;
+      docListUserPengirim.removeWhere((item) => item['chat_id'] == chatIdMessage);
+      docListUserPenerima.removeWhere((item) => item['chat_id'] == chatIdMessage);
+      await docRefPengirim.update({'chats': docListUserPengirim});
+      await docRefPenerima.update({'chats': docListUserPenerima});
+      return true;
+    }catch (e) {
+      return "error";
+    }
   }
 }
 

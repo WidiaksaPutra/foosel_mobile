@@ -10,7 +10,7 @@ class HelperTransaksi implements
   InterfaceInsertDataTransaksiLocal, 
   InterfaceUpdateDataTransaksiLocal{
   @override
-  Future<List<Map<String, dynamic>>> getDataTransaksiLocal() async {
+  Future<List<Map<String, dynamic>>> getDataTransaksiLocal() async{
     final dbGet = await SqlTransaksiTabel.db();
     return await dbGet.query('transaksi');
   }
@@ -38,7 +38,7 @@ class HelperTransaksi implements
     required String tokenId,
     required String hargaTotal,
     required int jumlah,
-  }) async {
+  }) async{
      final db = await SqlTransaksiTabel.db();
     return await db.rawUpdate("UPDATE transaksi SET hargaTotal='$hargaTotal',jumlah='$jumlah' WHERE tokenId='$tokenId'");
   }
@@ -56,7 +56,8 @@ class HelperTransaksi implements
     required String hargaTotal, 
     required int jumlah,
     required String imagePath,
-  }) async {
+    required dynamic alamat,
+  }) async{
     final db = await SqlTransaksiTabel.db();
     final dataInsert = {
       'tokenId': tokenId,
@@ -69,7 +70,8 @@ class HelperTransaksi implements
       'hargaSatuan': hargaSatuan,
       'hargaTotal': hargaTotal,
       'jumlah': jumlah,
-      'imagePath': imagePath
+      'imagePath': imagePath,
+      'alamat': alamat
     };
     return await db.insert('transaksi', dataInsert);
   }

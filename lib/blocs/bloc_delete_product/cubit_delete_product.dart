@@ -20,7 +20,7 @@ class CubitDeleteProduct extends Cubit<StateDeleteProduct> implements InterfaceD
   Future<void> deleteDataProduct({
     required String idProduct, 
     required String image,
-  }) async {
+  }) async{
     emit(DeleteProduct(loadingDeleteProduct: true, statusAlert: '-'));
     String _statusApiProduct = await _dataDeleteProduct.deleteDataProduct(idProduct: idProduct, image: image); 
     bool _loadingDeleteProduct = await _dataDeleteProduct.loadingDeleteDataProduct();

@@ -1,0 +1,90 @@
+Encapsulation merupakan cara untuk mengatur akses data dan properti. 
+Dalam konteks flutter digunakan untuk mengatur penggunaan widget serta logika yang ada didalam class, dengan tujuan untuk meningkatkan keamanan, keterbacaan, dan pemeliharaan kode.
+
+    contoh penerapan Encapsulation dalam Bloc:
+    class BlocUploadInsertProduct extends Bloc<DataEventAddBarang, StateAddPostBarang> with SharedPref implements InterfacesUploadProduct{
+        final InterfacePostDataProduct _postDataProduct = getItInstance<InterfacePostDataProduct>();
+        BlocUploadInsertProduct() : super(AddPostBarang(loading: false, snackBar: false, responApi: '-')){
+            on<ButtonFormProducts>((event, emit) async{
+                uploadProduct(
+                    nameProduct: event.nameProduct,
+                    price: event.price,
+                    description: event.description,
+                    type: event.type,
+                    image: event.image,
+                    images: event.images, 
+                    context: event.context,
+                );
+            });
+        }
+
+        @override
+        Future<void> uploadProduct({
+            required String nameProduct, 
+            required String price, 
+            required String description, 
+            required XFile? image, 
+            required List images, 
+            required String type, 
+            required BuildContext context,
+        }) async {
+            emit(AddPostBarang(loading: true, snackBar: false, responApi: '-'));
+            await sharedPref();
+            String _responPostProducts = await _postDataProduct.postDataProduct(
+            email: prefs.getString('email').toString(),
+            description: description, 
+            name: nameProduct,
+            price: price,
+            image: image,
+            images: images,
+            type: type,
+            );
+            if(_responPostProducts == "berhasil"){
+            emit(AddPostBarang(loading: false, snackBar: true, responApi: _responPostProducts));
+            _clearPrefs();
+            }else{
+            emit(AddPostBarang(loading: false, snackBar: true, responApi: _responPostProducts));
+            }
+        }
+
+        void _clearPrefs(){
+            prefs.remove('namaProduct');
+            prefs.remove('deskripsi');
+            prefs.remove('price');
+            prefs.remove('typeProduct');
+            prefs.remove('indexDropdown');
+        }
+    }
+
+    contoh penerapan Encapsulation dalam Widget:
+    - splash screen widget
+        class SplashScreen extends StatelessWidget{
+            SplashScreen({Key? key }) : super(key: key);
+            @override
+            Widget build(BuildContext context) {
+                ThemeBox(context);
+                SplashScreenUserRole().splashScreenUserRole(context: context);
+                return Scaffold(
+                    backgroundColor: kPrimaryColor,
+                    body: Center(child: ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200)),
+                );
+            }
+        }
+    - splash screen componen
+        class ComponenLoadingLottieBasic extends StatelessWidget {
+            final double height;
+            const ComponenLoadingLottieBasic({Key? key, required this.height}) : super(key: key);
+            @override
+            Widget build(BuildContext context) {
+                return Center(
+                    child: Lottie.asset(
+                    "asset/animations/loading_basic_lottie.json",
+                    height: height,
+                    ),
+                );
+            }
+        }
+
+Dalam kasus widget, ComponenLoadingLottieBasic merupakan detail implementasi.
+Dengan menjadikan ComponenLoadingLottieBasic sebagai detail implementasi, membuat isi widget didalam ComponenLoadingLottieBasic tidak diketahui oleh class yang memanggilnya,
+sehingga menciptakan batasan privat bagi ComponenLoadingLottieBasic.

@@ -15,7 +15,7 @@ class ClassConnectionDialog with DialogBasic, NavigasiRole, NavigasiRoleBarRead 
     required BuildContext context,
     required VoidCallback onTap,
     required bool buttonConnection,
-  })async {
+  }){
     ThemeBox(context);
     var _listener = InternetConnectionChecker().onStatusChange.listen((status){
       if (status == InternetConnectionStatus.disconnected) {

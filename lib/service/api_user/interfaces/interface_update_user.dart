@@ -1,5 +1,5 @@
 abstract class InterfaceUpdateUser{
-  updateUser({
+  Future updateUser({
     bool testing = false,
     required String name, 
     required String email, 

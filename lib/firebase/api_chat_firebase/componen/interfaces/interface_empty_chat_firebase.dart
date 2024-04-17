@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class InterfaceEmptyChatFirebase{
-  emptyChat({ 
+  Future<void> emptyChat({ 
     required String emailPengirim, 
     required String emailPenerima,
     required dynamic docListUserPengirim, 

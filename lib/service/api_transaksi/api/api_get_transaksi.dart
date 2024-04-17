@@ -10,11 +10,11 @@ class ApiGetTransaksi with SharedPref implements InterfaceGetTransaksi{
   late String tokens;
 
   @override
-  getTransaksi({
+  Future getTransaksi({
     bool testing = false,
     String testingToken = "",
     String email = "", transactionsId = "",
-  }) async {
+  }) async{
     try {
       if(testing == false){
         await sharedPref();
@@ -29,12 +29,12 @@ class ApiGetTransaksi with SharedPref implements InterfaceGetTransaksi{
         'Content-Type': 'application/json; charset=UTF-8',
       };
       await (role == "PENJUAL")
-      ? rolePenjual(
+      ? await rolePenjual(
           email: email,
           transactionsId: transactionsId,
           headers: headers,
         )
-      : rolePembeli(
+      : await rolePembeli(
           email: email,
           transactionsId: transactionsId,
           headers: headers,
@@ -45,71 +45,83 @@ class ApiGetTransaksi with SharedPref implements InterfaceGetTransaksi{
     }
   }
 
-  rolePenjual({
+  Future rolePenjual({
     bool testing = false,
     String email = "", transactionsId = "",
     required Map<String, String>? headers
-  }) async {
-    late Map<String, String> parameterApi = {};
-    if(email != ""){
-      parameterApi = {
-        'email_penjual' : email,
-      };
-    }else{
-      parameterApi = {
-        'transactions_id' : transactionsId,
-      };
+  }) async{
+    try{
+      late Map<String, String> parameterApi = {};
+      if(email != ""){
+        parameterApi = {
+          'email_penjual' : email,
+        };
+      }else{
+        parameterApi = {
+          'transactions_id' : transactionsId,
+        };
+      }
+      await getDataTransaksi(
+        headers: headers, 
+        link: 'fetchTransaksiPenjual', 
+        parameterApi: parameterApi
+      );
+      return await (testing == false) ? dataListTransaksi : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
     }
-    await getDataTransaksi(
-      headers: headers, 
-      link: 'fetchTransaksiPenjual', 
-      parameterApi: parameterApi
-    );
-    return await (testing == false) ? dataListTransaksi : "berhasil";
   }
 
-  rolePembeli({
+  Future rolePembeli({
     bool testing = false,
     String email = "", transactionsId = "",
     required Map<String, String>? headers
-  }) async {
-    late Map<String, String> parameterApi = {};
-    if(email != ""){
-      parameterApi = {
-        'email_pembeli' : email,
-      };
-    }else{
-      parameterApi = {
-        'transactions_id' : transactionsId,
-      };
+  }) async{
+    try{
+      late Map<String, String> parameterApi = {};
+      if(email != ""){
+        parameterApi = {
+          'email_pembeli' : email,
+        };
+      }else{
+        parameterApi = {
+          'transactions_id' : transactionsId,
+        };
+      }
+      await getDataTransaksi(
+        headers: headers, 
+        link: 'fetchTransaksiPembeli', 
+        parameterApi: parameterApi
+      );
+      return await (testing == false) ? dataListTransaksi : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
     }
-    await getDataTransaksi(
-      headers: headers, 
-      link: 'fetchTransaksiPembeli', 
-      parameterApi: parameterApi
-    );
-    await (testing == false) ? dataListTransaksi : "berhasil";
   }
 
-  getDataTransaksi({
+  Future getDataTransaksi({
     bool testing = false,
     required Map<String, dynamic> parameterApi,
     required Map<String, String>? headers,
     required String link,
-  }) async {
-    String? parameterString = await Uri(queryParameters: parameterApi).query;
-    final responseTransaksi = await Api.client.get(
-      Uri.parse('${Api.baseURL}/$link?' + parameterString),
-      headers: headers,
-    ).timeout(const Duration(seconds: 10));
-    if(responseTransaksi.statusCode == 200){
-      final parse = await json.decode(responseTransaksi.body);
-      Transaksi transaksiDataModel = await Transaksi.fromJson(parse);
-      dataListTransaksi.clear();
-      dataListTransaksi.addAll(transaksiDataModel.data.toList());
-    }else{
-      throw Exception('data gagal');
+  }) async{
+    try{
+      String? parameterString = await Uri(queryParameters: parameterApi).query;
+      final responseTransaksi = await Api.client.get(
+        Uri.parse('${Api.baseURL}/$link?' + parameterString),
+        headers: headers,
+      ).timeout(const Duration(seconds: 10));
+      if(responseTransaksi.statusCode == 200){
+        final parse = await json.decode(responseTransaksi.body);
+        Transaksi transaksiDataModel = await Transaksi.fromJson(parse);
+        dataListTransaksi.clear();
+        dataListTransaksi.addAll(transaksiDataModel.data.toList());
+      }else{
+        throw Exception('data gagal');
+      }
+      return await (testing == false) ? dataListTransaksi : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
     }
-    return await (testing == false) ? dataListTransaksi : "berhasil";
   }
 }

@@ -26,7 +26,7 @@ class BlocMainUpdateUserConnect extends Bloc<DataEventUser, StateSnackBar> with 
     });
   }
 
-  buttonUpdate({
+  Future<void> buttonUpdate({
     required String name,
     required String alamat,
     required String email, 

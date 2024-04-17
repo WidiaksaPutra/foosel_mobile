@@ -15,7 +15,7 @@ class CubitLike extends Cubit<DataStateLike> implements Like{
   @override
   Future<void> getLikeInit({
     required String tokenId,
-  }) async {
+  }) async{
     emit(DataStateLike(statusLike: false, loadingLike: true));
     final _dataLocal = await _dataGetLike.getDataLikeWhereIdLocal(tokenId: tokenId);
     if(_dataLocal.isEmpty){
@@ -36,7 +36,7 @@ class CubitLike extends Cubit<DataStateLike> implements Like{
     required String imagePath, 
     required BuildContext context,
     required bool like,
-  }) async {
+  }) async{
     like = !like;
     if(like == true){
       await context.read<CubitInsertLike>().saveLocalDataLike(

@@ -3,14 +3,14 @@ import 'package:foosel/firebase/api_chat_firebase/componen/interfaces/interface_
 
 class EmptyChatFirebase implements InterfaceEmptyChatFirebase{
   @override
-  emptyChat({
+  Future<void> emptyChat({
     required String emailPengirim, 
     required String emailPenerima, 
     required docListUserPengirim, 
     required docListUserPenerima, 
     required CollectionReference<Object?> users, 
     required chatId,
-  }) async {
+  }) async{
     docListUserPengirim.add({
       'chat_id': chatId,
       'connection': emailPenerima,

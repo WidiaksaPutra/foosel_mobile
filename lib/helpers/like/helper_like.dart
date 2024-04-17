@@ -40,7 +40,7 @@ class HelperLike implements
     required String nameCategory, 
     required String price, 
     required String imagePath,
-  }) async {
+  }) async{
     final db = await SqlLikeTabel.db();
     final dataInsert = {
       'tokenId': tokenId, 

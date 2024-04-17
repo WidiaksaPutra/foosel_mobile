@@ -30,7 +30,7 @@ class BlocButtonRegisterData extends Bloc<DataEventFormRegister, StateSnackBar> 
     });
   }
 
-  buttonSnackBar({
+  Future<void> buttonSnackBar({
     required String email,
     required String alamat,
     required String password,
@@ -56,7 +56,7 @@ class BlocButtonRegisterData extends Bloc<DataEventFormRegister, StateSnackBar> 
           colorSnackBar2: kWhiteColor,
         ),
       );
-      await prosesColorRandom();
+      prosesColorRandom();
       String _rColor = colorData;
       List<String> _inisial = email.split('');
       String _respons = await _dataPostRegister.postRegister(

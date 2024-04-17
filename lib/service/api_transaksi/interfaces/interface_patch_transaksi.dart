@@ -1,5 +1,5 @@
 abstract class InterfacePatchTransaksi{
-  patchTransaksi({
+  Future patchTransaksi({
     bool testing = false,
     String testingToken = "",
     required String transactionsId,

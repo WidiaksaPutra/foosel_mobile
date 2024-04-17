@@ -1,5 +1,5 @@
 abstract class InterfacePostRegister{
-  postRegister({
+  Future postRegister({
     bool testing = false,
     required String name,
     required String username, 

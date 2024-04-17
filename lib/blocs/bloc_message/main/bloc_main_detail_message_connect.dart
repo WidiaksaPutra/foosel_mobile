@@ -28,7 +28,7 @@ class BlocDetailMessageConnect extends Bloc<DataEventMessage, DataBlocStateChatM
     });
   }
 
-  firebaseChatMessage({
+  Future<void> firebaseChatMessage({
     required String message,
     required String tokenPenerima,
   }) async{
@@ -49,7 +49,7 @@ class BlocDetailMessageConnect extends Bloc<DataEventMessage, DataBlocStateChatM
     emit(DataBlocChatMessage(false));
   }
 
-  insertFirebaseChatMessage({
+  Future<void> insertFirebaseChatMessage({
     required String emailPenerima,
     required String message,
     required String tokenPenerima,
@@ -69,14 +69,14 @@ class BlocDetailMessageConnect extends Bloc<DataEventMessage, DataBlocStateChatM
     }
   }
 
-  updateFirebaseChatMessage({
+  Future<void> updateFirebaseChatMessage({
     required String emailPenerima,
     required String emailPengirim
   }) async{
     await _dataUpdateChatFirebase.updateChatFirebase(emailPenerima: emailPenerima, emailPengirim: emailPengirim);
   }
 
-  getFirebaseChatMessage({
+  Future<void> getFirebaseChatMessage({
     required String emailPenerima, 
     required String message, 
     required String prefEmail,

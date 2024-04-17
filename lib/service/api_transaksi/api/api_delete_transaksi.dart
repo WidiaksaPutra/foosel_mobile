@@ -6,7 +6,7 @@ class ApiDeleteTransaksi implements InterfaceDeleteTransaksi{
   late bool loadingTransaksi = true;
   
   @override
-  deleteTransaksi({
+  Future deleteTransaksi({
     bool testing = false,
     String transactionsId = "-",
     String productsId = "-",

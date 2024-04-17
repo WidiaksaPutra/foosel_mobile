@@ -1,0 +1,31 @@
+Abstract merupakan blueprint atau templete yang dapat digunakan untuk class turunannya, 
+  tujuannya agar turunan dari abstract dapat menggunakan metode yang sesuai dengan isi didalam abstract, 
+  sehingga class turunan jadi lebih rapi dan mudah untuk dikembangkan. 
+  Mirip seperti class biasa, perbedaannya abastract tidak dapat membuat object sehingga tidak dapat dijalankan secara langsung, 
+  jadi abstract membutuhkan class turunan untuk mengeksekusi atau menjalankan isi dari abstract.
+  contoh :
+
+    abstract class InterfacesSplashScreenUserRole{
+        Future<void> splashScreenUserRole({required BuildContext context});
+    }
+
+    class SplashScreenUserRole with RoleAcces implements InterfacesSplashScreenUserRole{
+        @override
+        Future<void> splashScreenUserRole({required BuildContext context}) async{
+            rolesUser();
+            await Timer(
+                const Duration(seconds: 2),
+                (){
+                    if(tokens != 'null'){
+                        return (role == "PENJUAL")
+                        ? context.go(RouteName.bottomNavPenjual) 
+                        : (role == "PEMBELI")
+                        ? context.go(RouteName.bottomNavPembeli)
+                        : context.go(RouteName.homeGuest);
+                    }else{
+                        return context.go(RouteName.homeGuest); 
+                    }      // (prefs.get("token") != null) ? Get.offNamed(RouteName.bottomNavPembeli) : Get.offNamed(RouteName.login);
+                }
+            );
+        }
+    }

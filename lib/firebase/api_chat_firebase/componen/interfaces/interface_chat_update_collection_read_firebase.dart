@@ -1,5 +1,5 @@
 abstract class InterfaceChatUpdateCollectionReadFirebase{
-  chatUpdateCollectionRead({
+  Future<void> chatUpdateCollectionRead({
     required dynamic chatId,
     required bool read,
     required dynamic messageId,

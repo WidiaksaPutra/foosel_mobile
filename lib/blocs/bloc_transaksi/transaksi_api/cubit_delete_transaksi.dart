@@ -11,7 +11,7 @@ class CubitDeleteTransaksi extends Cubit<StateDeleteTransaksi> implements Interf
   CubitDeleteTransaksi() : super(DeleteTransaksi(loadingDeleteTransaksi: false, statusAlert: '-'));
 
   @override
-  deleteDataTransaksi({required String tokenId}) async{
+  Future<void> deleteDataTransaksi({required String tokenId}) async{
     emit(DeleteTransaksi(loadingDeleteTransaksi: true, statusAlert: '-'));
     String _statusApi = await _dataDeleteTransaksi.deleteTransaksi(transactionsId: tokenId); 
     bool _loadingDelete = await _dataDeleteTransaksi.loadingDeleteDataTransaksi();

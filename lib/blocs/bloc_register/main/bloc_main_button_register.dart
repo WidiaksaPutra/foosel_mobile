@@ -21,7 +21,7 @@ class BlocButtonRegisterUser extends Bloc<DataEventFormRegister, DataStateMultiF
     });
   }
   
-  buttonRegister({
+  void buttonRegister({
     required String email, 
     required String password, 
     required String fullName, 
@@ -519,6 +519,20 @@ class BlocButtonRegisterUser extends Bloc<DataEventFormRegister, DataStateMultiF
         messageFullName: fullNameKosong, 
         messageUsername: usernameKosong,
         messageAlamat: "",
+      ));
+    }
+    else if(fullName != "" && email != "" && password != "" && username != "" && alamat == ""){
+      emit(DataStateFormRegister(
+        formVisibleEmail: false,
+        formVisiblePassword: false,
+        formVisibleFullName: false, 
+        formVisibleUsername: false, 
+        formVisibleAlamat: true,
+        messageEmail: "",
+        messagePassword: "", 
+        messageFullName: "",
+        messageUsername: "", 
+        messageAlamat: alamatKosong,
       ));
     }
   }

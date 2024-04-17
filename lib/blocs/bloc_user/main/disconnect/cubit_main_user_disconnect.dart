@@ -6,7 +6,7 @@ import 'package:foosel/shared/theme_global_variabel.dart';
 class CubitMainUserDisconnect extends Cubit<DataStateUser>{
   final InterfaceGetDataUserLocal _dataGetUserLocal = getItInstance<InterfaceGetDataUserLocal>();
   CubitMainUserDisconnect() : super(DataUser(true, {}));
-  fetchUser() async{
+  Future<void> fetchUser() async{
     final _dataLocal = await _dataGetUserLocal.getDataUser();
     Map<String, dynamic> _dataGetLocal = {
       'nama' : _dataLocal[0]["name"].toString(),

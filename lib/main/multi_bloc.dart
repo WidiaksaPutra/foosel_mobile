@@ -8,8 +8,8 @@ import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_connection_basic.dart'
 import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_connection_navigasi.dart';
 import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_form_not_null_barang.dart';
 import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_navigation_list_image_barang.dart';
-import 'package:foosel/blocs/bloc_all_products/main/bloc_main_all_products_connect.dart';
-import 'package:foosel/blocs/bloc_all_products/main/cubit_main_list_all_products_disconnect.dart';
+import 'package:foosel/blocs/bloc_list_products/main/bloc_main_all_products_connect.dart';
+import 'package:foosel/blocs/bloc_list_products/main/cubit_main_list_all_products_disconnect.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_pembeli/cubit_bottom_nav_pembeli.dart';
 import 'package:foosel/blocs/bloc_bottom_nav_penjual/cubit_bottom_nav_penjual.dart';
 import 'package:foosel/blocs/bloc_default/bloc/bloc/cubit_connection_example.dart';

@@ -11,7 +11,7 @@ class ApiGetDetailProducts with SharedPref implements InterfaceGetDataDetailProd
   late String tokens;
 
   @override
-  getDataDetailProduct({
+  Future getDataDetailProduct({
     bool testing = false,
     String testingToken = "",
     required String tokenId
@@ -43,100 +43,120 @@ class ApiGetDetailProducts with SharedPref implements InterfaceGetDataDetailProd
     }
   }
 
-  tokenNull({
+  Future tokenNull({
     bool testing = false,
     required String tokenId,
-  }) async {
-    Map<String, String> headers = {
-      'Content-Type': 'application/json; charset=UTF-8',
-    };
-    Map<String, String> parameterApi = {
-      'token_id' : tokenId,
-    };
-    await getDataProductUsers(
-      parameterApi: parameterApi,
-      link: 'detailGuest', 
-      headers: headers,
-    );
-    return (testing == false) ? dataProducts : "berhasil";
+  }) async{
+    try{
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      Map<String, String> parameterApi = {
+        'token_id' : tokenId,
+      };
+      await getDataProductUsers(
+        parameterApi: parameterApi,
+        link: 'detailGuest', 
+        headers: headers,
+      );
+      return (testing == false) ? dataProducts : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
+    }
   }
 
-  tokenNotNull({
+  Future tokenNotNull({
     bool testing = false,
     required String tokens,
     required String tokenId
-  }) async {
-    Map<String, dynamic> decodeTokenUser = await JwtDecoder.decode(tokens);
-    String role = decodeTokenUser['roles'].toString();
-    Map<String, String> headers = {
-      'Authorization': 'Bearer $tokens',
-      'Content-Type': 'application/json; charset=UTF-8',
-    };
-    if(role == "PENJUAL"){
-      await rolePenjual(
-        headers: headers, 
-        tokenId: tokenId,
-      );
-    }else{
-      await rolePembeli(
-        headers: headers,
-        tokenId: tokenId,
-      );
+  }) async{
+    try{
+      Map<String, dynamic> decodeTokenUser = await JwtDecoder.decode(tokens);
+      String role = decodeTokenUser['roles'].toString();
+      Map<String, String> headers = {
+        'Authorization': 'Bearer $tokens',
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      if(role == "PENJUAL"){
+        await rolePenjual(
+          headers: headers, 
+          tokenId: tokenId,
+        );
+      }else{
+        await rolePembeli(
+          headers: headers,
+          tokenId: tokenId,
+        );
+      }
+      return (testing == false) ? dataProducts : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
     }
-    return (testing == false) ? dataProducts : "berhasil";
   }
 
-  rolePenjual({
+  Future rolePenjual({
     bool testing = false,
     required Map<String, String>? headers,
     required String tokenId,
-  }) async {
-    Map<String, String> parameterApi = {
-      'token_id' : tokenId,
-    };
-    await getDataProductUsers(
-      parameterApi: parameterApi,
-      link: 'detailPenjual',
-      headers: headers,
-    );
-    return (testing == false) ? dataProducts : "berhasil";
+  }) async{
+    try{
+      Map<String, String> parameterApi = {
+        'token_id' : tokenId,
+      };
+      await getDataProductUsers(
+        parameterApi: parameterApi,
+        link: 'detailPenjual',
+        headers: headers,
+      );
+      return (testing == false) ? dataProducts : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
+    }
   }
 
-  rolePembeli({
+  Future rolePembeli({
     bool testing = false,
     required Map<String, String>? headers,
     required String tokenId,
-  }) async {
-    Map<String, String> parameterApi = {
-      'token_id' : tokenId,
-    };
-    await getDataProductUsers(
-      parameterApi: parameterApi,
-      link: 'detailPembeli',
-      headers: headers,
-    );
-    return (testing == false) ? dataProducts : "berhasil";
+  }) async{
+    try{
+      Map<String, String> parameterApi = {
+        'token_id' : tokenId,
+      };
+      await getDataProductUsers(
+        parameterApi: parameterApi,
+        link: 'detailPembeli',
+        headers: headers,
+      );
+      return (testing == false) ? dataProducts : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
+    }
   }
 
-  getDataProductUsers({
+  Future getDataProductUsers({
     bool testing = false,
     required Map<String, dynamic> parameterApi,
     required Map<String, String>? headers,
     required String link,
-  }) async {
-    String? parameterString = await Uri(queryParameters: parameterApi).query;
-    final responseDetailProducts = await Api.client.get(
-      Uri.parse('${Api.baseURL}/$link?' + parameterString),
-      headers: headers,
-    ).timeout(const Duration(seconds: 10));
-    if(responseDetailProducts.statusCode == 200){
-      final parse = await json.decode(responseDetailProducts.body);
-      DetailProducts detailProductsDataModel = DetailProducts.fromJson(parse);
-      dataProducts = detailProductsDataModel.data!.data[0];
-      loading = false;
-      return (testing == false) ? dataProducts : "berhasil";
-    }else{
-      throw Exception('data gagal');
+  }) async{
+    try{
+      String? parameterString = await Uri(queryParameters: parameterApi).query;
+      final responseDetailProducts = await Api.client.get(
+        Uri.parse('${Api.baseURL}/$link?' + parameterString),
+        headers: headers,
+      ).timeout(const Duration(seconds: 10));
+      if(responseDetailProducts.statusCode == 200){
+        final parse = await json.decode(responseDetailProducts.body);
+        DetailProducts detailProductsDataModel = DetailProducts.fromJson(parse);
+        dataProducts = detailProductsDataModel.data!.data[0];
+        loading = false;
+        return (testing == false) ? dataProducts : "berhasil";
+      }else{
+        throw Exception('data gagal');
+      }
+    }catch (e) {
+      throw Exception('data error');
     }
   }
   

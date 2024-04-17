@@ -27,5 +27,5 @@ class DataStatePassword extends DataStateFormUser{
 }
 
 class DataStateAlamat extends DataStateFormUser{
-  DataStateAlamat(bool formVisibleAlamat) : super(false, false, false, false, formVisibleAlamat, passwordKosong);
+  DataStateAlamat(bool formVisibleAlamat) : super(false, false, false, false, formVisibleAlamat, alamatKosong);
 }

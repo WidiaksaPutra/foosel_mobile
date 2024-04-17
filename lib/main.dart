@@ -48,6 +48,7 @@ void main() async{
   var initialzationSettingsAndroid = AndroidInitializationSettings('@mipmap/foosel_logo');
   var initializationSettings = InitializationSettings(android: initialzationSettingsAndroid);
   flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;

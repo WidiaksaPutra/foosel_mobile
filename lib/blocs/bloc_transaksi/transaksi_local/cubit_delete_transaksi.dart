@@ -9,7 +9,7 @@ class CubitDeleteTransaksiLocal extends Cubit<DataStatePostTransaksiLocal> imple
   CubitDeleteTransaksiLocal() : super(DataPostTransaksiLocal(loadingTransaksi: true, status: false));
   
   @override
-  deleteDataTransaksi({required String tokenId}) async{
+  Future<void> deleteDataTransaksi({required String tokenId}) async{
     emit(DataPostTransaksiLocal(loadingTransaksi: true, status: false));
     final _respons = await _dataDeleteTransaksiLocal.deleteDataTransaksiLocalWhereId(tokenId: tokenId);
     if(_respons == 0){

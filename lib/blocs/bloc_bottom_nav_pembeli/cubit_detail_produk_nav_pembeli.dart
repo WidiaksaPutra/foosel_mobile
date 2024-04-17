@@ -5,10 +5,10 @@ import 'package:foosel/blocs/bloc_bottom_nav_pembeli/state_bottom_nav_pembeli.da
 class CubitDetailProdukNavPembeli extends Cubit<DataStateDetailProdukNavPembeli> implements InterfacesDetailProdukNavPembeli{
   CubitDetailProdukNavPembeli() : super(DataDetailProdukNavPembeli(jenisDetail: ''));
   @override
-  Future<void> detailProdukNavPembeli({
+  void detailProdukNavPembeli({
     required String jenisDetail,
     required dynamic readDetail
-  }) async{
+  }){
     if(jenisDetail == "AllProduct"){
       readDetail;
       emit(DataDetailProdukNavPembeli(jenisDetail: jenisDetail));

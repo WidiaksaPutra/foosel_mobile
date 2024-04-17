@@ -1,0 +1,580 @@
+Association merupakan hubungan dari berbagai kompenen yang saling melengkapi, dengan tujuan untuk menciptakan suatu fitur atau sistem yang saling terhubung.
+Association biasanya digunakan dalam hubungan antara user role seperti antara user penjual dan pembeli yang saling melengkapi pada suatu system.
+Dalam kasus ini saya menerapkan Association kedalam pembuatan suatu page tampilan dan pembuatan suatu objek yang menggunakan class dengan berbagai metode. 
+- dalam contoh widget saya akan membuat tampilan Detail Product, yang berisi header, informasi gambar, dan informasi text.
+- dalam contoh bloc saya akan membuat class yang bertujuan untuk pemrosessan logika dalam menampilkan list product yang menyimpan list product didalam penyimpanan local secara bersamaan.
+
+===========================================================================================
+
+contoh Widget : 
+  Dalam contoh ini saya menghasilkan page detail product yang terdiri dari 3 bagian yaitu bagian header, bagian informasi gambar, dan bagian informasi text.
+  Maka dalam code tersebut saya mengasosiasikan beberapa komponen untuk membuat fitur detail product yang utuh yaitu :
+  HeaderDetailProduct, ComponenCarouselSliderImage, Expanded(child: Continer(...)). 
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  class HeaderDetailProduct extends StatelessWidget {
+    final bool guestUser;
+    final VoidCallback onPressedChart, onPressedBack;
+    final String icon;
+    const HeaderDetailProduct({Key? key,
+      required this. guestUser,
+      required this. onPressedChart,
+      required this. onPressedBack,
+      required this. icon,
+    }) : super(key: key);
+
+    @override
+    Widget build(BuildContext context) {
+      return Container(
+        height: ThemeBox.defaultHeightBox62,
+        color: kGreyColor6,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [ 
+            CompenenGetBackBasic2(onPressedBack: onPressedBack),
+            IconButton(
+              onPressed: onPressedChart,
+              icon: (guestUser == false)
+              ? Image.asset(
+                  icon,
+                  height: ThemeBox.defaultHeightBox22,
+                  width: ThemeBox.defaultWidthBox20,
+                )
+              : Text(""),
+            ),
+          ]
+        ),
+      );
+    }
+  }
+
+  -------------------------------------------------------------------------------------------
+
+  class ComponenCarouselSliderImage extends HookWidget {
+    late double sizeWidth;
+    late List imageProduct;
+    late bool connect;
+    ComponenCarouselSliderImage({Key? key, 
+      required this.sizeWidth, 
+      required this.imageProduct,
+      required this.connect,
+    }) : super(key: key);
+
+    @override
+    Widget build(BuildContext context) {
+      final currentIndex = useState<int>(0);
+      final index = useState<int>(-1);
+      ThemeBox(context);
+      return Container(
+        color: kGreyColor6,
+        child: Column(
+          children: [
+            CarouselSlider(
+              items: (connect == true)
+              ? imageProduct.map(
+                  (imageProduct) => ClipRRect(
+                    borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10), // Mengatur borderRadius menjadi setengah dari lebar/tinggi
+                    child: Image.network(
+                      "${Api.linkURL}/${imageProduct.toString()}",
+                      width: sizeWidth,
+                      height: ThemeBox.defaultHeightBox340,
+                      fit: BoxFit.cover,
+                    )
+                  ),
+                ).toList()
+              : imageProduct.map(
+                  (imageProduct) => ClipRRect(
+                    borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10), // Mengatur borderRadius menjadi setengah dari lebar/tinggi
+                    child: Image.asset(
+                      imageProduct,
+                      width: sizeWidth,
+                      height: ThemeBox.defaultHeightBox340,
+                      fit: BoxFit.cover,
+                    )
+                  ),
+                ).toList(),
+              options: CarouselOptions(
+                initialPage: 0,
+                enlargeCenterPage: true,
+                onPageChanged: ((i, reason){
+                  currentIndex.value = i;//untuk memberikan nilai index pada currentIndex, digunakan untuk nilai index dari gambar
+                  index.value = -1;
+                })
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: imageProduct.map(//??
+                (e) {
+                  index.value++;
+                  return Container(
+                    margin: EdgeInsets.only(right: ThemeBox.defaultWidthBox4),
+                    width: (currentIndex.value == index.value) ? ThemeBox.defaultWidthBox16 : ThemeBox.defaultWidthBox4,
+                    height: ThemeBox.defaultHeightBox4,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10),
+                      color: (currentIndex.value == index.value) ? kPurpleColor : kGreyColor5,
+                    ),
+                  );
+                }
+              ).toList(),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  ------------------------------------------------------------------------------------------
+
+  class DetailProductGuest extends HookWidget{
+    DetailProductGuest({Key? key}) : super(key: key);
+
+    @override
+    Widget build(BuildContext context) {
+      ThemeBox(context);
+      Size size = MediaQuery.of(context).size;
+      final listImageProduct = useState([]);
+      final loading = useState(true);
+      return Scaffold(
+        backgroundColor: kGreyColor6,
+        body: BlocConsumer<CubitDetailProductConnect, DataStateProducts>(
+          listener: (context, state){
+            if(state.loading == false){
+              for(int i = 0 ; i < state.dataProducts.galleries!.length ; i++){
+                listImageProduct.value.add(state.dataProducts.galleries![i].url.toString());
+              }
+              loading.value = state.loading;
+            }
+          },
+          builder: (context, state){
+            return (loading.value == false)
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  HeaderDetailProduct(
+                    guestUser: true,
+                    onPressedBack: () {
+                      context.go(RouteName.homeGuest);
+                    },
+                    onPressedChart: () {}, 
+                    icon: 'asset/icon/cart_Icon4.png',// harus dari cart
+                  ),
+                  ComponenCarouselSliderImage(sizeWidth: size.width, imageProduct: listImageProduct.value, connect: true),
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox17),
+                      padding: EdgeInsets.only(top: ThemeBox.defaultHeightBox30, left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, bottom: ThemeBox.defaultHeightBox30),
+                      decoration: BoxDecoration(
+                        color: kPrimaryColor,
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(ThemeBox.defaultRadius24), topRight: Radius.circular(ThemeBox.defaultRadius24))
+                      ),
+                      child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ComponenTextColumn_CrossStartAndWhiteGray2AndFont18Font12AndSemiBoldRegular(
+                              title: state.dataProducts.name.toString(), 
+                              content: state.dataProducts.category!.name.toString(),
+                            ),
+                            ComponenContainerHarga(titleHarga: "Price starts from", harga: state.dataProducts.price.toString()),
+                            ComponenTextDetail(title: "Description", data: state.dataProducts.description.toString()),
+                            ComponenTextDetail(title: "Email Penjual", data: state.dataProducts.email.toString()),
+                            // ComponenSmallHorizontal(titleImage: "Fimiliar Product"),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200);
+          }
+        ),
+      );
+    }
+  }
+
+=============================================================================================
+
+contoh bloc :
+
+  Dalam contoh Association pada Bloc ini saya menggunakan abstrak InterfaceGetDataProduct, InterfaceInsertDataProductsLocal, InterfaceDeleteDataProductLocal yang diimplementasikan seperti komponen,
+  dimana penerapan Association terletak pada hubungan :
+  - InterfaceGetDataProduct yang saya gunakan untuk menciptakan metode getDataAllProduct yang digunakan untuk menampilkan data, dan scrollControlAllProduct yang digunakan untuk scroll data ketika ditampilkan.
+  - Komposisi InterfaceInsertDataProductsLocal dan InterfaceDeleteDataProductLocal saya gunakan untuk menciptakan metode saveLocalDataAllProduct yang berfungsi untuk menyimpan data terbaru didalam local.
+
+  jadi dalam contoh ini saya menggunakan abstract InterfaceInsertDataProductsLocal dan InterfaceDeleteDataProductLocal dalam implementasi Composition dan hasil dari metode nya saya Association dengan abstract InterfaceGetDataProduct.
+
+  ---------------------------------------------------------------------------------------------------
+
+  BlocProvider(
+    lazy: false,
+    create: (context){
+      setupDInjectionProductLocal();
+      setupDInjectionProduct();
+      return BlocAllProductConnect();
+    },
+  ),
+
+
+  ScrollController _scrollController = ScrollController();
+  late List _dataList = [];
+  late bool _loadingScrolling = false, _loadingApi = true;
+  class BlocAllProductConnect extends Bloc<DataEventAllProduct,DataStateProductBasic> implements InterfacesAllProductConnect{
+    final InterfaceGetDataProduct _dataGetProduct = getItInstance<InterfaceGetDataProduct>();
+    final InterfaceInsertDataProductsLocal _dataInsertProductLocal = getItInstance<InterfaceInsertDataProductsLocal>();
+    final InterfaceDeleteDataProductLocal _dataDeleteProductLocal = getItInstance<InterfaceDeleteDataProductLocal>();
+    BlocAllProductConnect() : super(
+      DataProductBasic(
+        scrollControl: _scrollController,
+        getData: _dataList,
+        loadingScroll: _loadingScrolling,
+        loadingApi: _loadingApi,
+      ),
+    ){
+      on<Product>((event, emit) async{
+        await getDataAllProduct(pages: event.pages);
+        await saveLocalDataAllProduct(); 
+        scrollControlAllProduct(pages: event.pages);
+      });
+    }
+
+    @override
+    Future<void> getDataAllProduct({required int pages}) async {
+      _loadingScrolling = false;
+      _dataList = await _dataGetProduct.getDataProduct(pages: pages);
+      _loadingApi = false;
+      _emitState();
+    }
+    
+    @override
+    Future<void> saveLocalDataAllProduct() async{
+      await _dataDeleteProductLocal.deleteDataProductLocal();
+      if(_dataList.length <= 10){
+        for(int i = 0; i < _dataList.length; i++) {
+          await _dataInsertProductLocal.insertDataLocal(
+            description: _dataList[i].description.toString(),
+            tokenId: _dataList[i].tokenId.toString(),
+            name: _dataList[i].name.toString(),
+            email: _dataList[i].email.toString(),
+            nameCategory: _dataList[i].category!.name.toString(),
+            price: _dataList[i].price.toString(),
+            imagePath: "${Api.linkURL}/${_dataList[i].urlImage.toString()}",
+          );
+        }
+      }  
+    }
+    
+    @override
+    void scrollControlAllProduct({required int pages}) {
+      _scrollController.addListener(() async {
+        if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent && _loadingScrolling == false){
+          _loadingScrolling = true;
+          pages = pages + 4;
+          _dataList = await _dataGetProduct.getDataProduct(pages: pages);
+          _loadingApi = false;
+          _emitState();
+          await Future.delayed(
+            Duration(milliseconds: 3000),
+            () => _loadingScrolling = false,
+          );
+          _emitState();
+        }
+      });
+    }
+
+    void _emitState(){
+      emit(
+        DataProductBasic(
+          scrollControl: _scrollController,
+          getData: _dataList,
+          loadingScroll: _loadingScrolling,
+          loadingApi: _loadingApi,
+        ),
+      );
+    }
+  }
+
+  -----------------------------------------------------------------------------------------------------
+
+  void setupDInjectionProduct(){
+    if(!getItInstance.isRegistered<InterfaceGetDataProduct>()){
+      getItInstance.registerFactory<InterfaceGetDataProduct>(() => ApiGetProducts());
+    }
+  }
+
+
+  abstract class InterfaceGetDataProduct{
+    Future getDataProduct({
+      bool testing = false,
+      String testingToken = "",
+      required int pages
+    });
+    Future tokenNull({
+      bool testing = false,
+      required int pages,
+    });
+    Future tokenNotNull({
+      bool testing = false,
+      required String tokens,
+      required int pages,
+    });
+    Future rolePenjual({
+      bool testing = false,
+      required int pages,
+      required Map<String, String>? headers
+    });
+    Future rolePembeli({
+      bool testing = false,
+      required int pages,
+      required Map<String, String>? headers
+    });
+    Future getDataProductUsers({
+      bool testing = false,
+      required Map<String, dynamic> parameterApi,
+      required Map<String, String>? headers,
+      required String link,
+    });
+  }
+
+  ------------------------------------------------------------------------------------------
+
+  class ApiGetProducts with SharedPref implements InterfaceGetDataProduct{
+    late List dataProducts = [];
+    late String tokens;
+
+    @override
+    Future getDataProduct({
+      bool testing = false,
+      String testingToken = "",
+      required int pages
+    }) async{
+      try {
+        if(testing == false){
+          await sharedPref();
+          tokens = prefs.getString('token').toString();
+        }else{
+          (testingToken == "") ? tokens = 'null' : tokens = testingToken;
+        }
+        if(tokens == 'null'){
+          if(testing == false){
+            return await tokenNull(pages: pages);
+          }else{
+            await tokenNull(pages: pages);
+            return "berhasil";
+          }  
+        }else{
+          if(testing == false){
+            return await tokenNotNull(pages: pages, tokens: tokens); 
+          }else{
+            await tokenNotNull(pages: pages, tokens: tokens);
+            return "berhasil";
+          }
+        }
+      }catch (e) {
+        throw Exception('data error');
+      }
+    }
+
+    Future tokenNull({
+      bool testing = false,
+      required int pages,
+    }) async{
+      try{
+        Map<String, String> headers = {
+          'Content-Type': 'application/json; charset=UTF-8',
+        };
+        Map<String, String> parameterApi = {
+          'page' : '1',
+          'limit' : pages.toString(),
+        };
+        await getDataProductUsers(
+          parameterApi: parameterApi, 
+          link: 'products', 
+          headers: headers,
+        );
+        return (testing == false) ? dataProducts : "berhasil";
+      }catch (e) {
+        throw Exception('data error');
+      }
+    }
+
+    Future tokenNotNull({
+      bool testing = false,
+      required String tokens,
+      required int pages,
+    }) async{
+      try{
+        Map<String, dynamic> decodeTokenUser = await JwtDecoder.decode(tokens);
+        String role = decodeTokenUser['roles'].toString();
+        Map<String, String> headers = {
+          'Authorization': 'Bearer $tokens',
+          'Content-Type': 'application/json; charset=UTF-8',
+        };
+        if(role == "PENJUAL"){
+          await rolePenjual(
+            pages: pages,
+            headers: headers,
+          );
+        }else{
+          await rolePembeli(
+            pages: pages,
+            headers: headers,
+          );
+        }
+        return (testing == false) ? dataProducts : "berhasil";
+      }catch (e) {
+        throw Exception('data error');
+      }
+    }
+
+    Future rolePenjual({
+      bool testing = false,
+      required int pages,
+      required Map<String, String>? headers
+    }) async{
+      try{
+        Map<String, String> parameterApi = {
+          'page' : '1',
+          'limit' : pages.toString(),
+        };
+        await getDataProductUsers(
+          parameterApi: parameterApi, 
+          link: 'productsPenjual',
+          headers: headers,
+        );
+        return (testing == false) ? dataProducts : "berhasil";
+      }catch (e) {
+        throw Exception('data error');
+      }
+    }
+
+    Future rolePembeli({
+      bool testing = false,
+      required int pages,
+      required Map<String, String>? headers
+    }) async{
+      try{
+        Map<String, String> parameterApi = {
+          'page' : '1',
+          'limit' : pages.toString(),
+        };
+        await getDataProductUsers(
+          parameterApi: parameterApi,
+          link: 'productsPembeli',
+          headers: headers,
+        );
+        return (testing == false) ? dataProducts : "berhasil";
+      }catch (e) {
+        throw Exception('data error');
+      }
+    }
+
+    Future getDataProductUsers({
+      bool testing = false,
+      required Map<String, dynamic> parameterApi,
+      required Map<String, String>? headers,
+      required String link,
+    }) async{
+      try{    
+        String? parameterString = await Uri(queryParameters: parameterApi).query;
+        final responseProducts = await Api.client.get(
+          Uri.parse('${Api.baseURL}/$link?' + parameterString),
+          headers: headers,
+        ).timeout(const Duration(seconds: 10));
+        if(responseProducts.statusCode == 200){
+          final parse = await json.decode(responseProducts.body);
+          Products productsDataModel = await Products.fromJson(parse);
+          dataProducts.clear();
+          dataProducts.addAll(productsDataModel.data!.data.toList());
+        }else{
+          throw Exception('data gagal');
+        }
+        return (testing == false) ? dataProducts : "berhasil";
+      }catch (e) {
+        throw Exception('data error');
+      }
+    }
+  }
+
+  -------------------------------------------------------------------------------------
+
+  void setupDInjectionProductLocal(){
+    if(!getItInstance.isRegistered<InterfaceInsertDataProductsLocal>()){
+      getItInstance.registerFactory<InterfaceInsertDataProductsLocal>(() => HelperProducts());
+    }
+    if(!getItInstance.isRegistered<InterfaceDeleteDataProductLocal>()){
+      getItInstance.registerFactory<InterfaceDeleteDataProductLocal>(() => HelperProducts());
+    }
+  }
+
+
+  abstract class InterfaceInsertDataProductsLocal{
+    Future<int> insertDataLocal({
+      required String tokenId,
+      required String email,
+      required String name,
+      required String description,
+      required String nameCategory,
+      required String price,
+      required String imagePath
+    });
+  }
+
+
+  abstract class InterfaceDeleteDataProductLocal{
+    Future<int> deleteDataProductLocal();
+  }
+
+  -----------------------------------------------------------------------------------
+
+  class HelperProducts implements 
+    InterfaceGetDataProductLocal, 
+    InterfaceInsertDataProductsLocal, 
+    InterfaceDeleteDataProductLocal{
+    @override
+    Future<int> insertDataLocal({
+      required String tokenId,
+      required String email,
+      required String name,
+      required String description, 
+      required String nameCategory, 
+      required String price,
+      required String imagePath
+    }) async {
+      final db = await SqlProductsTabel.db();
+      final dataInsert = {
+        'tokenId': tokenId,
+        'email': email,
+        'name': name,
+        'description': description, 
+        'nameCategory': nameCategory, 
+        'price': price,
+        'imagePath': imagePath
+      };
+      return await db.insert('products', dataInsert);
+    }
+
+    @override
+    Future<List<Map<String, dynamic>>> getDataProductLocal() async {
+      final dbGet = await SqlProductsTabel.db();
+      return await dbGet.query('products');
+    }
+
+    @override
+    Future<List<Map<String, dynamic>>> getDataProductWhereIdLocal({required String tokenId}) async{
+      final dbGet = await SqlProductsTabel.db();
+      return await dbGet.query('products', where: "tokenId = '$tokenId'");
+    }
+
+    @override
+    Future<int> deleteDataProductLocal() async{
+      final db = await SqlProductsTabel.db();
+      return await db.delete('products');
+    }
+  }
+

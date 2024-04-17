@@ -1,3 +1,3 @@
 abstract class InterfaceDeleteChatFirebase{
-  deleteChatFirebase({required String emailPengirim, required String emailPenerima});
+  Future deleteChatFirebase({required String emailPengirim, required String emailPenerima});
 }

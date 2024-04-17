@@ -67,8 +67,7 @@ class DetailBodyConnectionProductPenjual extends HookWidget with NavigasiRole, N
           children: [
             BlocBuilder<CubitDetailProdukNavPenjual, DataStateDetailProdukNavPenjual>(
               builder: (context2, state){
-                return headerDetailProduct(
-                  context: context, 
+                return HeaderDetailProduct(
                   guestUser: true, 
                   onPressedBack: () => navigationBack(context: context, jenisDetail: state.jenisDetail.toString()),
                   onPressedChart: () => context.go(RouteName.cart), 
@@ -117,13 +116,21 @@ class DetailBodyConnectionProductPenjual extends HookWidget with NavigasiRole, N
                       BlocBuilder<CubitDetailProdukNavPenjual, DataStateDetailProdukNavPenjual>(
                         builder: (context2, state2) => (state2.jenisDetail.toString() == "AllProduct")
                         ? SizedBox()
-                        : BlocBuilder<CubitGetDetailTransaksiProduct, DataStateGetTransaksi>(
+                        : BlocConsumer<CubitGetDetailTransaksiProduct, DataStateGetTransaksi>(
+                          listener: (context3, state3) {
+                            if(state3.dataTransaksi.isEmpty || state3.dataTransaksi[0].productsId != state.dataProducts.tokenId){
+                              ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox100);
+                            }
+                          },
                           builder: (context3, state3) {
                             return (state3.dataTransaksi.isEmpty)
                             ? ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox100)
-                            : (state3.dataTransaksi[0].productsId != state.dataProducts.tokenId)
-                              ? ComponenLoadingLottieHorizontal(height: ThemeBox.defaultHeightBox100)
-                              : ComponenTextDetail(title: "Email Pembeli", data: state3.dataTransaksi[0].usersEmailPembeli.toString());
+                            : Column(
+                                children: [
+                                  ComponenTextDetail(title: "Email Pembeli", data: state3.dataTransaksi[0].usersEmailPembeli.toString()),
+                                  ComponenTextDetail(title: "Alamat Pembeli", data: state3.dataTransaksi[0].usersAlamatPembeli.toString()),
+                                ],
+                              ); 
                           })
                       ),
                       // ComponenSmallHorizontal(titleImage: "Fimiliar Product"),

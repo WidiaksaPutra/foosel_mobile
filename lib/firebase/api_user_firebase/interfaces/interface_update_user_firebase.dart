@@ -1,5 +1,5 @@
 abstract class InterfaceUpdateUserFirebase{
-  updateUserFirebase({
+  Future updateUserFirebase({
     required String email, 
     required dynamic statusUser,
   });

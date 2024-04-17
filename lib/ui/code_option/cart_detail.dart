@@ -44,7 +44,7 @@
 //     );
 //     return Scaffold(
 //       backgroundColor: kBlackColor6,
-//       appBar: headerCart(
+//       appBar: HeaderCart(
 //         context: context, 
 //         titleCart: "Checkout Details", 
 //         statusLeading: true, 

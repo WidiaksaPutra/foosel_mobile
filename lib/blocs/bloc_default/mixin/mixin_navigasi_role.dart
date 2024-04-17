@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 mixin NavigasiRole{
   late String navigation = "";
-  navigasiR() async{
+  Future<void> navigasiR() async{
     final _tokenUser = await SharedPreferences.getInstance();
     Map<String, dynamic> _decodeTokenUser = JwtDecoder.decode(_tokenUser.getString('token').toString());
     if(_decodeTokenUser['roles'].toString() == "PEMBELI"){
@@ -20,7 +20,7 @@ mixin NavigasiRole{
 }
 
 mixin NavigasiRoleBarRead{
-  navigasiRBR({required BuildContext context, required int value}) async{
+  Future<void> navigasiRBR({required BuildContext context, required int value}) async{
     final _tokenUser = await SharedPreferences.getInstance();
     Map<String, dynamic> _decodeTokenUser = JwtDecoder.decode(_tokenUser.getString('token').toString());
     if(_decodeTokenUser['roles'].toString() == "PEMBELI"){

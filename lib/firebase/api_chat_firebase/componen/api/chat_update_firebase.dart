@@ -4,12 +4,12 @@ import 'package:foosel/shared/theme_global_variabel.dart';
 
 class ChatUpdateFirebase implements InterfaceChatUpdateFirebase{
   @override
-  chatUpdate({
+  Future<void> chatUpdate({
     required String chatId, 
     required int totalChats, 
     required int totalRead, 
     required int totalUnread,
-  }) async {
+  }) async{
     CollectionReference chats = firestore.collection('Chats');
     await chats.doc(chatId).update({
       'total_chats': totalChats,

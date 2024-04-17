@@ -11,18 +11,18 @@ class CubitGetTransaksiUserPembeli extends Cubit<DataStateGetTransaksi> implemen
   CubitGetTransaksiUserPembeli() : super(DataGetTransaksi(loading: true, dataTransaksi: []));
 
   @override
-  getDataTransaksiHistory() async{
+  Future<void> getDataTransaksiHistory() async{
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     _dataUserTransaksiProducts.clear();
     emit(DataGetTransaksi(loading: true, dataTransaksi: []));
     List _dataListTransaksi = await _dataGetTransaksi.getTransaksi(email: _prefs.getString('email').toString());
     if(_dataListTransaksi.isNotEmpty){
-      await _addListGetDataTransaksiHistory(_dataListTransaksi);
+      _addListGetDataTransaksiHistory(_dataListTransaksi);
     }
     emit(DataGetTransaksi(loading: false, dataTransaksi: _dataUserTransaksiProducts));
   }
 
-  Future<void> _addListGetDataTransaksiHistory(List dataListTransaksi) async{
+  void _addListGetDataTransaksiHistory(List dataListTransaksi){
     dataListTransaksi.forEach((data) { 
       late bool _status = false;
       for(int k = 0; k < _dataUserTransaksiProducts.length; k++){

@@ -1,31 +1,31 @@
 
 abstract class InterfaceGetDataProductsCategory{
-  getDataProductsCategory({
+  Future getDataProductsCategory({
     bool testing = false,
     String testingToken = "",
     required String categoriesId, 
     required bool fresh,
   });
-  tokenNull({
+  Future tokenNull({
     bool testing = false,
     required String categoriesId
   });
-  tokenNotNull({
+  Future tokenNotNull({
     bool testing = false,
     required String tokens,
     required String categoriesId,
   });
-  rolePenjual({
+  Future rolePenjual({
     bool testing = false,
     required Map<String, String>? headers,
     required String categoriesId,
   });
-  rolePembeli({
+  Future rolePembeli({
     bool testing = false,
     required Map<String, String>? headers,
     required String categoriesId,
   });
-  getDataProductUsers({
+  Future getDataProductUsers({
     bool testing = false,
     required Map<String, dynamic> parameterApi,
     required Map<String, String>? headers,

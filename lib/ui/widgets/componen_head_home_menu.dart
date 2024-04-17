@@ -14,11 +14,13 @@ class ComponenHeadHomeMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeBox(context);
     
+    // ignore: unused_local_variable
     final InputBorder inputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(ThemeBox.defaultRadius8),
       borderSide: BorderSide(color: kPurpleColor),
     );
 
+    // ignore: unused_local_variable
     final TextStyle textStyleSearch = TextStyle(
         fontSize: defaultFont16, 
         color: kWhiteColor

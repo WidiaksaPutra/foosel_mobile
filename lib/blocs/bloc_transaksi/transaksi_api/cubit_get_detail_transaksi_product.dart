@@ -10,7 +10,7 @@ class CubitGetDetailTransaksiProduct extends Cubit<DataStateGetTransaksi>{
   CubitGetDetailTransaksiProduct() : super(DataGetTransaksi(loading: false, dataTransaksi: []));
   
   @override
-  getDataTransaksiDetail({required String transactionsId}) async{
+  Future<void> getDataTransaksiDetail({required String transactionsId}) async{
     late List _dataListTransaksi = [];
     emit(DataGetTransaksi(loading: true, dataTransaksi: []));
     _dataListTransaksi = await _dataGetTransaksi.getTransaksi(transactionsId: transactionsId);

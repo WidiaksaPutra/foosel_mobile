@@ -1,0 +1,187 @@
+Aggregation merupakan konsep yang menggunakan komponen dengan lebih Optimal.
+Seperti konsep Composition, komponen yang dibuat harus reuse sehingga dapat menciptakan suatu objek,
+yang dimana secara bersamaan komponen kompenen tersebut dapat dijalankan atau di Asosiasikan pada objek yang lebih besar bersamaan dengan objek yang dihasilkan dari Composition tadi.
+
+Konsep Agregation merupakan pemanfaatan suatu komponen yang bersifat reuse secara optimal dengan cara menggabungkan konsep asossiation dengan konsep composition, sehingga menciptakan objek yang lebih kompleks.
+
+contoh :
+  Dalam contoh ini, NavigasiRole, NavigasiRoleBarRead merupakan function yang digunakan sebagai komponen untuk membuat RefreshDialog dengan menggunakan konsep Komposition.
+  RefreshDialog di jalankan pada DetailBodyDisconnectProductPenjual, secara bersamaan NavigasiRole, NavigasiRoleBarRead juga dijalankan pada DetailBodyDisconnectProductPenjual. 
+  Maka penerapan konsep Aggregation terletak pada penggunaan komponen NavigasiRole dan NavigasiRoleBarRead.
+  
+  mixin NavigasiRole{
+    late String navigation = "";
+    Future<void> navigasiR() async{
+      final _tokenUser = await SharedPreferences.getInstance();
+      Map<String, dynamic> _decodeTokenUser = JwtDecoder.decode(_tokenUser.getString('token').toString());
+      if(_decodeTokenUser['roles'].toString() == "PEMBELI"){
+        navigation = RouteName.bottomNavPembeli;
+      }else if(_decodeTokenUser['roles'].toString() == "PENJUAL"){
+        navigation = RouteName.bottomNavPenjual;
+      }
+    }
+  }
+
+  mixin NavigasiRoleBarRead{
+    Future<void> navigasiRBR({required BuildContext context, required int value}) async{
+      final _tokenUser = await SharedPreferences.getInstance();
+      Map<String, dynamic> _decodeTokenUser = JwtDecoder.decode(_tokenUser.getString('token').toString());
+      if(_decodeTokenUser['roles'].toString() == "PEMBELI"){
+        context.read<CubitBottomNavPembeli>().navigation(currentButton: value);
+      }else if(_decodeTokenUser['roles'].toString() == "PENJUAL"){
+        context.read<CubitBottomNavPenjual>().navigation(currentButton: value);
+      }
+    }
+  }
+
+  ---------------------------------------------------------------------------------------------------------
+
+  class RefreshDialog with DialogBasic, NavigasiRole, NavigasiRoleBarRead implements InterfacesRefreshDialog{
+    @override
+    void basicRefresh({
+      required BuildContext context,
+      required VoidCallback onTap,
+    }){
+      var _listener = InternetConnectionChecker().onStatusChange.listen((status){
+        if (status == InternetConnectionStatus.disconnected) {
+          ThemeBox(context);
+          voidDialogBasic(
+            margin: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
+            padding: EdgeInsets.only(left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, top: ThemeBox.defaultHeightBox30),
+            borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10),
+            color: kBlackColor6,
+            context: context, 
+            closeIconStatus: true,
+            barrierDismissible: false,
+            contentDialog: ComponenContentDialog_ImageAndTitleTextAndButtonRefresh(
+              text: 'Halaman Perlu Di Refresh',
+              image: 'asset/animations/loading_keong_lottie.json',
+              onTapRefresh: () {
+                navigasiRBR(context: context, value: 0);
+                navigasiR();
+                context.go(navigation);
+              },
+            ),
+            onTapCloseDialog: onTap,
+          );
+        }
+      });
+      Future.delayed(
+        const Duration(seconds: 30),
+        () => _listener.cancel(),
+      );
+    }
+  }
+
+  ---------------------------------------------------------------------------------------------------------------------------
+
+  class DetailBodyDisconnectProductPenjual extends StatelessWidget with NavigasiRole, NavigasiRoleBarRead{
+    DetailBodyDisconnectProductPenjual({Key? key}) : super(key: key);
+
+    void listener({
+      required BuildContext context,
+      required String navigation,
+      required bool loading,
+    }){
+      if(loading == true){
+        RefreshDialog().basicRefresh(context: context, onTap: () => context.go(navigation));
+      }
+    }
+
+    @override
+    Widget build(BuildContext context) {
+      ThemeBox(context);
+      Size size = MediaQuery.of(context).size;
+
+      navigationRole(BuildContext context){
+        return BlocBuilder<CubitDetailProdukNavPenjual, DataStateDetailProdukNavPenjual>(
+          builder: (context, state){
+            (state.jenisDetail == "AllProduct")
+            ? navigasiRBR(context: context, value: 0)
+            : navigasiRBR(context: context, value: 2);
+            return SizedBox();
+          }
+        );
+      }
+      navigasiR();
+    
+      Widget contentDisconnect({
+        required String name,
+        required String category,
+        required String harga,
+        required String description,
+      }){
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            HeaderDetailProduct(
+              guestUser: true, 
+              onPressedBack: () => context.go(navigation), 
+              onPressedChart: () => context.go(RouteName.cartDetail),
+              icon: 'asset/icon/cart_Icon4.png',
+            ),
+            ComponenCarouselSliderImage(sizeWidth: size.width, imageProduct: ["asset/image/disconnect_image.jpg"], connect: false),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox17),
+                padding: EdgeInsets.only(top: ThemeBox.defaultHeightBox30, left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, bottom: ThemeBox.defaultHeightBox30),
+                decoration: BoxDecoration(
+                  color: kPrimaryColor,
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(ThemeBox.defaultRadius24), topRight: Radius.circular(ThemeBox.defaultRadius24))
+                ),
+                child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ComponenTextColumn_CrossStartAndWhiteGray2AndFont18Font12AndSemiBoldRegular(
+                        title: name,
+                        content: category,
+                      ),
+                      ComponenContainerHarga(titleHarga: "Harga", harga: harga),
+                      ComponenTextDetail(title: "Description", data: description),
+                      // ComponenSmallHorizontal(titleImage: "Fimiliar Product"),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      }
+
+      return BlocBuilder<CubitDetailProdukNavPenjual, DataStateDetailProdukNavPenjual>(
+      builder: (context1, state1) => (state1.jenisDetail == "AllProduct")
+      ? BlocConsumer<CubitDetailProductsDisconnect, DataStateProductBasic>(
+          listener: (context2, state2) => listener(
+            context: context2,
+            loading: state2.loadingApi, 
+            navigation: navigation,
+          ),
+          builder: (context3, state3) => (state3.getData.toString() != "[]")
+          ? contentDisconnect(
+              name: state3.getData[0]['name'].toString(),
+              category: state3.getData[0]['nameCategory'].toString(), 
+              description: state3.getData[0]['description'].toString(),
+              harga: state3.getData[0]['price'].toString(),
+            )
+          : Center(child: ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200)),
+        )
+      : BlocConsumer<CubitGetLike, DataStateGetLike>(
+          listener: (context4, state4) => listener(
+            context: context4,
+            loading: state4.loadingLike, 
+            navigation: navigation,
+          ),
+          builder: (context5, state5) => (state5.getData.toString() != "[]")
+          ? contentDisconnect(
+              name: state5.getData[0]['name'].toString(),
+              category: state5.getData[0]['nameCategory'].toString(), 
+              description: state5.getData[0]['description'].toString(),
+              harga: state5.getData[0]['price'].toString(),
+            )
+          : Center(child: ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200)),
+        ),
+      );
+    }
+  }

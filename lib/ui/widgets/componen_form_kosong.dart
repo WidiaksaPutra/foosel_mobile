@@ -4,6 +4,7 @@ import 'package:foosel/shared/theme_font.dart';
 import 'package:foosel/shared/theme_text_style.dart';
 import 'package:flutter_svg/svg.dart';
 
+// ignore: must_be_immutable
 class ComponenFormKosong extends StatelessWidget {
   bool formVisible;
   String message;

@@ -13,7 +13,7 @@ import 'package:foosel/shared/theme_box.dart';
 class CubitNavigationListImageBarang extends Cubit<DataStateNavigationListImageBarang> with ShowSnackBar implements InterfacesCubitNavigationListImageBarang{
   CubitNavigationListImageBarang() : super(DataNavigationListImageBarang(null));
   @override
-  Future<void> navigation({
+  void navigation({
     required String namaProduct,
     required String deskripsi,
     required String price,
@@ -21,13 +21,13 @@ class CubitNavigationListImageBarang extends Cubit<DataStateNavigationListImageB
     required XFile? image,
     required String navigation,
     required BuildContext context,
-  }) async{
+  }){
     if(namaProduct != 'null' && 
       deskripsi != 'null' && 
       (price != 'null' || price != '0.00') && 
       (typeProduct != 'null' || typeProduct != "All Product") && 
       image != null){
-        emit(await DataNavigationListImageBarang(XFile(image.path)));
+        emit(DataNavigationListImageBarang(XFile(image.path)));
         context.go(navigation);
     }else{
       ThemeBox(context);

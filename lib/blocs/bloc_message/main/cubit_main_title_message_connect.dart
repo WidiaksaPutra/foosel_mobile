@@ -12,7 +12,8 @@ class CubitTitleMessageConnect extends Cubit<DataStateTitleMessage> with SharedP
   final InterfaceGetUserFirebase _dataGetUserFirebase = getItInstance<InterfaceGetUserFirebase>();
   final InterfaceInsertChatFirebase _dataInsertChatFirebase = getItInstance<InterfaceInsertChatFirebase>();
   CubitTitleMessageConnect() : super(DataTitleMessage("","","",true));
-  getTitleMessage({required dynamic users, required String message}) async{
+  
+  Future<void> getTitleMessage({required dynamic users, required String message}) async{
     await sharedPref();
     String _emailPenerima = await prefs.getString('emailPenerima').toString();
     emit(DataTitleMessage("","","",true));
@@ -38,7 +39,7 @@ class CubitTitleMessageConnect extends Cubit<DataStateTitleMessage> with SharedP
     );
   }
 
-  insertFirebaseChatMessage({
+  Future<void> insertFirebaseChatMessage({
     required String emailPenerima,
     required String message,
     required String tokenPenerima,

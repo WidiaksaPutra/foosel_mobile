@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 abstract class InterfacesCubitNavigationListImageBarang{
-  Future<void> navigation({
+  void navigation({
     required String namaProduct,
     required String deskripsi,
     required String price,

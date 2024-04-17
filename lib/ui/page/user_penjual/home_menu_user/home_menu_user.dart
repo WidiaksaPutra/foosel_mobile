@@ -49,7 +49,7 @@ class HomeMenuUser extends StatelessWidget{
                 children: [
                   ComponenCarouselSliderImageSliver(
                     connect: false,
-                    imageProduct: coverFoosel,
+                    imageProduct: coverfoosel,
                   ),
                   HomeUpProfile(),
                 ],

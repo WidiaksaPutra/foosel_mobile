@@ -1,5 +1,5 @@
 abstract class InterfaceGetLogout{
-  getLogout({
+  Future getLogout({
     bool testing = false,
     String testingToken = "",
   });

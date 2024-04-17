@@ -1,0 +1,327 @@
+SOLID merupakan pedoman yang digunakan untuk menerapkan konsep konsep OOP
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Single Responsibility Principle (SRP) merupakan konsep penggunaan class yang bertujuan untuk mengatur tanggung jawab suatu class menjadi lebih spesifik,
+jadi dalam konsep ini suatu class hanya boleh memiliki 1 tanggung jawab, dengan tujuan agar code lebih mudah dikembangkan, dirawat dan ditesting.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Open/Closed Principle (OCP) merupakan konsep yang digunakan untuk mengatur seuatu entitas, dimana suatu entitas diharuskan memiliki sifat yang terbuka untuk pengembangan, tetapi tertutup untuk modifikasi.
+Maksudnya suatu entitas bersifat reuse dimana entitas hanya dapat diwariskan untuk menambahkan tanggung jawab baru, atau membuat entitas dengan tanggung jawab yang baru untuk mengganti entitas yang lama.
+Tujuan dari konsep ini adalah mempermudah pengembangan, karena kita tidak perlu merubah yang sudah ada, 
+kita hanya perlu membuat entitas baru untuk ditambahkan ke entitas yang membutuhkan atau entitas baru tersebut juga dapat digunakan untuk mengganti entitas yang lama, tanpa mempengaruhi keseluruhan code. 
+
+Salah satu cara untuk menerapkan konsep Open/Closed Principle dengan menggunakan teknik Strategy Design Pattern.
+Teknik Strategy Design Patterns merupakan teknik yang bekerja dengan cara, merubah berbagai tanggung jawab menjadi komponen komponen kecil(Strategy) yang memiliki sifat reuse, 
+dimana nantinya komponen2 tersebut bisa digunakan sebagai opsi tanggung jawab yang bisa dipilih atau dijalankan bersamaan oleh suatu entitas yang membutuhkan. 
+Dengan cara ini entitas bisa bersifat Fleksible, tanpa harus mempengaruhi keseluruhan code.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Liskov Substitution Principle (LSP) merupakan prinsip yang memiliki konsep, warisan yang diterima child harus sesuai dengan karakteristik yang diwariskan oleh induk,
+dalam artian apapun metode ataupun properti kontrak dari induk harus diikuti oleh child.
+Dimana konsep ini dkhususkan untuk mengoptimalkan penggunaan Concretions, didalam konteks pewarisan pada Abstract. 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Interface Segregation Principle (ISP) merupakan prinsip yang memiliki konsep, dimana Abstract harus membuat Interface yang efisien, yang benar benar dibutuhkan oleh Concretions yang dituju,
+jadi nanti Concretions tidak terpaksa menerapkan isi interface yang sebenarnya tidak dibutuhkan.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Dependency Inversion Principle (DIP) merupakan konsep yang memiliki prinsip, High-Level Modules tidak boleh tergantung pada Low-Level Modules, dan berlaku sebaliknya
+, dimana High-Level Modules dan Low-Level Modules harus bergantung pada Abstraction.
+Dependency Inversion Principle merupakan pedoman dari Dependency pada OOP, yang berarti dalam menerapkan konsep Dependency yang efektive kita bisa menggunakan prinsip Depedency Inversion Principle.
+dalam code saya, dalam menerapkan Dependency Inversion Principle saya menggunakan teknik Depedency Injection.
+
+Dependency Injection merupakan teknik yang bertujuan menerapkan konsep Dependency pada OOP, yang juga memiliki prinsip dari Depedency Inversion Principle, dengan cara Injection.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+contoh :
+Saya akan memberikan contoh code yang mewakili konsep
+- Single Responsibility Principle
+- Open/Closed Principle
+- Liskov Substitution Principle
+- Interface Segregation Principle
+- Dependency Inversion Principle & Dependency Injection
+
+
+BlocProvider(
+    create: (context){
+        setupDInjectionProduct();
+        return CubitDetailProductConnect();
+    },
+),
+
+late Datum _dataList = Datum();
+late bool _loading = true;
+class CubitDetailProductConnect extends Cubit<DataStateProducts> implements InterfacesCubitDetailProductConnect{
+  final InterfaceGetDataDetailProduct _dataGetDetailProduct = getItInstance<InterfaceGetDataDetailProduct>();
+  CubitDetailProductConnect() : super(DataProducts(loading: _loading, dataProducts: _dataList, jenisDetail: true));
+  @override
+  Future<void> getDetailProductConnect({bool jenisDetail = true, required String idProduct}) async{
+    Future.delayed(Duration(milliseconds: 3000));
+    emit(DataProducts(loading: _loading, dataProducts: _dataList, jenisDetail: jenisDetail));
+    _dataList = await _dataGetDetailProduct.getDataDetailProduct(tokenId: idProduct);
+    _loading = await _dataGetDetailProduct.loadingGetDataDetailProduct();
+    if(_loading == false){ 
+      emit(DataProducts(loading: _loading, dataProducts: _dataList, jenisDetail: jenisDetail));
+    }
+  }
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+void setupDInjectionProduct(){
+  if(!getItInstance.isRegistered<InterfaceGetDataDetailProduct>()){
+    getItInstance.registerLazySingleton<InterfaceGetDataDetailProduct>(() => ApiGetDetailProducts());
+  }
+}
+
+abstract class InterfaceGetDataDetailProduct{
+  Future getDataDetailProduct({
+    bool testing = false, 
+    String testingToken = "",
+    required String tokenId,
+  });
+  Future tokenNull({
+    bool testing = false, 
+    required String tokenId,
+  });
+  Future tokenNotNull({
+    bool testing = false,
+    required String tokens,
+    required String tokenId
+  });
+  Future rolePenjual({
+    bool testing = false,
+    required Map<String, String>? headers,
+    required String tokenId,
+  });
+  Future rolePembeli({
+    bool testing = false,
+    required Map<String, String>? headers,
+    required String tokenId,
+  });
+  Future getDataProductUsers({
+    bool testing = false,
+    required Map<String, dynamic> parameterApi,
+    required Map<String, String>? headers,
+    required String link,
+  });
+  bool loadingGetDataDetailProduct();
+}
+
+----------------------------------------------------------------------------------------------
+
+class ApiGetDetailProducts with SharedPref implements InterfaceGetDataDetailProduct{
+  late Datum? dataProducts = Datum();
+  late bool loading = true;
+  late String tokens;
+
+  @override
+  Future getDataDetailProduct({
+    bool testing = false,
+    String testingToken = "",
+    required String tokenId
+  }) async{
+    try {
+      if(testing == false){
+        await sharedPref();
+        tokens = prefs.getString('token').toString();
+      }else{
+        (testingToken == "") ? tokens = 'null' : tokens = testingToken;
+      }
+      if(tokens == 'null'){
+        if(testing == false){
+          return await tokenNull(tokenId: tokenId);
+        }else{
+          await tokenNull(tokenId: tokenId);
+          return "berhasil";
+        }  
+      }else{
+        if(testing == false){
+          return await tokenNotNull(tokens: tokens, tokenId: tokenId); 
+        }else{
+          await tokenNotNull(tokens: tokens, tokenId: tokenId);
+          return "berhasil";
+        }
+      }
+    }catch (e) {
+      throw Exception('data error');
+    }
+  }
+
+  Future tokenNull({
+    bool testing = false,
+    required String tokenId,
+  }) async{
+    try{
+      Map<String, String> headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      Map<String, String> parameterApi = {
+        'token_id' : tokenId,
+      };
+      await getDataProductUsers(
+        parameterApi: parameterApi,
+        link: 'detailGuest', 
+        headers: headers,
+      );
+      return (testing == false) ? dataProducts : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
+    }
+  }
+
+  Future tokenNotNull({
+    bool testing = false,
+    required String tokens,
+    required String tokenId
+  }) async{
+    try{
+      Map<String, dynamic> decodeTokenUser = await JwtDecoder.decode(tokens);
+      String role = decodeTokenUser['roles'].toString();
+      Map<String, String> headers = {
+        'Authorization': 'Bearer $tokens',
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
+      if(role == "PENJUAL"){
+        await rolePenjual(
+          headers: headers, 
+          tokenId: tokenId,
+        );
+      }else{
+        await rolePembeli(
+          headers: headers,
+          tokenId: tokenId,
+        );
+      }
+      return (testing == false) ? dataProducts : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
+    }
+  }
+
+  Future rolePenjual({
+    bool testing = false,
+    required Map<String, String>? headers,
+    required String tokenId,
+  }) async{
+    try{
+      Map<String, String> parameterApi = {
+        'token_id' : tokenId,
+      };
+      await getDataProductUsers(
+        parameterApi: parameterApi,
+        link: 'detailPenjual',
+        headers: headers,
+      );
+      return (testing == false) ? dataProducts : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
+    }
+  }
+
+  Future rolePembeli({
+    bool testing = false,
+    required Map<String, String>? headers,
+    required String tokenId,
+  }) async{
+    try{
+      Map<String, String> parameterApi = {
+        'token_id' : tokenId,
+      };
+      await getDataProductUsers(
+        parameterApi: parameterApi,
+        link: 'detailPembeli',
+        headers: headers,
+      );
+      return (testing == false) ? dataProducts : "berhasil";
+    }catch (e) {
+      throw Exception('data error');
+    }
+  }
+
+  Future getDataProductUsers({
+    bool testing = false,
+    required Map<String, dynamic> parameterApi,
+    required Map<String, String>? headers,
+    required String link,
+  }) async{
+    try{
+      String? parameterString = await Uri(queryParameters: parameterApi).query;
+      final responseDetailProducts = await Api.client.get(
+        Uri.parse('${Api.baseURL}/$link?' + parameterString),
+        headers: headers,
+      ).timeout(const Duration(seconds: 10));
+      if(responseDetailProducts.statusCode == 200){
+        final parse = await json.decode(responseDetailProducts.body);
+        DetailProducts detailProductsDataModel = DetailProducts.fromJson(parse);
+        dataProducts = detailProductsDataModel.data!.data[0];
+        loading = false;
+        return (testing == false) ? dataProducts : "berhasil";
+      }else{
+        throw Exception('data gagal');
+      }
+    }catch (e) {
+      throw Exception('data error');
+    }
+  }
+  
+  @override
+  bool loadingGetDataDetailProduct() {
+    return loading;
+  }
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+- Single Responsibility Principle
+  CubitDetailProductConnect menerapkan SRP karena hanya memiliki 1 tanggung jawab pada suatu class, yaitu getDetailProductConnect, yang digunakan untuk menampilkan detail product connect.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+- Open/Closed Principle
+    Dalam perspektive OCP saya menerapkannya, pada penggunaan Depedency Injection dan dalam pembuatan ApiGetDetailProducts dengan teknik Strategy Design Pattern.
+   
+    - Dalam penggunaan Depedency Injection, saya menerapkannya pada setupDInjectionProduct() dan pemanggilan Abstractnya pada CubitDetailProductConnect.
+    Dimana ketika kita ingin merubah class yang ingin kita ambil. Kita tinggal merubah abstract dan class nya pada setupDInjectionProduct() dengan class yang baru,
+    yang nantinya kita sesuaikan pemanggilannya pada Interface yang terdapat didalam CubitDetailProductConnect, tanpa mempengaruhi code CubitDetailProductConnect dan merubah code yang lama,
+    begitupun ketika kita ingin menambahkan class baru, kita tinggal daftarkan didalam setupDInjectionProduct(), dan tambahkan Abstract dialam CubitDetailProductConnect.
+    dengan begitu kita telah memberikan komponen opsi yang dapat dipilih atau digunakan secara bersamaan pada class CubitDetailProductConnect, tanpa mempengaruhi class tersebut.
+
+    - Dalam penggunaan Strategy Design Pattern, saya menerapkannya pada class ApiGetDetailProducts, dimana tujuan dari kelas tersebut adalah menampilkan detail product berdasarkan user role yang telah login.
+     Terdapat user role Penjual dan Pembeli yang memiliki token, dan user role Guest yang tidak memiliki token.
+     Maka cara yang saya lakukan adalah membagikan tanggung jawab menjadi bagian yang lebih spesifik dan saya membuat masing2 objek komponen dari setiap tanggung jawab tersebut yang bersifat reuse.
+     komponen2 tersebut menghasilkan opsi yang bisa dipilih atau dijalankan secara bersamaan pada objek yang membutuhkan.
+     komponen2 dalam code ini :
+     - tokenNotNull yang memiliki opsi
+        - rolePenjual (user penjual)
+        - rolePembeli (user pembeli)
+    - tokenNull (user guest)
+    - getDataProductUsers yang bisa diakses oleh rolePenjual, rolePembeli, tokenNull.
+
+    getDataDetailProduct merupakan metode utama yang dapat dipanggil oleh code yang terInjeksi, yang berfungsi untuk memilih opsi user role untuk menampilkan data detail product.
+
+    Dengan demikian strategi code ini akan lebih mudah dikembangkan, karena kita bisa menambahkan user role baru menjadi sebuah komponen / mengurangi komponen user role tanpa mempengaruhi code lainnya.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+- Liskov Substitution Principle dalam code ini diterapkan pada hubungan antara InterfaceGetDataDetailProduct sebagai Abstract dengan ApiGetDetailProducts sebagai Concretions.
+dimana ApiGetDetailProducts sudah menerapkan setiap metode yang terdapat didalam class abstract yang diwariskan.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+- Interface Segregation Principle dalam code ini juga diterapkan pada hubungan antara InterfaceGetDataDetailProduct sebagai Abstract dengan ApiGetDetailProducts sebagai Concretions.
+dimana InterfaceGetDataDetailProduct sudah membuat interface yang efisien yang dibutuhkan oleh ApiGetDetailProducts.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+- Dependency OOP/Dependency Inversion Principle/Dependency Injection, seperti yang telah saya jelaskan sebelumnya konsep ini memiliki inti mengelola ketergantungan, dalam contoh ini,
+ penerapannya terletak pada implementasi DI menggunakan Get_It, sesuai dengan prinsip DIP code ini dibagi menjadi 3 bagian :
+ - High-Level Modules yaitu CubitDetailProductConnect, code yang berfungsi untuk mengelola logic untuk menampilkan Detail Product.
+ - Low-Level Modules yaitu ApiGetDetailProducts, code yang berfungsi untuk mengambil data dari API berdasarkan user role yang telah dideteksi.
+ - Abstract yaitu InterfaceGetDataDetailProduct yang menggunakan Get_It untuk meng-Injeksi ApiGetDetailProducts ke CubitDetailProductConnect.
+
+Dengan demikian ketergantungan dapat dikelola, dengan Abstract sebagai Basicnya.

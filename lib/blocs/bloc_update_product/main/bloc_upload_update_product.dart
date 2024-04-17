@@ -16,7 +16,7 @@ class BlocUploadUpdateProduct extends Bloc<DataEventUpdateBarang, StateUpdateBar
   final InterfaceUpdateDataProduct _updateDataProduct = getItInstance<InterfaceUpdateDataProduct>();
   BlocUploadUpdateProduct() : super(UpdateBarang(loading: false, snackBar: false, responApi: '-')){
     on<ButtonFormProducts>((event, emit) async{
-      buttonUploadProduct(
+      await buttonUploadProduct(
         tokenId: event.tokenId,
         nameProduct: event.nameProduct,
         price: event.price,
@@ -31,7 +31,7 @@ class BlocUploadUpdateProduct extends Bloc<DataEventUpdateBarang, StateUpdateBar
   }
 
   @override
-  buttonUploadProduct({
+  Future<void> buttonUploadProduct({
     required String tokenId,
     required String nameProduct, 
     required String price, 
@@ -41,7 +41,7 @@ class BlocUploadUpdateProduct extends Bloc<DataEventUpdateBarang, StateUpdateBar
     required String type,
     required String oldImage,
     required BuildContext context,
-  }) async {
+  }) async{
     emit(UpdateBarang(loading: true, snackBar: false, responApi: '-'));
     await sharedPref();
     String _responUpdateProducts = await _updateDataProduct.updateDataProduct(

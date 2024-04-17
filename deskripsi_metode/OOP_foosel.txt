@@ -1,0 +1,117 @@
+OOP Foosel :
+
+pengertian OOP secara umum :
+OOP(Object Oriented Programming) meruapakan paradigma pemrograman dengan konsep objek,
+yang dimana setiap objek terdiri dari atribut dan metode yang digunakan untuk memanipulasi objek.
+
+Konsep OOP :
+- Class
+- Object
+- Encapsulation v
+- Inheritance v
+- Polymorphism v
+- Abstraction
+- Composition
+- Association
+- Aggregation
+- Dependency
+	- Inversion of Control (IoC) 
+		merupakan teknik yang digunakan untuk menerapkan Dependency, jenisnya :
+		- Dependency Injection
+		- Service Locator
+		- Factory Pattern
+		- Event Aggregator
+		- Service Registry
+		- Inversion of Control Container
+
+Konsep Pengembangan/Tambahan OOP :
+- SOLID Principles
+	- Single Responsibility Principle (SRP)
+	- Open/Closed Principle (OCP)
+		- Design Pattern
+	- Liskov Substitution Principle (LSP)
+	- Interface Segregation Principle (ISP)
+	- Dependency Inversion Principle (DIP)
+		- Dependency Injection
+
+- Design Patterns
+	- Factory
+	- Singleton
+	- Observer
+	- Strategy
+	- Adapter
+	- Factory Method Pattern, 
+	- Abstract Factory Pattern,
+	- Dependency Injection Pattern
+- Metode Pengembangan OOP
+	- Object-Oriented Analysis and Design (OOAD)
+	- Object-Oriented Modeling (OOM)
+- Anti-Patterns
+	- God Class
+	- Spaghetti Code
+- Konsep Lanjutan
+	- Reflection
+	- Metaprogramming
+	- Aspect-Oriented Programming (AOP)
+- Dependency Injection (DI)
+- Template Method Pattern
+- State Pattern
+- Command Pattern
+- Builder Pattern
+- Model-View-ViewModel (MVVM)
+- Database Management in OOP:
+	- Penggunaan ORM (Object-Relational Mapping)
+- Caching Strategies
+- Event-Driven Programming
+- Cross-Cutting Concerns
+
+Berikut adalah beberapa contoh kombinasi konsep OOP yang sering digunakan bersamaan:
+
+- SOLID Principles + Design Patterns
+- Abstraction + Encapsulation + Inheritance + Polymorphism + Design Patterns
+- Object-Oriented Analysis and Design (OOAD) + Design Patterns + Refactoring
+- Dependency Injection + Dependency Inversion Principle + Design Patterns
+- Model-View-Controller (MVC) + Observer Pattern + Design Patterns
+====================================================
+
+perbedaan dan hubungan :
+- (Mixin)penggunaan mixin tidak sah jika digunakan untuk inheritance,
+  walaupun seringkali mixin dapat mewarisi function yang ada didalamnya, 
+  tetapi secara aturan mixin seharusnya dilakukan untuk melengkapi class turunan, 
+  analoginya sama seperti makan nasi menggunakan garpu, walaupun bisa, tetapi tidak seharusnya.
+  Tetapi dalam flutter, karena di flutter tidak mendukung konsep multiple inheritance, 
+  maka untuk menerapkan multiple inheritance bisa menggunakan mixin sebagai penggantinya.
+  Mixin berisi function karena mixin bukan class. Mixin memungkinkan function menjadi reuse.
+  dan Penggunaan mixin lebih tepat digunakan pada konsep Composition, karena konsep Composition membutuhkan componen2 kecil untuk menciptakan objek yang besar.
+
+- (abstract, inheritance) perbedaan abstract dan inheritance adalah,
+  - inheritance intinya merupakan class biasa yang bisa diwariskan, dan class induk dan childnya dapat dibuatkan objek untuk dijalankan. 
+  - sedangkan abstract merupakan jenis class yang bertipe abstract, yang maksdunya kelas tersebut tidak dapat dijadikan objek dan dijalankan, 
+    karena kelas abstract dirancang khusus untuk membuat blueprint saja, tetapi class abstract diharuskan untuk mewariskan class-nya agar metode dari class abstract bisa dijalankan ketika class pewarisnya dijadikan objek.
+
+- (inheritance, polymorphism) Konsep polymorphism itu ngebuat penggunaan object lebih luas untuk diimplementasikan, 
+  karena jika kita menggunakan konsep inheritance dalam penggunaan object kita hanya bisa membuat variabel yang hanya bisa memanggil metode2 dari 1 child saja, 
+  sedangkan jika kita menggunakan konsep polymorphism untuk memanggil metode2 dari perent pada suatu child, itu dapat diganti ke child lain dan lebih luas lagi.
+  Jadi intinya inheritance itu konsep pewarisan dari class2, 
+  sedangkan polimorpism konsep yang berfungsi agar pemanggilan kelas tersebut dapat dipanggil dengan fleksibel dan penggunaan yang luas.
+
+- (Constructor, Metode)
+perbedaan constructor dengan metode itu gaterlalu jauh karena mereka mirip, yang membedakannya hanyalah : 
+- constructor harus mendefinisakn variabel sesuai dengan tipedata dahulu sebelum varibel tersebut dijadikan parameter dalam contrucor. 
+- class hanya boleh memiliki  1 constructor, tetapi dapat menerapkan lebih dari satu constructor dengan nama yang sama dan parameter yang berbeda (overloading).
+- constructor tidak dapat di return, dan constructor dapat dijalankan langsung secara otomatis hanya dengan memanggil objeknya saja.
+
+- (Interface) merupakan bagian dari abstraction, 
+  yang dimana peran dari interface adalah memberikan kontrak atau menempatkan metode2 dan properti yang ada didalam abstract yang nantinya bisa diwariskan.
+  Intinya interface merupakan kumpulan metode dan properti yang bertujuan sebagai kerangka kerja bagi pewarisnya.
+
+- (Function, Metode) sebenarnya function dan metode merupakan objek yang sama.
+Tetapi function tidak terkait dengan class tertentu, sehingga dalam menjalankan functionnya kita bisa langsung memanggil objek functionnya tanpa memanggil classnya. 
+Sedangkan metode terkait dengan class tertentu, sehingga ketika kita memanggil metode, kita harus memanggil objek classnya terlebih dahulu baru bisa metodenya dipanggil dari class yang telah dijadikan objek.
+
+- Hubungan Abstraction dengan Concretions, Concretions merupakan pewaris/turunan dari Abstraction.
+
+- bloc provider merupakan tempat untuk menginisialisasi atau menyediakan class yang akan dijadikan bloc nantinya
+- intinya perbedaan bloc linstener dengan bloc builder adalah,
+bloc builder akan otomatis menampilkan data di UI setelah di emit dari Bloc nya, 
+sedangkan bloc listener, setelah di emit,  akan didengarkan dahulu didalam listener untuk melakukan logic tambahan yang bisa dilakukan pada UI sebelum ditampilkan pada UI.

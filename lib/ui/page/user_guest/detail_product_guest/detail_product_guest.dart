@@ -39,8 +39,7 @@ class DetailProductGuest extends HookWidget{
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                headerDetailProduct(
-                  context: context,
+                HeaderDetailProduct(
                   guestUser: true,
                   onPressedBack: () {
                     context.go(RouteName.homeGuest);

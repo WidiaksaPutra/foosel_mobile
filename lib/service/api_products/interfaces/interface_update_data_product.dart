@@ -1,7 +1,7 @@
 import 'package:image_picker/image_picker.dart';
 
 abstract class InterfaceUpdateDataProduct{
-  updateDataProduct({
+  Future updateDataProduct({
     bool testing = false,
     String testingTokenPenjual = "",
     required String tokenId, 

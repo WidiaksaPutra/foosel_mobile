@@ -15,7 +15,7 @@ class CubitMainUserConnect extends Cubit<DataStateUser> with SharedPref{
   final InterfaceGetDataUserLocal _dataGetUserLocal = getItInstance<InterfaceGetDataUserLocal>();
   final InterfaceInsertDataUserLocal _dataInsertUserLocal = getItInstance<InterfaceInsertDataUserLocal>();
   CubitMainUserConnect() : super(DataUser(false, {}));
-  fetchUser() async{
+  Future<void> fetchUser() async{
     await _dataDeleteUserLocal.deleteDataUser();
     await sharedPref();
     await _dataUpdateUserFirebase.updateUserFirebase(email: prefs.getString('email').toString(), statusUser: "Offline");

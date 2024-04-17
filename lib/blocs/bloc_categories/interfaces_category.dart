@@ -5,7 +5,7 @@ abstract class InterfacesProductsCategoryConnect{
     required int pages,
     required String categoryKey, 
   });
-  scrollControlCategoryProduct({
+  void scrollControlCategoryProduct({
     required int pages,
     required String categoryKey, 
   });
@@ -14,7 +14,7 @@ abstract class InterfacesProductsCategoryConnect{
 abstract class InterfacesCategoryNameConnect{
   Future<void> getNameCategories();
   Future<void> saveLocalDataCategories();
-  scrollControlNameCategories();
+  void scrollControlNameCategories();
 }
 
 abstract class InterfacesProductsCategoryDisconnect{

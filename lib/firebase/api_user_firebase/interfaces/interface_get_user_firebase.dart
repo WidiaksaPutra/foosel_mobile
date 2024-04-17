@@ -1,5 +1,5 @@
 abstract class InterfaceGetUserFirebase{
-  getUserFirebase({
+  Future getUserFirebase({
     required String email, 
     required dynamic users ,
   });

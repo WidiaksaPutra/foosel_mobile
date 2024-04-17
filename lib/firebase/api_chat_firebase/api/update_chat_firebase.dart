@@ -9,8 +9,9 @@ class UpdateChatFirebase implements InterfaceUpdateChatFirebase{
   final InterfaceSearchIdChatPersonalFirebase dataSearchIdChatPersonal = getItInstance<InterfaceSearchIdChatPersonalFirebase>();
   final InterfaceChatUpdateCollectionReadFirebase dataChatUpdateCollectionRead = getItInstance<InterfaceChatUpdateCollectionReadFirebase>();
   final InterfaceChatUpdateFirebase dataChatUpdateFirebase = getItInstance<InterfaceChatUpdateFirebase>();
+
   @override
-  updateChatFirebase({required String emailPengirim, required String emailPenerima}) async{
+  Future<void> updateChatFirebase({required String emailPengirim, required String emailPenerima}) async{
     String chatIdMessage = await dataSearchIdChatPersonal.searchIdChatPersonal(
       emailPenerima: emailPenerima, 
       emailPengirim: emailPengirim,

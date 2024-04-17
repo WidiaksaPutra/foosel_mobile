@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foosel/blocs/bloc_default/event/event_form_user.dart';
 import 'package:foosel/blocs/bloc_default/class/class/connection_dialog.dart';
+import 'package:foosel/blocs/bloc_default/mixin/mixin_dialog_basic.dart';
 import 'package:foosel/blocs/bloc_default/mixin/mixin_shared_pref.dart';
 import 'package:foosel/blocs/bloc_register/main/bloc_main_button_register.dart';
 import 'package:foosel/blocs/bloc_register/main/bloc_main_data_register.dart';
@@ -15,7 +16,9 @@ import 'package:foosel/routes/route_name.dart';
 import 'package:foosel/shared/theme_box.dart';
 import 'package:foosel/shared/theme_color.dart';
 import 'package:foosel/shared/theme_font.dart';
+import 'package:foosel/shared/theme_konstanta.dart';
 import 'package:foosel/shared/theme_text_style.dart';
+import 'package:foosel/ui/widgets/componen_advanced/componen_content_dialog(image_&_text).dart';
 import 'package:foosel/ui/widgets/componen_advanced/componen_text_form_field(label_white_16_&_text_form_and_hint_grey_14_&_radius_12_&_fill_color_black).dart';
 import 'package:foosel/ui/widgets/componen_button_bar.dart';
 import 'package:foosel/ui/widgets/componen_connection_basic.dart';
@@ -26,7 +29,7 @@ import 'package:foosel/ui/widgets/componen_list_view.dart';
 import 'package:foosel/ui/widgets/componen_text_button_315x50.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-class Register extends HookWidget with SharedPref{
+class Register extends HookWidget with SharedPref, DialogBasic{
   Register({ Key? key }) : super(key: key);
 
   @override
@@ -155,30 +158,46 @@ class Register extends HookWidget with SharedPref{
       ? ComponenTextButton_315x50( 
         textButton: TextButton(
           onPressed: () {
-            Future.delayed(
-              const Duration(milliseconds: 1000),
-              (){
-                context.read<BlocButtonRegisterUser>().add(ButtonFormUser(
-                  email: prefs.getString('emailRegister').toString(), 
-                  password: prefs.getString('passwordRegister').toString(),
-                  fullName: prefs.getString('fullNameRegister').toString(), 
-                  username: prefs.getString('usernameRegister').toString(), 
-                  navigation: RouteName.login,
-                  context: context, 
-                  userRole: _isRadioSelected.value, 
-                  alamat: prefs.getString('alamatRegister').toString(),
-                ));
-                context.read<BlocButtonRegisterData>().add(ButtonFormUser(
-                  email: prefs.getString('emailRegister').toString(),
-                  password: prefs.getString('passwordRegister').toString(),
-                  fullName: prefs.getString('fullNameRegister').toString(), 
-                  username: prefs.getString('usernameRegister').toString(), 
-                  navigation: RouteName.login,
-                  context: context, userRole: _isRadioSelected.value, 
-                  alamat: prefs.getString('alamatRegister').toString(),
-                ));
-              }
-            );
+            print(environment);
+            print(_isRadioSelected.value);
+            (environment == "LIVE" && _isRadioSelected.value == false)
+            ? voidDialogBasic(
+                context: context, 
+                margin: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
+                padding: EdgeInsets.only(left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, top: ThemeBox.defaultHeightBox30),
+                borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10),
+                color: kBlackColor6,
+                closeIconStatus: true,
+                barrierDismissible: true,
+                contentDialog: ComponenContentDialog_ImageAndTitleText(
+                  image: 'asset/animations/peringatan_lottie.json',
+                  text: 'user penjual ini sementara tidak dapat digunakan, menunggu persetujuan admin...',
+                ), onTapCloseDialog: () => Navigator.of(context).pop(),
+              )
+            : Future.delayed(
+                const Duration(milliseconds: 1000),
+                (){
+                  context.read<BlocButtonRegisterUser>().add(ButtonFormUser(
+                    email: prefs.getString('emailRegister').toString(), 
+                    password: prefs.getString('passwordRegister').toString(),
+                    fullName: prefs.getString('fullNameRegister').toString(), 
+                    username: prefs.getString('usernameRegister').toString(), 
+                    navigation: RouteName.login,
+                    context: context, 
+                    userRole: _isRadioSelected.value,
+                    alamat: prefs.getString('alamatRegister').toString(),
+                  ));
+                  context.read<BlocButtonRegisterData>().add(ButtonFormUser(
+                    email: prefs.getString('emailRegister').toString(),
+                    password: prefs.getString('passwordRegister').toString(),
+                    fullName: prefs.getString('fullNameRegister').toString(), 
+                    username: prefs.getString('usernameRegister').toString(), 
+                    navigation: RouteName.login,
+                    context: context, userRole: _isRadioSelected.value, 
+                    alamat: prefs.getString('alamatRegister').toString(),
+                  ));
+                }
+              );
           }, 
           child: Text("Sign Up", style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16)),
         ), 

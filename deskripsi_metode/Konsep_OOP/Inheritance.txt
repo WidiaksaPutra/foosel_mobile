@@ -1,0 +1,147 @@
+Inheritance berarti pewarisan, kita dapat mewariskan properti, metode yang terdapat pada class parent ke pada class child dengan menggunakan extends sebagai penghubungnya. 
+  Tujuan dari konsep pewarisan adalah menciptakan code induk yang reuse, yang dapat digunakan kembali disetiap child yang akan diwariskan, membuat hierarki class lebih terstruktur, 
+  mempermudah pengelolaan dan pemeliharaan code.
+  Terdapat beberapa jenis Inheritance salah satunya Single Inheritance, dan Multiple Inheritance.
+  Dalam flutter tidak mendukung adanya konsep Multiple Inheritance karena untuk menghindari Diamond Problem.
+  Maksud dari Diamond Problem dimana kesalahan terletak karena child meng-extends lebih dari 1 subClass yang terhubung ke Induk yang sama, 
+  masalahnya terjadi ketika child mencoba untuk mengakses metode induk, yang pada akhirnya mengakibatkan child kebingungan memilih subClass yang akan digunakan sebagai penghubung untuk menggunakan metode induk.
+  Dari masalah tersebut maka dalam flutter kita menggunakan Mixin untuk menerapkan konsep Multiple Inheritance, tanpa menyebabkan Diamond Problem. 
+
+-------------------------------------------------------------------------------
+
+  contoh Single Inheritance:
+    class StateAddPostBarang{
+      bool loading;
+      bool snackBar;
+      String responApi;
+      StateAddPostBarang(this.loading, this.snackBar, this.responApi);
+    }
+
+    class AddPostBarang extends StateAddPostBarang{
+      AddPostBarang({
+        required bool loading,
+        required bool snackBar,
+        required String responApi,
+      })
+      : super(loading, snackBar, responApi);
+    }
+
+---------------------------------------------------------------------------
+
+  contoh Multiple Inheritance :
+    mixin DialogBasic{
+      void voidDialogBasic({
+        required BuildContext context,
+        required VoidCallback onTapCloseDialog,
+        required Widget contentDialog,
+        required bool barrierDismissible,
+        required bool closeIconStatus,
+        required EdgeInsetsGeometry margin,
+        required EdgeInsetsGeometry padding,
+        required Color color,
+        required BorderRadiusGeometry borderRadius,
+      }){
+        ThemeBox(context);
+        showDialog(
+          context: context,
+          barrierDismissible: barrierDismissible,
+          builder: ((BuildContext context) => Container(
+            margin: margin,
+            padding: padding,
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: borderRadius,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if(closeIconStatus == true)...[
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: GestureDetector(
+                      onTap: onTapCloseDialog,
+                      child: Image.asset(
+                        'asset/icon/close_icon.png',
+                        height: ThemeBox.defaultHeightBox10,
+                        width: ThemeBox.defaultWidthBox10,
+                      ),
+                    ),
+                  ),
+                ],
+                Expanded(child: contentDialog),
+              ],
+            ),
+          )
+        ));
+      }
+    }
+
+    ------------------------------------------------------------------------
+
+    mixin NavigasiRole{
+      late String navigation = "";
+      Future<void> navigasiR() async{
+        final _tokenUser = await SharedPreferences.getInstance();
+        Map<String, dynamic> _decodeTokenUser = JwtDecoder.decode(_tokenUser.getString('token').toString());
+        if(_decodeTokenUser['roles'].toString() == "PEMBELI"){
+          navigation = RouteName.bottomNavPembeli;
+        }else if(_decodeTokenUser['roles'].toString() == "PENJUAL"){
+          navigation = RouteName.bottomNavPenjual;
+        }
+      }
+    }
+
+    -----------------------------------------------------------------------------------
+
+    mixin NavigasiRoleBarRead{
+      Future<void> navigasiRBR({required BuildContext context, required int value}) async{
+        final _tokenUser = await SharedPreferences.getInstance();
+        Map<String, dynamic> _decodeTokenUser = JwtDecoder.decode(_tokenUser.getString('token').toString());
+        if(_decodeTokenUser['roles'].toString() == "PEMBELI"){
+          context.read<CubitBottomNavPembeli>().navigation(currentButton: value);
+        }else if(_decodeTokenUser['roles'].toString() == "PENJUAL"){
+          context.read<CubitBottomNavPenjual>().navigation(currentButton: value);
+        }
+      }
+    }
+
+    ----------------------------------------------------------------------------------------
+
+    class RefreshDialog with DialogBasic, NavigasiRole, NavigasiRoleBarRead implements InterfacesRefreshDialog{
+      @override
+      void basicRefresh({
+        required BuildContext context,
+        required VoidCallback onTap,
+      }){
+        var _listener = InternetConnectionChecker().onStatusChange.listen((status){
+          if (status == InternetConnectionStatus.disconnected) {
+            ThemeBox(context);
+            voidDialogBasic(
+              margin: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox30, vertical: MediaQuery.of(context).size.height * 0.3),
+              padding: EdgeInsets.only(left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, top: ThemeBox.defaultHeightBox30),
+              borderRadius: BorderRadius.circular(ThemeBox.defaultRadius10),
+              color: kBlackColor6,
+              context: context, 
+              closeIconStatus: true,
+              barrierDismissible: false,
+              contentDialog: ComponenContentDialog_ImageAndTitleTextAndButtonRefresh(
+                text: 'Halaman Perlu Di Refresh',
+                image: 'asset/animations/loading_keong_lottie.json',
+                onTapRefresh: () {
+                  navigasiRBR(context: context, value: 0);
+                  navigasiR();
+                  context.go(navigation);
+                },
+              ),
+              onTapCloseDialog: onTap,
+            );
+          }
+        });
+        Future.delayed(
+          const Duration(seconds: 30),
+          () => _listener.cancel(),
+        );
+      }
+    }
+
+----------------------------------------------------------------------------------------------------------------------------------

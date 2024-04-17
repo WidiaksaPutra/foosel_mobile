@@ -30,7 +30,7 @@ class HelperUser implements
     required String username, 
     required String phone, 
     required String profilePhoto,
-  }) async {
+  }) async{
     final db = await SqlUserTabel.db();
     final dataUpdate = {'name': name, 'email': email, 'username': username, 'phone': phone, 'profilePhoto': profilePhoto};
     return await db.update('user', dataUpdate);
@@ -44,7 +44,7 @@ class HelperUser implements
   }
   
   @override
-  Future<int> deleteDataUser() async {
+  Future<int> deleteDataUser() async{
     final db = await SqlUserTabel.db();
     return await db.delete("user");
   }

@@ -61,7 +61,7 @@ class MenuGuest extends StatelessWidget{
                       children: [
                         ComponenCarouselSliderImageSliver(
                           connect: false,
-                          imageProduct: coverFoosel,
+                          imageProduct: coverfoosel,
                         ),
                         Container(
                           margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox30, left: ThemeBox.defaultWidthBox20),

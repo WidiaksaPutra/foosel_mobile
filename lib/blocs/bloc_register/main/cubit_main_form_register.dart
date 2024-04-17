@@ -4,7 +4,7 @@ import 'package:foosel/blocs/bloc_default/state/state_form_user.dart';
 class CubitFormRegister extends Cubit<DataStateFormUser>{
   CubitFormRegister() : super(DataStateInitial());
 
-  fullNameValidasiEmpty(String fullName){
+  void fullNameValidasiEmpty(String fullName){
     if(fullName.isEmpty){
       emit(DataStateFullName(true));
     }else{
@@ -12,7 +12,7 @@ class CubitFormRegister extends Cubit<DataStateFormUser>{
     }
   }
 
-  usernameValidasiEmpty(String username){
+  void usernameValidasiEmpty(String username){
     if(username.isEmpty){
       emit(DataStateUsername(true));
     }else{
@@ -20,7 +20,7 @@ class CubitFormRegister extends Cubit<DataStateFormUser>{
     }
   }
 
-  emailValidasiEmpty(String email){
+  void emailValidasiEmpty(String email){
     if(email.isEmpty){
       emit(DataStateEmail(true));
     }else{
@@ -28,7 +28,7 @@ class CubitFormRegister extends Cubit<DataStateFormUser>{
     }
   }
 
-  passwordValidasiEmpty(String password){
+  void passwordValidasiEmpty(String password){
     if(password.isEmpty){
       emit(DataStatePassword(true));
     }else{
@@ -36,7 +36,7 @@ class CubitFormRegister extends Cubit<DataStateFormUser>{
     }
   }
   
-  alamatValidasiEmpty(String alamat){
+  void alamatValidasiEmpty(String alamat){
     if(alamat.isEmpty){
       emit(DataStateAlamat(true));
     }else{
