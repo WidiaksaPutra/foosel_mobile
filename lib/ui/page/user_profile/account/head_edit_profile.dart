@@ -28,7 +28,7 @@ class EditProfile extends StatelessWidget with SharedPref, NavigasiRole, Navigas
     if(decodeTokenUser['roles'].toString() == "PENJUAL"){
       navigasiRBR(context: context, value: 4);
     }else{
-      navigasiRBR(context: context, value: 3);
+      navigasiRBR(context: context, value: 4);
     }
   }
 

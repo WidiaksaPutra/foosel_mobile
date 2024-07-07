@@ -21,58 +21,62 @@ class ComponenBottomCartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeBox(context);
     Size size = MediaQuery.of(context).size;
-    return SizedBox(
-      height: (connection == true) ? 
-        (listCart == true) ? size.height * 0.27 : size.height * 0.18
-      : size.height * 0.10,
-      child: ListView(
-        physics: BouncingScrollPhysics(),
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              if(listCart == true)...[
-                Container(
-                  margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox20, left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, bottom: ThemeBox.defaultHeightBox30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Subtotal", style: whiteTextStyle.copyWith(fontWeight: regular, fontSize: defaultFont14)),
-                      Text(formatCurrency.format(double.parse(harga.toString()).toInt()), style: blueTextStyle.copyWith(fontWeight: semiBold, fontSize: defaultFont16)),
-                    ]
-                  ),
-                ),
-              ],
-              if(connection == true)...[
-                Divider(height: ThemeBox.defaultHeightBox12, color: kBlackColor9, thickness: 1,),
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox30, vertical: ThemeBox.defaultHeightBox30),
-                  padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox13, horizontal: ThemeBox.defaultWidthBox20),
-                  decoration: BoxDecoration(
-                    color: kPurpleColor,
-                    borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
-                  ),
-                  child: TextButton(
-                    onPressed: onPressed,
+    return Padding(
+      padding: EdgeInsets.only(bottom: ThemeBox.defaultHeightBox50),
+      child: SizedBox(
+        height: (connection == true)
+        ? (listCart == true) ? size.height * 0.27 : size.height * 0.18
+        : size.height * 0.10,
+        child: ListView(
+          physics: BouncingScrollPhysics(),
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                if(listCart == true)...[
+                  Container(
+                    margin: EdgeInsets.only(top: ThemeBox.defaultHeightBox20, left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, bottom: ThemeBox.defaultHeightBox30),
                     child: Row(
-                      mainAxisAlignment: (listCart == true) ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Expanded(child: Text(textButton, style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16), overflow: TextOverflow.ellipsis,)),
-                        Image.asset(
-                          "asset/icon/icon_button_next.png",
-                          height: ThemeBox.defaultHeightBox14,
-                          width: ThemeBox.defaultHeightBox12,
-                        ),
-                      ],
+                        Text("Subtotal", style: whiteTextStyle.copyWith(fontWeight: regular, fontSize: defaultFont14)),
+                        Text(formatCurrency.format(double.parse(harga.toString()).toInt()), style: blueTextStyle.copyWith(fontWeight: semiBold, fontSize: defaultFont16)),
+                      ]
                     ),
                   ),
-                ),
-              ]
-            ],
-          ),
-        ],
+                ],
+                if(connection == true)...[
+                  Divider(height: ThemeBox.defaultHeightBox12, color: kBlackColor9, thickness: 1,),
+                  Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox30, vertical: ThemeBox.defaultHeightBox30),
+                    padding: EdgeInsets.symmetric(vertical: ThemeBox.defaultHeightBox13, horizontal: ThemeBox.defaultWidthBox20),
+                    decoration: BoxDecoration(
+                      color: kPurpleColor,
+                      borderRadius: BorderRadius.circular(ThemeBox.defaultRadius12),
+                    ),
+                    child: TextButton(
+                      onPressed: onPressed,
+                      child: Row(
+                        mainAxisAlignment: (listCart == true) ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
+                        children: [
+                          Expanded(child: Text(textButton, style: whiteTextStyle.copyWith(fontWeight: medium, fontSize: defaultFont16), overflow: TextOverflow.ellipsis,)),
+                          Image.asset(
+                            "asset/icon/icon_button_next.png",
+                            height: ThemeBox.defaultHeightBox14,
+                            width: ThemeBox.defaultHeightBox12,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ]
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

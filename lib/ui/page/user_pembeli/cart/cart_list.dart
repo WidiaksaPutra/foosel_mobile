@@ -21,7 +21,6 @@ import 'package:foosel/shared/theme_font.dart';
 import 'package:foosel/shared/theme_text_style.dart';
 import 'package:foosel/ui/widgets/componen_advanced/componen_bottom_cart_button.dart';
 import 'package:foosel/ui/widgets/componen_advanced/componen_card_vertical(image_&_text_&_button_add_&_button_min_&_button_delete).dart';
-import 'package:foosel/ui/widgets/componen_advanced/componen_header_cart.dart';
 import 'package:foosel/ui/widgets/componen_basic/componen_dash_border_box.dart';
 import 'package:foosel/ui/widgets/componen_loading.dart';
 import 'package:foosel/ui/widgets/componen_page_kosong.dart';
@@ -146,11 +145,6 @@ class Cart extends StatelessWidget{
       builder: (context1, state){
         return Scaffold(
           backgroundColor: kBlackColor6,
-          appBar: PreferredHeaderCart(
-            titleCart: 'Your Cart', 
-            statusLeading: true, 
-            onPressed: () => context.go(RouteName.bottomNavPembeli),
-          ),
           bottomNavigationBar: (state.getData.isNotEmpty)
           ? BlocBuilder<CubitConnectionExample, DataStateConnection>(
               builder: (context, stateConnect) => ComponenBottomCartButton(

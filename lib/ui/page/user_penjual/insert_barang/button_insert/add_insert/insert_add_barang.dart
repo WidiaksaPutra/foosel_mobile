@@ -49,7 +49,7 @@ class InsertAddBarangPenjual extends HookWidget with SharedPref, ImageSingleAcce
               return ComponenListViewVertical(
                 sizeHeightBox: constraint.maxHeight-ThemeBox.defaultHeightBox70, 
                 content: Container(
-                  margin: EdgeInsets.only(left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, top: ThemeBox.defaultHeightBox50),
+                  margin: EdgeInsets.only(left: ThemeBox.defaultWidthBox30, right: ThemeBox.defaultWidthBox30, top: ThemeBox.defaultHeightBox50, bottom: ThemeBox.defaultHeightBox50),
                   child: Column(
                     children: [
                       Expanded(child: FormInsertBarang(statusUpdateFormBarang: false)),

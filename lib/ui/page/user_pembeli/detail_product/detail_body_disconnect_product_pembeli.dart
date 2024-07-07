@@ -35,14 +35,14 @@ class DetailBodyDisconnectProductPembeli extends StatelessWidget with NavigasiRo
   }) async{
     (jenisDetail == "AllProduct")
     ? await navigasiRBR(context: context, value: 0)
-    : await navigasiRBR(context: context, value: 2);
+    : await navigasiRBR(context: context, value: 3);
     await navigasiR();
     (jenisDetail == "Transaksi") 
-    ? context.go(RouteName.cart) 
+    ? context.go(RouteName.bottomNavPembeli)
     : (jenisDetail == "TransaksiHistory")
     ? context.go(RouteName.cartHistory)
     : (jenisDetail == "TransaksiDetail")
-    ? context.go(RouteName.cartDetail)
+    ? context.go(RouteName.bottomNavPembeli)
     : context.go(navigation);
   }
 
@@ -79,7 +79,11 @@ class DetailBodyDisconnectProductPembeli extends StatelessWidget with NavigasiRo
               return HeaderDetailProduct(
                 guestUser: false, 
                 onPressedBack: () => navigationBack(context: context, jenisDetail: state2.jenisDetail.toString()), 
-                onPressedChart: () => context.go(RouteName.cart), 
+                onPressedChart: (){
+                  navigasiRBR(context: context, value: 2);
+                  navigasiR();
+                  context.go(navigation);
+                }, 
                 icon: 'asset/icon/cart_Icon4.png',
               );
             },

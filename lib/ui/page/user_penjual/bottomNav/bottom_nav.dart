@@ -31,30 +31,31 @@ import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:badges/badges.dart' as badges;
 
-class BottomNavPenjual extends HookWidget with SharedPref {
+class BottomNavPenjual extends StatelessWidget with SharedPref {
   BottomNavPenjual({ Key? key }) : super(key: key);
   late Size size;
+  late int currentButton = 0;
+  late bool loadingLogout = false;
+  late BuildContext contexts;
 
   @override
   Widget build(BuildContext context) {
     ThemeBox(context);
-    var loadingLogout = useState<bool>(false);
-    var currentButton = useState<int>(0);
+    contexts = context;
     size = MediaQuery.of(context).size;
     sharedPref();
     return BlocBuilder<CubitBottomNavPenjual, DataStateBottomNavigasiPenjual>(
       builder: (context, state){
-        currentButton.value = state.currentButton;
+        currentButton = state.currentButton;
         return BlocBuilder<CubitLogout,StateDataLogout>(
           builder: (context, state){
-            loadingLogout.value = state.loadingLogout;
+            loadingLogout = state.loadingLogout;
             return Scaffold(
-              appBar: appBar(contexts: context, currentButton: currentButton.value, loadingLogout: loadingLogout.value),
-              body: body(contexts: context, currentButton: currentButton.value),
-              // floatingActionButton: (loadingLogout == false) ? FloatingButtonNav() : Text(""),
-              // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-              bottomNavigationBar: (loadingLogout.value == false) ? customBottomNav(contexts: context, currentButton: currentButton.value) : Text(""),
-              backgroundColor: (currentButton.value == 0 ) ? kPrimaryColor : kBlackColor6,
+              appBar: appBar(),
+              body: body(),
+              floatingActionButton: (loadingLogout == false) ? customBottomNav() : Text(""),
+              floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+              backgroundColor: (currentButton == 0 ) ? kPrimaryColor : kBlackColor6,
             );
           }
         );
@@ -62,10 +63,7 @@ class BottomNavPenjual extends HookWidget with SharedPref {
     );
   }
 
-  Widget message({
-    required Widget contentMessage,
-    required BuildContext contexts,
-  }){
+  Widget message({required Widget contentMessage}){
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
     stream: contexts.read<CubitListMessageConnect>().getStreamFirebaseListMessage,
     builder: (context1, snapshot){
@@ -74,162 +72,138 @@ class BottomNavPenjual extends HookWidget with SharedPref {
         return contentMessage;
       }else return Lottie.asset(
         "asset/animations/loading_horizontal_lottie.json",
-        height: ThemeBox.defaultHeightBox50,
+        height: ThemeBox.defaultHeightBox20,
       );
-    });
+    });   
   }
 
-  Widget customBottomNav({
-    required BuildContext contexts,
-    required int currentButton,
-  }){
-    return ClipRRect(
-      borderRadius: const BorderRadius.vertical(
-        top: Radius.circular(30),
-      ),
-      child: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 12,
-        clipBehavior: Clip.antiAlias,
-        child: BottomNavigationBar(
-          backgroundColor: kBlackColor,
-          type: BottomNavigationBarType.fixed,
-          onTap: (value){            
-            contexts.read<CubitBottomNavPenjual>().navigation(currentButton: value);
-          },
-          items: [            
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: message(
-                  contexts: contexts,
-                  contentMessage: BlocBuilder<CubitListMessageConnect, DataStateListMessage>(
-                    builder: (context2, listMessage){
-                      if(listMessage.loading == false && listMessage.dataUser.isNotEmpty){
-                        contexts.read<CubitJumlahBadges>().getBadgesMessage(listMessage.dataUser);
-                      }
-                      return Image.asset(
-                        "asset/icon/home_icon.png",
-                        color: (currentButton == 0) ? kPurpleColor : kGreyColor,
-                        width: 21.0,
-                        height: 20.0,
-                      );
-                    },
-                  ),
-                ),
+  Widget customBottomNav(){
+    return Container(
+    padding: EdgeInsets.all(10),
+    margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+    decoration: BoxDecoration(
+      color: kBlackColor,
+      borderRadius: BorderRadius.circular(15),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black,
+          offset: Offset(4, 4),
+          blurRadius: 15,
+        ),
+      ]
+    ),
+    child: SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      physics: BouncingScrollPhysics(),
+      child: Row(
+        children: [
+          SizedBox(width: ThemeBox.defaultWidthBox20),
+          IconButton(
+            onPressed: () => contexts.read<CubitBottomNavPenjual>().navigation(currentButton: 0), 
+            icon: message(
+              contentMessage: BlocBuilder<CubitListMessageConnect, DataStateListMessage>(
+                builder: (context2, listMessage){
+                  if(listMessage.loading == false && listMessage.dataUser.isNotEmpty){
+                    contexts.read<CubitJumlahBadges>().getBadgesMessage(listMessage.dataUser);
+                  }
+                  return Image.asset(
+                    "asset/icon/home_icon.png",
+                    color: (currentButton == 0) ? kPurpleColor : kGreyColor,
+                    height: ThemeBox.defaultHeightBox20,
+                  );
+                },
               ),
-              label: "",
             ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: message(
-                  contexts: contexts,
-                  contentMessage: BlocBuilder<CubitListMessageConnect, DataStateListMessage>(
-                    builder: (context2, listMessage){
-                      if(listMessage.loading == false && listMessage.dataUser.isNotEmpty){
-                        return BlocBuilder<CubitJumlahBadges, DataStateBadges>(
-                          builder: (context3, jumlahBadges){
-                          if(jumlahBadges.loading == false && jumlahBadges.totalBadges.toString() != "0"){
-                            prefs.setString("navBadges", jumlahBadges.totalBadges.toString());
-                          }
-                          return (jumlahBadges.loading == false)
-                          ? (jumlahBadges.totalBadges.toString() == "0")
-                            ? Image.asset(
-                                "asset/icon/chat_icon.png",
-                                color: (currentButton == 1) ? kPurpleColor : kGreyColor,
-                                width: 20.0,
-                                height: 18.0,
-                              )
-                            : badges.Badge(
-                                badgeContent: Text(jumlahBadges.totalBadges.toString(), style: const TextStyle(fontSize: 12, color: Colors.white)), 
-                                child: Image.asset(
-                                  "asset/icon/chat_icon.png",
-                                  color: (currentButton == 1) ? kPurpleColor : kGreyColor,
-                                  width: 20.0,
-                                  height: 18.0,
-                                ),
-                              )
-                          : (prefs.getString("navBadges") != null)
-                          ? badges.Badge(
-                              badgeContent: Text("...",
-                              style: const TextStyle(fontSize: 12, color: Colors.white)), 
-                              child: Image.asset(
-                                "asset/icon/chat_icon.png",
-                                color: (currentButton == 1) ? kPurpleColor : kGreyColor,
-                                width: 20.0,
-                                height: 18.0,
-                              ),
-                            )
-                          : Image.asset(
+          ),
+          SizedBox(width: ThemeBox.defaultWidthBox20),
+          IconButton(
+            onPressed: () => contexts.read<CubitBottomNavPenjual>().navigation(currentButton: 1),
+            icon: message(
+              contentMessage: BlocBuilder<CubitListMessageConnect, DataStateListMessage>(
+                builder: (context2, listMessage){
+                  if(listMessage.loading == false && listMessage.dataUser.isNotEmpty){
+                    return BlocBuilder<CubitJumlahBadges, DataStateBadges>(
+                      builder: (context3, jumlahBadges){
+                      if(jumlahBadges.loading == false && jumlahBadges.totalBadges.toString() != "0"){
+                        prefs.setString("navBadges", jumlahBadges.totalBadges.toString());
+                      }
+                      return (jumlahBadges.loading == false)
+                      ? (jumlahBadges.totalBadges.toString() == "0")
+                        ? Image.asset(
+                            "asset/icon/chat_icon.png",
+                            color: (currentButton == 1) ? kPurpleColor : kGreyColor,
+                            height: ThemeBox.defaultHeightBox20,
+                          )
+                        : badges.Badge(
+                            badgeContent: Text(jumlahBadges.totalBadges.toString(), style: const TextStyle(fontSize: 12, color: Colors.white)), 
+                            child: Image.asset(
                               "asset/icon/chat_icon.png",
                               color: (currentButton == 1) ? kPurpleColor : kGreyColor,
-                              width: 20.0,
-                              height: 18.0,
-                            );
-                          }
-                        );
-                      }else{
-                        return Image.asset(
+                              height: ThemeBox.defaultHeightBox20,
+                            )
+                          )
+                      : (prefs.getString("navBadges") != null)
+                      ? badges.Badge(
+                          badgeContent: Text("...",
+                          style: const TextStyle(fontSize: 12, color: Colors.white)), 
+                          child: Image.asset(
+                            "asset/icon/chat_icon.png",
+                            color: (currentButton == 1) ? kPurpleColor : kGreyColor,
+                            height: ThemeBox.defaultHeightBox20,
+                          ),
+                        )
+                      : Image.asset(
                           "asset/icon/chat_icon.png",
                           color: (currentButton == 1) ? kPurpleColor : kGreyColor,
-                          width: 20.0,
-                          height: 18.0,
+                          height: ThemeBox.defaultHeightBox20,
                         );
                       }
-                    },
-                  ),
-                ),
+                    );
+                  }else{
+                    return Image.asset(
+                      "asset/icon/chat_icon.png",
+                      color: (currentButton == 1) ? kPurpleColor : kGreyColor,
+                      height: ThemeBox.defaultHeightBox20,
+                    );
+                  }
+                }
               ),
-              label: "",
             ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Image.asset(
-                  "asset/icon/cart_Icon.png",
-                  color: (currentButton == 2) ? kPurpleColor : kGreyColor,
-                  width: 20.0,
-                  height: 22.0,
-                ),
-              ),
-              label: "",
+          ),
+          SizedBox(width: ThemeBox.defaultWidthBox20),
+          IconButton(
+            onPressed: () => contexts.read<CubitBottomNavPenjual>().navigation(currentButton: 2),
+            icon: Image.asset(
+              "asset/icon/cart_Icon.png",
+              color: (currentButton == 2) ? kPurpleColor : kGreyColor,
+              height: ThemeBox.defaultHeightBox20,
             ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Image.asset(
-                  "asset/icon/icon_add.png",
-                  color: (currentButton == 3) ? kPurpleColor : kGreyColor,
-                  width: 28.0,
-                  height: 25.0,
-                ),
-              ),
-              label: "",
+          ),
+          SizedBox(width: ThemeBox.defaultWidthBox20),
+          IconButton(
+            onPressed: () => contexts.read<CubitBottomNavPenjual>().navigation(currentButton: 3),
+            icon: Image.asset(
+              "asset/icon/icon_add.png",
+              color: (currentButton == 3) ? kPurpleColor : kGreyColor,
+              height: ThemeBox.defaultHeightBox20,
             ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Image.asset(
-                  "asset/icon/user_icon.png",
-                  color: (currentButton == 4) ? kPurpleColor : kGreyColor,
-                  width: 18.0,
-                  height: 20.0,
-                ),
-              ),
-              label: "",
+          ),
+          SizedBox(width: ThemeBox.defaultWidthBox20),
+          IconButton(
+            onPressed: () => contexts.read<CubitBottomNavPenjual>().navigation(currentButton: 4),
+            icon: Image.asset(
+              "asset/icon/user_icon.png",
+              color: (currentButton == 4) ? kPurpleColor : kGreyColor,
+              height: ThemeBox.defaultHeightBox20,
             ),
-          ],
-        ),
+          ),
+          SizedBox(width: ThemeBox.defaultWidthBox20),    
+        ],
       ),
-    );
+    ),);
   }
 
-  PreferredSizeWidget? appBar({
-    required BuildContext contexts,
-    required int currentButton,
-    required bool loadingLogout,
-  }){
+  PreferredSizeWidget? appBar(){
     switch(currentButton){
       case 1 :
         return AppBar(
@@ -322,7 +296,7 @@ class BottomNavPenjual extends HookWidget with SharedPref {
     }
   }
 
-  void cartProduct(BuildContext contexts){
+  void cartProduct(){
     contexts.read<CubitConnectionExample>().connectCheck(
       readBlocConnect: {
         contexts.read<CubitGetTransaksiUserPembeli>().getDataTransaksiHistory(),
@@ -331,10 +305,7 @@ class BottomNavPenjual extends HookWidget with SharedPref {
     );
   }
 
-  Widget body({
-    required BuildContext contexts,
-    required int currentButton,
-  }){
+  Widget body(){
     switch(currentButton){
       case 0 :
       removeAddProduct();
@@ -345,7 +316,7 @@ class BottomNavPenjual extends HookWidget with SharedPref {
       return MessageList();
       case 2 :
       removeAddProduct();
-      cartProduct(contexts);
+      cartProduct();
       return CartPenjual();
       case 3 :
       removeUpdateProduct();

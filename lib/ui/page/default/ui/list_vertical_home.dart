@@ -34,61 +34,64 @@ class ListVerticalHome extends StatelessWidget with LoadingScrollData, SharedPre
     late double heightPage = sizeHeight;
     if(heightPage < 0.0){heightPage = 0.0;};
     return (data.isNotEmpty)
-    ? SizedBox(
-        height: heightPage,
-        child: LayoutBuilder(//perbedaan layout builder dengan mediaquery adalah:
-        //layoutbuilder memberikan ukuran berdasarkan parent/induk dari layout builder, contohnya pada kasus ini induknya adalah continer maka ukuran maksimum layout builder mengikuti ukuran maksimum yang dimiliki container.
-        //sedangkan mediaquery merupakah ukuran layar secara menyeluruh.
-          builder: (context, constraints) {
-            context.read<CubitDetailNavigasiProduct>().navigationDetailProduct();
-            return BlocBuilder<CubitDetailNavigasiProduct, DataStateDetailProduct>(
-              builder: (context, state) => Stack(
-                children: [
-                  ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox20),
-                    controller: scrollControl,
-                    physics: BouncingScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    itemCount: lengthList,
-                    itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      child: HomeMenuActionCardProductPenjual(
-                        idProduct: data[index].tokenId.toString(),
-                        nama: data[index].name.toString(),
-                        type: data[index].category.name.toString(),
-                        harga: data[index].price.toString(),
-                        gambar: data[index].urlImage.toString(),
-                        onTapImage: () {},
-                      ),
-                      onTap: (){
-                        prefs.setString('detailTokenId', data[index].tokenId.toString());
-                        prefs.setString('navDetailRole', state.navigation);
-                        context.read<CubitConnectionExample>().connectCheck(
-                          readBlocConnect: {
-                            context.read<CubitDetailProdukNavPenjual>().detailProdukNavPenjual(
-                              jenisDetail: "AllProduct",
-                              readDetail: context.read<CubitDetailProductConnect>().getDetailProductConnect(idProduct: data[index].tokenId.toString()),
-                            ),
-                          }, 
-                          readBlocDisconnect: {}
-                        );
-                        context.go(state.navigation);
-                      },
-                    );},
-                  ),
-                  LoadingScrollHeight(
-                    context: context,
-                    heightLoading: ThemeBox.defaultHeightBox300, 
-                    loadingScrollName: loading, 
-                    rightLoading: ThemeBox.defaultWidthBox20, 
-                    withLoading: constraints.maxWidth,
-                  ),
-                ],
-              ),
-            );
-          }
+    ? Padding(
+        padding: EdgeInsets.only(bottom: ThemeBox.defaultHeightBox50),
+        child: SizedBox(
+          height: heightPage,
+          child: LayoutBuilder(//perbedaan layout builder dengan mediaquery adalah:
+          //layoutbuilder memberikan ukuran berdasarkan parent/induk dari layout builder, contohnya pada kasus ini induknya adalah continer maka ukuran maksimum layout builder mengikuti ukuran maksimum yang dimiliki container.
+          //sedangkan mediaquery merupakah ukuran layar secara menyeluruh.
+            builder: (context, constraints) {
+              context.read<CubitDetailNavigasiProduct>().navigationDetailProduct();
+              return BlocBuilder<CubitDetailNavigasiProduct, DataStateDetailProduct>(
+                builder: (context, state) => Stack(
+                  children: [
+                    ListView.builder(
+                      padding: EdgeInsets.symmetric(horizontal: ThemeBox.defaultWidthBox20),
+                      controller: scrollControl,
+                      physics: BouncingScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      itemCount: lengthList,
+                      itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        child: HomeMenuActionCardProductPenjual(
+                          idProduct: data[index].tokenId.toString(),
+                          nama: data[index].name.toString(),
+                          type: data[index].category.name.toString(),
+                          harga: data[index].price.toString(),
+                          gambar: data[index].urlImage.toString(),
+                          onTapImage: () {},
+                        ),
+                        onTap: (){
+                          prefs.setString('detailTokenId', data[index].tokenId.toString());
+                          prefs.setString('navDetailRole', state.navigation);
+                          context.read<CubitConnectionExample>().connectCheck(
+                            readBlocConnect: {
+                              context.read<CubitDetailProdukNavPenjual>().detailProdukNavPenjual(
+                                jenisDetail: "AllProduct",
+                                readDetail: context.read<CubitDetailProductConnect>().getDetailProductConnect(idProduct: data[index].tokenId.toString()),
+                              ),
+                            }, 
+                            readBlocDisconnect: {}
+                          );
+                          context.go(state.navigation);
+                        },
+                      );},
+                    ),
+                    LoadingScrollHeight(
+                      context: context,
+                      heightLoading: ThemeBox.defaultHeightBox300, 
+                      loadingScrollName: loading, 
+                      rightLoading: ThemeBox.defaultWidthBox20, 
+                      withLoading: constraints.maxWidth,
+                    ),
+                  ],
+                ),
+              );
+            }
+          ),
         ),
-      )
+    )
     : Center(child: ComponenLoadingLottieBasic(height: ThemeBox.defaultHeightBox200));
   }
 }

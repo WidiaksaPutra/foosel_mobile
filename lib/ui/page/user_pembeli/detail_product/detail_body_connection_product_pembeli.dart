@@ -39,14 +39,14 @@ class DetailBodyConnectionProductPembeli extends HookWidget with NavigasiRole, N
   }){
     (jenisDetail == "AllProduct")
     ? navigasiRBR(context: context, value: 0)
-    : navigasiRBR(context: context, value: 2);
+    : navigasiRBR(context: context, value: 3);
     navigasiR();
     (jenisDetail == "Transaksi") 
-    ? context.go(RouteName.cart) 
+    ? context.go(RouteName.bottomNavPembeli)
     : (jenisDetail == "TransaksiHistory")
     ? context.go(RouteName.cartHistory)
     : (jenisDetail == "TransaksiDetail")
-    ? context.go(RouteName.cart)
+    ? context.go(RouteName.bottomNavPembeli)
     : context.go(navigation);
   }
 
@@ -89,7 +89,11 @@ class DetailBodyConnectionProductPembeli extends HookWidget with NavigasiRole, N
               return HeaderDetailProduct(
                 guestUser: false,
                 onPressedBack: () => navigationBack(context: context, jenisDetail: state.jenisDetail.toString()), 
-                onPressedChart: () => context.go(RouteName.cart), 
+                onPressedChart: (){
+                  navigasiRBR(context: context, value: 2);
+                  navigasiR();
+                  context.go(navigation);
+                }, 
                 icon: 'asset/icon/cart_Icon4.png',
               );
             },

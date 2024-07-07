@@ -47,10 +47,7 @@ class CartHistory extends HookWidget with DialogBasic{
       appBar: PreferredHeaderCart( 
         titleCart: 'History Cart', 
         statusLeading: true, 
-        onPressed: (){
-          // BlocProvider.of<CubitGetTransaksiProduct>(context).close();
-          context.go(RouteName.cart);
-        },
+        onPressed: () => context.go(RouteName.bottomNavPembeli),
       ),
       body: BlocBuilder<CubitConnectionExample, DataStateConnection>(
         builder: (context, state) => (state.connectionBoolean == true)
